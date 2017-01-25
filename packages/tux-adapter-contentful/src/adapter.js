@@ -1,4 +1,3 @@
-import adminContentful from './manage'
 import QueryApi from './query-api'
 import ManagementApi from './management-api'
 

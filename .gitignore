@@ -1,2 +1,9 @@
-node_modules
+# Misc/Debug files
+npm-debug.log
+lerna-debug.log
+
+# production
 packages/*/lib
+
+# dependencies
+node_modules
