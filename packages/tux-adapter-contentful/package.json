@@ -4,18 +4,17 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "prepublish": "rm -rf lib && BABEL_ENV=production babel src --out-dir lib",
-    "watch": "BABEL_ENV=development babel src --watch --out-dir lib"
+    "prepublish": "rm -rf lib && npm run typescript",
+    "watch": "npm run typescript -- --watch",
+    "typescript": "../../node_modules/.bin/tsc"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/lodash": "^4.14.50",
     "axios": "^0.15.3"
   },
   "peerDependencies": {
     "react": "^15.0.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.22.2"
   }
 }

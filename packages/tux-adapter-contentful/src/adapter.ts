@@ -2,7 +2,15 @@ import QueryApi from './query-api'
 import ManagementApi from './management-api'
 
 class ContentfulAdapter {
-  constructor({ space, deliveryToken, clientId, redirectUri }) {
+  private space: string
+  private clientId: string
+  private redirectUri: string
+  private deliveryApi: QueryApi
+  private previewApi: any
+  private managementApi: any
+  private listeners: Array<Function>
+
+  constructor(space : string, deliveryToken : string, clientId : string, redirectUri : string) {
     this.space = space
     this.clientId = clientId
     this.redirectUri = redirectUri
@@ -17,14 +25,14 @@ class ContentfulAdapter {
     this.listeners.forEach(fn => fn())
   }
 
-  addChangeListener(fn) {
+  addChangeListener(fn : Function) {
     this.listeners.push(fn)
     return () => {
       this.listeners = this.listeners.filter(listener => listener !== fn)
     }
   }
 
-  async initPrivateApis() {
+  private async initPrivateApis() : Promise<void> {
     // There is a total of three apis:
     // Content Delivery API - Access Token passed publicly to adapter.
     // Content Management API - Access Token returned from OAuth2 flow and saved in localStorage.
@@ -69,17 +77,17 @@ class ContentfulAdapter {
     return this.previewApi || this.deliveryApi
   }
 
-  getSchema(model) {
+  getSchema(model : any) {
     return this.managementApi.getTypeMeta(model.sys.contentType.sys.id)
   }
 
-  async save(model) {
+  async save(model : any) {
     const newModel = await this.managementApi.saveEntry(model)
     this.triggerChange()
     return newModel
   }
 
-  load(model) {
+  load(model : any) {
     return this.managementApi.getEntry(model.sys.id)
   }
 
@@ -117,6 +125,6 @@ class ContentfulAdapter {
   }
 }
 
-export default function createContentfulAdapter(options) {
-  return new ContentfulAdapter(options)
+export default function createContentfulAdapter(space : string, deliveryToken : string, clientId : string, redirectUri : string) {
+  return new ContentfulAdapter(space, deliveryToken, clientId, redirectUri)
 }
