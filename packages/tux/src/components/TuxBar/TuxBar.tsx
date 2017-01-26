@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import * as React from 'react'
 
 interface State {
   user ?: {
@@ -8,9 +8,9 @@ interface State {
   }
 }
 
-class TuxBar extends Component<any, State> {
+class TuxBar extends React.Component<any, State> {
   static contextTypes = {
-    tux: PropTypes.object,
+    tux: React.PropTypes.object,
   }
 
   state : State = {

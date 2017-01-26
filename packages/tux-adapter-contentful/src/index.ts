@@ -1,1 +1,2 @@
-export { default } from './adapter'
+import adapter from './adapter'
+export default adapter

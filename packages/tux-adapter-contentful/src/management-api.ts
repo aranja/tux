@@ -1,11 +1,11 @@
 import axios from 'axios'
-import find from 'lodash/find'
 import {AxiosInstance} from 'axios'
 
 class ManagementApi {
-  private space: string
-  private previewApi: any
-  private client: AxiosInstance
+  private client : AxiosInstance
+  private space : string
+
+  previewApi : any
 
   constructor (space : string, accessToken : string) {
     this.space = space
@@ -19,7 +19,7 @@ class ManagementApi {
     })
   }
 
-  get(url : string, params ?: Object) {
+  get(url : string, params? : Object) {
     return this.client.get(url, { params }).then(result => result.data)
   }
 
@@ -56,7 +56,7 @@ class ManagementApi {
     ])
 
     contentType.fields.forEach((field : any) => {
-      field.control = find(editorInterface.controls, ['fieldId', field.id])
+      field.control = editorInterface.controls.find((editor : any) => editor.fieldId === field.id)
     })
     return contentType
   }

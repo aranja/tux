@@ -1,16 +1,23 @@
 import QueryApi from './query-api'
 import ManagementApi from './management-api'
 
-class ContentfulAdapter {
-  private space: string
-  private clientId: string
-  private redirectUri: string
-  private deliveryApi: QueryApi
-  private previewApi: any
-  private managementApi: any
-  private listeners: Array<Function>
+interface Config {
+  space : string
+  deliveryToken : string
+  clientId : string
+  redirectUri : string
+}
 
-  constructor(space : string, deliveryToken : string, clientId : string, redirectUri : string) {
+class ContentfulAdapter {
+  private space : string
+  private clientId : string
+  private redirectUri : string
+  private deliveryApi : QueryApi
+  private previewApi : any
+  private managementApi : ManagementApi | null
+  private listeners : Array<Function>
+
+  constructor({space, deliveryToken, clientId, redirectUri} : Config) {
     this.space = space
     this.clientId = clientId
     this.redirectUri = redirectUri
@@ -32,7 +39,7 @@ class ContentfulAdapter {
     }
   }
 
-  private async initPrivateApis() : Promise<void> {
+  private async initPrivateApis() {
     // There is a total of three apis:
     // Content Delivery API - Access Token passed publicly to adapter.
     // Content Management API - Access Token returned from OAuth2 flow and saved in localStorage.
@@ -47,6 +54,7 @@ class ContentfulAdapter {
     }
 
     const managementToken = localStorage.getItem('contentfulManagementToken')
+
     if (!managementToken) {
       return
     }
@@ -78,17 +86,23 @@ class ContentfulAdapter {
   }
 
   getSchema(model : any) {
+    if (!this.managementApi) {
+      throw new Error('Manager api not defined, please log in get a scheme.')
+    }
     return this.managementApi.getTypeMeta(model.sys.contentType.sys.id)
   }
 
   async save(model : any) {
+    if (!this.managementApi) {
+      throw new Error('Manager api not defined, please log in to save.')
+    }
     const newModel = await this.managementApi.saveEntry(model)
     this.triggerChange()
     return newModel
   }
 
   load(model : any) {
-    return this.managementApi.getEntry(model.sys.id)
+    return this.managementApi && this.managementApi.getEntry(model.sys.id)
   }
 
   async currentUser() {
@@ -107,7 +121,7 @@ class ContentfulAdapter {
 
       user.space = space
       return user
-    } catch(error) {
+    } catch (error) {
       if (error.response && error.response.status === 401) {
         return null
       }
@@ -125,6 +139,6 @@ class ContentfulAdapter {
   }
 }
 
-export default function createContentfulAdapter(space : string, deliveryToken : string, clientId : string, redirectUri : string) {
-  return new ContentfulAdapter(space, deliveryToken, clientId, redirectUri)
+export default function createContentfulAdapter(config : Config) {
+  return new ContentfulAdapter(config)
 }
