@@ -3,11 +3,19 @@ import MaterialTextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 
-const MarkdownField = ({ id, value, label, helpText, onChange }) => (
+interface Field {
+  id : string
+  value : string
+  label : string
+  helpText : string
+  onChange : Function
+}
+
+const MarkdownField = ({ id, value, label, helpText, onChange } : Field) => (
   <MaterialTextField multiLine={true} rows={3} hintText={helpText} floatingLabelText={label} id={id} value={value} onChange={onChange} />
 )
 
-const TextField = ({ id, value, label, helpText, onChange }) => (
+const TextField = ({ id, value, label, helpText, onChange } : Field) => (
   <MaterialTextField hintText={helpText} floatingLabelText={label} id={id} value={value} onChange={onChange} />
 )
 
@@ -21,7 +29,7 @@ function componentForField({ id, type, control: { widgetId } }) {
   }
 }
 
-class TuxModal extends Component {
+class TuxModal extends Component<any, any> {
   static contextTypes = {
     tux: PropTypes.object,
   }

@@ -4,17 +4,17 @@ import ModalContainer, { openModal } from '../TuxModalContainer'
 import TuxBar from '../TuxBar'
 import TuxModal from '../TuxModal'
 
-class TuxProvider extends Component {
+interface Props {
+  adapter: Object
+}
+
+class TuxProvider extends Component<Props, any> {
   static childContextTypes = {
     tux: PropTypes.shape({
       isEditing: PropTypes.bool.isRequired,
       editModel: PropTypes.func.isRequired,
       adapter: PropTypes.object.isRequired,
     }),
-  }
-
-  static propTypes = {
-    adapter: PropTypes.object.isRequired,
   }
 
   getChildContext() {
@@ -27,7 +27,7 @@ class TuxProvider extends Component {
     }
   }
 
-  editModel = (model) => {
+  editModel = (model : any) => {
     return openModal(
       <TuxModal model={model} />
     )
