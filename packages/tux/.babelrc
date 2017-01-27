@@ -1,0 +1,8 @@
+{
+  "presets": [
+    "react-app"
+  ],
+  "plugins": [
+    "styled-jsx/babel"
+  ]
+}
