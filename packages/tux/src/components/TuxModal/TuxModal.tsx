@@ -24,16 +24,16 @@ interface State {
   typeMeta : any | null
 }
 
-const MarkdownField = ({id, value, label, helpText, onChange} : Field) => (
+const MarkdownField = ({ id, value, label, helpText, onChange } : Field) => (
   <MaterialTextField multiLine={true} rows={3} hintText={helpText} floatingLabelText={label} id={id} value={value}
                      onChange={onChange}/>
 )
 
-const TextField = ({id, value, label, helpText, onChange} : Field) => (
+const TextField = ({ id, value, label, helpText, onChange } : Field) => (
   <MaterialTextField hintText={helpText} floatingLabelText={label} id={id} value={value} onChange={onChange}/>
 )
 
-function componentForField({id, type, control: {widgetId}} : FieldComponent) {
+function componentForField({ id, type, control: { widgetId } } : FieldComponent) {
   if (type === 'Array')
     return null
   if (widgetId === 'markdown') {
@@ -54,7 +54,7 @@ class TuxModal extends React.Component<any, State> {
   }
 
   async componentDidMount() {
-    const {model} = this.props
+    const { model } = this.props
 
     const [
       fullModel,
@@ -71,7 +71,7 @@ class TuxModal extends React.Component<any, State> {
   }
 
   onChange(event : React.ChangeEvent<any>, type : {id : string}) {
-    const {fullModel} = this.state
+    const { fullModel } = this.state
     const field = fullModel.fields[type.id]
     field['en-US'] = event.target.value
     this.setState({fullModel})
@@ -84,7 +84,7 @@ class TuxModal extends React.Component<any, State> {
   onSubmit = async(event : React.FormEvent<any>) => {
     event.preventDefault()
 
-    const {fullModel} = this.state
+    const { fullModel } = this.state
     await this.context.tux.adapter.save(fullModel)
     this.props.onClose(true)
   }
@@ -107,7 +107,7 @@ class TuxModal extends React.Component<any, State> {
   }
 
   render() {
-    const {fullModel, typeMeta} = this.state
+    const { fullModel, typeMeta } = this.state
     return (
       <div className="TuxModal">
         {fullModel ? (

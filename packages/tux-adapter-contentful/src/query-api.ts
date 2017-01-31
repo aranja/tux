@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {AxiosInstance} from 'axios'
+import { AxiosInstance } from 'axios';
 
 class QueryApi {
   private overrides: {
