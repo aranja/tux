@@ -1,13 +1,17 @@
 {
-  "devDependencies": {
-    "babel-preset-react-app": "^2.0.1",
-    "lerna": "2.0.0-beta.32",
+  "dependencies": {
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
+  "devDependencies": {
+    "@types/classnames": "0.0.32",
+    "@types/material-ui": "^0.16.48",
+    "@types/node": "^7.0.4",
+    "@types/react": "^15.0.4",
+    "@types/react-addons-css-transition-group": "^15.0.1",
+    "@types/react-dom": "^0.14.21",
+    "lerna": "2.0.0-beta.33",
+    "tslint": "^4.4.2",
+    "typescript": "^2.1.5"
   }
 }

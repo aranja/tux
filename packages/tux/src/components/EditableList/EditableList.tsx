@@ -1,12 +1,12 @@
-import React, { Component, PropTypes } from 'react'
-import classNames from 'classnames'
+import * as React from 'react'
+import * as classNames from 'classnames'
 
-class EditableList extends Component {
+class EditableList extends React.Component<any, any> {
   static contextTypes = {
-    tux: PropTypes.object,
+    tux: React.PropTypes.object,
   }
 
-  async onEdit(item) {
+  async onEdit(item : any) {
     const { onChange } = this.props
     const { tux } = this.context
     const didChange = await tux.editModel(item)
@@ -20,7 +20,7 @@ class EditableList extends Component {
     const isEditing = this.context.tux && this.context.tux.isEditing
     return (
       <div className={classNames('EditableList', isEditing && 'is-editing')}>
-        {list.map(item => {
+        {list.map((item : any) => {
           const child = children(item)
           return (
             <div key={child.key} className="EditableList-item">

@@ -1,12 +1,20 @@
-import React, { Component, PropTypes } from 'react'
+import * as React from 'react'
 
-class TuxBar extends Component {
+interface State {
+  user : null | {
+    name: string
+    avatarUrl: string
+    spaceName: string
+  }
+}
+
+class TuxBar extends React.Component<any, State> {
   static contextTypes = {
-    tux: PropTypes.object,
+    tux: React.PropTypes.object,
   }
 
-  state = {
-    user: null
+  state : State = {
+    user: null,
   }
 
   async componentDidMount() {

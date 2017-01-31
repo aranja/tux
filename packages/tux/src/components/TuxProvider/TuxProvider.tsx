@@ -1,20 +1,20 @@
-import React, { Component, PropTypes } from 'react'
+import * as React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import ModalContainer, { openModal } from '../TuxModalContainer'
 import TuxBar from '../TuxBar'
 import TuxModal from '../TuxModal'
 
-class TuxProvider extends Component {
-  static childContextTypes = {
-    tux: PropTypes.shape({
-      isEditing: PropTypes.bool.isRequired,
-      editModel: PropTypes.func.isRequired,
-      adapter: PropTypes.object.isRequired,
-    }),
-  }
+interface Props {
+  adapter: Object
+}
 
-  static propTypes = {
-    adapter: PropTypes.object.isRequired,
+class TuxProvider extends React.Component<Props, any> {
+  static childContextTypes = {
+    tux: React.PropTypes.shape({
+      isEditing: React.PropTypes.bool.isRequired,
+      editModel: React.PropTypes.func.isRequired,
+      adapter: React.PropTypes.object.isRequired,
+    }),
   }
 
   getChildContext() {
@@ -27,7 +27,7 @@ class TuxProvider extends Component {
     }
   }
 
-  editModel = (model) => {
+  editModel = (model : any) => {
     return openModal(
       <TuxModal model={model} />
     )

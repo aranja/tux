@@ -1,10 +1,12 @@
-import React, { Component } from 'react'
-import classNames from 'classnames'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import * as React from 'react'
+import * as classNames from 'classnames'
+import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import toggleScroll from './toggle-scroll'
 import { getState, setListener } from './store'
 
-class ModalContainer extends Component {
+class ModalContainer extends React.Component<any, any> {
+  private listener : () => any
+
   state = {
     modals: getState()
   }
@@ -32,7 +34,7 @@ class ModalContainer extends Component {
     this.setState({ modals: getState() })
   }
 
-  onClickBackdrop = (event) => {
+  onClickBackdrop = (event : React.MouseEvent<any>) => {
     if (event.target !== event.currentTarget) {
       return
     }

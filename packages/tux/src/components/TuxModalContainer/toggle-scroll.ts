@@ -24,7 +24,7 @@ export function calculateScrollbarWidth({ className = defaultClassName } = {}) {
     return width
   }
 
-  function setCssRuleset(sidebarWidth) {
+  function setCssRuleset(sidebarWidth : number) {
     const style = document.createElement('style')
     let ruleset = `.${className} { margin-right: ${sidebarWidth}px; overflow: hidden; }`
     style.innerText = ruleset
@@ -48,9 +48,9 @@ export function calculateScrollbarWidth({ className = defaultClassName } = {}) {
  * @param className used to toggle scrolling. Defaults to .u-noScroll
  */
 export default function toggleScroll(
-  shouldScroll = undefined,
-  element,
-  className = defaultClassName
+  shouldScroll ?: boolean,
+  element ?: HTMLElement,
+  className : string = defaultClassName
 ) {
   if (typeof document === 'undefined') {
     throw new Error('Should not toggle scrolling on the server. Use componentDidMount instead.')
