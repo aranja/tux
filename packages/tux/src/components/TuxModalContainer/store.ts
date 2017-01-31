@@ -1,6 +1,6 @@
 interface Modal {
   id : number
-  element : Element
+  element : any
   onClose : Function
 }
 
@@ -29,7 +29,7 @@ function removeModal(modalToRemove : Modal) {
 /**
  * Opens a modal.
  */
-export function openModal(element : HTMLElement) {
+export function openModal(element : any) {
   return new Promise((resolve, reject) => {
     const id = counter++
     const modal = {

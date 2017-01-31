@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 interface State {
-  user ?: {
+  user : null | {
     name: string
     avatarUrl: string
     spaceName: string
