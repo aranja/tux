@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "start": "cd packages/tux-example-site && npm start",
+    "postinstall": "lerna bootstrap",
+    "lerna": "lerna"
+  },
   "dependencies": {
     "react": "^15.4.2",
     "react-dom": "^15.4.2"

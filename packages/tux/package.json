@@ -4,8 +4,8 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "prepublish": "npm run typescript",
-    "watch": "npm run typescript -- --watch",
+    "prepublish": "npm run --silent typescript",
+    "watch": "npm run --silent typescript -- --watch",
     "typescript": "../../node_modules/.bin/tsc"
   },
   "peerDependencies": {
