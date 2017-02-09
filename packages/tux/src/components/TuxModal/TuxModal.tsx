@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React = require('react')
 import MaterialTextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'

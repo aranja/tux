@@ -1,5 +1,5 @@
-import * as React from 'react'
-import * as classNames from 'classnames'
+import React = require('react')
+import classNames = require('classnames')
 
 class EditableList extends React.Component<any, any> {
   static contextTypes = {

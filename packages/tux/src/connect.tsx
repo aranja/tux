@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React = require('react')
 
 const connect = (fn : Function) => (InnerComponent : React.ComponentClass<any>) => {
   class TuxConnection extends React.Component<any, any> {
