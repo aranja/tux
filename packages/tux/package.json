@@ -4,9 +4,8 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "prepublish": "npm run --silent typescript",
-    "watch": "npm run --silent typescript -- --watch",
-    "typescript": "../../node_modules/.bin/tsc"
+    "prepublish": "../../tasks/build-package.js",
+    "watch": "../../tasks/build-package.js --watch"
   },
   "peerDependencies": {
     "react": "^15.0.0"
@@ -18,6 +17,6 @@
     "classnames": "^2.2.5",
     "material-ui": "^0.16.7",
     "react-addons-css-transition-group": "^15.4.2",
-    "styled-jsx": "^0.5.1"
+    "styled-jsx": "^0.5.4"
   }
 }
