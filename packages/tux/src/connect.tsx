@@ -1,31 +1,45 @@
 import React = require('react')
 
-const connect = (fn : Function) => (InnerComponent : React.ComponentClass<any>) => {
-  class TuxConnection extends React.Component<any, any> {
-    static contextTypes = {
-      tux: React.PropTypes.object,
-    }
+export interface RefreshProp {
+  refresh: () => Promise<void>,
+}
 
-    state = {
-      dataProps: {},
-    }
+interface State<DataProps> {
+  dataProps: null | DataProps,
+}
 
-    componentDidMount () {
-      this.context.tux.adapter.addChangeListener(this.refresh)
-      this.refresh()
-    }
+type InnerProps<OuterProps, DataProps> = OuterProps & DataProps & RefreshProp
 
-    refresh = async () => {
-      const queryApi = this.context.tux.adapter.getQueryApi()
-      const dataProps = await fn(queryApi)
-      this.setState({ dataProps })
-    }
+function connect<DataProps>(fn : (api: any) => Promise<DataProps>) {
+  return function wrap<OuterProps>(InnerComponent : React.ComponentClass<InnerProps<OuterProps, DataProps>>): React.ComponentClass<OuterProps> {
+    class TuxConnection extends React.Component<OuterProps, State<DataProps>> {
+      static contextTypes = {
+        tux: React.PropTypes.object,
+      }
 
-    render() {
-      return <InnerComponent {...this.props} {...this.state.dataProps} refresh={this.refresh} />
+      state = {
+        dataProps: null,
+      }
+
+      componentDidMount () {
+        this.context.tux.adapter.addChangeListener(this.refresh)
+        this.refresh()
+      }
+
+      refresh = async () => {
+        const queryApi = this.context.tux.adapter.getQueryApi()
+        const dataProps = await fn(queryApi)
+        this.setState({ dataProps })
+      }
+
+      render() {
+        const props = {} as InnerProps<OuterProps, DataProps>;
+        Object.assign(props, this.props, this.state.dataProps, { refresh: this.refresh });
+        return React.createElement(InnerComponent, props);
+      }
     }
+    return TuxConnection
   }
-  return TuxConnection
 }
 
 export default connect

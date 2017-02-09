@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "declaration": true,
     "lib": ["es2015", "dom"],
     "outDir": "./lib",
     "jsx": "react"

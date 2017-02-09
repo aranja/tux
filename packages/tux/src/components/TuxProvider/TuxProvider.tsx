@@ -4,7 +4,7 @@ import ModalContainer, { openModal } from '../TuxModalContainer'
 import TuxBar from '../TuxBar'
 import TuxModal from '../TuxModal'
 
-interface Props {
+export interface Props {
   adapter: Object
 }
 

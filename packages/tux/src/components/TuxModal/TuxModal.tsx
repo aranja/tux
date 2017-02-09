@@ -19,7 +19,7 @@ interface FieldComponent {
   }
 }
 
-interface State {
+export interface State {
   fullModel : any | null
   typeMeta : any | null
 }

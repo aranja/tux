@@ -1,6 +1,6 @@
 import React = require('react')
 
-interface State {
+export interface State {
   user : null | {
     name: string
     avatarUrl: string
