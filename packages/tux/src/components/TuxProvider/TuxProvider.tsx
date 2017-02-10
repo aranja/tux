@@ -1,10 +1,10 @@
-import * as React from 'react'
+import React = require('react')
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import ModalContainer, { openModal } from '../TuxModalContainer'
 import TuxBar from '../TuxBar'
 import TuxModal from '../TuxModal'
 
-interface Props {
+export interface Props {
   adapter: Object
 }
 

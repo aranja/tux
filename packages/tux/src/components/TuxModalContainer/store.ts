@@ -1,11 +1,13 @@
-interface Modal {
+export interface Modal {
   id : number
   element : any
   onClose : Function
 }
 
+export type State = Array<Modal>
+
 // State.
-let state : Array<Modal> = []
+let state : State = []
 let onChangeListener : Function | null = null
 let counter = 0
 

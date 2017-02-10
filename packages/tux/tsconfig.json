@@ -1,9 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../shared/tsconfig.base.json",
   "compilerOptions": {
+    "declaration": true,
     "lib": ["es2015", "dom"],
     "outDir": "./lib",
-    "jsx": "react"
+    "jsx": "preserve"
   },
   "include": [
     "./src"

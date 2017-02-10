@@ -4,9 +4,8 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "prepublish": "npm run typescript",
-    "watch": "npm run typescript -- --watch",
-    "typescript": "../../node_modules/.bin/tsc"
+    "prepublish": "../../tasks/build-package.js",
+    "watch": "../../tasks/build-package.js --watch"
   },
   "author": "",
   "license": "ISC",

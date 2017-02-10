@@ -1,13 +1,17 @@
-import * as React from 'react'
-import * as classNames from 'classnames'
-import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import React = require('react')
+import classNames = require('classnames')
+import ReactCSSTransitionGroup = require('react-addons-css-transition-group')
 import toggleScroll from './toggle-scroll'
-import { getState, setListener } from './store'
+import { getState, setListener, State as StoreState } from './store'
 
-class ModalContainer extends React.Component<any, any> {
+export interface State {
+  modals: StoreState,
+}
+
+class ModalContainer extends React.Component<any, State> {
   private listener : () => any
 
-  state = {
+  state : State = {
     modals: getState()
   }
 
@@ -65,6 +69,68 @@ class ModalContainer extends React.Component<any, any> {
             </div>
           )}
         </ReactCSSTransitionGroup>
+        <style jsx>{`
+          .ModalContainer {
+            position: relative;
+            z-index: 10;
+          }
+
+          .ModalContainer-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            height: 100%;
+            left: 0;
+            opacity: 0;
+            position: fixed;
+            top: 0;
+            transition: opacity 0.3s, visibility 0.3s 0.3s;
+            visibility: hidden;
+            width: 100%;
+          }
+
+          .ModalContainer-overlay.is-active {
+            opacity: 1;
+            transition-delay: 0s;
+            visibility: visible;
+          }
+
+          .ModalContainer-scroll {
+            height: 100%;
+            left: 0;
+            -webkit-overflow-scrolling: touch;
+            overflow-y: scroll;
+            position: fixed;
+            top: 0;
+            width: 100%;
+          }
+
+          .ModalContainer-modal {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+          }
+
+          .ModalTransition-enter {
+            opacity: 0;
+            transform: translateY(15%);
+            transition: opacity 0.3s, transform 0.3s;
+          }
+
+          .ModalTransition-enter-active {
+            opacity: 1;
+            transform: none;
+          }
+
+          .ModalTransition-leave {
+            overflow: hidden;
+          }
+
+          .ModalTransition-leave-active {
+            opacity: 0;
+            transform: translateY(15%);
+            transition: opacity 0.3s, transform 0.3s;
+          }
+        `}</style>
       </div>
     )
   }

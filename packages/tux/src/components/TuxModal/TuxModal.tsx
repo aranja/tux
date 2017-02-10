@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React = require('react')
 import MaterialTextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -19,7 +19,7 @@ interface FieldComponent {
   }
 }
 
-interface State {
+export interface State {
   fullModel : any | null
   typeMeta : any | null
 }
@@ -111,17 +111,41 @@ class TuxModal extends React.Component<any, State> {
     return (
       <div className="TuxModal">
         {fullModel ? (
-            <form onSubmit={this.onSubmit}>
-              <h1 className="TuxModal-title">{`Edit ${typeMeta.name.toLowerCase()}`}</h1>
-              {typeMeta.fields.map(this.renderField)}
-              <div className="TuxModal-buttons">
-                <FlatButton label="Cancel" onClick={this.onCancel}/>
-                <RaisedButton className="TuxModal-saveBtn" type="submit" primary={true} label="Save"/>
-              </div>
-            </form>
-          ) : (
-            'Loading'
-          )}
+          <form onSubmit={this.onSubmit}>
+            <h1 className="TuxModal-title">{`Edit ${typeMeta.name.toLowerCase()}`}</h1>
+            {typeMeta.fields.map(this.renderField)}
+            <div className="TuxModal-buttons">
+              <FlatButton label="Cancel" onClick={this.onCancel}/>
+              <RaisedButton className="TuxModal-saveBtn" type="submit" primary={true} label="Save" />
+            </div>
+          </form>
+        ) : (
+          'Loading'
+        )}
+        <style jsx>{`
+          .TuxModal {
+            background: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            padding: 30px;
+          }
+
+          .TuxModal-title {
+            color: rgba(0, 0, 0, 0.870588);
+            font-size: 1.6em;
+            font-weight: 400;
+            margin: 0;
+          }
+
+          .TuxModal-buttons {
+            display: flex;
+            justify-content: flex-end;
+          }
+
+          .TuxModal-saveBtn {
+            margin-left: 0.5em;
+          }
+        `}</style>
       </div>
     )
   }
