@@ -27,7 +27,8 @@
     "merge2": "^1.0.3",
     "styled-jsx": "^0.5.4",
     "tslint": "^4.4.2",
-    "typescript": "^2.1.5"
+    "typescript": "^2.1.5",
+    "yargs": "^6.6.0"
   },
   "babel": {
     "presets": [
