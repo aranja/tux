@@ -19,6 +19,15 @@ export function getState() {
 }
 
 /**
+ * Restore to initial
+ */
+export function resetState() {
+  state = []
+  onChangeListener = null
+  counter = 0
+}
+
+/**
  * Removes a modal from the state.
  */
 function removeModal(modalToRemove : Modal) {

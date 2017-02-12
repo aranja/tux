@@ -23,8 +23,8 @@
             "single"
         ],
         "semicolon": [
-            false,
-            "always"
+            true,
+            "never"
         ],
         "triple-equals": [
             true,

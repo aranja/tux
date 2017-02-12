@@ -12,6 +12,7 @@
   },
   "compileOnSave": true,
   "exclude": [
+    "**/*.spec.tsx",
     "**/*.spec.ts"
   ]
 }

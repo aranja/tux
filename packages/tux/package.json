@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "../../tasks/build-package.js",
-    "watch": "../../tasks/build-package.js --watch"
+    "watch": "../../tasks/build-package.js --watch",
+    "test": "../../node_modules/.bin/jest"
   },
   "peerDependencies": {
     "react": "^15.0.0"
@@ -18,5 +19,16 @@
     "material-ui": "^0.16.7",
     "react-addons-css-transition-group": "^15.4.2",
     "styled-jsx": "^0.5.4"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "\\.(test|spec)\\.(ts|tsx)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   }
 }

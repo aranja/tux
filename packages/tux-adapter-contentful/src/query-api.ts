@@ -2,10 +2,10 @@ import axios from 'axios'
 import { AxiosInstance } from 'axios';
 
 class QueryApi {
-  private overrides: {
-    [id: string]: any,
+  private overrides : {
+    [id : string] : any,
   }
-  private client: AxiosInstance
+  private client : AxiosInstance
 
   constructor(space : string, accessToken : string, subDomain : string) {
     this.overrides = {}
@@ -17,7 +17,7 @@ class QueryApi {
     })
   }
 
-  async getEntries(params ?: Object) {
+  async getEntries(params? : Object) {
     const result = await this.client.get('/entries', { params }).then(result => result.data)
     result.items = result.items.map(this.checkOverride)
     return result

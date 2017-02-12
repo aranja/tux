@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "../../tasks/build-package.js",
-    "watch": "../../tasks/build-package.js --watch"
+    "watch": "../../tasks/build-package.js --watch",
+    "test": "../../node_modules/.bin/jest"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +15,16 @@
   },
   "peerDependencies": {
     "react": "^15.0.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "\\.(test|spec)\\.(ts|tsx)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   }
 }

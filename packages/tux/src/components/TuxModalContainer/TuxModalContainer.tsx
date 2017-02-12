@@ -5,7 +5,7 @@ import toggleScroll from './toggle-scroll'
 import { getState, setListener, State as StoreState } from './store'
 
 export interface State {
-  modals: StoreState,
+  modals : StoreState,
 }
 
 class ModalContainer extends React.Component<any, State> {

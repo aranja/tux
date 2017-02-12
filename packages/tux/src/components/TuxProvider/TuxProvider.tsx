@@ -4,8 +4,8 @@ import ModalContainer, { openModal } from '../TuxModalContainer'
 import TuxBar from '../TuxBar'
 import TuxModal from '../TuxModal'
 
-export interface Props {
-  adapter: Object
+interface Props {
+  adapter : Object
 }
 
 class TuxProvider extends React.Component<Props, any> {

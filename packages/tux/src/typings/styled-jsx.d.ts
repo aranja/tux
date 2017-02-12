@@ -1,9 +1,9 @@
-import "react";
+import 'react'
 
 // Augmentation of React:
-declare module "react" {
+declare module 'react' {
     interface HTMLAttributes<T> extends DOMAttributes<T> {
-        jsx?: boolean;
-        global?: boolean;
+        jsx? : boolean
+        global? : boolean
     }
 }

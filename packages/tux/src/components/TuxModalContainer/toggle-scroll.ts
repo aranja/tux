@@ -48,8 +48,8 @@ export function calculateScrollbarWidth({ className = defaultClassName } = {}) {
  * @param className used to toggle scrolling. Defaults to .u-noScroll
  */
 export default function toggleScroll(
-  shouldScroll ?: boolean,
-  element ?: HTMLElement,
+  shouldScroll? : boolean,
+  element? : HTMLElement,
   className : string = defaultClassName
 ) {
   if (typeof document === 'undefined') {
@@ -69,5 +69,5 @@ export default function toggleScroll(
 }
 
 if (process.env.BROWSER !== false) {
-  //calculateScrollbarWidth()
+  // calculateScrollbarWidth()
 }

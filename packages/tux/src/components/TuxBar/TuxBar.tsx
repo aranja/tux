@@ -2,9 +2,9 @@ import React = require('react')
 
 export interface State {
   user : null | {
-    name: string
-    avatarUrl: string
-    spaceName: string
+    name : string
+    avatarUrl : string
+    spaceName : string
   }
 }
 
