@@ -1,0 +1,31 @@
+.Gallery {
+  display: flex;
+}
+
+.Gallery-item {
+  flex: 0 1 33.333%;
+  max-width: 33.333%;
+  margin-right: 2.5rem;
+}
+
+.Gallery-item:last-child {
+  margin-right: 0;
+}
+
+.Gallery-itemImage {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 5px;
+  padding-top: 70%;
+}
+
+.Gallery-itemTitle {
+  padding-bottom: 1rem;
+  padding-top: 3rem;
+  font-size: 1.5rem;
+}
+
+.Gallery-itemCopy {
+  line-height: 1.75;
+}

@@ -7,6 +7,7 @@ import Section from './components/Section'
 import SellPoints from './components/SellPoints'
 import Carousel from './components/Carousel'
 import Testimonial from './components/Testimonial'
+import Gallery from './components/Gallery'
 
 import './reset.css'
 import './App.css'
@@ -23,6 +24,10 @@ const App = ({ articles }) => (
     </Section>
     <Section>
       <Testimonial />
+    </Section>
+    <Section>
+      <H1>Who is using Tux</H1>
+      <Gallery />
     </Section>
     {articles && articles.items.map(article => (
       <Editable key={article.id} model={article}>
