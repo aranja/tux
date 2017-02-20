@@ -58,7 +58,7 @@ class QueryApi {
             }
           }
         } else if (field.sys && field.sys.type === 'Link') {
-          field.url = linkMap[field.sys.id].file.url
+          field.data = linkMap[field.sys.id]
         }
       }
     }

@@ -11,7 +11,10 @@ const App = ({ articles }) => (
             <h1>{article.fields.title}</h1>
             <p className="App-articleText">{article.fields.text}</p>
             {article.fields.image ? (
-              <img src={article.fields.image.url} />
+              <img
+                alt={article.fields.image.data.title}
+                src={article.fields.image.data.file.url}
+              />
             ) : null}
             <hr />
             <p>Comments:</p>
