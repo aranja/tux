@@ -1,4 +1,5 @@
 .Testimonial {
+  align-items: center;
   display: flex;
   justify-content: space-between;
 }
@@ -6,35 +7,34 @@
 .Testimonial-quote {
   color: #010101;
   font-size: 2.3rem;
-  font-weight: 200;
+  font-weight: 300;
   line-height: 1.4;
   max-width: 30rem;
   padding-right: 5rem;
-  padding-top: 7rem;
+  padding-top: 2rem;
   position: relative;
   width: 50%;
 }
 
 .Testimonial-quote::before {
+  color: #555;
   content: '“';
   font-family: 'serif';
-  font-size: 15rem;
-  font-weight: 200;
+  font-size: 10rem;
+  font-weight: 300;
   height: 1em;
   line-height: 0;
   position: absolute;
+  top: 0;
   width: 1em;
 }
 
-.Testimonial-quoteText {
-
-}
 
 .Testimonial-quoteAuthor {
   border-top: 1px solid currentColor;
-  color: #b2b2b2;
+  color: #c2c2c2;
   font-size: 1.5rem;
-  font-weight: 400;
+  font-weight: 300;
   margin-top: 1.5em;
   padding-top: 1.5em;
 }

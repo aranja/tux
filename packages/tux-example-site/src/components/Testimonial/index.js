@@ -9,7 +9,7 @@ const defaultData = [
 const Testimonial = ({ data = defaultData }) => (
   <div>
     {data.map((testimonial) => (
-      <div className="Testimonial">
+      <div key={testimonial.authorName} className="Testimonial">
         <div className="Testimonial-quote">
           <p className="Testimonial-quoteText">{testimonial.quote}</p>
           <p className="Testimonial-quoteAuthor">{`${testimonial.authorName}, ${testimonial.authorWorkplace}`}</p>
