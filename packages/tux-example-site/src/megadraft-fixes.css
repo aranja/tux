@@ -1,0 +1,10 @@
+.megadraft-editor .toolbar_list {
+  display: flex;
+}
+
+.megadraft-editor .DraftEditor-root {
+  color: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}

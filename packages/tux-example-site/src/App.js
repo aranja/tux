@@ -10,37 +10,42 @@ import Gallery from './components/Gallery'
 import SocialPlug from './components/SocialPlug'
 
 import './reset.css'
+import './megadraft.css'
+import './megadraft-fixes.css'
 import './App.css'
 
-const App = ({ articles }) => (
-  <div className="App">
-    <Banner color={"#473bb1"} />
-    <Section>
-      <H1>The Main Features</H1>
-      <SellPoints />
-    </Section>
-    <Section>
-      <Carousel />
-    </Section>
-    <Section>
-      <Testimonial />
-    </Section>
-    <Section>
-      <H1>Who is using Tux</H1>
-      <Gallery />
-      <SocialPlug>
-        Are you using Tux? <strong>Let us know on Twitter</strong>
-      </SocialPlug>
-    </Section>
-    {articles && articles.items.map(article => (
-      <Editable key={article.id} model={article}>
-        <h1>{article.fields.title}</h1>
-        <p className="App-articleText">{article.fields.text}</p>
-      </Editable>
-    ))}
-  </div>
-)
+const App = ({ pages, articles, sellPoints }) => {
+  if (!pages) return null
+
+  const page = pages.items[0]
+  return (
+    <div className="App">
+      <Banner color={"#473bb1"}>
+        <Editable model={page} field="fields.content.title" />
+      </Banner>
+      <Section>
+        <H1><Editable model={page} field="fields.content.tagline" /></H1>
+        <SellPoints sellPoints={sellPoints.items} />
+      </Section>
+      <Section>
+        <Carousel />
+      </Section>
+      <Section>
+        <Testimonial />
+      </Section>
+      <Section>
+        <H1>Who is using Tux</H1>
+        <Gallery />
+        <SocialPlug>
+          Are you using Tux? <strong>Let us know on Twitter</strong>
+        </SocialPlug>
+      </Section>
+    </div>
+  )
+}
 
 export default connect(async contentful => ({
+  pages: await contentful.getEntries({ content_type: 'page' }),
   articles: await contentful.getEntries({ content_type: 'article', order: '-sys.createdAt' }),
+  sellPoints: await contentful.getEntries({ content_type: 'sellPoint' }),
 }))(App)

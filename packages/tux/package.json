@@ -17,6 +17,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "material-ui": "^0.16.7",
+    "megadraft": "^0.4.15",
     "react-addons-css-transition-group": "^15.4.2",
     "styled-jsx": "^0.5.4"
   },
