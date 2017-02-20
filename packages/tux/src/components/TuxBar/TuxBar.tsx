@@ -58,9 +58,10 @@ class TuxBar extends React.Component<any, State> {
             background: #292c33;
             box-sizing: border-box;
             display: flex;
+            height: 55px;
             left: 0;
             justify-content: space-between;
-            padding: 0.46em 1em;
+            padding: 0 1em;
             position: fixed;
             top: 0;
             width: 100%;
