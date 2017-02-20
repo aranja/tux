@@ -1,0 +1,22 @@
+.FeaturedIn {
+  align-items: center;
+  background: #FFF;
+  display: flex;
+  justify-content: space-between;
+}
+
+.FeaturedIn-logo {
+  display: block;
+}
+
+.FeaturedIn-logo img {
+  display: block;
+  height: 100%;
+  max-width: 6rem;
+  opacity: 0.2;
+  transition: opacity 0.15s ease-out;
+}
+
+.FeaturedIn-logo img:hover {
+  opacity: 1;
+}

@@ -60,7 +60,7 @@ class TuxBar extends React.Component<any, State> {
             display: flex;
             left: 0;
             justify-content: space-between;
-            padding: 0 1em;
+            padding: 0.46em 1em;
             position: fixed;
             top: 0;
             width: 100%;

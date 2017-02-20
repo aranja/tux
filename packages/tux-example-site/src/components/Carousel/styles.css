@@ -1,0 +1,83 @@
+.Carousels {
+  position: relative;
+  height: 500px;
+  width: 100%;
+}
+
+.Carousel {
+  display: flex;
+  justify-content: space-between;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  will-change: opacity;
+}
+.Carousel.is-active {
+  opacity: 1;
+}
+
+.Carousel-image {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 40px;
+  max-width: 550px;
+  opacity: 0;
+  padding-bottom: 40%;
+  transform: translate(20px, 0);
+  transition: transform 0.25s cubic-bezier(0,1,1,1.1), opacity 0.25s;
+  width: 55%;
+  will-change: transform, opacity;
+}
+
+.Carousel.is-active .Carousel-image {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.Carousel-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 30rem;
+  opacity: 0;
+  transition: opacity 0.35s;
+  width: 45%;
+  will-change: opacity;
+}
+
+.Carousel.is-active .Carousel-body {
+  opacity: 1;
+}
+
+.Carousel-title {
+  color: #000;
+  font-size: 2.5rem;
+  font-weight: 200;
+  padding-bottom: 1em;
+}
+
+.Carousel-copy {
+  font-size: 1.375rem;
+  font-weight: 200;
+}
+
+.Carousel-indicators {
+  position: absolute;
+  bottom: -1rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.Carousel-indicator {
+  background: #e6e6e6;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 1rem;
+  transition: background 0.2s ease-out;
+  width: 1rem;
+}
+
+.Carousel-indicator.is-active {
+  background: #e8008a;
+}

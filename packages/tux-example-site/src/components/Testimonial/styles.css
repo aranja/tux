@@ -1,0 +1,48 @@
+.Testimonial {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Testimonial-quote {
+  color: #010101;
+  font-size: 2.3rem;
+  font-weight: 200;
+  line-height: 1.4;
+  max-width: 30rem;
+  padding-right: 5rem;
+  padding-top: 7rem;
+  position: relative;
+  width: 50%;
+}
+
+.Testimonial-quote::before {
+  content: '“';
+  font-family: 'serif';
+  font-size: 15rem;
+  font-weight: 200;
+  height: 1em;
+  line-height: 0;
+  position: absolute;
+  width: 1em;
+}
+
+.Testimonial-quoteText {
+
+}
+
+.Testimonial-quoteAuthor {
+  border-top: 1px solid currentColor;
+  color: #b2b2b2;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-top: 1.5em;
+  padding-top: 1.5em;
+}
+
+.Testimonial-image {
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 65%;
+  width: 50%;
+}

@@ -1,0 +1,28 @@
+.SellPoints {
+  display: flex;
+}
+
+.SellPoint {
+  flex: 0 1 33.333%;
+  text-align: center;
+}
+
+.SellPoint-icon {
+  display: block;
+  margin: auto;
+  max-height: 3.125rem;
+  max-width: 2.5rem;
+}
+
+.SellPoint-title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  padding: 1rem 0;
+}
+
+.SellPoint-copy {
+  font-size: 1rem;
+  margin: auto;
+  max-width: 18rem;
+  font-weight: 400;
+}
