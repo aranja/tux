@@ -29,4 +29,5 @@
 
 .Menu-item:last-child:hover {
   background: #f11b9e;
+  box-shadow: 0px 0px 6px 4px rgba(232, 0, 138, 0.36);
 }
