@@ -10,19 +10,6 @@ const App = ({ articles }) => (
           <div key={article.sys.id}>
             <h1>{article.fields.title}</h1>
             <p className="App-articleText">{article.fields.text}</p>
-            {article.fields.image ? (
-              <img
-                alt={article.fields.image.data.title}
-                src={article.fields.image.data.file.url}
-              />
-            ) : null}
-            <hr />
-            <p>Comments:</p>
-            <ul className="App-articleCommentSection">
-              {article.fields.comments && article.fields.comments.map((comment, index) => (
-                <li key={`${comment}-${index}`}>{comment.text}</li>
-              ))}
-            </ul>
           </div>
         )}
       </EditableList>
