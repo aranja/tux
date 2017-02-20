@@ -2,13 +2,14 @@
   color: #FFF;
   display: flex;
   flex-direction: column;
-  height: 60rem;
+  height: 40rem;
 }
+
 
 .Banner-heading {
   align-items: center;
   display: flex;
-  font-size: 4.5rem;
+  font-size: 3rem;
   font-weight: 300;
   line-height: 1.25;
   margin: auto;
@@ -16,4 +17,14 @@
   padding-bottom: 6.75rem;
   text-align: center;
   width: 100%;
+}
+
+@media (min-width: 1000px) {
+  .Banner {
+    height: 60rem;
+  }
+
+  .Banner-heading {
+    font-size: 4.5rem;
+  }
 }

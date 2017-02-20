@@ -11,13 +11,22 @@
   box-sizing: inherit;
 }
 
+html {
+  font-size: calc(15.29577px + .18779vw);
+}
+
+@media (min-width: 1440px) {
+  html {
+    font-size: 16px;
+  }
+}
+
 body {
   box-sizing: border-box;
   margin: 0 auto;
   margin-top: 55px; //Tux bar takes 55px right now. TODO.
   padding: 0;
   font-family: sans-serif;
-  font-size: 16px;
   line-height: 1.5;
   max-width: 1655px;
 }

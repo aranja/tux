@@ -1,4 +1,11 @@
 .Section {
   margin: auto;
-  padding: 6.5rem 12.25%;
+  padding: 4.5rem 5%;
+}
+
+
+@media (min-width: 1000px) {
+  .Section {
+    padding: 6.5rem 12.25%;
+  }
 }
