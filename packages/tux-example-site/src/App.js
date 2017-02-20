@@ -19,6 +19,9 @@ const App = ({ articles }) => (
     <Section>
       <Carousel />
     </Section>
+    <Section>
+      <FeaturedIn />
+    </Section>
     {/* <FeaturedIn /> */}
     {articles && articles.items.map(article => (
       <Editable key={article.id} model={article}>

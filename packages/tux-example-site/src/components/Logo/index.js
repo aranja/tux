@@ -2,7 +2,7 @@ import React from 'react'
 import './styles.css'
 
 const Logo = () => (
-  <div className="Logo">Flux Demo</div>
+  <div className="Logo">Tux Demo</div>
 )
 
 export default Logo

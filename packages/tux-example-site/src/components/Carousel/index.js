@@ -17,12 +17,6 @@ class Carousel extends React.Component {
     currentIndex: 0
   }
 
-  onNext = () => {
-    this.setState((state, props) => ({
-      currentIndex: (state.currentIndex + 1) % props.data.length,
-    }))
-  }
-
   onDotClick = currentIndex => () => {
     this.setState({ currentIndex })
   }
@@ -51,7 +45,7 @@ class Carousel extends React.Component {
             const isActive = index === this.state.currentIndex
 
             return (
-              <div className={classNames('Carousel-indicator', isActive && 'is-active')} onClick={this.onDotClick(index)}></div>
+              <div key={index} className={classNames('Carousel-indicator', isActive && 'is-active')} onClick={this.onDotClick(index)}></div>
             )
           }))}
         </div>
