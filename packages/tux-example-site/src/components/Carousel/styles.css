@@ -5,11 +5,11 @@
 }
 
 .Carousel {
+  display: flex;
+  justify-content: space-between;
+  opacity: 0;
   position: absolute;
   width: 100%;
-  display: flex;
-  opacity: 0;
-  justify-content: space-between;
   will-change: opacity;
 }
 .Carousel.is-active {
@@ -22,12 +22,11 @@
   background-size: cover;
   border-radius: 40px;
   max-width: 550px;
-  padding-bottom: 40%;
-  width: 55%;
   opacity: 0;
-
+  padding-bottom: 40%;
   transform: translate(20px, 0);
   transition: transform 0.25s cubic-bezier(0,1,1,1.1), opacity 0.25s;
+  width: 55%;
   will-change: transform, opacity;
 }
 
@@ -41,10 +40,10 @@
   flex-direction: column;
   justify-content: center;
   max-width: 30rem;
-  width: 45%;
   opacity: 0;
-  will-change: opacity;
   transition: opacity 0.35s;
+  width: 45%;
+  will-change: opacity;
 }
 
 .Carousel.is-active .Carousel-body {
@@ -73,6 +72,7 @@
 .Carousel-indicator {
   background: #e6e6e6;
   border-radius: 50%;
+  cursor: pointer;
   height: 1rem;
   transition: background 0.2s ease-out;
   width: 1rem;

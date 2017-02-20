@@ -6,6 +6,8 @@ import FeaturedIn from './components/FeaturedIn'
 import Section from './components/Section'
 import SellPoints from './components/SellPoints'
 import Carousel from './components/Carousel'
+import Testimonial from './components/Testimonial'
+
 import './reset.css'
 import './App.css'
 
@@ -20,7 +22,7 @@ const App = ({ articles }) => (
       <Carousel />
     </Section>
     <Section>
-      <FeaturedIn />
+      <Testimonial />
     </Section>
     {/* <FeaturedIn /> */}
     {articles && articles.items.map(article => (
