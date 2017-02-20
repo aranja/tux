@@ -18,7 +18,7 @@ class QueryApi {
   }
 
   async getEntries(params? : Object) {
-    const result = await this.client.get('/entries?include=1', { params }).then(result => result.data)
+    const result = await this.client.get('/entries', { params }).then(result => result.data)
     result.items = result.items.map(this.checkOverride)
     this.linkIncluded(result)
     return result
@@ -36,7 +36,7 @@ class QueryApi {
   populateLinks(links, linkMap) {
     for (const asset of links) {
       if (asset.sys) {
-        linkMap[asset.sys.id] = asset.fields
+        linkMap[asset.sys.id] = this.checkOverride(asset).fields
       }
     }
   }
@@ -44,9 +44,11 @@ class QueryApi {
   linkIncluded(result) {
     const linkMap = {}
 
+    // Find included models
     this.populateLinks(result.includes.Asset, linkMap)
     this.populateLinks(result.includes.Entry, linkMap)
 
+    // Add included models to items
     for (const item of result.items) {
       const fieldNames = Object.keys(item.fields)
       for (const fieldName of fieldNames) {
