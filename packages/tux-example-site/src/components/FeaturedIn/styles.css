@@ -1,0 +1,25 @@
+.FeaturedIn {
+  background: #FFF;
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  width: 100%;
+  padding: 3.75rem 12.5%;
+}
+
+.FeaturedIn-logo {
+  width: auto;
+  opacity: 0.2;
+  transition: opacity 0.15s ease-out;
+}
+
+.FeaturedIn-logo:hover {
+  opacity: 1;
+}
+
+.FeaturedIn-logo img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 6rem;
+}

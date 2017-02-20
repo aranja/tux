@@ -1,0 +1,32 @@
+.Menu {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.125rem;
+  padding: 1.875rem;
+}
+
+.Menu-list {
+  align-items: center;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.Menu-item {
+  cursor: pointer;
+  padding: 0 1.875rem;
+}
+
+.Menu-item:last-child {
+  background: #e8008a;
+  border-radius: 40px;
+  margin-left: 1rem;
+  padding: 0.625rem 1.25rem;
+  transition: background 0.25s ease-out;
+}
+
+.Menu-item:last-child:hover {
+  background: #f11b9e;
+}
