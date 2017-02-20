@@ -16,7 +16,11 @@ const defaultCompanies = [
 const FeaturedIn = ({ companies = defaultCompanies }) => (
   <div className="FeaturedIn">
     {companies.map((company) => (
-      <a key={company.name} className="FeaturedIn-logo" href={company.url}><img src={company.logo} alt={company.name}/></a>
+      <div key={company.name} className="FeaturedIn-logo">
+        <a href={company.url} rel="noopener" target="_blank">
+          <img src={company.logo} alt={company.name}/>
+        </a>
+      </div>
     ))}
   </div>
 )

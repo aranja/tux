@@ -2,12 +2,12 @@ import React from 'react'
 import { Editable, connect } from 'tux'
 import { H1 } from './components/typography'
 import Banner from './components/Banner'
-import FeaturedIn from './components/FeaturedIn'
 import Section from './components/Section'
 import SellPoints from './components/SellPoints'
 import Carousel from './components/Carousel'
 import Testimonial from './components/Testimonial'
 import Gallery from './components/Gallery'
+import SocialPlug from './components/SocialPlug'
 
 import './reset.css'
 import './App.css'
@@ -28,6 +28,9 @@ const App = ({ articles }) => (
     <Section>
       <H1>Who is using Tux</H1>
       <Gallery />
+      <SocialPlug>
+        Are you using Tux? <strong>Let us know on Twitter</strong>
+      </SocialPlug>
     </Section>
     {articles && articles.items.map(article => (
       <Editable key={article.id} model={article}>

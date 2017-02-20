@@ -1,0 +1,26 @@
+.SocialPlug {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 5rem;
+  padding-top: 2.5rem;
+  letter-spacing: 0.5px;
+  font-weight: 300;
+}
+
+.SocialPlug-link {
+  align-items: center;
+  display: flex;
+  color: inherit;
+  text-decoration: none;
+}
+
+.SocialPlug-logo {
+  display: block;
+  height: 1.5rem;
+  margin-right: 0.6rem;
+  opacity: 0.5;
+  transition: opacity 0.25s;
+}
+
+.SocialPlug:hover .SocialPlug-logo {
+  opacity: 1;
+}

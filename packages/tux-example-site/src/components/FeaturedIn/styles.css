@@ -2,15 +2,15 @@
   align-items: center;
   background: #FFF;
   display: flex;
+  min-height: 100px;
   justify-content: space-between;
 }
 
-.FeaturedIn-logo {
+.FeaturedIn-logo a {
   display: block;
 }
 
 .FeaturedIn-logo img {
-  display: block;
   height: 100%;
   opacity: 0.2;
   transition: opacity 0.15s ease-out;

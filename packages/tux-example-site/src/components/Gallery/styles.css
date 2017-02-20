@@ -5,7 +5,7 @@
 .Gallery-item {
   flex: 0 1 33.333%;
   max-width: 33.333%;
-  margin-right: 2.5rem;
+  margin-right: 3.5rem;
 }
 
 .Gallery-item:last-child {
@@ -27,5 +27,7 @@
 }
 
 .Gallery-itemCopy {
+  text-align: justify;
   line-height: 1.75;
+  padding-right: 25%;
 }
