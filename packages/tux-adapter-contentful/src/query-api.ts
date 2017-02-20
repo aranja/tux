@@ -20,6 +20,7 @@ class QueryApi {
   async getEntries(params? : Object) {
     const result = await this.client.get('/entries', { params }).then(result => result.data)
     result.items = result.items.map(this.checkOverride)
+    this.linkIncluded(result)
     return result
   }
 
@@ -30,6 +31,39 @@ class QueryApi {
 
   override(entry : any) {
     this.overrides[entry.sys.id] = entry
+  }
+
+  populateLinks(links, linkMap) {
+    for (const asset of links) {
+      if (asset.sys) {
+        linkMap[asset.sys.id] = this.checkOverride(asset).fields
+      }
+    }
+  }
+
+  linkIncluded(result) {
+    const linkMap = {}
+
+    // Find included models
+    this.populateLinks(result.includes.Asset, linkMap)
+    this.populateLinks(result.includes.Entry, linkMap)
+
+    // Add included models to items
+    for (const item of result.items) {
+      const fieldNames = Object.keys(item.fields)
+      for (const fieldName of fieldNames) {
+        const field = item.fields[fieldName]
+        if (field instanceof Array) {
+          for (const childField of field) {
+            if (childField.sys && childField.sys.type === 'Link') {
+              childField.text = linkMap[childField.sys.id].text
+            }
+          }
+        } else if (field.sys && field.sys.type === 'Link') {
+          field.data = linkMap[field.sys.id]
+        }
+      }
+    }
   }
 
   checkOverride = (entry : any) => {
