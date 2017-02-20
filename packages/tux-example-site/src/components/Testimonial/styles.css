@@ -17,16 +17,17 @@
 }
 
 .Testimonial-quote::before {
-  color: #555;
-  content: '“';
+  content: '';
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url('./quoteShape.svg');
   font-family: 'serif';
-  font-size: 10rem;
-  font-weight: 300;
-  height: 1em;
+  height: 1.5em;
   line-height: 0;
   position: absolute;
-  top: 0;
-  width: 1em;
+  top: -1.5em;
+  width: 1.5em;
 }
 
 
@@ -35,8 +36,8 @@
   color: #c2c2c2;
   font-size: 1.5rem;
   font-weight: 300;
-  margin-top: 1.5em;
-  padding-top: 1.5em;
+  margin-top: 3.4rem;
+  padding-top: 3.4rem;
 }
 
 .Testimonial-image {

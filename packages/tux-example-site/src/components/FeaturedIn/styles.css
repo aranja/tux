@@ -12,9 +12,9 @@
 .FeaturedIn-logo img {
   display: block;
   height: 100%;
-  max-width: 6rem;
   opacity: 0.2;
   transition: opacity 0.15s ease-out;
+  width: 6rem;
 }
 
 .FeaturedIn-logo img:hover {

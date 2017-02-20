@@ -31,11 +31,11 @@ class Carousel extends React.Component {
 
           return (
             <div key={data.title} className={classNames('Carousel', isActive && 'is-active')}>
+              <div className="Carousel-image" style={{backgroundImage: `url(${data.image})`}}></div>
               <div className="Carousel-body">
                 <h1 className="Carousel-title">{data.title}</h1>
                 <p className="Carousel-copy">{data.copy}</p>
               </div>
-              <div className="Carousel-image" style={{backgroundImage: `url(${data.image})`}}></div>
             </div>
           )
         })}

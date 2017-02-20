@@ -24,7 +24,6 @@ const App = ({ articles }) => (
     <Section>
       <Testimonial />
     </Section>
-    {/* <FeaturedIn /> */}
     {articles && articles.items.map(article => (
       <Editable key={article.id} model={article}>
         <h1>{article.fields.title}</h1>

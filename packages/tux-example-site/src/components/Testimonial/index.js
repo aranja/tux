@@ -1,9 +1,9 @@
 import React from 'react'
-import image1 from './Image1.jpg'
+import image1 from './Image01.jpg'
 import './styles.css'
 
 const defaultData = [
-  { authorName: 'Eirikur Nilsson', authorWorkplace: 'Aranja', authorImage: image1, quote: 'Et vivendo comprehensam eam, dicam impetus et pertinax et vel, fugit set  persius dissentiunt eum et. Sed summo' }
+  { authorName: 'Eirikur Nilsson', authorWorkplace: 'Aranja', authorImage: image1, quote: 'Et vivendo comprehensam eam, dicam impetus et pertinax et vel, fugit set  persius dissentiunt eum et.' }
 ]
 
 const Testimonial = ({ data = defaultData }) => (
