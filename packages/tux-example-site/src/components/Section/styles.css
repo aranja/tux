@@ -2,7 +2,3 @@
   margin: auto;
   padding: 6.5rem 12.25%;
 }
-
-.Section + .Section {
-  padding-top: 3.25rem;
-}
