@@ -14,7 +14,7 @@ const defaultData = [
 class Carousel extends React.Component {
 
   state = {
-    currentIndex: 0
+    currentIndex: 0,
   }
 
   onDotClick = currentIndex => () => {

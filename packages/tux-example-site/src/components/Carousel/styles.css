@@ -1,11 +1,19 @@
-.Carousels {}
+.Carousels {
+  position: relative;
+  height: 500px;
+  width: 100%;
+}
 
 .Carousel {
-  display: none;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  opacity: 0;
   justify-content: space-between;
+  will-change: opacity;
 }
 .Carousel.is-active {
-  display: flex;
+  opacity: 1;
 }
 
 .Carousel-image {
@@ -16,13 +24,16 @@
   max-width: 550px;
   padding-bottom: 40%;
   width: 55%;
+  opacity: 0;
 
-  transform: translateX(50px);
-  transition: transform 1s 0.35s ease-out;
+  transform: translate(20px, 0);
+  transition: transform 0.25s cubic-bezier(0,1,1,1.1), opacity 0.25s;
+  will-change: transform, opacity;
 }
 
 .Carousel.is-active .Carousel-image {
   transform: translateX(0);
+  opacity: 1;
 }
 
 .Carousel-body {
@@ -31,6 +42,13 @@
   justify-content: center;
   max-width: 30rem;
   width: 45%;
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity 0.35s;
+}
+
+.Carousel.is-active .Carousel-body {
+  opacity: 1;
 }
 
 .Carousel-title {
@@ -46,9 +64,10 @@
 }
 
 .Carousel-indicators {
+  position: absolute;
+  bottom: -1rem;
   display: flex;
   justify-content: space-around;
-  margin-top: -1rem;
 }
 
 .Carousel-indicator {
