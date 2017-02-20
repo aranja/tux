@@ -54,6 +54,7 @@ class TuxBar extends React.Component<any, State> {
         </div>
         <style jsx>{`
           .TuxBar {
+            align-items: center;
             background: linear-gradient(to bottom, #494a4d, #252626);
             background: #292c33;
             box-sizing: border-box;
@@ -65,6 +66,7 @@ class TuxBar extends React.Component<any, State> {
             position: fixed;
             top: 0;
             width: 100%;
+            z-index: 1;
           }
 
           .TuxBar-title {

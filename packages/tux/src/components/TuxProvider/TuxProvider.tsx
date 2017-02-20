@@ -4,11 +4,11 @@ import ModalContainer, { openModal } from '../TuxModalContainer'
 import TuxBar from '../TuxBar'
 import TuxModal from '../TuxModal'
 
-interface Props {
+export interface TuxProviderProps {
   adapter : Object
 }
 
-class TuxProvider extends React.Component<Props, any> {
+class TuxProvider extends React.Component<TuxProviderProps, any> {
   static childContextTypes = {
     tux: React.PropTypes.shape({
       isEditing: React.PropTypes.bool.isRequired,

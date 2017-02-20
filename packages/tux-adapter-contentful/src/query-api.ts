@@ -45,8 +45,9 @@ class QueryApi {
     const linkMap = {}
 
     // Find included models
-    this.populateLinks(result.includes.Asset, linkMap)
-    this.populateLinks(result.includes.Entry, linkMap)
+    for (const entryType in result.includes) {
+      this.populateLinks(result.includes[entryType], linkMap)
+    }
 
     // Add included models to items
     for (const item of result.items) {
@@ -60,7 +61,7 @@ class QueryApi {
             }
           }
         } else if (field.sys && field.sys.type === 'Link') {
-          field.data = linkMap[field.sys.id]
+          field.fields = linkMap[field.sys.id]
         }
       }
     }
