@@ -10,13 +10,14 @@
 .SellPoint-icon {
   display: block;
   margin: auto;
+  max-height: 3.125rem;
   max-width: 2.5rem;
-  padding-bottom: 0.25rem;
 }
 
 .SellPoint-title {
   font-size: 1.5rem;
   font-weight: 300;
+  padding: 1rem 0;
 }
 
 .SellPoint-copy {

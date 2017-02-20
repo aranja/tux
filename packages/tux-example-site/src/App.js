@@ -3,17 +3,22 @@ import { Editable, connect } from 'tux'
 import { H1 } from './components/typography'
 import Banner from './components/Banner'
 import FeaturedIn from './components/FeaturedIn'
+import Section from './components/Section'
 import SellPoints from './components/SellPoints'
-
+import Carousel from './components/Carousel'
+import './reset.css'
 import './App.css'
 
 const App = ({ articles }) => (
   <div className="App">
     <Banner color={"#473bb1"} />
-    <section>
+    <Section>
       <H1>The Main Features</H1>
       <SellPoints />
-    </section>
+    </Section>
+    <Section>
+      <Carousel />
+    </Section>
     {/* <FeaturedIn /> */}
     {articles && articles.items.map(article => (
       <Editable key={article.id} model={article}>

@@ -1,14 +1,4 @@
 .Section {
-  display: flex;
-}
-
-.Section--half {
-  flex: 0 1 50%;
-  max-width: 50%;
-}
-
-.Section-image {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
+  margin: auto;
+  padding: 6.5rem 12.25%;
 }

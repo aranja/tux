@@ -16,7 +16,7 @@ const SellPoints = ({ points = defaultSellPoints }) => (
   <div className="SellPoints">
     {points.length && points.length >= 3 && points.map((point) => (
         <div key={points.title} className="SellPoint">
-          <img className="SellPoint-icon" src={point.icon}/>
+          <img className="SellPoint-icon" src={point.icon} alt={point.title}/>
           <h1 className="SellPoint-title">{point.title}</h1>
           <p className="SellPoint-copy">{point.copy}</p>
         </div>
