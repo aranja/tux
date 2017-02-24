@@ -51,19 +51,29 @@ class QueryApi {
 
     // Add included models to items
     for (const item of result.items) {
-      const fieldNames = Object.keys(item.fields)
-      for (const fieldName of fieldNames) {
-        const field = item.fields[fieldName]
-        if (field instanceof Array) {
-          for (const childField of field) {
-            if (childField.sys && childField.sys.type === 'Link') {
-              childField.text = linkMap[childField.sys.id].text
-            }
-          }
-        } else if (field.sys && field.sys.type === 'Link') {
-          field.fields = linkMap[field.sys.id]
-        }
+      this.linkFields(item, linkMap)
+    }
+  }
+
+  linkFields(item, linkMap) {
+    if (!item) {
+      return
+    }
+
+    const isArray = item instanceof Array
+    const isLeaf = !isArray && !item.fields
+
+    if (isLeaf) {
+      if (item.sys && item.sys.type === 'Link') {
+        const linkType = item.sys.linkType.toLowerCase()
+        item[linkType] = linkMap[item.sys.id]
       }
+      return
+    } else if (isArray) {
+      item.forEach(subItem => this.linkFields(subItem, linkMap))
+    } else {
+      const fieldNames = Object.keys(item.fields)
+      fieldNames.forEach(fieldName => this.linkFields(item.fields[fieldName], linkMap))
     }
   }
 
