@@ -1,5 +1,6 @@
 .SellPoints {
   display: flex;
+  justify-content: center;
 }
 
 .SellPoint {

@@ -5,3 +5,16 @@
   padding-bottom: 1.75em;
   text-align: center;
 }
+
+.t-h1 + .t-h2 {
+  margin-top: -3em;
+  padding-bottom: 5rem;
+}
+
+.t-h2 {
+  font-size: 1.375rem;
+  font-weight: 300;
+  margin: 0;
+  padding-bottom: 1.75em;
+  text-align: center;
+}

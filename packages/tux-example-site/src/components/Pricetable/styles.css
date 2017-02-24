@@ -1,0 +1,60 @@
+.Pricetable {
+  display: flex;
+  border: 1px solid #dedede;
+  border-radius: 20px;
+  color: #8e8e8e;
+}
+
+.Pricetable-plan {
+  border-right: 1px solid #dedede;
+  text-align: center;
+  display: flex;
+  padding: 40px;
+  flex-direction: column;
+  width: 33.333%;
+  justify-content: center;
+  align-items: center;
+}
+
+.Pricetable-plan:last-child {
+  border-right: 0;
+}
+
+.Pricetable-planHeading {
+  font-size: 1.125rem;
+  padding-bottom: 2.75rem;
+  letter-spacing: 1px;
+}
+
+.Pricetable-planPrice {
+  color: #111;
+  line-height: 1;
+  font-size: 3.375rem;
+  font-weight: 300;
+  padding-bottom: 2.75rem;
+}
+
+.Pricetable-planList {
+  line-height: 2;
+  padding-bottom: 3.125rem;
+}
+
+.Pricetable-button {
+  background: none;
+  border-radius: 10px;
+  border: 1px solid #dedede;
+  color: #8e8e8e;
+  cursor: pointer;
+  display: block;
+  font-size: 1rem;
+  margin: auto;
+  margin-bottom: 0;
+  text-decoration: none;
+  padding: 1rem;
+  width: 100%;
+}
+
+.Pricetable-button:hover {
+  background: #473bb1;
+  color: #F2F2F2;
+}
