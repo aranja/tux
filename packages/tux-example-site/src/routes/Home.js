@@ -1,27 +1,23 @@
 import React from 'react'
 import { Editable, connect } from 'tux'
-import { H1, H2 } from './components/typography'
-import Banner from './components/Banner'
-import Section from './components/Section'
-import SellPoints from './components/SellPoints'
-import Carousel from './components/Carousel'
-import Testimonial from './components/Testimonial'
-import Gallery from './components/Gallery'
-import SocialPlug from './components/SocialPlug'
-import Pricetable from './components/Pricetable'
-
-import './reset.css'
-import './megadraft.css'
-import './megadraft-fixes.css'
-import './App.css'
+import { H1, H2 } from '../components/typography'
+import Banner from '../components/Banner'
+import Section from '../components/Section'
+import SellPoints from '../components/SellPoints'
+import Carousel from '../components/Carousel'
+import Testimonial from '../components/Testimonial'
+import Gallery from '../components/Gallery'
+import SocialPlug from '../components/SocialPlug'
+import Pricetable from '../components/Pricetable'
 
 const Home = ({ pages, articles, sellPoints }) => {
-  //if (!pages) return null
 
-  //const page = pages.items[0]
+  if (!pages) return null
+  const page = pages.items[0]
+
   return (
     <div className="Home">
-      <Banner color={"#473bb1"}>
+      <Banner color="#473bb1">
         <Editable model={page} field="fields.content.title" />
       </Banner>
       <Section>

@@ -26,7 +26,7 @@ body {
   margin: 0 auto;
   margin-top: 55px; //Tux bar takes 55px right now. TODO.
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   line-height: 1.5;
   max-width: 1655px;
 }

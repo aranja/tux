@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react'
 
+import './reset.css'
+import './index.css'
+import './megadraft.css'
+import './megadraft-fixes.css'
+
 // These are the variables that will be accessible from the React context.
 const ContextType = {
-  data: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  userAgent: PropTypes.string.isRequired,
 }
 
 /**
