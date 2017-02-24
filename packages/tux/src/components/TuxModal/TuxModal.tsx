@@ -3,6 +3,8 @@ import MaterialTextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 
+import ImageField from './fieldComponents/ImageField'
+
 interface Field {
   id : string
   value : string
@@ -33,11 +35,16 @@ const TextField = ({ id, value, label, helpText, onChange } : Field) => (
   <MaterialTextField hintText={helpText} floatingLabelText={label} id={id} value={value} onChange={onChange}/>
 )
 
+// className="TuxModal-saveBtn" type="submit" primary={true} label="Save"
+
 function componentForField({ id, type, control: { widgetId } } : FieldComponent) {
+  console.log(`componentForField: ${id} | ${type} | ${widgetId}`)
   if (type === 'Array')
     return null
   if (widgetId === 'markdown') {
     return MarkdownField
+  } else if (id === 'image' || id === 'icon') {
+    return ImageField
   } else {
     return TextField
   }
@@ -100,8 +107,14 @@ class TuxModal extends React.Component<any, State> {
     }
     return (
       <div key={type.id}>
-        <InputComponent id={type.id} value={value} label={type.name} helpText={helpText}
-                        onChange={event => this.onChange(event, type)}/>
+        <InputComponent
+          helpText={helpText}
+          id={type.id}
+          label={type.name}
+          model={this.props.model}
+          onChange={event => this.onChange(event, type)}
+          value={value}
+        />
       </div>
     )
   }
@@ -144,6 +157,17 @@ class TuxModal extends React.Component<any, State> {
 
           .TuxModal-saveBtn {
             margin-left: 0.5em;
+          }
+
+          .TuxModal-fileInput {
+            bottom: 0,
+            cursor: 'pointer',
+            left: 0,
+            opacity: 0,
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            width: '100%',
           }
         `}</style>
       </div>

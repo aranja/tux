@@ -17,6 +17,8 @@ import './App.css'
 const App = ({ pages, articles, sellPoints }) => {
   if (!pages) return null
 
+  console.log(articles)
+
   const page = pages.items[0]
   return (
     <div className="App">
