@@ -19,8 +19,8 @@ export default {
     const route = await next()
 
     // Provide default values for title, description etc.
-    route.title = route.title ? route.title : 'Title'
-    route.description = route.description || 'Desc'
+    route.title = route.title ? route.title : 'Tux'
+    route.description = route.description || ''
     route.element = (
       <TuxProvider adapter={adapter}>
         {route.element}
@@ -35,13 +35,21 @@ export default {
     {
       path: '/',
       action() {
-        return { element: <Home /> }
+        return {
+          element: <Home />,
+          title: 'Tux',
+          description: 'Description',
+        }
       }
     },
     {
       path: '/about',
       action() {
-        return { element: <About /> }
+        return {
+          element: <About />,
+          title: 'About Tux',
+          description: 'Description',
+        }
       }
     },
   ],

@@ -1,6 +1,4 @@
 import React, { PropTypes } from 'react'
-import ProductBannerImage from './ProductBannerImage.png'
-
 import './reset.css'
 import './index.css'
 import './megadraft.css'
