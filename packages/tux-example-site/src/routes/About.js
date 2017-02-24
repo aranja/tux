@@ -10,13 +10,13 @@ import Gallery from '../components/Gallery'
 import SocialPlug from '../components/SocialPlug'
 import Pricetable from '../components/Pricetable'
 
-const Home = ({ pages, articles, sellPoints }) => {
+const About = ({ pages, articles, sellPoints }) => {
 
   if (!pages) return null
   const page = pages.items[0]
 
   return (
-    <div className="p-Home">
+    <div className="p-About">
       <Banner color="#473bb1">
         <Editable model={page} field="fields.content.title" />
       </Banner>
@@ -50,4 +50,4 @@ export default connect(async contentful => ({
   pages: await contentful.getEntries({ content_type: 'page' }),
   articles: await contentful.getEntries({ content_type: 'article', order: '-sys.createdAt' }),
   sellPoints: await contentful.getEntries({ content_type: 'sellPoint' }),
-}))(Home)
+}))(About)
