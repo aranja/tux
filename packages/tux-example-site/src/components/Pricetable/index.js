@@ -1,12 +1,6 @@
 import React from 'react'
 import './styles.css'
 
-const defaultData = [
-  { planName: 'Free plan', planCost: 'free', planPerks: ['Self-hosted', 'Server-side Rendering', 'Contenful Adapter'], buttonText: 'Get started'  },
-  { planName: 'Individual plan', planCost: '$9', planPerks: ['Self-hosted', 'Server-side Rendering', 'All available CMS adapters', 'Middleman caching'] },
-  { planName: 'Professional plan', planCost: '$99', planPerks: ['Self-hosted', 'Server-side Rendering', 'Contenful Adapter', 'All Available CMS adapters', 'Middleman caching', 'Support'] }
-]
-
 const Pricetable = ({ pricetableItems }) => (
   <div className="Pricetable">
     {pricetableItems && pricetableItems.map((item) => {
