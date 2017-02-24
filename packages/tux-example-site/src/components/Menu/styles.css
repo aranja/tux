@@ -1,5 +1,7 @@
 .Menu {
   align-items: center;
+  background: #473bb1;
+  color: #FFF;
   display: flex;
   justify-content: space-between;
   font-size: 1.125rem;

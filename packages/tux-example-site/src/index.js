@@ -1,21 +1,113 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import UniversalRouter from 'universal-router'
+import queryString from 'query-string'
+import createBrowserHistory from 'history/createBrowserHistory'
 import App from './App'
-import createContentfulAdapter from 'tux-adapter-contentful'
-import { TuxProvider } from 'tux'
+import routes from './routes'
 
-import './index.css'
+const history = createBrowserHistory()
+const container = document.getElementById('root')
+let currentLocation = null
+let initialRender = true
 
-const adapter = createContentfulAdapter({
-  space: 'n2difvpz16fj',
-  deliveryToken: 'cb34b8fc758364cdbe2b9f73f640ac6ce55311176f9699cf06a0c44325a27208',
-  clientId: '7074da10fd8b52237feeccead1462c5c898eaf58a69dc2df08c65b1b306553b6',
-  redirectUri: process.env.PUBLIC_URL || `${location.protocol}//${location.host}/`
-})
 
-ReactDOM.render(
-  <TuxProvider adapter={adapter}>
-    <App />
-  </TuxProvider>,
-  document.getElementById('root')
-)
+// Global (context) variables that can be easily accessed from any React component
+// https://facebook.github.io/react/docs/context.html
+const context = {
+  history
+}
+
+// Switch off the native scroll restoration behavior and handle it manually
+// https://developers.google.com/web/updates/2015/09/history-api-scroll-restoration
+const scrollPositionsHistory = {}
+if (window.history && 'scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual'
+}
+
+function onRenderComplete(route, location) {
+  document.title = route.title
+
+  if (initialRender) {
+    initialRender = false
+    return
+  }
+
+  // Google Analytics tracking. Don't send 'pageview' event after
+  // the initial rendering, as it was already sent
+  if (window.ga) {
+    window.ga('send', 'pageview', location.pathname)
+  }
+}
+
+async function onLocationChange(location) {
+  const previousLocation = currentLocation
+  currentLocation = location
+
+  // Remember the latest scroll position for the previous location
+  if (previousLocation) {
+    scrollPositionsHistory[previousLocation.key] = {
+      scrollX: window.pageXOffset,
+      scrollY: window.pageYOffset,
+    }
+  }
+  // Delete stored scroll position for next page if any
+  if (history.action === 'PUSH') {
+    delete scrollPositionsHistory[location.key]
+  }
+
+  try {
+    // Traverses the list of routes in the order they are defined until
+    // it finds the first route that matches provided URL path string
+    // and whose action method returns anything other than `undefined`.
+    const route = await UniversalRouter.resolve(routes, {
+      path: location.pathname,
+      query: queryString.parse(location.search),
+      previousLocation,
+    })
+
+    // Prevent multiple page renders during the routing process
+    if (currentLocation.key !== location.key) {
+      return
+    }
+
+    if (route.redirect) {
+      history.replace(route.redirect)
+      return
+    }
+
+    ReactDOM.render(
+      <App context={context}>
+        {route.element}
+      </App>,
+      container,
+      () => onRenderComplete(route, location),
+    )
+  } catch (error) {
+    console.error(error) // eslint-disable-line no-console
+
+    // Current url has been changed during navigation process, do nothing
+    if (currentLocation.key !== location.key) {
+      return
+    }
+
+    // Display the error in full-screen for development mode
+    if (process.env.NODE_ENV !== 'production') {
+      const ErrorReporter = require('redbox-react').default
+      document.title = `Error: ${error.message}`
+
+      ReactDOM.render(<ErrorReporter error={error} />, container)
+      return
+    }
+
+    // Avoid broken navigation in production mode by a full page reload on error
+    if (!initialRender) {
+      window.location.reload()
+    }
+  }
+}
+
+// Handle client-side navigation by using HTML5 History API
+// For more information visit https://github.com/mjackson/history#readme
+history.listen(onLocationChange)
+onLocationChange(history.location)

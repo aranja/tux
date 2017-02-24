@@ -1,0 +1,39 @@
+.ProductBanner {
+  align-items: center;
+  background: #473bb1;
+  color: #FFF;
+  display: flex;
+  height: 40rem;
+  padding: 0 5rem;
+  overflow: hidden;
+}
+
+.ProductBanner-image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex: 0 1 40%;
+  height: 100%;
+  margin-right: 5rem;
+  max-height: 35rem;
+  width: 100%;
+}
+
+.ProductBanner-content {
+  flex: 0 1 60%;
+  max-width: 35rem;
+  padding-left: 1rem;
+  transform: translate(0, -25%);
+}
+
+.ProductBanner-heading {
+  line-height: 1.2;
+  font-size: 3.375rem;
+  font-weight: 300;
+  padding-bottom: 2rem;
+}
+
+.ProductBanner-text {
+  font-size: 1.375rem;
+  font-weight: 300;
+}
