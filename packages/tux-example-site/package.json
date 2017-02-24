@@ -7,8 +7,12 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "history": "^4.5.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
     "tux": "^0.1.0",
-    "tux-adapter-contentful": "^0.1.0"
+    "tux-adapter-contentful": "^0.1.0",
+    "universal-router": "^2.0.0"
   },
   "scripts": {
     "start": "HTTPS=true react-scripts start",
