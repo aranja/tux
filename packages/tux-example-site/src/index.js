@@ -25,40 +25,12 @@ if (window.history && 'scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual'
 }
 
-function scrollToLocation(location, behavior) {
-  let left = 0
-  let top = 0
-  const pos = scrollPositionsHistory[location.key]
-  if (pos) {
-    left = pos.scrollX
-    top = pos.scrollY
-  } else {
-    const targetHash = location.hash.substr(1)
-    if (targetHash) {
-      const target = document.getElementById(targetHash)
-      if (target) {
-        top = window.pageYOffset + target.getBoundingClientRect().top
-      }
-    }
-  }
-
-  window.scrollTo({ left, top, behavior })
-}
-
 function onRenderComplete(route, location) {
   document.title = route.title
 
   if (initialRender) {
     initialRender = false
     return
-  }
-
-  // Restore the scroll position if it was saved into the state
-  // or scroll to the given #hash anchor
-  // or scroll to top of the page
-  // unless manually cancelled
-  if (route.scroll !== false) {
-    scrollToLocation(location)
   }
 
   // Google Analytics tracking. Don't send 'pageview' event after
@@ -82,16 +54,6 @@ async function onLocationChange(location) {
   // Delete stored scroll position for next page if any
   if (history.action === 'PUSH') {
     delete scrollPositionsHistory[location.key]
-  }
-
-  // If only the hash changed, skip to scrolling.
-  if (previousLocation &&
-    location.pathname === previousLocation.pathname &&
-    location.search === previousLocation.search &&
-    location.hash !== previousLocation.hash
-  ) {
-    scrollToLocation(location, 'smooth')
-    return
   }
 
   try {

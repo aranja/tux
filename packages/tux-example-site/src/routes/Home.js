@@ -2,6 +2,7 @@ import React from 'react'
 import { Editable, connect } from 'tux'
 import { H1, H2 } from '../components/typography'
 import Banner from '../components/Banner'
+import Menu from '../components/Menu'
 import Section from '../components/Section'
 import SellPoints from '../components/SellPoints'
 import Carousel from '../components/Carousel'
@@ -17,6 +18,7 @@ const Home = ({ pages, articles, sellPoints }) => {
 
   return (
     <div className="p-Home">
+      <Menu />
       <Banner color="#473bb1">
         <Editable model={page} field="fields.content.title" />
       </Banner>

@@ -2,6 +2,7 @@ import React from 'react'
 import createContentfulAdapter from 'tux-adapter-contentful'
 import { TuxProvider } from 'tux'
 import Home from './Home'
+import About from './About'
 
 const adapter = createContentfulAdapter({
   space: 'n2difvpz16fj',
@@ -14,20 +15,35 @@ const adapter = createContentfulAdapter({
 export default {
   path: '/',
 
-  // Keep in mind, routes are evaluated in order
-  children: [],
+  async action({ next }) {
+    const route = await next()
 
-  action({ next }) {
-    const route = {}
     // Provide default values for title, description etc.
     route.title = route.title ? route.title : 'Title'
     route.description = route.description || 'Desc'
     route.element = (
       <TuxProvider adapter={adapter}>
-        <Home />
+        {route.element}
       </TuxProvider>
     )
 
     return route
   },
+
+  // Keep in mind, routes are evaluated in order
+  children: [
+    {
+      path: '/',
+      action() {
+        return { element: <Home /> }
+      }
+    },
+    {
+      path: '/about',
+      action() {
+        return { element: <About /> }
+      }
+    },
+  ],
+
 }

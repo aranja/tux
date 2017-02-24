@@ -1,14 +1,18 @@
 import React from 'react'
 import { Editable, connect } from 'tux'
 import { H1, H2 } from '../components/typography'
-import Banner from '../components/Banner'
-import Section from '../components/Section'
-import SellPoints from '../components/SellPoints'
 import Carousel from '../components/Carousel'
-import Testimonial from '../components/Testimonial'
-import Gallery from '../components/Gallery'
-import SocialPlug from '../components/SocialPlug'
 import Pricetable from '../components/Pricetable'
+import Menu from '../components/Menu'
+import SellPoints from '../components/SellPoints'
+import Gallery from '../components/Gallery'
+import ProductBanner from '../components/ProductBanner'
+import Section from '../components/Section'
+import SocialPlug from '../components/SocialPlug'
+import Testimonial from '../components/Testimonial'
+
+import ProductBannerImage from '../ProductBannerImage.png'
+
 
 const About = ({ pages, articles, sellPoints }) => {
 
@@ -17,9 +21,8 @@ const About = ({ pages, articles, sellPoints }) => {
 
   return (
     <div className="p-About">
-      <Banner color="#473bb1">
-        <Editable model={page} field="fields.content.title" />
-      </Banner>
+      <Menu />
+      <ProductBanner image={ProductBannerImage} heading="You make the website, we'll handle the content" text="Hand-crafted with so much love that you have no idea. In recusandae cum vero at commodi, ad tempore molestiae. Autem repellat adipisci aperiam atque tenetur accusamus, ipsa sit amet, consectetur adipisicing elit." />
       <Section>
         <H1><Editable model={page} field="fields.content.tagline" /></H1>
         <SellPoints sellPoints={sellPoints.items} />
@@ -31,7 +34,6 @@ const About = ({ pages, articles, sellPoints }) => {
         <Testimonial />
       </Section>
       <Section>
-        <H1>Who is using Tux</H1>
         <Gallery />
         <SocialPlug>
           Are you using Tux? <strong>Let us know on Twitter</strong>
