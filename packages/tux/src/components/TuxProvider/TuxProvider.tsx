@@ -1,7 +1,6 @@
 import React = require('react')
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import ModalContainer, { openModal } from '../TuxModalContainer'
-import TuxBar from '../TuxBar'
+import TuxSidebar from '../TuxSidebar'
 import TuxModal from '../TuxModal'
 
 export interface TuxProviderProps {
@@ -17,10 +16,14 @@ class TuxProvider extends React.Component<TuxProviderProps, any> {
     }),
   }
 
+  state = {
+    isEditing: false,
+  }
+
   getChildContext() {
     return {
       tux: {
-        isEditing: true,
+        isEditing: this.state.isEditing,
         editModel: this.editModel,
         adapter: this.props.adapter,
       },
@@ -33,16 +36,22 @@ class TuxProvider extends React.Component<TuxProviderProps, any> {
     )
   }
 
+  onClickEdit = () => {
+    const { isEditing } = this.state
+
+    this.setState({
+      isEditing: !isEditing
+    })
+  }
+
   render() {
+    const { isEditing } = this.state
+
     return (
-      <div>
+      <div className="TuxProvider" style={{display: 'flex'}}>
+        <TuxSidebar isEditing={isEditing} onClickEdit={this.onClickEdit} />
         {this.props.children}
-        <MuiThemeProvider>
-          <div>
-            <ModalContainer />
-            <TuxBar />
-          </div>
-        </MuiThemeProvider>
+        <ModalContainer />
       </div>
     )
   }

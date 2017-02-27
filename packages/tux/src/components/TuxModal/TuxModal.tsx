@@ -1,7 +1,4 @@
 import React = require('react')
-import MaterialTextField from 'material-ui/TextField'
-import FlatButton from 'material-ui/FlatButton'
-import RaisedButton from 'material-ui/RaisedButton'
 
 interface Field {
   id : string
@@ -25,12 +22,12 @@ export interface State {
 }
 
 const MarkdownField = ({ id, value, label, helpText, onChange } : Field) => (
-  <MaterialTextField multiLine={true} rows={3} hintText={helpText} floatingLabelText={label} id={id} value={value}
+  <input label={label} id={id} value={value}
                      onChange={onChange}/>
 )
 
 const TextField = ({ id, value, label, helpText, onChange } : Field) => (
-  <MaterialTextField hintText={helpText} floatingLabelText={label} id={id} value={value} onChange={onChange}/>
+  <input label={label} id={id} value={value} onChange={onChange}/>
 )
 
 function componentForField({ id, type, control: { widgetId } } : FieldComponent) {
@@ -115,8 +112,8 @@ class TuxModal extends React.Component<any, State> {
             <h1 className="TuxModal-title">{`Edit ${typeMeta.name.toLowerCase()}`}</h1>
             {typeMeta.fields.map(this.renderField)}
             <div className="TuxModal-buttons">
-              <FlatButton label="Cancel" onClick={this.onCancel}/>
-              <RaisedButton className="TuxModal-saveBtn" type="submit" primary={true} label="Save" />
+              <button label="Cancel" onClick={this.onCancel}/>
+              <button className="TuxModal-saveBtn" type="submit" label="Save" />
             </div>
           </form>
         ) : (
