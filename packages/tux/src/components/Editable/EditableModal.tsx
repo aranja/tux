@@ -2,9 +2,9 @@ import React from 'react'
 import classNames from 'classnames'
 
 export interface EditableModalProps {
-  model : any,
-  children ?: any,
-  onChange : Function,
+  model: any,
+  children?: any,
+  onChange: Function,
 }
 
 class EditableModal extends React.Component<EditableModalProps, any> {

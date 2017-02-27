@@ -26,12 +26,12 @@ type LinkMap = {
 }
 
 class QueryApi {
-  private overrides : {
-    [id : string] : any,
+  private overrides: {
+    [id: string]: any,
   }
-  private client : AxiosInstance
+  private client: AxiosInstance
 
-  constructor(space : string, accessToken : string, subDomain : string) {
+  constructor(space: string, accessToken: string, subDomain: string) {
     this.overrides = {}
     this.client = axios.create({
       baseURL: `https://${subDomain}.contentful.com/spaces/${space}`,
@@ -41,19 +41,19 @@ class QueryApi {
     })
   }
 
-  async getEntries(params? : Object) {
+  async getEntries(params?: Object) {
     const result: ContentfulQueryResponse = await this.client.get('/entries', { params }).then(result => result.data)
     result.items = result.items.map(this.checkOverride)
     this.linkIncluded(result)
     return result
   }
 
-  async getEntry(id : string) {
+  async getEntry(id: string) {
     const entry = await this.client.get(`/entries/${id}`).then(result => result.data)
     return this.checkOverride(entry)
   }
 
-  override(entry : any) {
+  override(entry: any) {
     this.overrides[entry.sys.id] = entry
   }
 

@@ -5,13 +5,13 @@ import toggleScroll from './toggle-scroll'
 import { getState, setListener, State as StoreState } from './store'
 
 export interface State {
-  modals : StoreState,
+  modals: StoreState,
 }
 
 class ModalContainer extends React.Component<any, State> {
-  private listener : () => any
+  private listener: () => any
 
-  state : State = {
+  state: State = {
     modals: getState()
   }
 
@@ -38,7 +38,7 @@ class ModalContainer extends React.Component<any, State> {
     this.setState({ modals: getState() })
   }
 
-  onClickBackdrop = (event : React.MouseEvent<any>) => {
+  onClickBackdrop = (event: React.MouseEvent<any>) => {
     if (event.target !== event.currentTarget) {
       return
     }

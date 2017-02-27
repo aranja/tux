@@ -1,10 +1,10 @@
 import * as React from 'react'
 
 export interface State {
-  user : null | {
-    name : string
-    avatarUrl : string
-    spaceName : string
+  user: null | {
+    name: string
+    avatarUrl: string
+    spaceName: string
   }
 }
 
@@ -13,7 +13,7 @@ class TuxBar extends React.Component<any, State> {
     tux: React.PropTypes.object,
   }
 
-  state : State = {
+  state: State = {
     user: null,
   }
 

@@ -2,22 +2,22 @@ import QueryApi from './query-api'
 import ManagementApi from './management-api'
 
 export interface Config {
-  space : string
-  deliveryToken : string
-  clientId : string
-  redirectUri : string
+  space: string
+  deliveryToken: string
+  clientId: string
+  redirectUri: string
 }
 
 export class ContentfulAdapter {
-  private space : string
-  private clientId : string
-  private redirectUri : string
-  private deliveryApi : QueryApi
-  private previewApi : any
-  private managementApi : ManagementApi | null
-  private listeners : Array<Function>
+  private space: string
+  private clientId: string
+  private redirectUri: string
+  private deliveryApi: QueryApi
+  private previewApi: any
+  private managementApi: ManagementApi | null
+  private listeners: Array<Function>
 
-  constructor({space, deliveryToken, clientId, redirectUri} : Config) {
+  constructor({space, deliveryToken, clientId, redirectUri}: Config) {
     this.space = space
     this.clientId = clientId
     this.redirectUri = redirectUri
@@ -32,7 +32,7 @@ export class ContentfulAdapter {
     this.listeners.forEach(fn => fn())
   }
 
-  addChangeListener(fn : Function) {
+  addChangeListener(fn: Function) {
     this.listeners.push(fn)
     return () => {
       this.listeners = this.listeners.filter(listener => listener !== fn)
@@ -85,14 +85,14 @@ export class ContentfulAdapter {
     return this.previewApi || this.deliveryApi
   }
 
-  getSchema(model : any) {
+  getSchema(model: any) {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }
     return this.managementApi.getTypeMeta(model.sys.contentType.sys.id)
   }
 
-  async save(model : any) {
+  async save(model: any) {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in to save.')
     }
@@ -101,7 +101,7 @@ export class ContentfulAdapter {
     return newModel
   }
 
-  load(model : any) {
+  load(model: any) {
     return this.managementApi && this.managementApi.getEntry(model.sys.id)
   }
 
@@ -139,6 +139,6 @@ export class ContentfulAdapter {
   }
 }
 
-export default function createContentfulAdapter(config : Config) {
+export default function createContentfulAdapter(config: Config) {
   return new ContentfulAdapter(config)
 }

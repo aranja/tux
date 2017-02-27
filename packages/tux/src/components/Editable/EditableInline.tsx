@@ -27,13 +27,13 @@ function setField<T>(model: any, field: FieldRef, editorState: T) {
 }
 
 export interface EditableInlineProps {
-  model : any,
-  field : string | Array<string>,
-  onChange ?: () => void,
+  model: any,
+  field: string | Array<string>,
+  onChange?: () => void,
 }
 
 export interface EditableInlineState {
-  editorState : any,
+  editorState: any,
 }
 
 class EditableInline extends React.Component<EditableInlineProps, EditableInlineState> {
@@ -41,11 +41,11 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
     tux: React.PropTypes.object,
   }
 
-  state : EditableInlineState = {
+  state: EditableInlineState = {
     editorState: editorStateFromRaw(null)
   }
 
-  timer : number
+  timer: number
 
   constructor(props: EditableInlineProps) {
     super(props)

@@ -3,10 +3,10 @@ import EditableInline from './EditableInline'
 import EditableModal from './EditableModal'
 
 export interface EditableProps {
-  model : any,
-  field : string | Array<string>,
-  onChange : Function,
-  children : any,
+  model: any,
+  field: string | Array<string>,
+  onChange: Function,
+  children: any,
 }
 
 class Editable extends React.Component<EditableProps, any> {

@@ -1,14 +1,14 @@
 export interface Modal {
-  id : number
-  element : any
-  onClose : Function
+  id: number
+  element: any
+  onClose: Function
 }
 
 export type State = Array<Modal>
 
 // State.
-let state : State = []
-let onChangeListener : Function | null = null
+let state: State = []
+let onChangeListener: Function | null = null
 let counter = 0
 
 /**
@@ -30,7 +30,7 @@ export function resetState() {
 /**
  * Removes a modal from the state.
  */
-function removeModal(modalToRemove : Modal) {
+function removeModal(modalToRemove: Modal) {
   state = state.filter(modal => modal !== modalToRemove)
   if (onChangeListener) {
     onChangeListener()
@@ -40,7 +40,7 @@ function removeModal(modalToRemove : Modal) {
 /**
  * Opens a modal.
  */
-export function openModal(element : any) {
+export function openModal(element: any) {
   return new Promise((resolve, reject) => {
     const id = counter++
     const modal = {
@@ -63,7 +63,7 @@ export function openModal(element : any) {
  * Registers a modal stack listener. This is a singleton as the
  * modals should only be rendered in one place.
  */
-export function setListener(handler : Function) {
+export function setListener(handler: Function) {
   onChangeListener = handler
 
   // Dispose function

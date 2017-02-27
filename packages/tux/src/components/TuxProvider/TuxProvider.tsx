@@ -5,7 +5,7 @@ import TuxBar from '../TuxBar'
 import TuxModal from '../TuxModal'
 
 export interface TuxProviderProps {
-  adapter : Object
+  adapter: Object
 }
 
 class TuxProvider extends Component<TuxProviderProps, any> {
@@ -27,7 +27,7 @@ class TuxProvider extends Component<TuxProviderProps, any> {
     }
   }
 
-  editModel = (model : any) => {
+  editModel = (model: any) => {
     return openModal(
       <TuxModal model={model} />
     )
