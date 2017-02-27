@@ -3,7 +3,7 @@ import MaterialTextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import ImageField from './fieldComponents/ImageField'
+import ImageField from '../ImageField'
 
 interface Field {
   id : string
@@ -27,12 +27,25 @@ export interface State {
 }
 
 const MarkdownField = ({ id, value, label, helpText, onChange } : Field) => (
-  <MaterialTextField multiLine={true} rows={3} hintText={helpText} floatingLabelText={label} id={id} value={value}
-                     onChange={onChange}/>
+  <MaterialTextField
+    floatingLabelText={label}
+    hintText={helpText}
+    id={id}
+    multiLine={true}
+    onChange={(event) => onChange(event.target.value)}
+    rows={3}
+    value={value}
+  />
 )
 
 const TextField = ({ id, value, label, helpText, onChange } : Field) => (
-  <MaterialTextField hintText={helpText} floatingLabelText={label} id={id} value={value} onChange={onChange}/>
+  <MaterialTextField
+    floatingLabelText={label}
+    hintText={helpText}
+    id={id}
+    onChange={(event) => onChange(event.target.value)}
+    value={value}
+  />
 )
 
 // className="TuxModal-saveBtn" type="submit" primary={true} label="Save"
@@ -77,11 +90,13 @@ class TuxModal extends React.Component<any, State> {
     })
   }
 
-  onChange(event : React.ChangeEvent<any>, type : {id : string}) {
+  onChange(value : any, type : {id : string}) {
     const { fullModel } = this.state
     const field = fullModel.fields[type.id]
-    field['en-US'] = event.target.value
+    field['en-US'] = value
     this.setState({fullModel})
+    console.log('Full model is now: ')
+    console.log(fullModel)
   }
 
   onCancel = () => {
@@ -110,6 +125,7 @@ class TuxModal extends React.Component<any, State> {
         <InputComponent
           helpText={helpText}
           id={type.id}
+          name={type.name}
           label={type.name}
           model={this.props.model}
           onChange={event => this.onChange(event, type)}

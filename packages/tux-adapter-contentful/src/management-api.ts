@@ -36,8 +36,16 @@ class ManagementApi {
   }
 
   async saveEntry(entry : any) {
-    const { fields, sys: { id, version } } = entry
-    const newEntry = await this.put(`/spaces/${this.space}/entries/${id}`, { fields }, version)
+    return this._save(entry, 'entries')
+  }
+
+  async saveAsset(entry : any) {
+    return this._save(entry, 'assets')
+  }
+
+  async _save(entity : any, entityPath : string) {
+    const { fields, sys: { id, version } } = entity
+    const newEntry = await this.put(`/spaces/${this.space}/${entityPath}/${id}`, { fields }, version)
 
     if (this.previewApi) {
       this.previewApi.override(this.formatForDelivery(newEntry))
