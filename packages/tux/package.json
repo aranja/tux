@@ -24,7 +24,7 @@
   },
   "jest": {
     "transform": {
-      ".(ts|tsx)": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+      ".(ts|tsx)": "<rootDir>/../../shared/jest-preprocessor"
     },
     "testRegex": "\\.(test|spec)\\.(ts|tsx)$",
     "moduleFileExtensions": [

@@ -37,7 +37,6 @@
     "react-test-renderer": "^15.4.2",
     "run-sequence": "^1.2.2",
     "styled-jsx": "^0.5.4",
-    "ts-jest": "^18.0.2",
     "tslint": "^4.4.2",
     "typescript": "^2.1.5",
     "yargs": "^6.6.0"
@@ -53,6 +52,11 @@
       "development": {
         "plugins": [
           "transform-react-jsx-self"
+        ]
+      },
+      "test": {
+        "plugins": [
+          "transform-es2015-modules-commonjs"
         ]
       }
     }

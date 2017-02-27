@@ -1,14 +1,14 @@
 import QueryApi from './query-api'
 import ManagementApi from './management-api'
 
-interface Config {
+export interface Config {
   space : string
   deliveryToken : string
   clientId : string
   redirectUri : string
 }
 
-class ContentfulAdapter {
+export class ContentfulAdapter {
   private space : string
   private clientId : string
   private redirectUri : string

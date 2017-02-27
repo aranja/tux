@@ -19,16 +19,16 @@ class ManagementApi {
     })
   }
 
-  get(url : string, params? : Object) {
-    return this.client.get(url, { params }).then(result => result.data)
+  get(url : string, params? : Object): Promise<any> {
+    return this.client.get(url, { params }).then(result => result.data) as Promise<any>
   }
 
-  put(url : string, body : any, version : string) {
+  put(url : string, body : any, version : string): Promise<any> {
     return this.client.put(url, body, {
       headers: {
         'X-Contentful-Version': version,
       }
-    }).then(result => result.data)
+    }).then(result => result.data) as Promise<any>
   }
 
   getEntry(id : string) {

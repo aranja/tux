@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 export interface EditableModalProps {
   model : any,
-  children : any,
+  children ?: any,
   onChange : Function,
 }
 
@@ -12,7 +12,7 @@ class EditableModal extends React.Component<EditableModalProps, any> {
     tux: React.PropTypes.object,
   }
 
-  async onEdit() {
+  async onEdit(): Promise<void> {
     const { onChange, model } = this.props
     const { tux } = this.context
     const didChange = await tux.editModel(model)
