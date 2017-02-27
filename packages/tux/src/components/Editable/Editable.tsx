@@ -24,7 +24,7 @@ class Editable extends React.Component<EditableProps, any> {
     }
 
     return (
-      <EditableModal model={model} onChange={onChange} shouldInheritStyles={shouldInheritStyles}>
+      <EditableModal model={model} onChange={onChange}>
         {children}
       </EditableModal>
     )
