@@ -42,29 +42,27 @@ class TuxSidebar extends React.Component<any, State> {
     const { user } = this.state
     return (
       <div className="TuxSidebar">
-        <div className="TuxSidebar-content">
+        <ul className="TuxSidebar-content">
           <div className="TuxSidebar-logo">Tux</div>
-          <button className={classNames('TuxSidebar-editButton', isEditing && 'is-active')} onClick={onClickEdit}>{isEditing ? 'Done' : 'Edit'}</button>
-        </div>
-        {!user && <button onClick={this.login} className="TuxSidebar-btn">Sign in</button>}
+          <li>
+            <button className={classNames('TuxSidebar-editButton', isEditing && 'is-active')} onClick={onClickEdit}>{isEditing ? 'Editing: on' : 'Editing: off'}</button>
+          </li>
+          <li><a href="/">Documentation</a></li>
+          <li><a href="/">Tux on Github</a></li>
+        </ul>
         {user && (
           <div className="TuxSidebar-user">
-            <div className="TuxSidebar-userAvatar" style={{backgroundImage: `url(${user.avatarUrl})`}}>
-              <p className="TuxSidebar-userInfo">
-                Hello, {user.name}
-              </p>
-            </div>
+            <a onClick={this.login} className="TuxSidebar-signInOut">{user ? 'Sign out' : 'Sign in'}</a>
           </div>
         )}
+
         <style jsx>{`
           .TuxSidebar {
-            display: flex;
-            flex-direction: column;
-            background: #FFF;
+            background: #f3f5f7;
             box-sizing: border-box;
             position: fixed;
             width: 100%;
-            max-width: 100px;
+            max-width: 260px;
             height: 100%;
             min-height: 100vh;
             z-index: 100;
@@ -75,42 +73,73 @@ class TuxSidebar extends React.Component<any, State> {
             background-repeat: no-repeat;
             background-size: cover;
           }
+          .TuxSidebar-quickjump {
+            display: block;
+            font-size: 15px;
+            margin-top: 10px;
+            padding: 4px;
+            width: 100%;
+          }
           .TuxSidebar-content {
+            display: block;
             position: relative;
             flex: 0 1 100%;
             padding: 10px;
           }
-          .TuxSidebar-user {
-            flex: 0 1 128px;
-            max-height: 128px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            width: 100%;
+          .TuxSidebar-content li {
+            font-size: 16px;
+            color: #3C4858;
+            display: block;
+            margin: 10px 15px;
+            padding: 10px 15px;
           }
-          .TuxSidebar-userInfo {
-            color: white;
-            background: #e8008a;
-            text-align: center;
+          .TuxSidebar-content li a {
+            text-decoration: none;
           }
           .TuxSidebar-logo {
             font-size: 24px;
             padding: 10px;
             text-align: center;
+            font-size: 24px;
+            border-bottom: 1px solid rgba(180, 180, 180, 0.3);
+            margin-bottom: 10px;
           }
           .TuxSidebar-editButton {
             appearance: none;
-            background: rgb(71, 59, 177);
+            background: #473bb1;
             border: none;
+            box-shadow: 0 12px 20px -10px rgba(71, 59, 177, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(71, 59, 177, 0.2);
             color: white;
+            cursor: pointer;
             display: block;
-            font-size: 14px;
-            padding: 10px;
+            font-size: 16px;
+            padding: 15px;
             width: 100%;
+          }
+          .TuxSidebar-editButton:hover {
+            background: #4f41c7;
           }
           .TuxSidebar-editButton.is-active {
             background: #e8008a;
             box-shadow: 0px 0px 3px 2px rgba(232, 0, 138, 0.25);
+          }
+          .TuxSidebar-user {
+            bottom: 25px;
+            left: 0; right: 0;
+            margin: auto;
+            position: absolute;
+          }
+          .TuxSidebar-signInOut {
+            opacity: 0.85;
+            cursor: pointer;
+            color: #3C4858;
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+          }
+          .TuxSidebar-signInOut:hover {
+            color: #e8008a;
           }
         `}</style>
       </div>
