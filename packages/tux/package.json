@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "description": "",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
-    "prepublish": "../../tasks/build-package.js",
+    "prepublish": "NODE_ENV=production ../../tasks/build-package.js",
     "watch": "../../tasks/build-package.js --watch",
     "test": "../../node_modules/.bin/jest"
   },

@@ -1,4 +1,4 @@
-import React = require('react')
+import React, { Component } from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import ModalContainer, { openModal } from '../TuxModalContainer'
 import TuxBar from '../TuxBar'
@@ -8,7 +8,7 @@ export interface TuxProviderProps {
   adapter : Object
 }
 
-class TuxProvider extends React.Component<TuxProviderProps, any> {
+class TuxProvider extends Component<TuxProviderProps, any> {
   static childContextTypes = {
     tux: React.PropTypes.shape({
       isEditing: React.PropTypes.bool.isRequired,

@@ -1,5 +1,4 @@
-import React = require('react')
-import classNames = require('classnames')
+import React from 'react'
 import EditableInline from './EditableInline'
 import EditableModal from './EditableModal'
 

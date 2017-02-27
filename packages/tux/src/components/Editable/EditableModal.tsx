@@ -1,5 +1,5 @@
-import React = require('react')
-import classNames = require('classnames')
+import React from 'react'
+import classNames from 'classnames'
 
 export interface EditableModalProps {
   model : any,
