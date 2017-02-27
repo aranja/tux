@@ -11,7 +11,7 @@ import Gallery from '../components/Gallery'
 import SocialPlug from '../components/SocialPlug'
 import Pricetable from '../components/Pricetable'
 
-const Home = ({ pages, articles, sellPoints, pricetable }) => {
+const Home = ({ pages, articles, sellPoints, pricetable, testimonial, gallery, carousel }) => {
 
   if (!pages) return null
   const page = pages.items[0]
@@ -27,14 +27,14 @@ const Home = ({ pages, articles, sellPoints, pricetable }) => {
         <SellPoints sellPoints={sellPoints.items} />
       </Section>
       <Section>
-        <Carousel />
+        <Carousel carouselItems={carousel.items}/>
       </Section>
       <Section>
-        <Testimonial />
+        <Testimonial testimonial={testimonial.items}/>
       </Section>
       <Section>
         <H1>Who is using Tux</H1>
-        <Gallery />
+        <Gallery galleryItems={gallery.items} />
         <SocialPlug>
           Are you using Tux? <strong>Let us know on Twitter</strong>
         </SocialPlug>
@@ -53,4 +53,7 @@ export default connect(async contentful => ({
   articles: await contentful.getEntries({ content_type: 'article', order: '-sys.createdAt' }),
   sellPoints: await contentful.getEntries({ content_type: 'sellPoint' }),
   pricetable: await contentful.getEntries({ content_type: 'priceTable', order: 'sys.createdAt' }),
+  testimonial: await contentful.getEntries({ content_type: 'testimony' }),
+  gallery: await contentful.getEntries({ content_type: 'gallery' }),
+  carousel: await contentful.getEntries({ content_type: 'carousel' }),
 }))(Home)

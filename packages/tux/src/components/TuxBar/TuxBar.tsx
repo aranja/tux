@@ -66,7 +66,7 @@ class TuxBar extends React.Component<any, State> {
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1;
+            z-index: 100;
           }
 
           .TuxBar-title {

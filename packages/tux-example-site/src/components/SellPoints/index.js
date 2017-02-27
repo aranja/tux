@@ -8,7 +8,7 @@ const SellPoints = ({ sellPoints }) => (
     {sellPoints && sellPoints.slice(0, 3).map((point, index) => (
       <Editable key={index} model={point}>
         <div className="SellPoint">
-          <img className="SellPoint-icon" src={point.fields.icon.fields.file.url} alt={point.fields.icon.fields.title}/>
+          <img className="SellPoint-icon" src={point.fields.icon.asset.file.url} alt={point.fields.icon.title}/>
           <h1 className="SellPoint-title">{point.fields.title}</h1>
           <p className="SellPoint-copy">{point.fields.text}</p>
         </div>

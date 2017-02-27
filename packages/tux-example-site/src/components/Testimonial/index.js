@@ -1,21 +1,21 @@
 import React from 'react'
-import image1 from './Image01.jpg'
+import { Editable } from 'tux'
 import './styles.css'
 
-const defaultData = [
-  { authorName: 'Eirikur Nilsson', authorWorkplace: 'Aranja', authorImage: image1, quote: 'Et vivendo comprehensam eam, dicam impetus et pertinax et vel, fugit set  persius dissentiunt eum et.' }
-]
-
-const Testimonial = ({ data = defaultData }) => (
+const Testimonial = ({ testimonial }) => (
   <div>
-    {data.map((testimonial) => (
-      <div key={testimonial.authorName} className="Testimonial">
-        <div className="Testimonial-quote">
-          <p className="Testimonial-quoteText">{testimonial.quote}</p>
-          <p className="Testimonial-quoteAuthor">{`${testimonial.authorName}, ${testimonial.authorWorkplace}`}</p>
+    {testimonial && testimonial.map((testimony) => (
+      <Editable key={testimony.fields.attestantName} model={testimony}>
+        <div className="Testimonial">
+          <div className="Testimonial-quote">
+            <p className="Testimonial-quoteText">{testimony.fields.quote}</p>
+            <p className="Testimonial-quoteAuthor">
+              {`${testimony.fields.attestantName}, ${testimony.fields.attestantTitle}`}
+            </p>
+          </div>
+          <div className="Testimonial-image" style={{backgroundImage: `url('${testimony.fields.attestantImage.asset.file.url}')`}}></div>
         </div>
-        <div className="Testimonial-image" style={{backgroundImage: `url('${testimonial.authorImage}')`}}></div>
-      </div>
+      </Editable>
     ))}
   </div>
 )
