@@ -1,16 +1,19 @@
-import React = require('react')
-import classNames = require('classnames')
-import { MegadraftEditor, editorStateFromRaw, editorStateToJSON } from 'megadraft'
+import React from 'react'
+import { MegadraftEditor, editorStateFromRaw, editorStateToJSON, EditorState } from 'megadraft'
 
-const getField = (model, field) => {
+type FieldRef = string | string[]
+
+function getField<T>(model: any, field: FieldRef): T {
   if (typeof field === 'string')
-    return getField(model, field.split('.'))
+    return getField<T>(model, field.split('.'))
   return field.reduce((object, key) => object[key], model)
 }
 
-const setField = (model, field, editorState) => {
-  if (typeof field === 'string')
-    return setField(model, field.split('.'), editorState)
+function setField<T>(model: any, field: FieldRef, editorState: T) {
+  if (typeof field === 'string') {
+    setField(model, field.split('.'), editorState)
+    return
+  }
 
   let localized = field.slice()
   localized.splice(2, 0, 'en-US')
@@ -26,8 +29,7 @@ const setField = (model, field, editorState) => {
 export interface EditableInlineProps {
   model : any,
   field : string | Array<string>,
-  onChange : Function,
-  children : any,
+  onChange ?: () => void,
 }
 
 export interface EditableInlineState {
@@ -45,7 +47,7 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
 
   timer : number
 
-  constructor(props) {
+  constructor(props: EditableInlineProps) {
     super(props)
 
     const { model, field } = props
@@ -67,7 +69,7 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
     this.context.tux.adapter.save(fullModel)
   }
 
-  onEditorChange(editorState) {
+  onEditorChange(editorState: EditorState) {
     this.setState({ editorState })
     if (this.timer) {
       window.clearTimeout(this.timer)

@@ -1,6 +1,6 @@
-import React = require('react')
-import classNames = require('classnames')
-import ReactCSSTransitionGroup = require('react-addons-css-transition-group')
+import * as React from 'react'
+import * as classNames from 'classnames'
+import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import toggleScroll from './toggle-scroll'
 import { getState, setListener, State as StoreState } from './store'
 
