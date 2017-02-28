@@ -9,13 +9,17 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "history": "^4.5.1",
+    "neutrino": "^4.2.1",
+    "neutrino-preset-tux": "0.1.0",
+    "pretty-error": "^2.0.2",
     "tux": "^0.1.0",
     "tux-adapter-contentful": "^0.1.0",
     "universal-router": "^2.0.0"
   },
   "scripts": {
-    "start": "HTTPS=true react-scripts start",
-    "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "start": "neutrino start --presets neutrino-preset-tux",
+    "build": "neutrino build --presets neutrino-preset-tux",
+    "start-server": "neutrino start --presets neutrino-preset-tux/server",
+    "build-server": "neutrino build --presets neutrino-preset-tux/server"
   }
 }
