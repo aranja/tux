@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "classnames": "^2.2.5",
     "material-ui": "^0.16.7",
     "megadraft": "^0.4.15",

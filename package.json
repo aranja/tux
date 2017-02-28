@@ -1,4 +1,6 @@
 {
+  "private": true,
+  "license": "MIT",
   "scripts": {
     "start": "cd packages/tux-example-site && npm start",
     "postinstall": "lerna bootstrap",
@@ -21,8 +23,6 @@
     "@types/react-addons-css-transition-group": "^15.0.1",
     "@types/react-dom": "^0.14.21",
     "babel-jest": "^18.0.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.22.0",
-    "babel-plugin-transform-react-jsx-self": "^6.22.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "del": "^2.2.2",
@@ -43,21 +43,10 @@
     "yargs": "^6.6.0"
   },
   "babel": {
-    "presets": [
-      "react"
-    ],
-    "plugins": [
-      "styled-jsx/babel"
-    ],
     "env": {
-      "development": {
-        "plugins": [
-          "transform-react-jsx-self"
-        ]
-      },
       "test": {
-        "plugins": [
-          "transform-es2015-modules-commonjs"
+        "presets": [
+          "es2015"
         ]
       }
     }

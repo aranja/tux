@@ -12,6 +12,23 @@ const merge = require('merge2')
 // tracks incremental builds after a watch triggers.
 const tsProject = ts.createProject('tsconfig.json')
 
+// Configures babel to build es6 code with styled-jsx to es5. Either
+// with or without es2015 module syntax.
+const babelConfig = es2015 => ({
+  plugins: [
+    "styled-jsx/babel",
+    ['transform-runtime', {
+      helpers: false,
+      polyfill: false,
+      regenerator: true,
+    }],
+  ],
+  "presets": [
+    "react",
+    ["es2015", { "modules": es2015 ? false : 'commonjs' }],
+  ],
+})
+
 gulp.task('clean', () => {
   return del(['lib', 'es'])
 })
@@ -27,18 +44,14 @@ gulp.task('build:js', () => {
       .pipe(gulp.dest('lib')),
     tsResult.js
       .pipe(clone())
-      .pipe(babel({
-        plugins: [
-          'transform-es2015-modules-commonjs',
-        ],
-      }))
+      .pipe(babel(babelConfig(false)))
       .pipe(gulp.dest('lib')),
 
     // ES2015 Modules
     tsResult.dts
       .pipe(gulp.dest('es')),
     tsResult.js
-      .pipe(babel())
+      .pipe(babel(babelConfig(true)))
       .pipe(gulp.dest('es')),
   ])
 })
