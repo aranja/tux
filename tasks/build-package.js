@@ -28,4 +28,5 @@ if (argv.watch) {
 }
 
 // Go!
-child_process.spawnSync(gulp, gulpArgs, { stdio: 'inherit' })
+const child = child_process.spawnSync(gulp, gulpArgs, { stdio: 'inherit' })
+process.exit(child.status)
