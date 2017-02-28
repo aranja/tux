@@ -1,12 +1,12 @@
-import React = require('react')
-import classNames = require('classnames')
+import React from 'react'
+import classNames from 'classnames'
 
 export interface EditableModalProps {
-  model : any,
-  children : any,
-  onChange : Function,
-  className : string,
-  tagName : string,
+  model: any,
+  children?: any,
+  onChange: Function,
+  className: string,
+  tagName: string,
 }
 
 class EditableModal extends React.Component<EditableModalProps, any> {
@@ -14,7 +14,7 @@ class EditableModal extends React.Component<EditableModalProps, any> {
     tux: React.PropTypes.object,
   }
 
-  async onEdit() {
+  async onEdit(): Promise<void> {
     const { onChange, model } = this.props
     const { tux } = this.context
     const isEditing = tux && tux.isEditing

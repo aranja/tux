@@ -1,14 +1,14 @@
-import React = require('react')
-import classNames = require('classnames')
+import React, { Component } from 'react'
+import classNames from 'classnames'
 import ModalContainer, { openModal } from '../TuxModalContainer'
 import TuxSidebar from '../TuxSidebar'
 import TuxModal from '../TuxModal'
 
 export interface TuxProviderProps {
-  adapter : Object
+  adapter: Object
 }
 
-class TuxProvider extends React.Component<TuxProviderProps, any> {
+class TuxProvider extends Component<TuxProviderProps, any> {
   static childContextTypes = {
     tux: React.PropTypes.shape({
       isEditing: React.PropTypes.bool.isRequired,
@@ -32,7 +32,7 @@ class TuxProvider extends React.Component<TuxProviderProps, any> {
     }
   }
 
-  editModel = async (model : any) => {
+  editModel = async (model: any) => {
 
     // Modal has been opened.
     this.setState({

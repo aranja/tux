@@ -1,17 +1,17 @@
-import React = require('react')
+import React from 'react'
 
 export interface RefreshProp {
-  refresh : () => Promise<void>,
+  refresh: () => Promise<void>,
 }
 
 interface State<DataProps> {
-  dataProps : null | DataProps,
+  dataProps: null | DataProps,
 }
 
 type InnerProps<OuterProps, DataProps> = OuterProps & DataProps & RefreshProp
 
-function connect<DataProps>(fn : (api : any) => Promise<DataProps>) {
-  return function wrap<OuterProps>(InnerComponent : React.ComponentClass<InnerProps<OuterProps, DataProps>>) : React.ComponentClass<OuterProps> {
+function connect<DataProps>(fn: (api: any) => Promise<DataProps>) {
+  return function wrap<OuterProps>(InnerComponent: React.ComponentClass<InnerProps<OuterProps, DataProps>>): React.ComponentClass<OuterProps> {
     class TuxConnection extends React.Component<OuterProps, State<DataProps>> {
       static contextTypes = {
         tux: React.PropTypes.object,

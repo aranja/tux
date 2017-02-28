@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "description": "",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
-    "prepublish": "../../tasks/build-package.js",
+    "prepublish": "NODE_ENV=production ../../tasks/build-package.js",
     "watch": "../../tasks/build-package.js --watch",
     "test": "../../node_modules/.bin/jest"
   },
@@ -15,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "classnames": "^2.2.5",
     "material-ui": "^0.16.7",
     "megadraft": "^0.4.15",
@@ -23,7 +25,7 @@
   },
   "jest": {
     "transform": {
-      ".(ts|tsx)": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+      ".(ts|tsx)": "<rootDir>/../../shared/jest-preprocessor"
     },
     "testRegex": "\\.(test|spec)\\.(ts|tsx)$",
     "moduleFileExtensions": [

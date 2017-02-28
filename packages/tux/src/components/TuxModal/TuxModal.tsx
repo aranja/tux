@@ -1,27 +1,27 @@
-import React = require('react')
+import React from 'react'
 
 interface Field {
-  id : string
-  value : string
-  label : string
-  helpText : string
-  onChange : (e : React.FormEvent<any>) => void
+  id: string
+  value: string
+  label: string
+  helpText: string
+  onChange: (e: React.FormEvent<any>) => void
 }
 
 interface FieldComponent {
-  id : string
-  type : string
-  control : {
-    widgetId : string
+  id: string
+  type: string
+  control: {
+    widgetId: string
   }
 }
 
 export interface State {
-  fullModel : any | null
-  typeMeta : any | null
+  fullModel: any | null
+  typeMeta: any | null
 }
 
-const MarkdownField = ({ id, value, label, helpText, onChange } : Field) => (
+const MarkdownField = ({ id, value, label, helpText, onChange }: Field) => (
   <div>
     <input className="InputField" label={label} id={id} value={value}
       onChange={onChange}/>
@@ -38,7 +38,7 @@ const MarkdownField = ({ id, value, label, helpText, onChange } : Field) => (
   </div>
 )
 
-const TextField = ({ id, value, label, helpText, onChange } : Field) => (
+const TextField = ({ id, value, label, helpText, onChange }: Field) => (
   <div>
     <input className="InputField" label={label} id={id} value={value} onChange={onChange}/>
     <style jsx>{`
@@ -54,7 +54,7 @@ const TextField = ({ id, value, label, helpText, onChange } : Field) => (
   </div>
 )
 
-function componentForField({ id, type, control: { widgetId } } : FieldComponent) {
+function componentForField({ id, type, control: { widgetId } }: FieldComponent) {
   if (type === 'Array')
     return null
   if (widgetId === 'markdown') {
@@ -69,7 +69,7 @@ class TuxModal extends React.Component<any, State> {
     tux: React.PropTypes.object,
   }
 
-  state : State = {
+  state: State = {
     fullModel: null,
     typeMeta: null,
   }
@@ -91,7 +91,7 @@ class TuxModal extends React.Component<any, State> {
     })
   }
 
-  onChange(event : React.ChangeEvent<any>, type : {id : string}) {
+  onChange(event: React.ChangeEvent<any>, type: {id: string}) {
     const { fullModel } = this.state
     const field = fullModel.fields[type.id]
     field['en-US'] = event.target.value
@@ -102,7 +102,7 @@ class TuxModal extends React.Component<any, State> {
     this.props.onClose()
   }
 
-  onSubmit = async(event : React.FormEvent<any>) => {
+  onSubmit = async(event: React.FormEvent<any>) => {
     event.preventDefault()
 
     const { fullModel } = this.state
@@ -110,7 +110,7 @@ class TuxModal extends React.Component<any, State> {
     this.props.onClose(true)
   }
 
-  renderField = (type : any) => {
+  renderField = (type: any) => {
     const helpText = type.control.settings && type.control.settings.helpText
     const InputComponent = componentForField(type)
     const field = this.state.fullModel.fields[type.id]
