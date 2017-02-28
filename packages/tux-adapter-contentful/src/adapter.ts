@@ -96,13 +96,71 @@ class ContentfulAdapter {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in to save.')
     }
-    const newModel = await this.managementApi.saveEntry(model)
-    this.triggerChange()
-    return newModel
+    // const newModel = await this.managementApi.saveEntry(model)
+    // this.triggerChange()
+    // return newModel
+    console.log('Looking for assets to save ...')
+    console.log(model)
+    if (model.fields) {
+      await this._saveAssets(model.fields)
+    }
+    console.log('Done')
+    return
   }
 
-  load(model : any) {
-    return this.managementApi && this.managementApi.getEntry(model.sys.id)
+  async _saveAssets(fields : any) {
+    console.log('saveAssets: enter')
+    for (const fieldName of Object.keys(fields)) {
+      const field = fields[fieldName]
+      console.log(`Looking at ${fieldName}`)
+      let foundAssets = false
+      for (const localeName of Object.keys(field)) {
+        console.log(`Locale: ${localeName}`)
+        const locale = field[localeName]
+        if (locale.sys) {
+          console.log(`Found a sys property`)
+          if (locale.fields) {
+            console.log('Had fields, saving asset')
+            if (!locale.sys.version) {
+              console.log('setting version')
+              locale.sys.version = 2
+            }
+            await this.managementApi.saveAsset(locale)
+            foundAssets = true
+          }
+        }
+      }
+
+      if (foundAssets) {
+        delete fields[fieldName]
+      }
+    }
+  }
+
+  async load(model : any) {
+    if (!this.managementApi) {
+      throw new Error('Manager api not defined, please log in get a scheme.')
+    }
+    const entry = await this.managementApi.getEntry(model.sys.id)
+    // await this._loadAssetsForEntry(entry.fields)
+    return entry
+  }
+
+  async _loadAssetsForEntry(fields : any) {
+    for (const fieldName of Object.keys(fields)) {
+      const field = fields[fieldName]
+      let foundAssets = false
+      for (const localeName of Object.keys(field)) {
+        const locale = field[localeName]
+        if (locale.sys) {
+          if (locale.fields) {
+            console.log('Loading asset')
+            const loadedAsset = await this.managementApi.getAsset(locale.sys.id)
+            console.log(loadedAsset)
+          }
+        }
+      }
+    }
   }
 
   async currentUser() {

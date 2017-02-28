@@ -93,10 +93,8 @@ class TuxModal extends React.Component<any, State> {
   onChange(value : any, type : {id : string}) {
     const { fullModel } = this.state
     const field = fullModel.fields[type.id]
-    field['en-US'] = value
+    field['en-US'].fields = value
     this.setState({fullModel})
-    console.log('Full model is now: ')
-    console.log(fullModel)
   }
 
   onCancel = () => {

@@ -32,15 +32,23 @@ class ManagementApi {
   }
 
   getEntry(id : string) {
-    return this.get(`/spaces/${this.space}/entries/${id}`)
+    return this._getEntity(id, 'entries')
+  }
+
+  getAsset(id : string) {
+    return this._getEntity(id, 'assets')
+  }
+
+  _getEntity(id : string, entityPath : string) {
+    return this.get(`/spaces/${this.space}/${entityPath}/${id}`)
   }
 
   async saveEntry(entry : any) {
     return this._save(entry, 'entries')
   }
 
-  async saveAsset(entry : any) {
-    return this._save(entry, 'assets')
+  async saveAsset(asset : any) {
+    return this._save(asset, 'assets')
   }
 
   async _save(entity : any, entityPath : string) {
