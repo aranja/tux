@@ -1,5 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
+import { lighten, fade } from '../../utils/color'
+import { tuxColors } from '../../styles'
 
 export interface State {
   user : null | {
@@ -58,7 +60,7 @@ class TuxSidebar extends React.Component<any, State> {
 
         <style jsx>{`
           .TuxSidebar {
-            background: #f3f5f7;
+            background: ${tuxColors.colorSnow};
             box-sizing: border-box;
             position: fixed;
             width: 100%;
@@ -66,7 +68,7 @@ class TuxSidebar extends React.Component<any, State> {
             height: 100%;
             min-height: 100vh;
             z-index: 100;
-            box-shadow: 7px 1px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 7px 1px 10px ${fade(tuxColors.colorBlack, 0.2)};
             transform: none;
             transition: transform 0.4s ease-out;
             will-change: transform;
@@ -75,18 +77,6 @@ class TuxSidebar extends React.Component<any, State> {
           .TuxSidebar.has-overlay {
             transform: translateX(-100%);
           }
-          .TuxSidebar-userAvatar {
-            padding-top: 100%;
-            background-repeat: no-repeat;
-            background-size: cover;
-          }
-          .TuxSidebar-quickjump {
-            display: block;
-            font-size: 15px;
-            margin-top: 10px;
-            padding: 4px;
-            width: 100%;
-          }
           .TuxSidebar-content {
             display: block;
             position: relative;
@@ -94,9 +84,9 @@ class TuxSidebar extends React.Component<any, State> {
             padding: 10px;
           }
           .TuxSidebar-content li {
-            font-size: 16px;
-            color: #3C4858;
+            color: ${tuxColors.textGray};
             display: block;
+            font-size: 16px;
             margin: 10px 15px;
             padding: 10px 15px;
           }
@@ -108,15 +98,15 @@ class TuxSidebar extends React.Component<any, State> {
             padding: 10px;
             text-align: center;
             font-size: 24px;
-            border-bottom: 1px solid rgba(180, 180, 180, 0.3);
+            border-bottom: 1px solid ${fade(tuxColors.colorBlack, 0.05)};
             margin-bottom: 10px;
           }
           .TuxSidebar-editButton {
             appearance: none;
-            background: #473bb1;
+            background: ${tuxColors.colorPurple};
             border: none;
-            box-shadow: 0 12px 20px -10px rgba(71, 59, 177, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(71, 59, 177, 0.2);
-            color: white;
+            box-shadow: 0 12px 20px -10px ${fade(tuxColors.colorPurple, 0.2)}, 0 4px 20px 0px ${fade(tuxColors.colorBlack, 0.2)}, 0 7px 8px -5px ${fade(tuxColors.colorPurple, 0.2)};
+            color: ${tuxColors.textLight};
             cursor: pointer;
             display: block;
             font-size: 16px;
@@ -124,11 +114,11 @@ class TuxSidebar extends React.Component<any, State> {
             width: 100%;
           }
           .TuxSidebar-editButton:hover {
-            background: #4f41c7;
+            background: ${lighten(tuxColors.colorPurple, 0.1)};
           }
           .TuxSidebar-editButton.is-active {
-            background: #e8008a;
-            box-shadow: 0px 0px 3px 2px rgba(232, 0, 138, 0.25);
+            background: ${tuxColors.colorPink};
+            box-shadow: 0px 0px 3px 2px ${fade(tuxColors.colorPink, 0.25)};
           }
           .TuxSidebar-user {
             bottom: 25px;
@@ -139,14 +129,14 @@ class TuxSidebar extends React.Component<any, State> {
           .TuxSidebar-signInOut {
             opacity: 0.85;
             cursor: pointer;
-            color: #3C4858;
+            color: ${tuxColors.textGray};
             display: block;
             text-decoration: none;
             text-align: center;
-            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+            text-shadow: 0 1px 0 ${fade(tuxColors.textLight, 0.4)};
           }
           .TuxSidebar-signInOut:hover {
-            color: #e8008a;
+            color: ${tuxColors.colorPink};
           }
         `}</style>
       </div>

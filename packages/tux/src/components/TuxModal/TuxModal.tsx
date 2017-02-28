@@ -1,4 +1,6 @@
 import React from 'react'
+import { tuxColors } from '../../styles'
+import { modalStyles, InputStyles, buttonStyles } from './styles'
 
 interface Field {
   id: string
@@ -21,38 +23,29 @@ export interface State {
   typeMeta: any | null
 }
 
-const MarkdownField = ({ id, value, label, helpText, onChange }: Field) => (
-  <div>
-    <input className="InputField" label={label} id={id} value={value}
-      onChange={onChange}/>
-      <style jsx>{`
-        .InputField {
-          border-radius: 3px;
-          border: 1px solid #cbcbcb;
-          color: #313132;
-          margin: 5px 0;
-          padding: 10px;
-          width: 100%;
-        }
-      `}</style>
-  </div>
-)
-
 const TextField = ({ id, value, label, helpText, onChange }: Field) => (
-  <div>
+  <div className="Input">
+    <label className="InputLabel">{label}</label>
     <input className="InputField" label={label} id={id} value={value} onChange={onChange}/>
     <style jsx>{`
+      .InputLabel {
+        color: ${InputStyles.labelTextColor};
+        font-size: 14px;
+        line-height: 24px;
+      }
       .InputField {
         border-radius: 3px;
-        border: 1px solid #cbcbcb;
-        color: #313132;
+        border: 1px solid ${InputStyles.borderColor};
+        color: ${tuxColors.textDark};
         margin: 5px 0;
         padding: 10px;
         width: 100%;
       }
       `}</style>
-  </div>
-)
+    </div>
+  )
+
+const MarkdownField = TextField
 
 function componentForField({ id, type, control: { widgetId } }: FieldComponent) {
   if (type === 'Array')
@@ -165,8 +158,8 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-title {
-            color: rgba(0, 0, 0, 0.8);
-            font-size: 1.6em;
+            color: ${tuxColors.textDark};
+            font-size: 25px;
             font-weight: 400;
             margin: 0;
           }
@@ -181,10 +174,10 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-button {
-            background: #E5EBED;
+            background: ${buttonStyles.backgroundColor};
             border-radius: 2px;
-            border: 1px solid #C3CFD5;
-            color: #536171;
+            border: 1px solid ${buttonStyles.borderColor};
+            color: ${buttonStyles.textColor};
             cursor: pointer;
             display: inline-block;
             font-size: 14px;
@@ -202,8 +195,8 @@ class TuxModal extends React.Component<any, State> {
 
           .TuxModal-button.TuxModal-button--green {
             color: #FFF;
-            background: #3BB172;
-            border-color: #188e18;
+            background: ${buttonStyles.greenTheme.backgroundColor};
+            border-color: ${buttonStyles.greenTheme.borderColor};
           }
         `}</style>
       </div>
