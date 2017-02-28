@@ -84,16 +84,16 @@ class TuxSidebar extends React.Component<any, State> {
             transition: transform 0.4s ease-out;
             will-change: transform;
           }
+
           .TuxSidebar.is-visible {
             transform: none;
           }
+
           /* When we open a *modal* for editing, we animate the sidebar out. */
           .TuxSidebar.is-visible.has-overlay {
             transform: translateX(100%);
           }
-          .TuxSidebar.is-visible .TuxSidebar-trigger {
-            background: pink;
-          }
+
           .TuxSidebar-trigger {
             background: ${lighten(tuxColors.colorPurple, 0.2)};
             border-radius: 0;
@@ -110,10 +110,12 @@ class TuxSidebar extends React.Component<any, State> {
             width: 100px;
             z-index: 101;
           }
+
           /*Sneak peak on hover*/
           .TuxSidebar:hover:not(.is-visible) {
             transform: translateX(100%);
           }
+
           .TuxSidebar-content {
             display: block;
             position: relative;
@@ -121,6 +123,7 @@ class TuxSidebar extends React.Component<any, State> {
             padding: 10px;
             padding-right: 20px;
           }
+
           .TuxSidebar-content li {
             color: ${tuxColors.textGray};
             display: block;
@@ -128,9 +131,11 @@ class TuxSidebar extends React.Component<any, State> {
             margin: 10px 15px;
             padding: 10px 15px;
           }
+
           .TuxSidebar-content li a {
             text-decoration: none;
           }
+
           .TuxSidebar-logo {
             font-size: 24px;
             padding: 10px;
@@ -139,6 +144,7 @@ class TuxSidebar extends React.Component<any, State> {
             border-bottom: 1px solid ${fade(tuxColors.colorBlack, 0.05)};
             margin-bottom: 10px;
           }
+
           .TuxSidebar-editButton {
             appearance: none;
             background: ${tuxColors.colorPurple};
@@ -151,19 +157,23 @@ class TuxSidebar extends React.Component<any, State> {
             padding: 15px;
             width: 100%;
           }
+
           .TuxSidebar-editButton:hover {
             background: ${lighten(tuxColors.colorPurple, 0.1)};
           }
+
           .TuxSidebar-editButton.is-active {
             background: ${tuxColors.colorPink};
             box-shadow: 0px 0px 3px 2px ${fade(tuxColors.colorPink, 0.25)};
           }
+
           .TuxSidebar-user {
             bottom: 25px;
             left: 0; right: 0;
             margin: auto;
             position: absolute;
           }
+
           .TuxSidebar-signInOut {
             opacity: 0.85;
             cursor: pointer;
@@ -173,9 +183,11 @@ class TuxSidebar extends React.Component<any, State> {
             text-align: center;
             text-shadow: 0 1px 0 ${fade(tuxColors.textLight, 0.4)};
           }
+
           .TuxSidebar-signInOut:hover {
             color: ${tuxColors.colorPink};
           }
+
         `}</style>
       </div>
     )
