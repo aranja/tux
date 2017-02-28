@@ -20,6 +20,7 @@ class TuxProvider extends Component<TuxProviderProps, any> {
   state = {
     isEditing: false,
     overlayIsActive: false,
+    sidebarIsActive: false,
   }
 
   getChildContext() {
@@ -59,11 +60,11 @@ class TuxProvider extends Component<TuxProviderProps, any> {
   }
 
   render() {
-    const { isEditing, overlayIsActive } = this.state
+    const { isEditing, sidebarIsActive, overlayIsActive } = this.state
 
     return (
       <div className="TuxProvider">
-        <TuxSidebar isEditing={isEditing} overlayIsActive={overlayIsActive} onClickEdit={this.onClickEdit} />
+        <TuxSidebar isEditing={isEditing} sidebarIsActive={sidebarIsActive} overlayIsActive={overlayIsActive} onClickEdit={this.onClickEdit} />
         {this.props.children}
         <ModalContainer />
       </div>
