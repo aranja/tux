@@ -6,7 +6,6 @@ export interface EditableModalProps {
   children?: any,
   onChange: Function,
   className: string,
-  tagName: string,
 }
 
 class EditableModal extends React.Component<EditableModalProps, any> {
@@ -25,9 +24,8 @@ class EditableModal extends React.Component<EditableModalProps, any> {
   }
 
   render() {
-    const { model, children, tagName, className } = this.props
+    const { model, children, className } = this.props
     const isEditing = this.context.tux && this.context.tux.isEditing
-    // const RootComponent = tagName || 'div'
 
     return (
       <div className={classNames(className, 'EditableModal', isEditing && 'is-editing')} onClick={() => this.onEdit()}>

@@ -5,7 +5,6 @@ export interface EditableModalProps {
     children?: any;
     onChange: Function;
     className: string;
-    tagName: string;
 }
 declare class EditableModal extends React.Component<EditableModalProps, any> {
     static contextTypes: {
