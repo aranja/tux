@@ -38,10 +38,10 @@ class TuxSidebar extends React.Component<any, State> {
   }
 
   render() {
-    const { isEditing, onClickEdit } = this.props
+    const { isEditing, overlayIsActive, onClickEdit } = this.props
     const { user } = this.state
     return (
-      <div className="TuxSidebar">
+      <div className={classNames('TuxSidebar', overlayIsActive && 'has-overlay')}>
         <ul className="TuxSidebar-content">
           <div className="TuxSidebar-logo">Tux</div>
           <li>
@@ -67,6 +67,13 @@ class TuxSidebar extends React.Component<any, State> {
             min-height: 100vh;
             z-index: 100;
             box-shadow: 7px 1px 10px rgba(0, 0, 0, 0.2);
+            transform: none;
+            transition: transform 0.4s ease-out;
+            will-change: transform;
+          }
+          /* When we open a *modal* for editing, we animate the sidebar out. */
+          .TuxSidebar.has-overlay {
+            transform: translateX(-100%);
           }
           .TuxSidebar-userAvatar {
             padding-top: 100%;

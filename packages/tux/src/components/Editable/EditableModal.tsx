@@ -37,7 +37,7 @@ class EditableModal extends React.Component<EditableModalProps, any> {
             cursor: pointer;
           }
           .EditableModal.is-editing, .EditableModal.is-editing > * {
-            background-color: rgb(230, 227, 255) !important;
+            outline: 1px solid aquamarine !important;
           }
         `}</style>
       </div>

@@ -1,4 +1,5 @@
 import React = require('react')
+import classNames = require('classnames')
 import ModalContainer, { openModal } from '../TuxModalContainer'
 import TuxSidebar from '../TuxSidebar'
 import TuxModal from '../TuxModal'
@@ -18,6 +19,7 @@ class TuxProvider extends React.Component<TuxProviderProps, any> {
 
   state = {
     isEditing: false,
+    overlayIsActive: false,
   }
 
   getChildContext() {
@@ -30,10 +32,22 @@ class TuxProvider extends React.Component<TuxProviderProps, any> {
     }
   }
 
-  editModel = (model : any) => {
-    return openModal(
+  editModel = async (model : any) => {
+
+    // Modal has been opened.
+    this.setState({
+      overlayIsActive: true
+    })
+
+    await openModal(
       <TuxModal model={model} />
     )
+
+    // Wait for openModal promise to resolve,
+    // which means that the modal has been closed.
+    this.setState({
+      overlayIsActive: false
+    })
   }
 
   onClickEdit = () => {
@@ -45,11 +59,11 @@ class TuxProvider extends React.Component<TuxProviderProps, any> {
   }
 
   render() {
-    const { isEditing } = this.state
+    const { isEditing, overlayIsActive } = this.state
 
     return (
-      <div className="TuxProvider" style={{display: 'flex'}}>
-        <TuxSidebar isEditing={isEditing} onClickEdit={this.onClickEdit} />
+      <div className="TuxProvider">
+        <TuxSidebar isEditing={isEditing} overlayIsActive={overlayIsActive} onClickEdit={this.onClickEdit} />
         {this.props.children}
         <ModalContainer />
       </div>
