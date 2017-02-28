@@ -34,7 +34,6 @@ class TuxProvider extends Component<TuxProviderProps, any> {
   }
 
   editModel = async (model: any) => {
-
     // Modal has been opened.
     this.setState({
       overlayIsActive: true

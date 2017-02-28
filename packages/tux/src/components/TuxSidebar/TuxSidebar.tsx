@@ -8,7 +8,8 @@ export interface State {
     name: string
     avatarUrl: string
     spaceName: string
-  }
+  },
+  isVisible: boolean
 }
 
 class TuxSidebar extends React.Component<any, State> {
@@ -49,9 +50,10 @@ class TuxSidebar extends React.Component<any, State> {
   render() {
     const { isEditing, overlayIsActive, onClickEdit } = this.props
     const { user, isVisible } = this.state
+
     return (
       <div className={classNames('TuxSidebar', isVisible && 'is-visible', overlayIsActive && 'has-overlay')}>
-        <div className="TuxSidebar-trigger" onClick={this.handleVisibility}></div>
+        <div className="TuxSidebar-trigger" onClick={this.handleVisibility}>{isVisible ? '×' : 'Tux'}</div>
         <ul className="TuxSidebar-content">
           <div className="TuxSidebar-logo">Tux</div>
           <li>
@@ -73,11 +75,12 @@ class TuxSidebar extends React.Component<any, State> {
             position: fixed;
             width: 100%;
             max-width: 260px;
+            right: 0;
             height: 100%;
             min-height: 100vh;
             z-index: 100;
             box-shadow: 7px 1px 10px ${fade(tuxColors.colorBlack, 0.2)};
-            transform: translateX(calc(-100% + 8px));
+            transform: translateX(100%);
             transition: transform 0.4s ease-out;
             will-change: transform;
           }
@@ -86,20 +89,30 @@ class TuxSidebar extends React.Component<any, State> {
           }
           /* When we open a *modal* for editing, we animate the sidebar out. */
           .TuxSidebar.is-visible.has-overlay {
-            transform: translateX(-100%);
+            transform: translateX(100%);
+          }
+          .TuxSidebar.is-visible .TuxSidebar-trigger {
+            background: pink;
           }
           .TuxSidebar-trigger {
-            background: linear-gradient(90deg, transparent 12px, ${tuxColors.colorPurple} 12px);
-            width: 20px;
-            height: 100%;
+            background: ${lighten(tuxColors.colorPurple, 0.2)};
+            border-radius: 0;
+            box-shadow: 0px 0 10px ${fade(tuxColors.colorBlack, 0.25)};
+            color: white;
+            cursor: pointer;
+            height: 30px;
+            left: -65px;
+            line-height: 30px;
             position: absolute;
-            right: 0;
-            top: 0;
+            text-align: center;
+            bottom: 135px;
+            transform: rotateZ(-90deg);
+            width: 100px;
             z-index: 101;
           }
           /*Sneak peak on hover*/
           .TuxSidebar:hover:not(.is-visible) {
-            transform: translateX(calc(-100% + 20px));
+            transform: translateX(100%);
           }
           .TuxSidebar-content {
             display: block;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { tuxColors } from '../../styles'
-import { modalStyles, InputStyles, buttonStyles } from './styles'
+import { InputStyles, buttonStyles } from './styles'
 
 interface Field {
   id: string
@@ -146,6 +146,7 @@ class TuxModal extends React.Component<any, State> {
           .TuxModal {
             background: #F3F5F7;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            margin-left: auto;
             max-width: 60%;
             height: 100%;
             padding: 30px;

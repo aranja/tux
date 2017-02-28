@@ -85,7 +85,7 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
     const { children, field, model, onChange } = this.props
     const isEditing = this.context.tux && this.context.tux.isEditing
 
-    if (isEditing) {
+    if (isEditing || true) {
       return (
         <MegadraftEditor
           editorState={this.state.editorState}

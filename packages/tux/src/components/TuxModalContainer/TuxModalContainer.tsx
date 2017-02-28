@@ -110,7 +110,7 @@ class ModalContainer extends React.Component<any, State> {
 
           .ModalTransition-enter {
             opacity: 0;
-            transform: translateX(-100%);
+            transform: translateX(100%);
             transition: opacity 0.3s, transform 0.3s ease-in-out;
           }
 
@@ -125,7 +125,7 @@ class ModalContainer extends React.Component<any, State> {
 
           .ModalTransition-leave-active {
             opacity: 0;
-            transform: translateX(-100%);
+            transform: translateX(100%);
             transition: opacity 0.3s, transform 0.3s ease-in-out;
           }
         `}</style>

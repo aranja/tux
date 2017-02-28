@@ -1,5 +1,3 @@
-import globalStyles from '../../styles'
-
 export const InputStyles = {
   labelTextColor: '#8091A5',
   borderColor: '#CBCBCB',
@@ -13,7 +11,4 @@ export const buttonStyles = {
     backgroundColor: '#3BB172',
     borderColor: '#188E18',
   }
-}
-
-export const modalStyles = {
 }
