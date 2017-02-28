@@ -129,9 +129,6 @@ class TuxModal extends React.Component<any, State> {
 
   render() {
     const { fullModel, typeMeta } = this.state
-    const style = {
-      test: 'red'
-    }
 
     return (
       <div className="TuxModal">
@@ -154,7 +151,6 @@ class TuxModal extends React.Component<any, State> {
         <style jsx>{`
 
           .TuxModal {
-            color: ${ style.test };
             background: #F3F5F7;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             max-width: 60%;

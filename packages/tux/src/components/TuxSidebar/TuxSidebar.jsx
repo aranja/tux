@@ -1,47 +1,41 @@
-import React from 'react'
-import classNames from 'classnames'
-
-export interface State {
-  user : null | {
-    name : string
-    avatarUrl : string
-    spaceName : string
-  }
-}
-
-class TuxSidebar extends React.Component<any, State> {
-  static contextTypes = {
-    tux: React.PropTypes.object,
-  }
-
-  state : State = {
-    user: null,
-
-  }
-
-  async componentDidMount() {
-    const user = await this.context.tux.adapter.currentUser()
-
-    if (user) {
-      this.setState({
-        user: {
-          name: user.firstName,
-          avatarUrl: user.avatarUrl,
-          spaceName: user.space.name,
-        }
-      })
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+import React from 'react';
+import classNames from 'classnames';
+class TuxSidebar extends React.Component {
+    constructor() {
+        super(...arguments);
+        this.state = {
+            user: null,
+        };
+        this.login = () => {
+            this.context.tux.adapter.login();
+        };
     }
-  }
-
-  login = () => {
-    this.context.tux.adapter.login()
-  }
-
-  render() {
-    const { isEditing, overlayIsActive, onClickEdit } = this.props
-    const { user } = this.state
-    return (
-      <div className={classNames('TuxSidebar', overlayIsActive && 'has-overlay')}>
+    componentDidMount() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield this.context.tux.adapter.currentUser();
+            if (user) {
+                this.setState({
+                    user: {
+                        name: user.firstName,
+                        avatarUrl: user.avatarUrl,
+                        spaceName: user.space.name,
+                    }
+                });
+            }
+        });
+    }
+    render() {
+        const { isEditing, overlayIsActive, onClickEdit } = this.props;
+        const { user } = this.state;
+        return (<div className={classNames('TuxSidebar', overlayIsActive && 'has-overlay')}>
         <ul className="TuxSidebar-content">
           <div className="TuxSidebar-logo">Tux</div>
           <li>
@@ -50,11 +44,9 @@ class TuxSidebar extends React.Component<any, State> {
           <li><a href="/">Documentation</a></li>
           <li><a href="/">Tux on Github</a></li>
         </ul>
-        {user && (
-          <div className="TuxSidebar-user">
+        {user && (<div className="TuxSidebar-user">
             <a onClick={this.login} className="TuxSidebar-signInOut">{user ? 'Sign out' : 'Sign in'}</a>
-          </div>
-        )}
+          </div>)}
 
         <style jsx>{`
           .TuxSidebar {
@@ -149,9 +141,11 @@ class TuxSidebar extends React.Component<any, State> {
             color: #e8008a;
           }
         `}</style>
-      </div>
-    )
-  }
+      </div>);
+    }
 }
-
-export default TuxSidebar
+TuxSidebar.contextTypes = {
+    tux: React.PropTypes.object,
+};
+export default TuxSidebar;
+//# sourceMappingURL=TuxSidebar.jsx.map
