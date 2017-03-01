@@ -125,7 +125,14 @@ class ContentfulAdapter {
               console.log('setting version')
               locale.sys.version = 2
             }
-            await this.managementApi.saveAsset(locale)
+            await this.managementApi.saveAsset({
+              fields: {
+                file: {
+                  [localeName]: locale.fields
+                }
+              },
+              sys: locale.sys,
+            })
             foundAssets = true
           }
         }

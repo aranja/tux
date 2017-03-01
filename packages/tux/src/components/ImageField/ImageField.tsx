@@ -57,7 +57,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     const value = {
       contentType: 'image/jpeg',
       fileName: model.fields[id].asset.file.fileName,
-      upload: event.target.value
+      url: event.target.value
     }
 
     this.props.onChange(
