@@ -1,5 +1,6 @@
 import React from 'react'
 import { tuxColors } from '../../styles'
+import { fade } from '../../utils/color'
 import { InputStyles, buttonStyles } from './styles'
 
 interface Field {
@@ -23,36 +24,131 @@ export interface State {
   typeMeta: any | null
 }
 
+const TuxModalSpinner = () => (
+  <div className="Spinner">
+    <style jsx>{`
+      .Spinner {
+        animation: pulse 0.75s infinite;
+        animation-delay: 0.25s;
+        background: ${fade(tuxColors.colorPurple, 0.2)};
+        height: 36px;
+        margin: auto;
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        width: 8px;
+      }
+      .Spinner:before, .Spinner:after {
+        animation: pulse 0.75s infinite;
+        background: ${fade(tuxColors.colorPurple, 0.2)};
+        content: '';
+        display: block;
+        height: 24px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+      }
+      .Spinner:before {
+        left: -16px;
+      }
+      .Spinner:after {
+        left: 16px;
+        animation-delay: 0.5s;
+      }
+
+      @keyframes pulse {
+        50% {
+          background: ${fade(tuxColors.colorPurple, 0.7)};
+        }
+      }
+    `}</style>
+  </div>
+)
+
 const TextField = ({ id, value, label, helpText, onChange }: Field) => (
   <div className="Input">
-    <label className="InputLabel">{label}</label>
+    <label className="InputLabel">{label}:</label>
     <input className="InputField" label={label} id={id} value={value} onChange={onChange}/>
     <style jsx>{`
+      .Input {
+        display: flex;
+        border-radius: 3px;
+        align-items: center;
+        background: #FFF;
+        border: 1px solid ${InputStyles.borderColor};
+        margin: 20px 0;
+        padding: 5px;
+      }
       .InputLabel {
         color: ${InputStyles.labelTextColor};
-        font-size: 14px;
+        font-size: 16px;
         line-height: 24px;
+        margin: 0 8px;
+        font-weight: 300;
+        text-transform: capitalize;
       }
       .InputField {
-        border-radius: 3px;
-        border: 1px solid ${InputStyles.borderColor};
+        font-size: 16px;
         color: ${tuxColors.textDark};
+        border: none;
+        background: none;
         margin: 5px 0;
-        padding: 10px;
         width: 100%;
       }
       `}</style>
     </div>
   )
 
-const MarkdownField = TextField
+  const MarkdownField = ({ id, value, label, helpText, onChange }: Field) => (
+    <div className="MarkdownField">
+      <label className="MarkdownField-label">{label}:</label>
+      <textarea rows="12" className="MarkdownField-textArea" label={label} id={id} value={value} onChange={onChange}/>
+      <style jsx>{`
+        .MarkdownField {
+          align-items: baseline;
+          background: #FFF;
+          border-radius: 3px;
+          border: 1px solid ${InputStyles.borderColor};
+          display: flex;
+          flex-direction: column;
+          margin: 20px 0;
+          padding: 5px;
+        }
+
+        .MarkdownField-textArea {
+          background: none;
+          border: none;
+          color: ${tuxColors.textDark};
+          font-size: 16px;
+          width: 100%;
+        }
+
+        .MarkdownField-label {
+          color: ${InputStyles.labelTextColor};
+          font-size: 16px;
+          line-height: 24px;
+          margin: 0 8px;
+          margin-bottom: 8px;
+          text-transform: capitalize;
+          font-weight: 300;
+        }
+      `}</style>
+      </div>
+    )
 
 function componentForField({ id, type, control: { widgetId } }: FieldComponent) {
   if (type === 'Array')
     return null
   if (widgetId === 'markdown') {
     return MarkdownField
-  } else {
+  }
+  if (widgetId === 'datePicker') {
+    return TextField
+  }
+  if (widgetId === 'boolean') {
+    return TextField
+  }
+  else {
     return TextField
   }
 }
@@ -139,7 +235,7 @@ class TuxModal extends React.Component<any, State> {
             </div>
           </form>
         ) : (
-          'Loading'
+          <TuxModalSpinner />
         )}
         <style jsx>{`
 
@@ -150,6 +246,7 @@ class TuxModal extends React.Component<any, State> {
             max-width: 60%;
             height: 100%;
             padding: 30px;
+            position: relative;
           }
 
           .TuxModal-topBar {

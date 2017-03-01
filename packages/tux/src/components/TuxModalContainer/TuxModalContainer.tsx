@@ -58,7 +58,7 @@ class ModalContainer extends React.Component<any, State> {
 
         <ReactCSSTransitionGroup
           transitionName="ModalTransition"
-          transitionEnterTimeout={300}
+          transitionEnterTimeout={400}
           transitionLeaveTimeout={300}
         >
           {modals.map(({ element, id, onClose }) =>
@@ -82,7 +82,7 @@ class ModalContainer extends React.Component<any, State> {
             opacity: 0;
             position: fixed;
             top: 0;
-            transition: opacity 0.3s, visibility 0.3s 0.3s;
+            transition: opacity 0.3s, visibility 0 0.3s;
             visibility: hidden;
             width: 100%;
           }
@@ -91,6 +91,7 @@ class ModalContainer extends React.Component<any, State> {
             opacity: 1;
             transition-delay: 0s;
             visibility: visible;
+            transition: opacity 1s cubic-bezier(.11,.37,.83,.99);
           }
 
           .ModalContainer-scroll {
@@ -111,12 +112,12 @@ class ModalContainer extends React.Component<any, State> {
           .ModalTransition-enter {
             opacity: 0;
             transform: translateX(100%);
-            transition: opacity 0.3s, transform 0.3s ease-in-out;
           }
 
           .ModalTransition-enter-active {
             opacity: 1;
-            transform: none;
+            transform: translateX(0);
+            transition: opacity 0.2s ease-in, transform 0.4s cubic-bezier(.11,.37,.83,.99);
           }
 
           .ModalTransition-leave {
