@@ -1,9 +1,5 @@
 import { timeSince } from './time'
 
-// afterEach(() => {
-//
-// })
-
 test('Convert a date', () => {
   const time = new Date()
   expect(timeSince(time)).toEqual('0 seconds')
