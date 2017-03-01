@@ -1,6 +1,7 @@
 import React from 'react'
 import { tuxColors } from '../../styles'
 import { fade } from '../../utils/color'
+import { timeSince } from '../../utils/time'
 import { InputStyles, buttonStyles } from './styles'
 
 interface Field {
@@ -37,7 +38,7 @@ const TuxModalSpinner = () => (
         top: 0; right: 0; bottom: 0; left: 0;
         width: 8px;
       }
-      .Spinner:before, .Spinner:after {
+      .Spinner::before, .Spinner::after {
         animation: pulse 0.75s infinite;
         background: ${fade(tuxColors.colorPurple, 0.2)};
         content: '';
@@ -48,10 +49,10 @@ const TuxModalSpinner = () => (
         transform: translateY(-50%);
         width: 8px;
       }
-      .Spinner:before {
+      .Spinner::before {
         left: -16px;
       }
-      .Spinner:after {
+      .Spinner::after {
         left: 16px;
         animation-delay: 0.5s;
       }
@@ -200,9 +201,10 @@ class TuxModal extends React.Component<any, State> {
   }
 
   renderField = (type: any) => {
+    const { fullModel } = this.state
     const helpText = type.control.settings && type.control.settings.helpText
     const InputComponent = componentForField(type)
-    const field = this.state.fullModel.fields[type.id]
+    const field = fullModel.fields[type.id]
     const value = field && field['en-US']
 
     if (!InputComponent) {
@@ -218,7 +220,6 @@ class TuxModal extends React.Component<any, State> {
 
   render() {
     const { fullModel, typeMeta } = this.state
-
     return (
       <div className="TuxModal">
         {fullModel ? (
@@ -227,32 +228,44 @@ class TuxModal extends React.Component<any, State> {
               <h1 className="TuxModal-title">Editing component <strong className="TuxModal-componentName">{typeMeta.name}</strong></h1>
               <div className="TuxModal-buttons">
                 <button className="TuxModal-button" label="Cancel" onClick={this.onCancel}>Cancel</button>
-                <button className="TuxModal-button TuxModal-button--green" type="submit" label="Save">Save</button>
+                <button className="TuxModal-button TuxModal-button--green" type="submit" label="Save">Update</button>
               </div>
             </div>
             <div className="TuxModal-content">
               {typeMeta.fields.map(this.renderField)}
+            </div>
+            <div className="TuxModal-meta">
+              <p className="TuxModal-metaLastUpdated">Last updated {timeSince(new Date(fullModel.sys.updatedAt))} ago</p>
             </div>
           </form>
         ) : (
           <TuxModalSpinner />
         )}
         <style jsx>{`
-
           .TuxModal {
             background: #F3F5F7;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             margin-left: auto;
-            max-width: 60%;
+            max-width: 800px;
             height: 100%;
             padding: 30px;
             position: relative;
+            width: 60%;
           }
 
           .TuxModal-topBar {
             display: flex;
             justify-content: space-between;
-            padding-bottom: 20px;
+            padding-bottom: 10px;
+          }
+
+          .TuxModal-meta {
+            text-align: right;
+          }
+
+          .TuxModal-metaLastUpdated {
+            color: ${fade(tuxColors.textGray, 0.5)};
+            font-weight: 300;
           }
 
           .TuxModal-title {
