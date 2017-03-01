@@ -100,6 +100,8 @@ export class ContentfulAdapter {
     if (model.fields) {
       await this._saveAssets(model.fields)
     }
+    await this.managementApi.saveEntry(model)
+    this.triggerChange()
   }
 
   async _saveAssets(fields : any) {

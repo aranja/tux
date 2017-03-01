@@ -1,6 +1,9 @@
 import React from 'react'
 import classNames from 'classnames'
 
+import { InputStyles } from '../../styles'
+import TextField from '../TextField'
+
 const BrowseField = ({ id, value, label, helpText, onChange } : any) => (
   <RaisedButton
     className="TuxModal-saveBtn"
@@ -43,21 +46,21 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     this.setState({ isToggled: !isToggled})
   }
 
-  onUrlChange = (event : React.ChangeEvent<any>, type : {id : string}) => {
+  onUrlChange = (value : any, type : {id : string}) => {
     const { id, model } = this.props
 
     this.setState({
-      newImageValue: event.target.value
+      newImageValue: value,
     })
 
-    const value = {
+    const fields = {
       contentType: 'image/jpeg',
       fileName: model.fields[id].asset.file.fileName,
-      url: event.target.value
+      url: value,
     }
 
     this.props.onChange(
-      value,
+      fields,
       type,
     )
   }
@@ -69,9 +72,13 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     const imageField = model.fields[id]
     if (imageField) {
       return (
-        <div>
-          <div>
-            <h2>{name} <small>(click image to edit)</small></h2>
+        <div style={{
+          display: 'flex',
+        }}>
+          <div style={{
+            flex: 1,
+          }}>
+            <label className="InputLabel">{name} <small>(click image to edit)</small></label>
             <img
               alt={imageField.asset.file.title}
               width="200"
@@ -79,16 +86,27 @@ class ImageField extends React.Component<ImageFieldProps, any> {
               src={`${imageField.asset.file.url}?w=200&h=200`}
               onClick={this.onCardClick}
             />
+          </div>
+          <div style={{
+            flex: 1,
+          }}>
             {isToggled ? (
-              <input
-                className="InputField"
+              <TextField
+                helpText="URL to image"
                 id={id}
-                label="New image URL"
+                label={`New image for ${name}`}
                 onChange={this.onUrlChange}
                 value={newImageValue}
               />
             ) : null}
           </div>
+          <style jsx>{`
+            .InputLabel {
+              color: ${InputStyles.labelTextColor};
+              font-size: 14px;
+              line-height: 24px;
+            }
+          `}</style>
         </div>
       )
     }

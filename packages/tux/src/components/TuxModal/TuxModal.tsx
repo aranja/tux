@@ -1,16 +1,8 @@
 import React from 'react'
-import { tuxColors } from '../../styles'
-import { InputStyles, buttonStyles } from './styles'
+import { InputStyles, buttonStyles, tuxColors } from '../../styles'
 
 import ImageField from '../ImageField'
-
-interface Field {
-  id: string
-  value: string
-  label: string
-  helpText: string
-  onChange: (value: any, type : {id : string}) => void
-}
+import TextField from '../TextField'
 
 interface FieldComponent {
   id: string
@@ -24,34 +16,6 @@ export interface State {
   fullModel: any | null
   typeMeta: any | null
 }
-
-const TextField = ({ id, value, label, helpText, onChange }: Field) => (
-  <div className="Input">
-    <label className="InputLabel">{label}</label>
-    <input
-      className="InputField"
-      id={id}
-      label={label}
-      onChange={(event) => onChange(event.target.value, { id })}
-      value={value}
-    />
-    <style jsx>{`
-      .InputLabel {
-        color: ${InputStyles.labelTextColor};
-        font-size: 14px;
-        line-height: 24px;
-      }
-      .InputField {
-        border-radius: 3px;
-        border: 1px solid ${InputStyles.borderColor};
-        color: ${tuxColors.textDark};
-        margin: 5px 0;
-        padding: 10px;
-        width: 100%;
-      }
-      `}</style>
-    </div>
-  )
 
 const MarkdownField = TextField
 
@@ -97,7 +61,13 @@ class TuxModal extends React.Component<any, State> {
   onChange(value : any, type : {id : string}) {
     const { fullModel } = this.state
     const field = fullModel.fields[type.id]
-    field['en-US'].fields = value
+
+    // If field has a sys property then it's a linked model
+    if (field['en-US'].sys) {
+      field['en-US'].fields = value
+    } else {
+      field['en-US'] = value
+    }
     this.setState({fullModel})
   }
 
