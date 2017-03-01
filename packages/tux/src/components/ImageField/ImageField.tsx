@@ -1,9 +1,5 @@
-import React = require('react')
-import classNames = require('classnames')
-
-import RaisedButton from 'material-ui/RaisedButton'
-import {Card, CardHeader, CardText, CardMedia} from 'material-ui/Card'
-import MaterialTextField from 'material-ui/TextField'
+import React from 'react'
+import classNames from 'classnames'
 
 const BrowseField = ({ id, value, label, helpText, onChange } : any) => (
   <RaisedButton
@@ -74,31 +70,25 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     if (imageField) {
       return (
         <div>
-          <Card>
-            <CardHeader
-              subtitle={name}
+          <div>
+            <h2>{name} <small>(click image to edit)</small></h2>
+            <img
+              alt={imageField.asset.file.title}
+              width="200"
+              height="200"
+              src={`${imageField.asset.file.url}?w=200&h=200`}
+              onClick={this.onCardClick}
             />
-            <CardMedia>
-              <img
-                alt={imageField.asset.file.title}
-                width="200"
-                height="200"
-                src={`${imageField.asset.file.url}?w=200&h=200`}
-                onClick={this.onCardClick}
+            {isToggled ? (
+              <input
+                className="InputField"
+                id={id}
+                label="New image URL"
+                onChange={this.onUrlChange}
+                value={newImageValue}
               />
-            </CardMedia>
-            <CardText>
-              {isToggled ? (
-                <MaterialTextField
-                  floatingLabelText="New image URL"
-                  hintText="www.example.com/image.jpg"
-                  value={newImageValue}
-                  id={id}
-                  onChange={this.onUrlChange}
-                />
-              ) : <p>Click image to edit</p>}
-            </CardText>
-          </Card>
+            ) : null}
+          </div>
         </div>
       )
     }

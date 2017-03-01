@@ -1,13 +1,37 @@
 import axios from 'axios'
 import { AxiosInstance } from 'axios';
 
-class QueryApi {
-  private overrides : {
-    [id : string] : any,
+// TODO: Fill in
+export interface ContentfulJsonItem {
+  sys: {
+    id: string,
+    updatedAt: string,
   }
-  private client : AxiosInstance
+}
+export interface ContentfulJsonEntry extends ContentfulJsonItem {
+  fields: any
+}
+export interface ContentfulJsonAsset extends ContentfulJsonItem {
+}
+export interface ContentfulQueryResponse {
+  items: ContentfulJsonItem[],
+  includes: {
+    Asset?: ContentfulJsonAsset[],
+    Entry?: ContentfulJsonEntry[],
+  },
+  total: number,
+}
+type LinkMap = {
+  [id: string]: ContentfulJsonItem,
+}
 
-  constructor(space : string, accessToken : string, subDomain : string) {
+class QueryApi {
+  private overrides: {
+    [id: string]: any,
+  }
+  private client: AxiosInstance
+
+  constructor(space: string, accessToken: string, subDomain: string) {
     this.overrides = {}
     this.client = axios.create({
       baseURL: `https://${subDomain}.contentful.com/spaces/${space}`,
@@ -17,23 +41,23 @@ class QueryApi {
     })
   }
 
-  async getEntries(params? : Object) {
-    const result = await this.client.get('/entries', { params }).then(result => result.data)
+  async getEntries(params?: Object) {
+    const result: ContentfulQueryResponse = await this.client.get('/entries', { params }).then(result => result.data)
     result.items = result.items.map(this.checkOverride)
     this.linkIncluded(result)
     return result
   }
 
-  async getEntry(id : string) {
+  async getEntry(id: string) {
     const entry = await this.client.get(`/entries/${id}`).then(result => result.data)
     return this.checkOverride(entry)
   }
 
-  override(entry : any) {
+  override(entry: any) {
     this.overrides[entry.sys.id] = entry
   }
 
-  populateLinks(links, linkMap) {
+  private populateLinks(links: ContentfulJsonItem[], linkMap: LinkMap) {
     for (const asset of links) {
       if (asset.sys) {
         linkMap[asset.sys.id] = this.checkOverride(asset).fields
@@ -41,12 +65,13 @@ class QueryApi {
     }
   }
 
-  linkIncluded(result) {
-    const linkMap = {}
+  private linkIncluded(result: ContentfulQueryResponse) {
+    const linkMap: LinkMap = {}
 
     // Find included models
-    for (const entryType in result.includes) {
-      this.populateLinks(result.includes[entryType], linkMap)
+    if (result.includes) {
+      this.populateLinks(result.includes.Asset || [], linkMap)
+      this.populateLinks(result.includes.Entry || [], linkMap)
     }
 
     // Add included models to items
@@ -55,7 +80,7 @@ class QueryApi {
     }
   }
 
-  linkFields(item, linkMap) {
+  private linkFields(item: any, linkMap: LinkMap) {
     if (!item) {
       return
     }
@@ -70,14 +95,14 @@ class QueryApi {
       }
       return
     } else if (isArray) {
-      item.forEach(subItem => this.linkFields(subItem, linkMap))
+      item.forEach((subItem: ContentfulJsonItem) => this.linkFields(subItem, linkMap))
     } else {
       const fieldNames = Object.keys(item.fields)
       fieldNames.forEach(fieldName => this.linkFields(item.fields[fieldName], linkMap))
     }
   }
 
-  checkOverride = (entry : any) => {
+  private checkOverride = (entry: ContentfulJsonItem) => {
     const other = this.overrides[entry.sys.id]
     if (other && other.sys.updatedAt > entry.sys.updatedAt) {
       return other

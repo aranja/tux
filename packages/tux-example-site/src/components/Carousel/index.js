@@ -1,15 +1,8 @@
 import React from 'react'
+import { Editable } from 'tux'
 import classNames from 'classnames'
-import Image1 from './Image1.jpg'
-import Image2 from './Image2.jpg'
-import Image3 from './Image3.jpg'
-import './styles.css'
 
-const defaultData = [
-  {image: Image1, title: 'Users First', copy: 'Persius laboramus pro in. Mutat harum nam ei. Eam in graeco offendit. Reque saepe nusquam qui ea, ad nonumy causae molestie nam. Alia vocibus invidunt in mea. Sit albucius conclusionemque ea, sea oblique posidonium ad'},
-  {image: Image2, title: 'Server Side Rendering', copy: 'Molestiae ratione doloremque nam nostrum temporibus at harum ipsa consequuntur alias dolor. Facere ex ipsam vero ipsa possimus, accusamus debitis perspiciatis eius nam suscipit! Architecto nam tempora omnis quaerat incidunt minus laudantium exercitationem soluta impedit ducimus expedita ipsum cumque, voluptates quas ea?'},
-  {image: Image3, title: 'Inline Editing', copy: 'Accusamus modi perferendis iste, labore voluptates ut asperiores voluptatibus qui architecto, soluta. Dolore cumque maiores expedita dignissimos laborum, nemo beatae ipsa rem! Voluptates temporibus modi, quam enim sapiente iste ab quisquam minima nihil, ad officia ea omnis numquam consectetur. Vero architecto, neque! Commodi laborum nobis nesciunt natus mollitia eos ad eum accusamus unde quod esse et pariatur assumenda voluptates.'}
-]
+import './styles.css'
 
 class Carousel extends React.Component {
 
@@ -22,30 +15,30 @@ class Carousel extends React.Component {
   }
 
   render() {
-    const { data = defaultData } = this.props
+    const { carouselItems } = this.props
 
     return (
-      <div className="Carousels">
-        {data && data.map((data, index) => {
+      <div className="Carousel">
+        {carouselItems && carouselItems.map((item, index) => {
           const isActive = index === this.state.currentIndex
 
           return (
-            <div key={data.title} className={classNames('Carousel', isActive && 'is-active')}>
-              <div className="Carousel-image" style={{backgroundImage: `url(${data.image})`}}></div>
-              <div className="Carousel-body">
-                <h1 className="Carousel-title">{data.title}</h1>
-                <p className="Carousel-copy">{data.copy}</p>
+            <Editable key={item.fields.title} model={item} className={classNames('Carousel-item', isActive && 'is-active')}>
+              <div className="Carousel-itemImage" style={{backgroundImage: `url(${item.fields.image.asset.file.url})`}}></div>
+              <div className="Carousel-itemBody">
+                <h1 className="Carousel-itemTitle">{item.fields.title}</h1>
+                <p className="Carousel-itemCopy">{item.fields.text}</p>
               </div>
-            </div>
+            </Editable>
           )
         })}
 
-        <div className="Carousel-indicators" style={{width: `${data.length*1.5}rem`}}>
-          {(data && data.map((data, index) => {
+        <div className="Carousel-indicator" style={{width: `${carouselItems && carouselItems.length*1.5}rem`}}>
+          {(carouselItems && carouselItems.map((item, index) => {
             const isActive = index === this.state.currentIndex
 
             return (
-              <div key={index} className={classNames('Carousel-indicator', isActive && 'is-active')} onClick={this.onDotClick(index)}></div>
+              <div key={index} className={classNames('Carousel-indicatorDot', isActive && 'is-active')} onClick={this.onDotClick(index)}></div>
             )
           }))}
         </div>

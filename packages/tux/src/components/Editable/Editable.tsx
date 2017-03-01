@@ -1,13 +1,13 @@
-import React = require('react')
-import classNames = require('classnames')
+import React from 'react'
 import EditableInline from './EditableInline'
 import EditableModal from './EditableModal'
 
 export interface EditableProps {
-  model : any,
-  field : string | Array<string>,
-  onChange : Function,
-  children : any,
+  model: any,
+  field: string | Array<string>,
+  onChange: Function,
+  children: any,
+  className: string,
 }
 
 class Editable extends React.Component<EditableProps, any> {
@@ -16,7 +16,7 @@ class Editable extends React.Component<EditableProps, any> {
   }
 
   render() {
-    const { children, field, model, onChange } = this.props
+    const { children, field, model, onChange, className } = this.props
     const isEditing = this.context.tux && this.context.tux.isEditing
 
     if (field) {
@@ -24,7 +24,7 @@ class Editable extends React.Component<EditableProps, any> {
     }
 
     return (
-      <EditableModal model={model} onChange={onChange}>
+      <EditableModal className={className} model={model} onChange={onChange}>
         {children}
       </EditableModal>
     )

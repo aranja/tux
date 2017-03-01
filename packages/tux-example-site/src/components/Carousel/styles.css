@@ -1,22 +1,24 @@
-.Carousels {
+.Carousel {
+  min-height: 500px;
   position: relative;
-  height: 500px;
   width: 100%;
 }
 
-.Carousel {
+.Carousel-item {
   display: flex;
   justify-content: space-between;
   opacity: 0;
   position: absolute;
   width: 100%;
   will-change: opacity;
+  z-index: 1;
 }
-.Carousel.is-active {
+.Carousel-item.is-active {
   opacity: 1;
+  z-index: 2;
 }
 
-.Carousel-image {
+.Carousel-itemImage {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -31,12 +33,12 @@
   will-change: transform, opacity;
 }
 
-.Carousel.is-active .Carousel-image {
+.Carousel-item.is-active .Carousel-itemImage {
   transform: translateX(0);
   opacity: 1;
 }
 
-.Carousel-body {
+.Carousel-itemBody {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,31 +49,32 @@
   will-change: opacity;
 }
 
-.Carousel.is-active .Carousel-body {
+.Carousel-item.is-active .Carousel-itemBody {
   opacity: 1;
 }
 
-.Carousel-title {
+.Carousel-itemTitle {
   color: #000;
   font-size: 2.5rem;
   font-weight: 200;
   padding-bottom: 1em;
 }
 
-.Carousel-copy {
+.Carousel-itemCopy {
   font-size: 1.375rem;
   font-weight: 200;
 }
 
-.Carousel-indicators {
-  position: absolute;
+.Carousel-indicator {
   bottom: -1rem;
-  right: 0;
   display: flex;
   justify-content: space-around;
+  position: absolute;
+  right: 0;
+  z-index: 3;
 }
 
-.Carousel-indicator {
+.Carousel-indicatorDot {
   background: #e6e6e6;
   border-radius: 50%;
   cursor: pointer;
@@ -80,6 +83,6 @@
   width: 1rem;
 }
 
-.Carousel-indicator.is-active {
+.Carousel-indicatorDot.is-active {
   background: #e8008a;
 }

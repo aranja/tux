@@ -1,18 +1,24 @@
 {
+  "compilerOptions": "// COMMENT - This file is just a template. gulp-typescript does not support extends.",
   "compilerOptions": {
-    "declaration": true,
-    "noImplicitAny": true,
-    "removeComments": false,
-    "preserveConstEnums": true,
-    "strictNullChecks": true,
     "allowSyntheticDefaultImports": true,
-    "module": "commonjs",
-    "target": "es5",
-    "sourceMap": true
+    "declaration": true,
+    "jsx": "preserve",
+    "lib": ["es2015", "dom"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "target": "es6"
   },
-  "compileOnSave": true,
+  "compileOnSave": false,
   "exclude": [
-    "**/*.spec.tsx",
-    "**/*.spec.ts"
+    "**/*.spec.{ts,tsx}"
+  ],
+  "include": [
+    "./src"
   ]
 }

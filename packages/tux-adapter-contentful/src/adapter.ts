@@ -1,23 +1,23 @@
 import QueryApi from './query-api'
 import ManagementApi from './management-api'
 
-interface Config {
-  space : string
-  deliveryToken : string
-  clientId : string
-  redirectUri : string
+export interface Config {
+  space: string
+  deliveryToken: string
+  clientId: string
+  redirectUri: string
 }
 
-class ContentfulAdapter {
-  private space : string
-  private clientId : string
-  private redirectUri : string
-  private deliveryApi : QueryApi
-  private previewApi : any
-  private managementApi : ManagementApi | null
-  private listeners : Array<Function>
+export class ContentfulAdapter {
+  private space: string
+  private clientId: string
+  private redirectUri: string
+  private deliveryApi: QueryApi
+  private previewApi: any
+  private managementApi: ManagementApi | null
+  private listeners: Array<Function>
 
-  constructor({space, deliveryToken, clientId, redirectUri} : Config) {
+  constructor({space, deliveryToken, clientId, redirectUri}: Config) {
     this.space = space
     this.clientId = clientId
     this.redirectUri = redirectUri
@@ -32,7 +32,7 @@ class ContentfulAdapter {
     this.listeners.forEach(fn => fn())
   }
 
-  addChangeListener(fn : Function) {
+  addChangeListener(fn: Function) {
     this.listeners.push(fn)
     return () => {
       this.listeners = this.listeners.filter(listener => listener !== fn)
@@ -85,44 +85,32 @@ class ContentfulAdapter {
     return this.previewApi || this.deliveryApi
   }
 
-  getSchema(model : any) {
+  getSchema(model: any) {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }
     return this.managementApi.getTypeMeta(model.sys.contentType.sys.id)
   }
 
-  async save(model : any) {
+  async save(model: any) {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in to save.')
     }
-    // const newModel = await this.managementApi.saveEntry(model)
-    // this.triggerChange()
-    // return newModel
-    console.log('Looking for assets to save ...')
-    console.log(model)
+
     if (model.fields) {
       await this._saveAssets(model.fields)
     }
-    console.log('Done')
-    return
   }
 
   async _saveAssets(fields : any) {
-    console.log('saveAssets: enter')
     for (const fieldName of Object.keys(fields)) {
       const field = fields[fieldName]
-      console.log(`Looking at ${fieldName}`)
       let foundAssets = false
       for (const localeName of Object.keys(field)) {
-        console.log(`Locale: ${localeName}`)
         const locale = field[localeName]
         if (locale.sys) {
-          console.log(`Found a sys property`)
           if (locale.fields) {
-            console.log('Had fields, saving asset')
             if (!locale.sys.version) {
-              console.log('setting version')
               locale.sys.version = 2
             }
             await this.managementApi.saveAsset({
@@ -203,6 +191,6 @@ class ContentfulAdapter {
   }
 }
 
-export default function createContentfulAdapter(config : Config) {
+export default function createContentfulAdapter(config: Config) {
   return new ContentfulAdapter(config)
 }

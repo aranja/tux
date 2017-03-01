@@ -1,57 +1,61 @@
-import React = require('react')
-import MaterialTextField from 'material-ui/TextField'
-import FlatButton from 'material-ui/FlatButton'
-import RaisedButton from 'material-ui/RaisedButton'
+import React from 'react'
+import { tuxColors } from '../../styles'
+import { InputStyles, buttonStyles } from './styles'
 
 import ImageField from '../ImageField'
 
 interface Field {
-  id : string
-  value : string
-  label : string
-  helpText : string
-  onChange : (e : React.FormEvent<any>) => void
+  id: string
+  value: string
+  label: string
+  helpText: string
+  onChange: (value: any, type : {id : string}) => void
 }
 
 interface FieldComponent {
-  id : string
-  type : string
-  control : {
-    widgetId : string
+  id: string
+  type: string
+  control: {
+    widgetId: string
   }
 }
 
 export interface State {
-  fullModel : any | null
-  typeMeta : any | null
+  fullModel: any | null
+  typeMeta: any | null
 }
 
-const MarkdownField = ({ id, value, label, helpText, onChange } : Field) => (
-  <MaterialTextField
-    floatingLabelText={label}
-    hintText={helpText}
-    id={id}
-    multiLine={true}
-    onChange={(event) => onChange(event.target.value)}
-    rows={3}
-    value={value}
-  />
-)
+const TextField = ({ id, value, label, helpText, onChange }: Field) => (
+  <div className="Input">
+    <label className="InputLabel">{label}</label>
+    <input
+      className="InputField"
+      id={id}
+      label={label}
+      onChange={(event) => onChange(event.target.value, { id })}
+      value={value}
+    />
+    <style jsx>{`
+      .InputLabel {
+        color: ${InputStyles.labelTextColor};
+        font-size: 14px;
+        line-height: 24px;
+      }
+      .InputField {
+        border-radius: 3px;
+        border: 1px solid ${InputStyles.borderColor};
+        color: ${tuxColors.textDark};
+        margin: 5px 0;
+        padding: 10px;
+        width: 100%;
+      }
+      `}</style>
+    </div>
+  )
 
-const TextField = ({ id, value, label, helpText, onChange } : Field) => (
-  <MaterialTextField
-    floatingLabelText={label}
-    hintText={helpText}
-    id={id}
-    onChange={(event) => onChange(event.target.value)}
-    value={value}
-  />
-)
+const MarkdownField = TextField
 
-// className="TuxModal-saveBtn" type="submit" primary={true} label="Save"
-
-function componentForField({ id, type, control: { widgetId } } : FieldComponent) {
-  console.log(`componentForField: ${id} | ${type} | ${widgetId}`)
+function componentForField({ id, type, control: { widgetId } }: FieldComponent) {
   if (type === 'Array')
     return null
   if (widgetId === 'markdown') {
@@ -68,7 +72,7 @@ class TuxModal extends React.Component<any, State> {
     tux: React.PropTypes.object,
   }
 
-  state : State = {
+  state: State = {
     fullModel: null,
     typeMeta: null,
   }
@@ -101,7 +105,7 @@ class TuxModal extends React.Component<any, State> {
     this.props.onClose()
   }
 
-  onSubmit = async(event : React.FormEvent<any>) => {
+  onSubmit = async(event: React.FormEvent<any>) => {
     event.preventDefault()
 
     const { fullModel } = this.state
@@ -109,7 +113,7 @@ class TuxModal extends React.Component<any, State> {
     this.props.onClose(true)
   }
 
-  renderField = (type : any) => {
+  renderField = (type: any) => {
     const helpText = type.control.settings && type.control.settings.helpText
     const InputComponent = componentForField(type)
     const field = this.state.fullModel.fields[type.id]
@@ -123,9 +127,9 @@ class TuxModal extends React.Component<any, State> {
         <InputComponent
           helpText={helpText}
           id={type.id}
-          name={type.name}
           label={type.name}
           model={this.props.model}
+          name={type.name}
           onChange={event => this.onChange(event, type)}
           value={value}
         />
@@ -135,33 +139,51 @@ class TuxModal extends React.Component<any, State> {
 
   render() {
     const { fullModel, typeMeta } = this.state
+
     return (
       <div className="TuxModal">
         {fullModel ? (
           <form onSubmit={this.onSubmit}>
-            <h1 className="TuxModal-title">{`Edit ${typeMeta.name.toLowerCase()}`}</h1>
-            {typeMeta.fields.map(this.renderField)}
-            <div className="TuxModal-buttons">
-              <FlatButton label="Cancel" onClick={this.onCancel}/>
-              <RaisedButton className="TuxModal-saveBtn" type="submit" primary={true} label="Save" />
+            <div className="TuxModal-topBar">
+              <h1 className="TuxModal-title">Editing component <strong className="TuxModal-componentName">{typeMeta.name}</strong></h1>
+              <div className="TuxModal-buttons">
+                <button className="TuxModal-button" label="Cancel" onClick={this.onCancel}>Cancel</button>
+                <button className="TuxModal-button TuxModal-button--green" type="submit" label="Save">Save</button>
+              </div>
+            </div>
+            <div className="TuxModal-content">
+              {typeMeta.fields.map(this.renderField)}
             </div>
           </form>
         ) : (
           'Loading'
         )}
         <style jsx>{`
+
           .TuxModal {
-            background: #fff;
+            background: #F3F5F7;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
+            margin-left: auto;
+            max-width: 60%;
+            height: 100%;
             padding: 30px;
           }
 
+          .TuxModal-topBar {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 20px;
+          }
+
           .TuxModal-title {
-            color: rgba(0, 0, 0, 0.870588);
-            font-size: 1.6em;
+            color: ${tuxColors.textDark};
+            font-size: 25px;
             font-weight: 400;
             margin: 0;
+          }
+
+          .TuxModal-componentName {
+            text-transform: capitalize;
           }
 
           .TuxModal-buttons {
@@ -169,8 +191,30 @@ class TuxModal extends React.Component<any, State> {
             justify-content: flex-end;
           }
 
-          .TuxModal-saveBtn {
-            margin-left: 0.5em;
+          .TuxModal-button {
+            background: ${buttonStyles.backgroundColor};
+            border-radius: 2px;
+            border: 1px solid ${buttonStyles.borderColor};
+            color: ${buttonStyles.textColor};
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.3;
+            margin: 0;
+            padding: 10px 24px;
+            text-align: center;
+            vertical-align: baseline;
+          }
+
+          .TuxModal-button + .TuxModal-button {
+            margin-left: 10px;
+          }
+
+          .TuxModal-button.TuxModal-button--green {
+            color: #FFF;
+            background: ${buttonStyles.greenTheme.backgroundColor};
+            border-color: ${buttonStyles.greenTheme.borderColor};
           }
 
           .TuxModal-fileInput {
