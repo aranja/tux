@@ -19,5 +19,7 @@ test('Return a string when handed a readable date string', () => {
 
 test('Throw an error when handed an invalid input', () => {
   const invalidInput = 'Hey Siri, what time is it?'
-  expect(timeSince(new Date(invalidInput))).toThrowError('Invalid input.')
+  expect(
+    () => timeSince(new Date(invalidInput))
+  ).toThrowError('Invalid input.')
 })
