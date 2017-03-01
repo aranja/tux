@@ -271,7 +271,7 @@ class TuxModal extends React.Component<any, State> {
           .TuxModal-title {
             color: ${tuxColors.textDark};
             font-size: 25px;
-            font-weight: 400;
+            font-weight: 300;
             margin: 0;
           }
 
