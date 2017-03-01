@@ -63,7 +63,12 @@ class TuxProvider extends Component<TuxProviderProps, any> {
 
     return (
       <div className="TuxProvider">
-        <TuxSidebar isEditing={isEditing} sidebarIsActive={sidebarIsActive} overlayIsActive={overlayIsActive} onClickEdit={this.onClickEdit} />
+        <TuxSidebar
+          isEditing={isEditing}
+          sidebarIsActive={sidebarIsActive}
+          overlayIsActive={overlayIsActive}
+          onClickEdit={this.onClickEdit}
+        />
         {this.props.children}
         <ModalContainer />
       </div>

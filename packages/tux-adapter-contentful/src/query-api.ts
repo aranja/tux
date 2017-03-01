@@ -42,7 +42,8 @@ class QueryApi {
   }
 
   async getEntries(params?: Object) {
-    const result: ContentfulQueryResponse = await this.client.get('/entries', { params }).then(result => result.data)
+    const result: ContentfulQueryResponse = await this.client.get('/entries', { params })
+      .then(result => result.data)
     result.items = result.items.map(this.checkOverride)
     this.linkIncluded(result)
     return result

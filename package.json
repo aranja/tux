@@ -4,7 +4,7 @@
   "scripts": {
     "start": "cd packages/tux-example-site && npm start",
     "postinstall": "lerna bootstrap",
-    "lint": "tslint -c './tslint.json' -e './packages/**/node_modules/**/*' -e './packages/**/lib/**/*' './packages/**/*.{ts,tsx}'",
+    "lint": "tslint -c './tslint.json' -e './packages/**/node_modules/**/*' -e './packages/**/es/**/*' -e './packages/**/lib/**/*' './packages/**/*.{ts,tsx}'",
     "lerna": "lerna",
     "bootstrap": "lerna bootstrap",
     "watch": "lerna run watch",

@@ -104,7 +104,14 @@ const TextField = ({ id, value, label, helpText, onChange }: Field) => (
   const MarkdownField = ({ id, value, label, helpText, onChange }: Field) => (
     <div className="MarkdownField">
       <label className="MarkdownField-label">{label}:</label>
-      <textarea rows="12" className="MarkdownField-textArea" label={label} id={id} value={value} onChange={onChange}/>
+      <textarea
+        rows={12}
+        className="MarkdownField-textArea"
+        label={label}
+        id={id}
+        value={value}
+        onChange={onChange}
+      />
       <style jsx>{`
         .MarkdownField {
           align-items: baseline;
@@ -205,8 +212,13 @@ class TuxModal extends React.Component<any, State> {
     }
     return (
       <div key={type.id}>
-        <InputComponent id={type.id} value={value} label={type.name} helpText={helpText}
-                        onChange={event => this.onChange(event, type)}/>
+        <InputComponent
+          id={type.id}
+          value={value}
+          label={type.name}
+          helpText={helpText}
+          onChange={event => this.onChange(event, type)}
+        />
       </div>
     )
   }
@@ -218,17 +230,27 @@ class TuxModal extends React.Component<any, State> {
         {fullModel ? (
           <form onSubmit={this.onSubmit}>
             <div className="TuxModal-topBar">
-              <h1 className="TuxModal-title">Editing <strong className="TuxModal-modelName">{typeMeta.name}</strong></h1>
+              <h1 className="TuxModal-title">
+                Editing <strong className="TuxModal-modelName">{typeMeta.name}</strong>
+              </h1>
               <div className="TuxModal-buttons">
-                <button className="TuxModal-button" label="Cancel" onClick={this.onCancel}>Cancel</button>
-                <button className="TuxModal-button TuxModal-button--green" type="submit" label="Save">Update</button>
+                <button
+                  className="TuxModal-button"
+                  label="Cancel"
+                  onClick={this.onCancel}>Cancel</button>
+                <button
+                  className="TuxModal-button TuxModal-button--green"
+                  type="submit"
+                  label="Save">Update</button>
               </div>
             </div>
             <div className="TuxModal-content">
               {typeMeta.fields.map(this.renderField)}
             </div>
             <div className="TuxModal-meta">
-              <p className="TuxModal-metaLastUpdated">Last updated {timeSince(new Date(fullModel.sys.updatedAt))} ago</p>
+              <p className="TuxModal-metaLastUpdated">
+                Last updated {timeSince(new Date(fullModel.sys.updatedAt))} ago
+              </p>
             </div>
           </form>
         ) : (

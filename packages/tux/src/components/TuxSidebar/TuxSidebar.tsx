@@ -50,21 +50,34 @@ class TuxSidebar extends React.Component<any, State> {
   render() {
     const { isEditing, overlayIsActive, onClickEdit } = this.props
     const { user, isVisible } = this.state
+    const classes = classNames('TuxSidebar', {
+      'is-visible': isVisible,
+      'has-overlay': overlayIsActive,
+    })
 
     return (
-      <div className={classNames('TuxSidebar', isVisible && 'is-visible', overlayIsActive && 'has-overlay')}>
-        <div className="TuxSidebar-trigger" onClick={this.handleVisibility}>{isVisible ? '×' : 'Tux'}</div>
+      <div className={classes}>
+        <div className="TuxSidebar-trigger" onClick={this.handleVisibility}>
+          {isVisible ? '×' : 'Tux'}
+        </div>
         <ul className="TuxSidebar-content">
           <div className="TuxSidebar-logo">Tux</div>
           <li>
-            <button className={classNames('TuxSidebar-editButton', isEditing && 'is-active')} onClick={onClickEdit}>{isEditing ? 'Editing: on' : 'Editing: off'}</button>
+            <button
+              className={classNames('TuxSidebar-editButton', isEditing && 'is-active')}
+              onClick={onClickEdit}
+            >
+              {isEditing ? 'Editing: on' : 'Editing: off'}
+            </button>
           </li>
           <li><a href="/">Documentation</a></li>
           <li><a href="/">Tux on Github</a></li>
         </ul>
         {user && (
           <div className="TuxSidebar-user">
-            <a onClick={this.login} className="TuxSidebar-signInOut">{user ? 'Sign out' : 'Sign in'}</a>
+            <a onClick={this.login} className="TuxSidebar-signInOut">
+              {user ? 'Sign out' : 'Sign in'}
+            </a>
           </div>
         )}
 
@@ -149,7 +162,9 @@ class TuxSidebar extends React.Component<any, State> {
             appearance: none;
             background: ${tuxColors.colorPurple};
             border: none;
-            box-shadow: 0 12px 20px -10px ${fade(tuxColors.colorPurple, 0.2)}, 0 4px 20px 0px ${fade(tuxColors.colorBlack, 0.2)}, 0 7px 8px -5px ${fade(tuxColors.colorPurple, 0.2)};
+            box-shadow: 0 12px 20px -10px ${fade(tuxColors.colorPurple, 0.2)},
+              0 4px 20px 0px ${fade(tuxColors.colorBlack, 0.2)},
+              0 7px 8px -5px ${fade(tuxColors.colorPurple, 0.2)};
             color: ${tuxColors.textLight};
             cursor: pointer;
             display: block;
