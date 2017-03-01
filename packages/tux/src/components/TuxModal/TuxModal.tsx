@@ -78,22 +78,22 @@ const TextField = ({ id, value, label, helpText, onChange }: Field) => (
         background: #FFF;
         border: 1px solid ${InputStyles.borderColor};
         margin: 20px 0;
-        padding: 5px;
       }
       .InputLabel {
         color: ${InputStyles.labelTextColor};
         font-size: 16px;
+        font-weight: 300;
         line-height: 24px;
         margin: 0 8px;
-        font-weight: 300;
         text-transform: capitalize;
       }
       .InputField {
-        font-size: 16px;
-        color: ${tuxColors.textDark};
-        border: none;
         background: none;
-        margin: 5px 0;
+        border: none;
+        color: ${tuxColors.textDark};
+        font-size: 16px;
+        padding: 0;
+        line-height: 36px;
         width: 100%;
       }
       `}</style>
@@ -113,7 +113,6 @@ const TextField = ({ id, value, label, helpText, onChange }: Field) => (
           display: flex;
           flex-direction: column;
           margin: 20px 0;
-          padding: 5px;
         }
 
         .MarkdownField-textArea {
@@ -127,11 +126,10 @@ const TextField = ({ id, value, label, helpText, onChange }: Field) => (
         .MarkdownField-label {
           color: ${InputStyles.labelTextColor};
           font-size: 16px;
-          line-height: 24px;
-          margin: 0 8px;
-          margin-bottom: 8px;
-          text-transform: capitalize;
           font-weight: 300;
+          line-height: 36px;
+          margin: 0 8px;
+          text-transform: capitalize;
         }
       `}</style>
       </div>
@@ -225,7 +223,7 @@ class TuxModal extends React.Component<any, State> {
         {fullModel ? (
           <form onSubmit={this.onSubmit}>
             <div className="TuxModal-topBar">
-              <h1 className="TuxModal-title">Editing component <strong className="TuxModal-componentName">{typeMeta.name}</strong></h1>
+              <h1 className="TuxModal-title">Editing <strong className="TuxModal-modelName">{typeMeta.name}</strong></h1>
               <div className="TuxModal-buttons">
                 <button className="TuxModal-button" label="Cancel" onClick={this.onCancel}>Cancel</button>
                 <button className="TuxModal-button TuxModal-button--green" type="submit" label="Save">Update</button>
@@ -275,7 +273,8 @@ class TuxModal extends React.Component<any, State> {
             margin: 0;
           }
 
-          .TuxModal-componentName {
+          .TuxModal-modelName {
+            font-weight: 400;
             text-transform: capitalize;
           }
 
