@@ -142,7 +142,7 @@ class ContentfulAdapter {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }
     const entry = await this.managementApi.getEntry(model.sys.id)
-    // await this._loadAssetsForEntry(entry.fields)
+    await this._loadAssetsForEntry(entry.fields)
     return entry
   }
 
@@ -153,10 +153,9 @@ class ContentfulAdapter {
       for (const localeName of Object.keys(field)) {
         const locale = field[localeName]
         if (locale.sys) {
-          if (locale.fields) {
-            console.log('Loading asset')
+          if (locale.sys.type === 'Link') {
             const loadedAsset = await this.managementApi.getAsset(locale.sys.id)
-            console.log(loadedAsset)
+            locale.sys.version = loadedAsset.sys.version
           }
         }
       }
