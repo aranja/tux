@@ -14,6 +14,7 @@
     "strictNullChecks": true,
     "target": "es6"
   },
+  "compileOnSave": false,
   "include": [
     "./src"
   ],

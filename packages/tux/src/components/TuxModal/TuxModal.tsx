@@ -1,7 +1,6 @@
 import React from 'react'
-import MaterialTextField from 'material-ui/TextField'
-import FlatButton from 'material-ui/FlatButton'
-import RaisedButton from 'material-ui/RaisedButton'
+import { tuxColors } from '../../styles'
+import { InputStyles, buttonStyles } from './styles'
 
 interface Field {
   id: string
@@ -24,14 +23,29 @@ export interface State {
   typeMeta: any | null
 }
 
-const MarkdownField = ({ id, value, label, helpText, onChange }: Field) => (
-  <MaterialTextField multiLine={true} rows={3} hintText={helpText} floatingLabelText={label} id={id} value={value}
-                     onChange={onChange}/>
-)
-
 const TextField = ({ id, value, label, helpText, onChange }: Field) => (
-  <MaterialTextField hintText={helpText} floatingLabelText={label} id={id} value={value} onChange={onChange}/>
-)
+  <div className="Input">
+    <label className="InputLabel">{label}</label>
+    <input className="InputField" label={label} id={id} value={value} onChange={onChange}/>
+    <style jsx>{`
+      .InputLabel {
+        color: ${InputStyles.labelTextColor};
+        font-size: 14px;
+        line-height: 24px;
+      }
+      .InputField {
+        border-radius: 3px;
+        border: 1px solid ${InputStyles.borderColor};
+        color: ${tuxColors.textDark};
+        margin: 5px 0;
+        padding: 10px;
+        width: 100%;
+      }
+      `}</style>
+    </div>
+  )
+
+const MarkdownField = TextField
 
 function componentForField({ id, type, control: { widgetId } }: FieldComponent) {
   if (type === 'Array')
@@ -108,33 +122,51 @@ class TuxModal extends React.Component<any, State> {
 
   render() {
     const { fullModel, typeMeta } = this.state
+
     return (
       <div className="TuxModal">
         {fullModel ? (
           <form onSubmit={this.onSubmit}>
-            <h1 className="TuxModal-title">{`Edit ${typeMeta.name.toLowerCase()}`}</h1>
-            {typeMeta.fields.map(this.renderField)}
-            <div className="TuxModal-buttons">
-              <FlatButton label="Cancel" onClick={this.onCancel}/>
-              <RaisedButton className="TuxModal-saveBtn" type="submit" primary={true} label="Save" />
+            <div className="TuxModal-topBar">
+              <h1 className="TuxModal-title">Editing component <strong className="TuxModal-componentName">{typeMeta.name}</strong></h1>
+              <div className="TuxModal-buttons">
+                <button className="TuxModal-button" label="Cancel" onClick={this.onCancel}>Cancel</button>
+                <button className="TuxModal-button TuxModal-button--green" type="submit" label="Save">Save</button>
+              </div>
+            </div>
+            <div className="TuxModal-content">
+              {typeMeta.fields.map(this.renderField)}
             </div>
           </form>
         ) : (
           'Loading'
         )}
         <style jsx>{`
+
           .TuxModal {
-            background: #fff;
+            background: #F3F5F7;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
+            margin-left: auto;
+            max-width: 60%;
+            height: 100%;
             padding: 30px;
           }
 
+          .TuxModal-topBar {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 20px;
+          }
+
           .TuxModal-title {
-            color: rgba(0, 0, 0, 0.870588);
-            font-size: 1.6em;
+            color: ${tuxColors.textDark};
+            font-size: 25px;
             font-weight: 400;
             margin: 0;
+          }
+
+          .TuxModal-componentName {
+            text-transform: capitalize;
           }
 
           .TuxModal-buttons {
@@ -142,8 +174,30 @@ class TuxModal extends React.Component<any, State> {
             justify-content: flex-end;
           }
 
-          .TuxModal-saveBtn {
-            margin-left: 0.5em;
+          .TuxModal-button {
+            background: ${buttonStyles.backgroundColor};
+            border-radius: 2px;
+            border: 1px solid ${buttonStyles.borderColor};
+            color: ${buttonStyles.textColor};
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.3;
+            margin: 0;
+            padding: 10px 24px;
+            text-align: center;
+            vertical-align: baseline;
+          }
+
+          .TuxModal-button + .TuxModal-button {
+            margin-left: 10px;
+          }
+
+          .TuxModal-button.TuxModal-button--green {
+            color: #FFF;
+            background: ${buttonStyles.greenTheme.backgroundColor};
+            border-color: ${buttonStyles.greenTheme.borderColor};
           }
         `}</style>
       </div>

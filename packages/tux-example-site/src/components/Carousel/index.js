@@ -23,15 +23,13 @@ class Carousel extends React.Component {
           const isActive = index === this.state.currentIndex
 
           return (
-            <div key={item.fields.title} className={classNames('Carousel-item', isActive && 'is-active')}>
+            <Editable key={item.fields.title} model={item} className={classNames('Carousel-item', isActive && 'is-active')}>
               <div className="Carousel-itemImage" style={{backgroundImage: `url(${item.fields.image.asset.file.url})`}}></div>
               <div className="Carousel-itemBody">
-                  <Editable model={item}>
-                  <h1 className="Carousel-itemTitle">{item.fields.title}</h1>
-                  <p className="Carousel-itemCopy">{item.fields.text}</p>
-                </Editable>
+                <h1 className="Carousel-itemTitle">{item.fields.title}</h1>
+                <p className="Carousel-itemCopy">{item.fields.text}</p>
               </div>
-            </div>
+            </Editable>
           )
         })}
 

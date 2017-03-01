@@ -69,8 +69,10 @@ class QueryApi {
     const linkMap: LinkMap = {}
 
     // Find included models
-    this.populateLinks(result.includes.Asset || [], linkMap)
-    this.populateLinks(result.includes.Entry || [], linkMap)
+    if (result.includes) {
+      this.populateLinks(result.includes.Asset || [], linkMap)
+      this.populateLinks(result.includes.Entry || [], linkMap)
+    }
 
     // Add included models to items
     for (const item of result.items) {

@@ -72,7 +72,7 @@ class ModalContainer extends React.Component<any, State> {
         <style jsx>{`
           .ModalContainer {
             position: relative;
-            z-index: 10;
+            z-index: 101;
           }
 
           .ModalContainer-overlay {
@@ -104,16 +104,14 @@ class ModalContainer extends React.Component<any, State> {
           }
 
           .ModalContainer-modal {
-            align-items: center;
-            display: flex;
-            justify-content: center;
+            height: 100%;
             min-height: 100vh;
           }
 
           .ModalTransition-enter {
             opacity: 0;
-            transform: translateY(15%);
-            transition: opacity 0.3s, transform 0.3s;
+            transform: translateX(100%);
+            transition: opacity 0.3s, transform 0.3s ease-in-out;
           }
 
           .ModalTransition-enter-active {
@@ -127,8 +125,8 @@ class ModalContainer extends React.Component<any, State> {
 
           .ModalTransition-leave-active {
             opacity: 0;
-            transform: translateY(15%);
-            transition: opacity 0.3s, transform 0.3s;
+            transform: translateX(100%);
+            transition: opacity 0.3s, transform 0.3s ease-in-out;
           }
         `}</style>
       </div>
