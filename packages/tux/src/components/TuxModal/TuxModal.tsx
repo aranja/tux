@@ -38,7 +38,8 @@ const TuxModalSpinner = () => (
         top: 0; right: 0; bottom: 0; left: 0;
         width: 8px;
       }
-      .Spinner::before, .Spinner::after {
+      .Spinner::before,
+      .Spinner::after {
         animation: pulse 0.75s infinite;
         background: ${fade(tuxColors.colorPurple, 0.2)};
         content: '';
@@ -75,7 +76,7 @@ const TextField = ({ id, value, label, helpText, onChange }: Field) => (
         display: flex;
         border-radius: 3px;
         align-items: center;
-        background: #FFF;
+        background: ${tuxColors.colorWhite};
         border: 1px solid ${InputStyles.borderColor};
         margin: 20px 0;
       }
@@ -107,7 +108,7 @@ const TextField = ({ id, value, label, helpText, onChange }: Field) => (
       <style jsx>{`
         .MarkdownField {
           align-items: baseline;
-          background: #FFF;
+          background: ${tuxColors.colorWhite};
           border-radius: 3px;
           border: 1px solid ${InputStyles.borderColor};
           display: flex;
@@ -140,12 +141,6 @@ function componentForField({ id, type, control: { widgetId } }: FieldComponent) 
     return null
   if (widgetId === 'markdown') {
     return MarkdownField
-  }
-  if (widgetId === 'datePicker') {
-    return TextField
-  }
-  if (widgetId === 'boolean') {
-    return TextField
   }
   else {
     return TextField
