@@ -98,7 +98,7 @@ class TuxSidebar extends React.Component<any, State> {
             background: ${lighten(tuxColors.colorPurple, 0.2)};
             border-radius: 0;
             box-shadow: 0px 0 10px ${fade(tuxColors.colorBlack, 0.25)};
-            color: white;
+            color: ${tuxColors.textLight};
             cursor: pointer;
             height: 30px;
             left: -65px;

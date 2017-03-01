@@ -1,5 +1,5 @@
 export const InputStyles = {
-    labelTextColor: '#8091A5',
+    labelTextColor: '#bdbdbc',
     borderColor: '#CBCBCB',
 }
 
