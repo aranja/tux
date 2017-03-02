@@ -5,7 +5,7 @@ export const tuxColors = {
   colorWhite: '#FFFFFF',
   colorBlack: '#000000',
   colorPink: '#E8008A',
-  colorSnow: '#F7F7F7',
+  colorSnow: '#FAFAFA',
   colorPurple: '#473BB1',
 }
 

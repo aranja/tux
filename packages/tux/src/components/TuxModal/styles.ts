@@ -1,6 +1,9 @@
 export const inputStyles = {
-    labelTextColor: '#bdbdbc',
     borderColor: '#CBCBCB',
+    labelTextColor: '#888888',
+    greenTheme: {
+        borderColor: '#3BB172',
+    }
 }
 
 export const buttonStyles = {

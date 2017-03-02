@@ -6,7 +6,6 @@ import MarkdownField from '../fields/MarkdownField'
 import TextField from '../fields/TextField'
 import TuxSpinner from '../Spinner/Spinner'
 
-
 interface Field {
   id: string
   value: string
@@ -143,24 +142,33 @@ class TuxModal extends React.Component<any, State> {
         )}
         <style jsx>{`
           .TuxModal {
-            background: #F3F5F7;
+            background: ${tuxColors.colorSnow};
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            margin: 0;
             margin-left: auto;
             max-width: 800px;
             height: 100%;
-            padding: 30px;
+            padding: 0;
             position: relative;
             width: 60%;
           }
 
           .TuxModal-topBar {
+            background: ${tuxColors.colorWhite};
+            border-bottom: 1px solid rgba(203, 203, 203, 0.53);
             display: flex;
             justify-content: space-between;
-            padding-bottom: 10px;
+            padding: 30px;
+          }
+
+          .TuxModal-content {
+            padding: 0 30px;
           }
 
           .TuxModal-meta {
+            font-size: 16px;
             text-align: right;
+            padding: 0 30px;
           }
 
           .TuxModal-metaLastUpdated {
@@ -202,7 +210,7 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-button + .TuxModal-button {
-            margin-left: 10px;
+            margin-left: 16px;
           }
 
           .TuxModal-button.TuxModal-button--green {
