@@ -89,7 +89,6 @@ class TuxModal extends React.Component<any, State> {
     const { fullModel } = this.state
     const helpText = type.control.settings && type.control.settings.helpText
     const InputComponent = componentForField(type)
-    
     const field = fullModel.fields[type.id]
     const value = field && field['en-US']
 
