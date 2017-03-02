@@ -1,8 +1,11 @@
 import React from 'react'
-import { tuxColors } from '../../styles'
+import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 import { fade } from '../../utils/color'
 import { timeSince } from '../../utils/time'
-import { InputStyles, buttonStyles } from './styles'
+import MarkdownField from '../fields/MarkdownField'
+import TextField from '../fields/TextField'
+import TuxSpinner from '../Spinner/Spinner'
+
 
 interface Field {
   id: string
@@ -24,124 +27,6 @@ export interface State {
   fullModel: any | null
   typeMeta: any | null
 }
-
-const TuxModalSpinner = () => (
-  <div className="Spinner">
-    <style jsx>{`
-      .Spinner {
-        animation: pulse 0.75s infinite;
-        animation-delay: 0.25s;
-        background: ${fade(tuxColors.colorPurple, 0.2)};
-        height: 36px;
-        margin: auto;
-        position: absolute;
-        top: 0; right: 0; bottom: 0; left: 0;
-        width: 8px;
-      }
-      .Spinner::before,
-      .Spinner::after {
-        animation: pulse 0.75s infinite;
-        background: ${fade(tuxColors.colorPurple, 0.2)};
-        content: '';
-        display: block;
-        height: 24px;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 8px;
-      }
-      .Spinner::before {
-        left: -16px;
-      }
-      .Spinner::after {
-        left: 16px;
-        animation-delay: 0.5s;
-      }
-
-      @keyframes pulse {
-        50% {
-          background: ${fade(tuxColors.colorPurple, 0.7)};
-        }
-      }
-    `}</style>
-  </div>
-)
-
-const TextField = ({ id, value, label, helpText, onChange }: Field) => (
-  <div className="Input">
-    <label className="InputLabel">{label}:</label>
-    <input className="InputField" label={label} id={id} value={value} onChange={onChange}/>
-    <style jsx>{`
-      .Input {
-        display: flex;
-        border-radius: 3px;
-        align-items: center;
-        background: ${tuxColors.colorWhite};
-        border: 1px solid ${InputStyles.borderColor};
-        margin: 20px 0;
-      }
-      .InputLabel {
-        color: ${InputStyles.labelTextColor};
-        font-size: 16px;
-        font-weight: 300;
-        line-height: 24px;
-        margin: 0 8px;
-        text-transform: capitalize;
-      }
-      .InputField {
-        background: none;
-        border: none;
-        color: ${tuxColors.textDark};
-        font-size: 16px;
-        padding: 0;
-        line-height: 36px;
-        width: 100%;
-      }
-      `}</style>
-    </div>
-  )
-
-  const MarkdownField = ({ id, value, label, helpText, onChange }: Field) => (
-    <div className="MarkdownField">
-      <label className="MarkdownField-label">{label}:</label>
-      <textarea
-        rows={12}
-        className="MarkdownField-textArea"
-        label={label}
-        id={id}
-        value={value}
-        onChange={onChange}
-      />
-      <style jsx>{`
-        .MarkdownField {
-          align-items: baseline;
-          background: ${tuxColors.colorWhite};
-          border-radius: 3px;
-          border: 1px solid ${InputStyles.borderColor};
-          display: flex;
-          flex-direction: column;
-          margin: 20px 0;
-        }
-
-        .MarkdownField-textArea {
-          background: none;
-          border: none;
-          color: ${tuxColors.textDark};
-          font-size: 16px;
-          width: 100%;
-        }
-
-        .MarkdownField-label {
-          color: ${InputStyles.labelTextColor};
-          font-size: 16px;
-          font-weight: 300;
-          line-height: 36px;
-          margin: 0 8px;
-          text-transform: capitalize;
-        }
-      `}</style>
-      </div>
-    )
 
 function componentForField({ id, type, control: { widgetId } }: FieldComponent) {
   if (type === 'Array')
@@ -204,6 +89,7 @@ class TuxModal extends React.Component<any, State> {
     const { fullModel } = this.state
     const helpText = type.control.settings && type.control.settings.helpText
     const InputComponent = componentForField(type)
+    
     const field = fullModel.fields[type.id]
     const value = field && field['en-US']
 
@@ -254,7 +140,7 @@ class TuxModal extends React.Component<any, State> {
             </div>
           </form>
         ) : (
-          <TuxModalSpinner />
+          <TuxSpinner />
         )}
         <style jsx>{`
           .TuxModal {
@@ -301,10 +187,10 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-button {
-            background: ${buttonStyles.backgroundColor};
+            background: ${tuxButtonStyles.backgroundColor};
             border-radius: 2px;
-            border: 1px solid ${buttonStyles.borderColor};
-            color: ${buttonStyles.textColor};
+            border: 1px solid ${tuxButtonStyles.borderColor};
+            color: ${tuxButtonStyles.textColor};
             cursor: pointer;
             display: inline-block;
             font-size: 14px;
@@ -322,8 +208,8 @@ class TuxModal extends React.Component<any, State> {
 
           .TuxModal-button.TuxModal-button--green {
             color: #FFF;
-            background: ${buttonStyles.greenTheme.backgroundColor};
-            border-color: ${buttonStyles.greenTheme.borderColor};
+            background: ${tuxButtonStyles.greenTheme.backgroundColor};
+            border-color: ${tuxButtonStyles.greenTheme.borderColor};
           }
         `}</style>
       </div>

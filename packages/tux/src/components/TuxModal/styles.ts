@@ -1,4 +1,4 @@
-export const InputStyles = {
+export const inputStyles = {
     labelTextColor: '#bdbdbc',
     borderColor: '#CBCBCB',
 }
