@@ -2,7 +2,7 @@ import React from 'react'
 import { tuxColors } from '../../styles'
 import { fade } from '../../utils/color'
 import { timeSince } from '../../utils/time'
-import { InputStyles, buttonStyles } from './styles'
+import { inputStyles, buttonStyles } from './styles'
 
 interface Field {
   id: string
@@ -69,33 +69,39 @@ const TuxModalSpinner = () => (
 
 const TextField = ({ id, value, label, helpText, onChange }: Field) => (
   <div className="Input">
-    <label className="InputLabel">{label}:</label>
+    <label className="InputLabel">{label}</label>
     <input className="InputField" label={label} id={id} value={value} onChange={onChange}/>
     <style jsx>{`
       .Input {
-        display: flex;
-        border-radius: 3px;
         align-items: center;
-        background: ${tuxColors.colorWhite};
-        border: 1px solid ${InputStyles.borderColor};
+        border-radius: 3px;
+        display: flex;
+        flex-wrap: wrap;
         margin: 20px 0;
       }
+
       .InputLabel {
-        color: ${InputStyles.labelTextColor};
+        color: ${inputStyles.labelTextColor};
         font-size: 16px;
         font-weight: 300;
         line-height: 24px;
-        margin: 0 8px;
+        padding: 4px 0;
         text-transform: capitalize;
       }
+
       .InputField {
-        background: none;
-        border: none;
+        background: ${tuxColors.colorWhite};
+        border: 1px solid ${inputStyles.borderColor};
+        border-radius: 3px;
         color: ${tuxColors.textDark};
         font-size: 16px;
-        padding: 0;
-        line-height: 36px;
+        padding: 5px;
+        line-height: 1.5;
         width: 100%;
+      }
+      .InputField:focus {
+        border-color: ${inputStyles.greenTheme.borderColor};
+        outline: 1px solid ${inputStyles.greenTheme.borderColor};
       }
       `}</style>
     </div>
@@ -103,7 +109,7 @@ const TextField = ({ id, value, label, helpText, onChange }: Field) => (
 
   const MarkdownField = ({ id, value, label, helpText, onChange }: Field) => (
     <div className="MarkdownField">
-      <label className="MarkdownField-label">{label}:</label>
+      <label className="MarkdownField-label">{label}</label>
       <textarea
         rows={12}
         className="MarkdownField-textArea"
@@ -115,29 +121,34 @@ const TextField = ({ id, value, label, helpText, onChange }: Field) => (
       <style jsx>{`
         .MarkdownField {
           align-items: baseline;
-          background: ${tuxColors.colorWhite};
-          border-radius: 3px;
-          border: 1px solid ${InputStyles.borderColor};
           display: flex;
           flex-direction: column;
+          flex-wrap: wrap;
           margin: 20px 0;
         }
 
+        .MarkdownField-label {
+          color: ${inputStyles.labelTextColor};
+          font-size: 16px;
+          font-weight: 300;
+          line-height: 1.5;
+          padding: 4px 0;
+          text-transform: capitalize;
+        }
+
         .MarkdownField-textArea {
-          background: none;
-          border: none;
+          background: ${tuxColors.colorWhite};
+          border: 1px solid ${inputStyles.borderColor};
+          border-radius: 3px;
           color: ${tuxColors.textDark};
           font-size: 16px;
+          padding: 5px;
           width: 100%;
         }
 
-        .MarkdownField-label {
-          color: ${InputStyles.labelTextColor};
-          font-size: 16px;
-          font-weight: 300;
-          line-height: 36px;
-          margin: 0 8px;
-          text-transform: capitalize;
+        .MarkdownField-textArea:focus {
+          border-color: ${inputStyles.greenTheme.borderColor};
+          outline: 1px solid ${inputStyles.greenTheme.borderColor};
         }
       `}</style>
       </div>
@@ -258,24 +269,33 @@ class TuxModal extends React.Component<any, State> {
         )}
         <style jsx>{`
           .TuxModal {
-            background: #F3F5F7;
+            background: ${tuxColors.colorSnow};
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            margin: 0;
             margin-left: auto;
             max-width: 800px;
             height: 100%;
-            padding: 30px;
+            padding: 0;
             position: relative;
             width: 60%;
           }
 
           .TuxModal-topBar {
+            background: ${tuxColors.colorWhite};
+            border-bottom: 1px solid rgba(203, 203, 203, 0.53);
             display: flex;
             justify-content: space-between;
-            padding-bottom: 10px;
+            padding: 30px;
+          }
+
+          .TuxModal-content {
+            padding: 0 30px;
           }
 
           .TuxModal-meta {
+            font-size: 16px;
             text-align: right;
+            padding: 0 30px;
           }
 
           .TuxModal-metaLastUpdated {
@@ -317,7 +337,7 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-button + .TuxModal-button {
-            margin-left: 10px;
+            margin-left: 16px;
           }
 
           .TuxModal-button.TuxModal-button--green {
