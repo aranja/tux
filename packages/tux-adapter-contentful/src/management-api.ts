@@ -51,7 +51,13 @@ class ManagementApi {
     return this._save(asset, 'assets')
   }
 
+  processAsset(id : string, locale : string, version : any) {
+    return this.put(`/spaces/${this.space}/assets/${id}/${locale}/process`, null, version)
+  }
+
   async _save(entity : any, entityPath : string) {
+    // console.log(`managementApi.save, would be saving ${entityPath}`)
+    console.log(`managementApi.save, saving ${entityPath}`)
     const { fields, sys: { id, version } } = entity
     const newEntry = await this.put(`/spaces/${this.space}/${entityPath}/${id}`, { fields }, version)
 

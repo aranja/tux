@@ -105,31 +105,34 @@ export class ContentfulAdapter {
   }
 
   async _saveAssets(fields : any) {
+    if (!this.managementApi) {
+      throw new Error('Manager api not defined, please log in to save.')
+    }
+
     for (const fieldName of Object.keys(fields)) {
       const field = fields[fieldName]
-      let foundAssets = false
       for (const localeName of Object.keys(field)) {
         const locale = field[localeName]
         if (locale.sys) {
           if (locale.fields) {
-            if (!locale.sys.version) {
-              locale.sys.version = 2
-            }
-            await this.managementApi.saveAsset({
+            const asset = await this.managementApi.saveAsset({
               fields: {
+                title: {
+                  [localeName]: 'Temporary title',
+                },
                 file: {
-                  [localeName]: locale.fields
+                  [localeName]: locale.fields,
                 }
               },
               sys: locale.sys,
             })
-            foundAssets = true
+            console.log(asset)
+            console.log(locale.sys)
+            await this.managementApi.processAsset(locale.sys.id, localeName, locale.sys.version)
+            delete locale.sys.version
+            delete locale.fields
           }
         }
-      }
-
-      if (foundAssets) {
-        delete fields[fieldName]
       }
     }
   }
@@ -146,7 +149,6 @@ export class ContentfulAdapter {
   async _loadAssetsForEntry(fields : any) {
     for (const fieldName of Object.keys(fields)) {
       const field = fields[fieldName]
-      let foundAssets = false
       for (const localeName of Object.keys(field)) {
         const locale = field[localeName]
         if (locale.sys) {

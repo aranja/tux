@@ -4,21 +4,47 @@ import classNames from 'classnames'
 import { InputStyles } from '../../styles'
 import TextField from '../TextField'
 
-const BrowseField = ({ id, value, label, helpText, onChange } : any) => (
-  <RaisedButton
-    className="TuxModal-saveBtn"
-    containerElement="label"
-    label={label}
-    labelPosition="before"
-  >
-    <input
-      className="TuxModal-fileInput"
-      id={id}
-      type="file"
-      value={value}
-    />
-  </RaisedButton>
-)
+class BrowseField extends React.Component<any, any> {
+  constructor(props : any) {
+    super(props)
+  }
+
+  onChange = (event : React.FormEvent<any>) => {
+    const { onChange } = this.props
+    const { input } = this.refs
+    console.log('BrowseFieldClass.onFileSelected')
+    if (input.files.length) {
+      onChange(input.files)
+    } else {
+      console.log('No files')
+    }
+  }
+
+  render() {
+    const { id, value, onChange } = this.props
+
+    return (
+      <div>
+        <label htmlFor={id}>
+          New image
+        </label>
+        <input
+          className="BrowseField-fileInput"
+          id={id}
+          onChange={this.onChange}
+          ref="input"
+          type="file"
+          value={value}
+        />
+        <style jsx>{`
+          .BrowseField-fileInput {
+
+          }
+        `}</style>
+      </div>
+    )
+  }
+}
 
 export interface ImageFieldProps {
   model : any,
@@ -29,6 +55,7 @@ export interface ImageFieldProps {
   label: string,
   helpText: string,
   value: string,
+  adapter: any,
 }
 
 class ImageField extends React.Component<ImageFieldProps, any> {
@@ -46,6 +73,28 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     this.setState({ isToggled: !isToggled})
   }
 
+  onFileChange = async(files : FileList) => {
+    const { onChange } = this.props
+    console.log('ImageField.onFileChange')
+    console.log(files)
+
+    // this.setState({
+    //   loading: true,
+    // })
+    //
+    // const asset = await this.context.tux.adapter.createAssetFromFile(files[0])
+    //
+    // onChange({
+    //   id: asset.sys.id,
+    //   linkType: 'Asset',
+    //   type: 'Link'
+    // })
+    //
+    // this.setState({
+    //   loading: false,
+    // })
+  }
+
   onUrlChange = (value : any, type : {id : string}) => {
     const { id, model } = this.props
 
@@ -56,13 +105,18 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     const fields = {
       contentType: 'image/jpeg',
       fileName: model.fields[id].asset.file.fileName,
-      url: value,
+      upload: value,
     }
 
-    this.props.onChange(
-      fields,
-      type,
-    )
+    // setState(isUploading: true)
+    // const asset = await adapter.createAssetFromFile(file)
+    //
+    // const formData = new FormData()
+    // formData.add('ldskjf', file)
+
+    // this.props.onChange(
+    //   asset
+    // )
   }
 
   render() {
@@ -91,12 +145,12 @@ class ImageField extends React.Component<ImageFieldProps, any> {
             flex: 1,
           }}>
             {isToggled ? (
-              <TextField
+              <BrowseField
                 helpText="URL to image"
                 id={id}
                 label={`New image for ${name}`}
-                onChange={this.onUrlChange}
-                value={newImageValue}
+                onChange={this.onFileChange}
+                ref="browseField"
               />
             ) : null}
           </div>

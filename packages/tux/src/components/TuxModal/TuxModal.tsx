@@ -68,6 +68,7 @@ class TuxModal extends React.Component<any, State> {
     } else {
       field['en-US'] = value
     }
+    console.log(fullModel)
     this.setState({fullModel})
   }
 
@@ -185,17 +186,6 @@ class TuxModal extends React.Component<any, State> {
             color: #FFF;
             background: ${buttonStyles.greenTheme.backgroundColor};
             border-color: ${buttonStyles.greenTheme.borderColor};
-          }
-
-          .TuxModal-fileInput {
-            bottom: 0,
-            cursor: 'pointer',
-            left: 0,
-            opacity: 0,
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            width: '100%',
           }
         `}</style>
       </div>
