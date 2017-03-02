@@ -2,6 +2,7 @@ import path from 'path'
 import webpack from 'webpack'
 import tux from './index'
 import { SERVER, SERVER_BUILD, ASSET_MANIFEST_EXTERNAL } from './paths'
+import fixRulesForServer from './fixRulesForServer'
 
 export default (neutrino: any) => {
   tux(neutrino)
@@ -26,6 +27,9 @@ export default (neutrino: any) => {
     .filename('[name].js')
     .libraryTarget('commonjs2')
     .end()
+
+  // Tweak module rules to work on server.
+  fixRulesForServer(config.module.rules)
 
   // Map `import assets from 'asset-manifest'` to asset-manifest.json from client build.
   config.externals([

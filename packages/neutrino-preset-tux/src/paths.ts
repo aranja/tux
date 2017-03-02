@@ -12,3 +12,4 @@ export const MODULES = path.join(__dirname, '../node_modules')
 export const ASSET_MANIFEST = 'asset-manifest.json'
 export const ASSET_MANIFEST_EXTERNAL =
   `./${path.relative(SERVER_BUILD, path.join(CLIENT_BUILD, ASSET_MANIFEST))}`
+export const LOCALS_LOADER = require.resolve('css-loader/locals')

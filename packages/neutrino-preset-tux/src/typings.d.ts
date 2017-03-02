@@ -17,3 +17,5 @@ declare module 'webpack-manifest-plugin' {
 
   export default WebpackManifestPlugin
 }
+
+declare module 'css-loader/locals'

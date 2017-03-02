@@ -65,8 +65,9 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
     <Html
       title="Internal Server Error"
       description={err.message}
+      assets={assets}
     >
-    {ReactDOM.renderToString(<ErrorPage error={err} />)}
+      {err.toString()}
     </Html>,
   )
   res.status(err.status || 500)
