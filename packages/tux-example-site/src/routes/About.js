@@ -20,7 +20,7 @@ const About = ({ pages, articles, sellPoints, gallery, testimonial, pricetable }
 
   return (
     <div className="p-About">
-      <Menu />
+      <Menu theme="light" />
       <ProductBanner image={ProductBannerImage} heading="You make the website, we'll handle the content" text="Hand-crafted with so much love that you have no idea. In recusandae cum vero at commodi, ad tempore molestiae. Autem repellat adipisci aperiam atque tenetur accusamus, ipsa sit amet, consectetur adipisicing elit." />
       <Section>
         <H1><Editable model={page} field="fields.content.tagline" /></H1>
