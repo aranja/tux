@@ -12,18 +12,16 @@ import Html from './Html'
 
 const app = express()
 
-app.use(express.static(path.join(__dirname, 'public'), { index: false }))
+app.use(express.static(path.join(__dirname, 'static'), { index: false }))
 
 /**
  * Server-side rendering middleware
  */
 app.get('*', async (req, res, next) => {
   try {
-    const api = createApi()
     const route = await UniversalRouter.resolve(routes, {
       path: req.path,
       query: req.query,
-      api,
     })
 
     if (route.redirect) {
@@ -35,14 +33,11 @@ app.get('*', async (req, res, next) => {
     // https://facebook.github.io/react/docs/context.html
     const context = {
       history: createMemoryHistory(req.url),
-      userAgent: req.headers['user-agent'],
-      data: route.data,
     }
 
     const data = { ...route }
     data.assets = assets
-    data.apiCache = api.getCache()
-    data.children = ReactDOM.renderToString(<App context={context}>{route.element}</App>)
+    data.app = ReactDOM.renderToString(<App context={context}>{route.element}</App>)
 
     const html = ReactDOM.renderToStaticMarkup(<Html {...data} />)
     res.status(route.status || 200)
@@ -65,10 +60,9 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
     <Html
       title="Internal Server Error"
       description={err.message}
+      app={err.toString()}
       assets={assets}
-    >
-      {err.toString()}
-    </Html>,
+    />,
   )
   res.status(err.status || 500)
   res.send(`<!doctype html>${html}`)

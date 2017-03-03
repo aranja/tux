@@ -9,12 +9,16 @@ export default (neutrino: any) => {
 
   const { config } = neutrino
 
+  // Build for node.
   config
     .target('node')
     .node
       .clear()
       .set('__filename', false)
       .set('__dirname', false)
+
+  // Always have good source maps.
+  config.devtool('source-map')
 
   // Switch to a new entry point.
   config.entries.delete('index')

@@ -13,8 +13,10 @@ export default (neutrino: any) => {
     .prepend('node_modules')
   config.resolveLoader.modules.add(MODULES)
 
+  // Build into a subfolder so server.js can live outside it.
   config.output
     .path(CLIENT_BUILD)
+  config.plugin('clean').args[0] = [CLIENT_BUILD]
 
   // Use react-app babel preset.
   config.module

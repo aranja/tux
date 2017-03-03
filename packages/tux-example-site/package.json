@@ -19,7 +19,7 @@
   "scripts": {
     "start": "neutrino start --presets neutrino-preset-tux",
     "build": "neutrino build --presets neutrino-preset-tux",
-    "start-server": "neutrino start --presets neutrino-preset-tux/server",
+    "start-server": "neutrino start --presets neutrino-preset-tux/server && node build/server",
     "build-server": "neutrino build --presets neutrino-preset-tux/server"
   }
 }
