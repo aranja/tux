@@ -60,7 +60,7 @@ class TuxModal extends React.Component<any, State> {
     })
   }
 
-  onChange(value : any, type : {id : string}) {
+  onChange(value: any, type: {id: string}) {
     const { fullModel } = this.state
     const field = fullModel.fields[type.id]
 

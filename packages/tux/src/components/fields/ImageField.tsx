@@ -126,9 +126,9 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     })
   }
 
-  onUrlChange = async(value: any) => {
+  onUrlChange = async(event: React.ChangeEvent<any>) => {
     this.setState({
-      imageUrl: value
+      imageUrl: event.target.value
     })
   }
 
