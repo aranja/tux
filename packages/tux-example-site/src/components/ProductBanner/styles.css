@@ -15,8 +15,8 @@
 }
 
 .ProductBanner-image {
-  height: 80%;
-  margin: 10% 0;
+  height: 60%;
+  margin: 20% 0;
 }
 
 
@@ -27,17 +27,37 @@
 .ProductBanner-content > * {
   display: block;
   margin: 0 auto;
-  max-width: 35rem;
+  max-width: 28rem;
 }
 
 .ProductBanner-heading {
   line-height: 1.2;
-  font-size: 3.375rem;
+  font-size: 2.45rem;
   font-weight: 300;
   padding-bottom: 2rem;
 }
 
 .ProductBanner-text {
-  font-size: 1.375rem;
+  font-size: 1rem;
   font-weight: 300;
+}
+
+@media (min-width: 1440px) {
+  .ProductBanner-image {
+    height: 80%;
+    margin: 10% 0;
+  }
+
+  .ProductBanner-heading {
+    font-size: 3.375rem;
+    padding-bottom: 2rem;
+  }
+
+  .ProductBanner-text {
+    font-size: 1.375rem;
+  }
+
+  .ProductBanner-content > * {
+    max-width: 35rem;
+  }
 }

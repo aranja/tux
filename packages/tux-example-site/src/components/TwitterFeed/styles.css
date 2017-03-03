@@ -1,0 +1,8 @@
+.TwitterFeed {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.TwitterFeed > div {
+  margin: 1rem;
+}
