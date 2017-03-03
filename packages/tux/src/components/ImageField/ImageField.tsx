@@ -146,6 +146,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
 
     this.setState({
       isLoadingImage: false,
+      imageUrl: '',
     })
   }
 
