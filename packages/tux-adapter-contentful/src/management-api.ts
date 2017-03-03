@@ -20,7 +20,10 @@ class ManagementApi {
   }
 
   get(url: string, params?: Object): Promise<any> {
-    return this.client.get(url, { params }).then(result => result.data) as Promise<any>
+    return this.client.get(
+      url,
+      { params }
+    ).then(result => result.data) as Promise<any>
   }
 
   put(url: string, body: any, version: string): Promise<any> {
@@ -60,12 +63,14 @@ class ManagementApi {
   }
 
   processAsset(id: string, localeName: string, version: any) {
-    return this.put(`/spaces/${this.space}/assets/${id}/files/${localeName}/process`, null, version)
+    const url = `/spaces/${this.space}/assets/${id}/files/${localeName}/process`
+    return this.put(url, null, version)
   }
 
   async _save(entity: any, entityPath: string) {
     const { fields, sys: { id, version } } = entity
-    const newEntry = await this.put(`/spaces/${this.space}/${entityPath}/${id}`, { fields }, version)
+    const url = `/spaces/${this.space}/${entityPath}/${id}`
+    const newEntry = await this.put(url, { fields }, version)
 
     if (this.previewApi) {
       this.previewApi.override(this.formatForDelivery(newEntry))
@@ -75,29 +80,38 @@ class ManagementApi {
   }
 
   createUpload(file: File) {
-    const url = `https://upload.contentful.com/spaces/${this.space}/uploads`
-    // this.post(url, file, 'application/octet-stream')
-
-    const promise = new Promise((resolve, reject) => {
-      const request = new XMLHttpRequest()
-      request.open('POST', url, true)
-      request.setRequestHeader('Content-Type', 'application/octet-stream')
-      request.setRequestHeader('Authorization', 'Bearer b9c30085503d94228c03bf433742f6c23c59c49ff61770a2631a22b9b07807fc')
-      request.onload = () => {
-        resolve(request.response.data)
-      }
-
-      request.onerror = () => {
-        reject('Could not create upload')
-      }
-
-      request.send(file)
-    })
-
-    return promise
+    // const url = `https://upload.contentful.com/spaces/${this.space}/uploads`
+    // // this.post(url, file, 'application/octet-stream')
+    //
+    // const promise = new Promise((resolve, reject) => {
+    //   const request = new XMLHttpRequest()
+    //   request.open('POST', url, true)
+    //   request.setRequestHeader('Content-Type', 'application/octet-stream')
+    //   request.setRequestHeader(
+    //     'Authorization',
+    //     'Bearer b9c30085503d94228c03bf433742f6c23c59c49ff61770a2631a22b9b07807fc'
+    //   )
+    //   request.onload = () => {
+    //     resolve(request.response.data)
+    //   }
+    //
+    //   request.onerror = () => {
+    //     reject('Could not create upload')
+    //   }
+    //
+    //   request.send(file)
+    // })
+    //
+    // return promise
   }
 
-  createAssetFromUpload(upload: any, localeName: string, title: string, contentType: string, fileName: string) {
+  createAssetFromUpload(
+    upload: any,
+    localeName: string,
+    title: string,
+    contentType: string,
+    fileName: string
+  ) {
     const url = `https://upload.contentful.com/spaces/${this.space}/assets`
     const body = {
       fields: {

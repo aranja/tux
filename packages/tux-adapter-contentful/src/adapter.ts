@@ -108,7 +108,13 @@ export class ContentfulAdapter {
     }
 
     const upload = await this.managementApi.createUpload(file)
-    const asset = await this.managementApi.createAssetFromUpload(upload, 'en-US', title, file.type, file.name)
+    const asset = await this.managementApi.createAssetFromUpload(
+      upload,
+      'en-US',
+      title,
+      file.type,
+      file.name
+    )
 
     return asset
   }
@@ -133,7 +139,11 @@ export class ContentfulAdapter {
       }
     })
 
-    await this.managementApi.processAsset(asset.sys.id, localeName, asset.sys.version)
+    await this.managementApi.processAsset(
+      asset.sys.id,
+      localeName,
+      asset.sys.version
+    )
 
     return asset
   }

@@ -51,7 +51,7 @@ export interface ImageFieldProps {
   imageUrl: string,
   label: string,
   name: string,
-  onChange : Function,
+  onChange: Function,
   value: {
     sys: {
       id: string,
@@ -66,7 +66,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     tux: React.PropTypes.object,
   }
 
-  constructor(props : ImageFieldProps) {
+  constructor(props: ImageFieldProps) {
     super(props)
 
     this.state = {
@@ -140,7 +140,12 @@ class ImageField extends React.Component<ImageFieldProps, any> {
       isLoadingImage: true,
     })
 
-    const asset = await this.context.tux.adapter.createAssetFromUrl(imageUrl, 'test-image.jpeg', 'en-US', 'Test Image')
+    const asset = await this.context.tux.adapter.createAssetFromUrl(
+      imageUrl,
+      'test-image.jpeg',
+      'en-US',
+      'Test Image'
+    )
 
     onChange({
       sys: {
@@ -172,7 +177,9 @@ class ImageField extends React.Component<ImageFieldProps, any> {
           <div style={{
             flex: 1,
           }}>
-            <label className="InputLabel">{label} <small>(click image to edit)</small></label>
+            <label className="InputLabel">
+              {label} <small>(click image to edit)</small>
+            </label>
             <img
               alt={title}
               width="200"
@@ -192,7 +199,12 @@ class ImageField extends React.Component<ImageFieldProps, any> {
                   onChange={this.onUrlChange}
                   value={imageUrl}
                 />
-                <input type="button" onClick={this.loadImageFromUrl} value="Load" disabled={isLoadingImage} />
+                <input
+                  disabled={isLoadingImage}
+                  onClick={this.loadImageFromUrl}
+                  type="button"
+                  value="Load"
+                  />
                 {isLoadingImage ? (
                   <p>Loading image ... </p>
                 ) : null}
