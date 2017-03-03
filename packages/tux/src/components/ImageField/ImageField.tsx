@@ -52,7 +52,7 @@ export interface ImageFieldProps {
   label: string,
   name: string,
   onChange : Function,
-  value: string,
+  value: Object,
 }
 
 class ImageField extends React.Component<ImageFieldProps, any> {
@@ -72,17 +72,25 @@ class ImageField extends React.Component<ImageFieldProps, any> {
 
   async componentDidMount() {
     const { value } = this.props
-
-    const [
-      fullModel,
-      typeMeta,
-    ] = await Promise.all([
-      this.context.tux.adapter.loadAsset(value)
-    ])
+    const fullModel = await this.context.tux.adapter.loadAsset(value)
 
     this.setState({
       fullModel
     })
+  }
+
+  async componentWillReceiveProps(props : ImageFieldProps) {
+    if (!props.value || !props.value.sys) {
+      return
+    }
+
+    if (props.value.sys.id !== this.props.value.sys.id) {
+      const fullModel = await this.context.tux.adapter.loadAsset(props.value)
+
+      this.setState({
+        fullModel
+      })
+    }
   }
 
   onCardClick = () => {
