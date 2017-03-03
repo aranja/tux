@@ -1,14 +1,19 @@
 import webpack from 'webpack'
 import nodeExternals from 'webpack-node-externals'
 import tux from './index'
-import { SERVER, SERVER_BUILD, ASSET_MANIFEST_EXTERNAL } from './paths'
+import { PKG, SERVER, SERVER_BUILD, ASSET_MANIFEST_EXTERNAL } from './paths'
 import fixRulesForServer from './fixRulesForServer'
+
+const pkgConfig = require(PKG)
 
 export default (neutrino: any) => {
   // Inherit main tux config.
   tux(neutrino)
 
   const { config } = neutrino
+  const hasSourceMap =
+    (pkgConfig.dependencies && 'source-map-support' in pkgConfig.dependencies) ||
+    (pkgConfig.devDependencies && 'source-map-support' in pkgConfig.devDependencies)
 
   // Build for node.
   config
@@ -54,13 +59,15 @@ export default (neutrino: any) => {
     .delete('manifest')
 
   // Add source map support for stack traces.
-  config
-    .plugin('banner')
-    .use(webpack.BannerPlugin, {
-      banner: `require('${require.resolve('source-map-support')}').install();`,
-      raw: true,
-      entryOnly: true,
-    })
+  if (hasSourceMap) {
+    config
+      .plugin('banner')
+      .use(webpack.BannerPlugin, {
+        banner: `require('source-map-support').install();`,
+        raw: true,
+        entryOnly: true
+      })
+  }
 
   // Disable dev server. This causes neutrino to run `build` instead of `start` for node targets.
   config.devServer.clear()
