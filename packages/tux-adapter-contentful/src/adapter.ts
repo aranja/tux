@@ -45,6 +45,11 @@ export class ContentfulAdapter {
     // Content Management API - Access Token returned from OAuth2 flow and saved in localStorage.
     // Content Preview API - Access Token manually queried through Admin API, then saved in localStorage.
 
+    // No private apis on server for now.
+    if (typeof window === 'undefined') {
+      return
+    }
+
     // Get auth token after login
     if (location.hash.indexOf('#access_token=') === 0) {
       const startOffset = '#access_token='.length
