@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import TwitterCard from '../TwitterCard'
+import peopleAreSaying from './text'
 import './styles.css'
 
 class TwitterFeed extends Component {
@@ -35,7 +36,7 @@ class TwitterFeed extends Component {
             handle={demoUser.login.username}
             image={demoUser.picture.thumbnail}
           >
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis hic, molestiae accusamus laboriosam! Optio, suscipit!
+          {peopleAreSaying[Math.floor(Math.random() * peopleAreSaying.length)]}
           </TwitterCard>
         )
       })}
