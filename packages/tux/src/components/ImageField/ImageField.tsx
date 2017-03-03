@@ -47,7 +47,6 @@ class BrowseField extends React.Component<any, any> {
 }
 
 export interface ImageFieldProps {
-  model : any,
   field : string | Array<string>,
   onChange : Function,
   id: string,
@@ -55,10 +54,13 @@ export interface ImageFieldProps {
   label: string,
   helpText: string,
   value: string,
-  adapter: any,
 }
 
 class ImageField extends React.Component<ImageFieldProps, any> {
+  static contextTypes = {
+    tux: React.PropTypes.object,
+  }
+
   constructor(props : ImageFieldProps) {
     super(props)
 
@@ -75,48 +77,29 @@ class ImageField extends React.Component<ImageFieldProps, any> {
 
   onFileChange = async(files : FileList) => {
     const { onChange } = this.props
-    console.log('ImageField.onFileChange')
-    console.log(files)
-
-    // this.setState({
-    //   loading: true,
-    // })
-    //
-    // const asset = await this.context.tux.adapter.createAssetFromFile(files[0])
-    //
-    // onChange({
-    //   id: asset.sys.id,
-    //   linkType: 'Asset',
-    //   type: 'Link'
-    // })
-    //
-    // this.setState({
-    //   loading: false,
-    // })
-  }
-
-  onUrlChange = (value : any, type : {id : string}) => {
-    const { id, model } = this.props
 
     this.setState({
-      newImageValue: value,
+      loading: true,
     })
 
-    const fields = {
-      contentType: 'image/jpeg',
-      fileName: model.fields[id].asset.file.fileName,
-      upload: value,
-    }
+    const asset = await this.context.tux.adapter.createAssetFromFile(files[0])
 
-    // setState(isUploading: true)
-    // const asset = await adapter.createAssetFromFile(file)
-    //
-    // const formData = new FormData()
-    // formData.add('ldskjf', file)
+    onChange({
+      id: asset.sys.id,
+      linkType: 'Asset',
+      type: 'Link'
+    })
 
-    // this.props.onChange(
-    //   asset
-    // )
+    this.setState({
+      loading: false,
+    })
+  }
+
+  onUrlChange = async(value : any, type : {id : string}) => {
+    const { id } = this.props
+    const { onChange } = this.props
+
+    console.log(`onUrlChange: ${value}`)
   }
 
   render() {
@@ -145,18 +128,21 @@ class ImageField extends React.Component<ImageFieldProps, any> {
             flex: 1,
           }}>
             {isToggled ? (
-              <BrowseField
-                helpText="URL to image"
-                id={id}
-                label={`New image for ${name}`}
-                onChange={this.onFileChange}
-                ref="browseField"
-              />
+              <div>
+                <BrowseField
+                  helpText="URL to image"
+                  id={id}
+                  label={`New image for ${name}`}
+                  onChange={this.onFileChange}
+                  ref="browseField"
+                />
+              </div>
             ) : null}
           </div>
           <style jsx>{`
             .InputLabel {
               color: ${InputStyles.labelTextColor};
+              display: block;
               font-size: 14px;
               line-height: 24px;
             }
