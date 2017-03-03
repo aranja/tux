@@ -52,7 +52,13 @@ export interface ImageFieldProps {
   label: string,
   name: string,
   onChange : Function,
-  value: Object,
+  value: {
+    sys: {
+      id: string,
+      type: string,
+      linkType: string,
+    }
+  },
 }
 
 class ImageField extends React.Component<ImageFieldProps, any> {
@@ -111,6 +117,8 @@ class ImageField extends React.Component<ImageFieldProps, any> {
       id: asset.sys.id,
       linkType: 'Asset',
       type: 'Link'
+    }, {
+      type: this.props.id
     })
 
     this.setState({
