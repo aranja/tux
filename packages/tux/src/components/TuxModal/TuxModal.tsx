@@ -68,7 +68,7 @@ class TuxModal extends React.Component<any, State> {
     } else {
       field['en-US'] = value
     }
-    console.log(fullModel)
+
     this.setState({fullModel})
   }
 
@@ -99,7 +99,6 @@ class TuxModal extends React.Component<any, State> {
           helpText={helpText}
           id={type.id}
           label={type.name}
-          model={this.props.model}
           name={type.name}
           onChange={event => this.onChange(event, type)}
           value={value}
@@ -110,6 +109,7 @@ class TuxModal extends React.Component<any, State> {
 
   render() {
     const { fullModel, typeMeta } = this.state
+    console.log('TuxModal.render')
 
     return (
       <div className="TuxModal">

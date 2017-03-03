@@ -97,9 +97,9 @@ export class ContentfulAdapter {
       throw new Error('Manager api not defined, please log in to save.')
     }
 
-    if (model.fields) {
-      await this._saveAssets(model.fields)
-    }
+    // if (model.fields) {
+    //   await this._saveAssets(model.fields)
+    // }
     await this.managementApi.saveEntry(model)
     this.triggerChange()
   }
@@ -177,9 +177,17 @@ export class ContentfulAdapter {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }
-    const entry = await this.managementApi.getEntry(model.sys.id)
-    await this._loadAssetsForEntry(entry.fields)
-    return entry
+    // const entry = await this.managementApi.getEntry(model.sys.id)
+    // await this._loadAssetsForEntry(entry.fields)
+    // return entry
+    return this.managementApi.getEntry(model.sys.id)
+  }
+
+  loadAsset(model : any) {
+    if (!this.managementApi) {
+      throw new Error('Manager api not defined, please log in get a scheme.')
+    }
+    return this.managementApi.getAsset(model.sys.id)
   }
 
   async _loadAssetsForEntry(fields : any) {

@@ -48,11 +48,12 @@ class BrowseField extends React.Component<any, any> {
 
 export interface ImageFieldProps {
   field : string | Array<string>,
-  onChange : Function,
-  id: string,
-  name: string,
-  label: string,
   helpText: string,
+  id: string,
+  imageUrl: string,
+  label: string,
+  name: string,
+  onChange : Function,
   value: string,
 }
 
@@ -66,8 +67,32 @@ class ImageField extends React.Component<ImageFieldProps, any> {
 
     this.state = {
       isToggled: false,
-      newImageValue: '',
+      imageUrl: '',
+      fullModel: null,
     }
+  }
+
+  async componentDidMount() {
+    const { value } = this.props
+
+    console.log('ImageField.componentDidMount')
+    console.log(value)
+
+    const [
+      fullModel,
+      typeMeta,
+    ] = await Promise.all([
+      this.context.tux.adapter.loadAsset(value)
+    ])
+
+    console.log(fullModel)
+    this.setState({
+      fullModel
+    })
+  }
+
+  async componentDidReciveProps(props : ImageFieldProps) {
+    console.log('Component received props')
   }
 
   onCardClick = () => {
@@ -96,18 +121,23 @@ class ImageField extends React.Component<ImageFieldProps, any> {
   }
 
   onUrlChange = async(value : any, type : {id : string}) => {
-    const { id } = this.props
-    const { onChange } = this.props
+    this.setState({
+      imageUrl: value
+    })
+  }
 
-    console.log(`onUrlChange: ${value}`)
+  loadImageFromUrl = () => {
+    const { onChange } = this.props
+    const { imageUrl } = this.state
   }
 
   render() {
-    const { model, value, id, name, onChange } = this.props
-    const { isToggled, newImageValue } = this.state
+    const { value, id, name, onChange } = this.props
+    const { isToggled, imageUrl, fullModel } = this.state
 
-    const imageField = model.fields[id]
-    if (imageField) {
+    if (fullModel) {
+      const title = fullModel.fields.title['en-US']
+      const url = fullModel.fields.file['en-US'].url
       return (
         <div style={{
           display: 'flex',
@@ -117,10 +147,10 @@ class ImageField extends React.Component<ImageFieldProps, any> {
           }}>
             <label className="InputLabel">{name} <small>(click image to edit)</small></label>
             <img
-              alt={imageField.asset.file.title}
+              alt={title}
               width="200"
               height="200"
-              src={`${imageField.asset.file.url}?w=200&h=200`}
+              src={`${url}?w=200&h=200`}
               onClick={this.onCardClick}
             />
           </div>
@@ -129,13 +159,15 @@ class ImageField extends React.Component<ImageFieldProps, any> {
           }}>
             {isToggled ? (
               <div>
-                <BrowseField
+                <TextField
                   helpText="URL to image"
                   id={id}
                   label={`New image for ${name}`}
-                  onChange={this.onFileChange}
-                  ref="browseField"
+                  onChange={this.onUrlChange}
+                  // ref="browseField"
+                  value={imageUrl}
                 />
+                <input type="button" onClick={this.loadImageFromUrl} value="Load" />
               </div>
             ) : null}
           </div>
@@ -151,7 +183,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
       )
     }
     return (
-      <div>Here be image field</div>
+      <div>Loading</div>
     )
   }
 }
