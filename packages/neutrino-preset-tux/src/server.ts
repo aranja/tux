@@ -1,10 +1,11 @@
-import path from 'path'
 import webpack from 'webpack'
+import nodeExternals from 'webpack-node-externals'
 import tux from './index'
 import { SERVER, SERVER_BUILD, ASSET_MANIFEST_EXTERNAL } from './paths'
 import fixRulesForServer from './fixRulesForServer'
 
 export default (neutrino: any) => {
+  // Inherit main tux config.
   tux(neutrino)
 
   const { config } = neutrino
@@ -37,6 +38,7 @@ export default (neutrino: any) => {
 
   // Map `import assets from 'asset-manifest'` to asset-manifest.json from client build.
   config.externals([
+    nodeExternals(),
     { 'asset-manifest': ASSET_MANIFEST_EXTERNAL },
   ])
 
