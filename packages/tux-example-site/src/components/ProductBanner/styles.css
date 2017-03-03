@@ -1,29 +1,33 @@
 .ProductBanner {
   align-items: center;
-  background: #473bb1;
-  color: #FFF;
+  background: #f8f9fb;
+  color: #333;
   display: flex;
   height: 40rem;
-  padding: 0 5rem;
+  position: relative;
   overflow: hidden;
 }
 
-.ProductBanner-image {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  flex: 0 1 40%;
+.ProductBanner-imageWrap {
   height: 100%;
-  margin-right: 5rem;
-  max-height: 35rem;
-  width: 100%;
+  position: absolute;
+  right: 0;
 }
 
+.ProductBanner-image {
+  height: 80%;
+  margin: 10% 0;
+}
+
+
 .ProductBanner-content {
-  flex: 0 1 60%;
+  width: 60%;
+}
+
+.ProductBanner-content > * {
+  display: block;
+  margin: 0 auto;
   max-width: 35rem;
-  padding-left: 1rem;
-  transform: translate(0, -25%);
 }
 
 .ProductBanner-heading {
