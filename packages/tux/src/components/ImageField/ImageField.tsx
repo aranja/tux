@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import { InputStyles } from '../../styles'
+import { tuxInputStyles } from '../../styles'
 import TextField from '../TextField'
 
 class BrowseField extends React.Component<any, any> {
@@ -203,7 +203,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
           </div>
           <style jsx>{`
             .InputLabel {
-              color: ${InputStyles.labelTextColor};
+              color: ${tuxInputStyles.labelTextColor};
               display: block;
               font-size: 14px;
               line-height: 24px;

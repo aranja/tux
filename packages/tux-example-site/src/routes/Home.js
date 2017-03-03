@@ -1,15 +1,17 @@
 import React from 'react'
 import { Editable, connect } from 'tux'
 import { H1, H2 } from '../components/typography'
-import Banner from '../components/Banner'
+import ProductBanner from '../components/ProductBanner'
 import Menu from '../components/Menu'
 import Section from '../components/Section'
 import SellPoints from '../components/SellPoints'
+import SocialPlug from '../components/SocialPlug'
 import Carousel from '../components/Carousel'
 import Testimonial from '../components/Testimonial'
-import Gallery from '../components/Gallery'
-import SocialPlug from '../components/SocialPlug'
+import TwitterFeed from '../components/TwitterFeed'
 import Pricetable from '../components/Pricetable'
+
+import ProductBannerImage from '../ProductBannerImage.png'
 
 const Home = ({ pages, articles, sellPoints, pricetable, testimonial, gallery, carousel }) => {
 
@@ -19,9 +21,7 @@ const Home = ({ pages, articles, sellPoints, pricetable, testimonial, gallery, c
   return (
     <div className="p-Home">
       <Menu />
-      <Banner color="#473bb1">
-        <Editable model={page} field="fields.content.title" />
-      </Banner>
+      <ProductBanner image={ProductBannerImage} heading="You make the website, we'll handle the content" text="Hand-crafted with so much love that you have no idea. In recusandae cum vero at commodi, ad tempore molestiae. Autem repellat adipisci aperiam atque tenetur accusamus, ipsa sit amet, consectetur adipisicing elit." />
       <Section>
         <H1><Editable model={page} field="fields.content.tagline" /></H1>
         <SellPoints sellPoints={sellPoints.items} />
@@ -32,9 +32,10 @@ const Home = ({ pages, articles, sellPoints, pricetable, testimonial, gallery, c
       <Section>
         <Testimonial testimonial={testimonial.items}/>
       </Section>
-      <Section>
-        <H1>Who is using Tux</H1>
-        <Gallery galleryItems={gallery.items} />
+      <Section backgroundColor="#F5F7FA">
+        <H1>What People Say About Tux</H1>
+        <H2>Totally random and unbiased selection of people</H2>
+        <TwitterFeed />
         <SocialPlug>
           Are you using Tux? <strong>Let us know on Twitter</strong>
         </SocialPlug>

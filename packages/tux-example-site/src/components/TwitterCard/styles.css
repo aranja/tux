@@ -1,0 +1,51 @@
+.TwitterCard {
+  background: #FFF;
+  border-radius: 10px;
+  min-height: 11.875rem;
+  width: calc(33.333% - 2rem);
+}
+
+.TwitterCard-top {
+  display: flex;
+  padding: 1.25rem;
+  padding-bottom: 0;
+}
+
+.TwitterCard-author {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.TwitterCard-authorImage {
+  height: 50px;
+  width: 50px;
+  margin-right: 1.25rem;
+  border-radius: 50%;
+}
+
+.TwitterCard-authorDetails {}
+
+.TwitterCard-authorName {
+  color: #000;
+  font-family: 'Arial', sans-serif;
+  text-transform: capitalize;
+}
+
+.TwitterCard-authorHandle {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 0.8rem;
+}
+
+.TwitterCard-content {
+  color: #666666;
+  line-height: 1.44;
+  padding: 1.25rem;
+}
+
+.TwitterCard-logo {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 1.5625rem;
+  height: 1.5625rem;
+  width: 1.5625rem;
+}

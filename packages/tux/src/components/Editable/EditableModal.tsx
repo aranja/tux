@@ -26,9 +26,9 @@ class EditableModal extends React.Component<EditableModalProps, any> {
   render() {
     const { model, children, className } = this.props
     const isEditing = this.context.tux && this.context.tux.isEditing
-
+    const classes = classNames(className, 'EditableModal', isEditing && 'is-editing')
     return (
-      <div className={classNames(className, 'EditableModal', isEditing && 'is-editing')} onClick={() => this.onEdit()}>
+      <div className={classes} onClick={() => this.onEdit()}>
         {children}
         <style jsx>{`
           .EditableModal.is-editing {

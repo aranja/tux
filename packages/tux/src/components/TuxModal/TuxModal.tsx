@@ -1,8 +1,12 @@
 import React from 'react'
-import { InputStyles, buttonStyles, tuxColors } from '../../styles'
 
+import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
+import { fade } from '../../utils/color'
+import { timeSince } from '../../utils/time'
+import MarkdownField from '../fields/MarkdownField'
+import TextField from '../fields/TextField'
+import TuxSpinner from '../Spinner/Spinner'
 import ImageField from '../ImageField'
-import TextField from '../TextField'
 
 interface FieldComponent {
   id: string
@@ -16,8 +20,6 @@ export interface State {
   fullModel: any | null
   typeMeta: any | null
 }
-
-const MarkdownField = TextField
 
 function componentForField({ id, type, control: { widgetId } }: FieldComponent) {
   if (type === 'Array')
@@ -80,9 +82,10 @@ class TuxModal extends React.Component<any, State> {
   }
 
   renderField = (type: any) => {
+    const { fullModel } = this.state
     const helpText = type.control.settings && type.control.settings.helpText
     const InputComponent = componentForField(type)
-    const field = this.state.fullModel.fields[type.id]
+    const field = fullModel.fields[type.id]
     const value = field && field['en-US']
 
     if (!InputComponent) {
@@ -91,12 +94,11 @@ class TuxModal extends React.Component<any, State> {
     return (
       <div key={type.id}>
         <InputComponent
-          helpText={helpText}
           id={type.id}
-          label={type.name}
-          name={type.name}
-          onChange={event => this.onChange(event, type)}
           value={value}
+          label={type.name}
+          helpText={helpText}
+          onChange={event => this.onChange(event, type)}
         />
       </div>
     )
@@ -104,50 +106,82 @@ class TuxModal extends React.Component<any, State> {
 
   render() {
     const { fullModel, typeMeta } = this.state
-
     return (
       <div className="TuxModal">
         {fullModel ? (
           <form onSubmit={this.onSubmit}>
             <div className="TuxModal-topBar">
-              <h1 className="TuxModal-title">Editing component <strong className="TuxModal-componentName">{typeMeta.name}</strong></h1>
+              <h1 className="TuxModal-title">
+                Editing <strong className="TuxModal-modelName">{typeMeta.name}</strong>
+              </h1>
               <div className="TuxModal-buttons">
-                <button className="TuxModal-button" label="Cancel" onClick={this.onCancel}>Cancel</button>
-                <button className="TuxModal-button TuxModal-button--green" type="submit" label="Save">Save</button>
+                <button
+                  className="TuxModal-button"
+                  label="Cancel"
+                  onClick={this.onCancel}>Cancel</button>
+                <button
+                  className="TuxModal-button TuxModal-button--green"
+                  type="submit"
+                  label="Save">Update</button>
               </div>
             </div>
             <div className="TuxModal-content">
               {typeMeta.fields.map(this.renderField)}
             </div>
+            <div className="TuxModal-meta">
+              <p className="TuxModal-metaLastUpdated">
+                Last updated {timeSince(new Date(fullModel.sys.updatedAt))} ago
+              </p>
+            </div>
           </form>
         ) : (
-          'Loading'
+          <TuxSpinner />
         )}
         <style jsx>{`
-
           .TuxModal {
-            background: #F3F5F7;
+            background: ${tuxColors.colorSnow};
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            margin: 0;
             margin-left: auto;
-            max-width: 60%;
+            max-width: 800px;
             height: 100%;
-            padding: 30px;
+            padding: 0;
+            position: relative;
+            width: 60%;
           }
 
           .TuxModal-topBar {
+            background: ${tuxColors.colorWhite};
+            border-bottom: 1px solid rgba(203, 203, 203, 0.53);
             display: flex;
             justify-content: space-between;
-            padding-bottom: 20px;
+            padding: 30px;
+          }
+
+          .TuxModal-content {
+            padding: 0 30px;
+          }
+
+          .TuxModal-meta {
+            font-size: 16px;
+            text-align: right;
+            padding: 0 30px;
+          }
+
+          .TuxModal-metaLastUpdated {
+            color: ${fade(tuxColors.textGray, 0.5)};
+            font-weight: 300;
           }
 
           .TuxModal-title {
             color: ${tuxColors.textDark};
             font-size: 25px;
-            font-weight: 400;
+            font-weight: 300;
             margin: 0;
           }
 
-          .TuxModal-componentName {
+          .TuxModal-modelName {
+            font-weight: 400;
             text-transform: capitalize;
           }
 
@@ -157,10 +191,10 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-button {
-            background: ${buttonStyles.backgroundColor};
+            background: ${tuxButtonStyles.backgroundColor};
             border-radius: 2px;
-            border: 1px solid ${buttonStyles.borderColor};
-            color: ${buttonStyles.textColor};
+            border: 1px solid ${tuxButtonStyles.borderColor};
+            color: ${tuxButtonStyles.textColor};
             cursor: pointer;
             display: inline-block;
             font-size: 14px;
@@ -173,13 +207,13 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-button + .TuxModal-button {
-            margin-left: 10px;
+            margin-left: 16px;
           }
 
           .TuxModal-button.TuxModal-button--green {
             color: #FFF;
-            background: ${buttonStyles.greenTheme.backgroundColor};
-            border-color: ${buttonStyles.greenTheme.borderColor};
+            background: ${tuxButtonStyles.greenTheme.backgroundColor};
+            border-color: ${tuxButtonStyles.greenTheme.borderColor};
           }
         `}</style>
       </div>
