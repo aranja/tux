@@ -60,20 +60,18 @@ class ManagementApi {
   }
 
   processAsset(id : string, localeName : string, version : any) {
-    return this.put(`/spaces/${this.space}/assets/${id}/${localeName}/process`, null, version)
+    return this.put(`/spaces/${this.space}/assets/${id}/files/${localeName}/process`, null, version)
   }
 
   async _save(entity : any, entityPath : string) {
-    console.log(`managementApi.save, would be saving ${entityPath}`)
-    // console.log(`managementApi.save, saving ${entityPath}`)
-    // const { fields, sys: { id, version } } = entity
-    // const newEntry = await this.put(`/spaces/${this.space}/${entityPath}/${id}`, { fields }, version)
-    //
-    // if (this.previewApi) {
-    //   this.previewApi.override(this.formatForDelivery(newEntry))
-    // }
-    //
-    // return newEntry
+    const { fields, sys: { id, version } } = entity
+    const newEntry = await this.put(`/spaces/${this.space}/${entityPath}/${id}`, { fields }, version)
+
+    if (this.previewApi) {
+      this.previewApi.override(this.formatForDelivery(newEntry))
+    }
+
+    return newEntry
   }
 
   createUpload(file : File) {
@@ -121,6 +119,11 @@ class ManagementApi {
     }
 
     return this.post(url, body, 'application/json')
+  }
+
+  createAssetFromUrl(upload : any) {
+    const url = `/spaces/${this.space}/assets`
+    return this.post(url, upload, 'application/json')
   }
 
   async getTypeMeta(type: string) {

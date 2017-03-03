@@ -12,11 +12,9 @@ class BrowseField extends React.Component<any, any> {
   onChange = (event : React.FormEvent<any>) => {
     const { onChange } = this.props
     const { input } = this.refs
-    console.log('BrowseFieldClass.onFileSelected')
+
     if (input.files.length) {
       onChange(input.files)
-    } else {
-      console.log('No files')
     }
   }
 
@@ -75,9 +73,6 @@ class ImageField extends React.Component<ImageFieldProps, any> {
   async componentDidMount() {
     const { value } = this.props
 
-    console.log('ImageField.componentDidMount')
-    console.log(value)
-
     const [
       fullModel,
       typeMeta,
@@ -85,14 +80,9 @@ class ImageField extends React.Component<ImageFieldProps, any> {
       this.context.tux.adapter.loadAsset(value)
     ])
 
-    console.log(fullModel)
     this.setState({
       fullModel
     })
-  }
-
-  async componentDidReciveProps(props : ImageFieldProps) {
-    console.log('Component received props')
   }
 
   onCardClick = () => {
@@ -104,7 +94,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     const { onChange } = this.props
 
     this.setState({
-      loading: true,
+      isLoadingImage: true,
     })
 
     const asset = await this.context.tux.adapter.createAssetFromFile(files[0])
@@ -116,7 +106,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     })
 
     this.setState({
-      loading: false,
+      isLoadingImage: false,
     })
   }
 
@@ -126,14 +116,34 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     })
   }
 
-  loadImageFromUrl = () => {
+  loadImageFromUrl = async() => {
     const { onChange } = this.props
     const { imageUrl } = this.state
+
+    this.setState({
+      isLoadingImage: true,
+    })
+
+    const asset = await this.context.tux.adapter.createAssetFromUrl(imageUrl, 'test-image.jpeg', 'en-US', 'Test Image')
+
+    onChange({
+      sys: {
+        id: asset.sys.id,
+        linkType: 'Asset',
+        type: 'Link'
+      }
+    }, {
+      type: this.props.id
+    })
+
+    this.setState({
+      isLoadingImage: false,
+    })
   }
 
   render() {
     const { value, id, name, onChange } = this.props
-    const { isToggled, imageUrl, fullModel } = this.state
+    const { isToggled, imageUrl, fullModel, isLoadingImage } = this.state
 
     if (fullModel) {
       const title = fullModel.fields.title['en-US']
@@ -167,7 +177,10 @@ class ImageField extends React.Component<ImageFieldProps, any> {
                   // ref="browseField"
                   value={imageUrl}
                 />
-                <input type="button" onClick={this.loadImageFromUrl} value="Load" />
+                <input type="button" onClick={this.loadImageFromUrl} value="Load" disabled={isLoadingImage} />
+                {isLoadingImage ? (
+                  <p>Loading image ... </p>
+                ) : null}
               </div>
             ) : null}
           </div>

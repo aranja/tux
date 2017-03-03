@@ -97,44 +97,8 @@ export class ContentfulAdapter {
       throw new Error('Manager api not defined, please log in to save.')
     }
 
-    // if (model.fields) {
-    //   await this._saveAssets(model.fields)
-    // }
     await this.managementApi.saveEntry(model)
     this.triggerChange()
-  }
-
-  async _saveAssets(fields : any) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in to save.')
-    }
-
-    for (const fieldName of Object.keys(fields)) {
-      const field = fields[fieldName]
-      for (const localeName of Object.keys(field)) {
-        const locale = field[localeName]
-        if (locale.sys) {
-          if (locale.fields) {
-            const asset = await this.managementApi.saveAsset({
-              fields: {
-                title: {
-                  [localeName]: 'Temporary title',
-                },
-                file: {
-                  [localeName]: locale.fields,
-                }
-              },
-              sys: locale.sys,
-            })
-            console.log(asset)
-            console.log(locale.sys)
-            await this.managementApi.processAsset(locale.sys.id, localeName, locale.sys.version)
-            delete locale.sys.version
-            delete locale.fields
-          }
-        }
-      }
-    }
   }
 
   async createAssetFromFile(file : any, title : string) {
@@ -148,38 +112,36 @@ export class ContentfulAdapter {
     return asset
   }
 
-  // async createAssetFromUrl(url : string, fileName : string, localeName : string, title : string) {
-  //   if (!this.managementApi) {
-  //     throw new Error('Manager api not defined, please log in to save.')
-  //   }
-  //
-  //   const asset = await this.managementApi.saveAsset({
-  //     fields: {
-  //       title: {
-  //         [localeName]: title
-  //       },
-  //       file: {
-  //         [localeName]: {
-  //           contentType: 'image/jpeg',
-  //           fileName,
-  //           upload: url,
-  //         }
-  //       }
-  //     }
-  //   })
-  //
-  //   await this.managementApi.processAsset(asset.sys.id, localeName, asset.sys.version)
-  //
-  //   return asset
-  // }
+  async createAssetFromUrl(url : string, fileName : string, localeName : string, title : string) {
+    if (!this.managementApi) {
+      throw new Error('Manager api not defined, please log in to save.')
+    }
+
+    const asset = await this.managementApi.createAssetFromUrl({
+      fields: {
+        title: {
+          [localeName]: title
+        },
+        file: {
+          [localeName]: {
+            contentType: 'image/jpeg',
+            fileName,
+            upload: url,
+          }
+        }
+      }
+    })
+
+    await this.managementApi.processAsset(asset.sys.id, localeName, asset.sys.version)
+
+    return asset
+  }
 
   async load(model : any) {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }
-    // const entry = await this.managementApi.getEntry(model.sys.id)
-    // await this._loadAssetsForEntry(entry.fields)
-    // return entry
+
     return this.managementApi.getEntry(model.sys.id)
   }
 
@@ -188,21 +150,6 @@ export class ContentfulAdapter {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }
     return this.managementApi.getAsset(model.sys.id)
-  }
-
-  async _loadAssetsForEntry(fields : any) {
-    for (const fieldName of Object.keys(fields)) {
-      const field = fields[fieldName]
-      for (const localeName of Object.keys(field)) {
-        const locale = field[localeName]
-        if (locale.sys) {
-          if (locale.sys.type === 'Link') {
-            const loadedAsset = await this.managementApi.getAsset(locale.sys.id)
-            locale.sys.version = loadedAsset.sys.version
-          }
-        }
-      }
-    }
   }
 
   async currentUser() {

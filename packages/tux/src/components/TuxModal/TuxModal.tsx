@@ -62,12 +62,7 @@ class TuxModal extends React.Component<any, State> {
     const { fullModel } = this.state
     const field = fullModel.fields[type.id]
 
-    // If field has a sys property then it's a linked model
-    if (field['en-US'].sys) {
-      field['en-US'].fields = value
-    } else {
-      field['en-US'] = value
-    }
+    field['en-US'] = value
 
     this.setState({fullModel})
   }
@@ -109,7 +104,6 @@ class TuxModal extends React.Component<any, State> {
 
   render() {
     const { fullModel, typeMeta } = this.state
-    console.log('TuxModal.render')
 
     return (
       <div className="TuxModal">
