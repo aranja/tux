@@ -1,16 +1,11 @@
 .Menu {
   align-items: center;
-  background: #473bb1;
-  color: #FFF;
+  background: #f8f9fb;
+  color: #333;
   display: flex;
   justify-content: space-between;
   font-size: 1.125rem;
   padding: 1.875rem;
-}
-
-.Menu--light {
-  background: #f8f9fb;
-  color: #333;
 }
 
 .Menu-list {
@@ -27,6 +22,7 @@
 }
 
 .Menu-item:last-child {
+  color: #FFF;
   background: #e8008a;
   border-radius: 40px;
   margin-left: 1rem;
@@ -37,8 +33,4 @@
 .Menu-item:last-child:hover {
   background: #f11b9e;
   box-shadow: 0px 0px 6px 4px rgba(232, 0, 138, 0.36);
-}
-
-.Menu--light .Menu-item:last-child {
-  color: #FFF;
 }

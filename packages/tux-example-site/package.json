@@ -11,7 +11,8 @@
     "history": "^4.5.1",
     "tux": "^0.1.0",
     "tux-adapter-contentful": "^0.1.0",
-    "universal-router": "^2.0.0"
+    "universal-router": "^2.0.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
     "start": "HTTPS=true react-scripts start",
