@@ -6,7 +6,7 @@ import { timeSince } from '../../utils/time'
 import MarkdownField from '../fields/MarkdownField'
 import TextField from '../fields/TextField'
 import TuxSpinner from '../Spinner/Spinner'
-import ImageField from '../ImageField'
+import ImageField from '../fields/ImageField'
 
 interface FieldComponent {
   id: string

@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import { tuxInputStyles } from '../../styles'
-import TextField from '../TextField'
+import TextField from './TextField'
 
 class BrowseField extends React.Component<any, any> {
   constructor(props : any) {
