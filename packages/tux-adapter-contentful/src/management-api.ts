@@ -31,7 +31,7 @@ class ManagementApi {
     }).then(result => result.data) as Promise<any>
   }
 
-  post(url : string, body : any, contentType : string) {
+  post(url: string, body: any, contentType: string) {
     return this.client.post(url, body, {
       headers: {
         'Content-Type': contentType,
@@ -39,31 +39,31 @@ class ManagementApi {
     }).then(result => result.data) as Promise<any>
   }
 
-  getEntry(id : string) {
+  getEntry(id: string) {
     return this._getEntity(id, 'entries')
   }
 
-  getAsset(id : string) {
+  getAsset(id: string) {
     return this._getEntity(id, 'assets')
   }
 
-  _getEntity(id : string, entityPath : string) {
+  _getEntity(id: string, entityPath: string) {
     return this.get(`/spaces/${this.space}/${entityPath}/${id}`)
   }
 
-  async saveEntry(entry : any) {
+  async saveEntry(entry: any) {
     return this._save(entry, 'entries')
   }
 
-  async saveAsset(asset : any) {
+  async saveAsset(asset: any) {
     return this._save(asset, 'assets')
   }
 
-  processAsset(id : string, localeName : string, version : any) {
+  processAsset(id: string, localeName: string, version: any) {
     return this.put(`/spaces/${this.space}/assets/${id}/files/${localeName}/process`, null, version)
   }
 
-  async _save(entity : any, entityPath : string) {
+  async _save(entity: any, entityPath: string) {
     const { fields, sys: { id, version } } = entity
     const newEntry = await this.put(`/spaces/${this.space}/${entityPath}/${id}`, { fields }, version)
 
@@ -74,7 +74,7 @@ class ManagementApi {
     return newEntry
   }
 
-  createUpload(file : File) {
+  createUpload(file: File) {
     const url = `https://upload.contentful.com/spaces/${this.space}/uploads`
     // this.post(url, file, 'application/octet-stream')
 
@@ -97,7 +97,7 @@ class ManagementApi {
     return promise
   }
 
-  createAssetFromUpload(upload : any, localeName : string, title : string, contentType : string, fileName : string) {
+  createAssetFromUpload(upload: any, localeName: string, title: string, contentType: string, fileName: string) {
     const url = `https://upload.contentful.com/spaces/${this.space}/assets`
     const body = {
       fields: {
@@ -121,7 +121,7 @@ class ManagementApi {
     return this.post(url, body, 'application/json')
   }
 
-  createAssetFromUrl(upload : any) {
+  createAssetFromUrl(upload: any) {
     const url = `/spaces/${this.space}/assets`
     return this.post(url, upload, 'application/json')
   }

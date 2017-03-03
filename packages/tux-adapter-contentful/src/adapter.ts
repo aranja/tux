@@ -102,7 +102,7 @@ export class ContentfulAdapter {
     this.triggerChange()
   }
 
-  async createAssetFromFile(file : any, title : string) {
+  async createAssetFromFile(file: any, title: string) {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in to save.')
     }
@@ -113,7 +113,7 @@ export class ContentfulAdapter {
     return asset
   }
 
-  async createAssetFromUrl(url : string, fileName : string, localeName : string, title : string) {
+  async createAssetFromUrl(url: string, fileName: string, localeName: string, title: string) {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in to save.')
     }
@@ -138,7 +138,7 @@ export class ContentfulAdapter {
     return asset
   }
 
-  async load(model : any) {
+  async load(model: any) {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }
@@ -146,7 +146,7 @@ export class ContentfulAdapter {
     return this.managementApi.getEntry(model.sys.id)
   }
 
-  loadAsset(model : any) {
+  loadAsset(model: any) {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }

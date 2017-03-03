@@ -5,11 +5,11 @@ import { tuxInputStyles } from '../../styles'
 import TextField from './TextField'
 
 class BrowseField extends React.Component<any, any> {
-  constructor(props : any) {
+  constructor(props: any) {
     super(props)
   }
 
-  onChange = (event : React.FormEvent<any>) => {
+  onChange = (event: React.FormEvent<any>) => {
     const { onChange } = this.props
     const { input } = this.refs
 
@@ -45,7 +45,7 @@ class BrowseField extends React.Component<any, any> {
 }
 
 export interface ImageFieldProps {
-  field : string | Array<string>,
+  field: string | Array<string>,
   helpText: string,
   id: string,
   imageUrl: string,
@@ -85,7 +85,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     })
   }
 
-  async componentWillReceiveProps(props : ImageFieldProps) {
+  async componentWillReceiveProps(props: ImageFieldProps) {
     if (!props.value || !props.value.sys) {
       return
     }
@@ -104,7 +104,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     this.setState({ isToggled: !isToggled})
   }
 
-  onFileChange = async(files : FileList) => {
+  onFileChange = async(files: FileList) => {
     const { onChange } = this.props
 
     this.setState({
@@ -126,7 +126,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     })
   }
 
-  onUrlChange = async(value : any, type : {id : string}) => {
+  onUrlChange = async(value: any) => {
     this.setState({
       imageUrl: value
     })
@@ -159,7 +159,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
   }
 
   render() {
-    const { value, id, name, onChange } = this.props
+    const { value, id, onChange, label } = this.props
     const { isToggled, imageUrl, fullModel, isLoadingImage } = this.state
 
     if (fullModel) {
@@ -172,7 +172,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
           <div style={{
             flex: 1,
           }}>
-            <label className="InputLabel">{name} <small>(click image to edit)</small></label>
+            <label className="InputLabel">{label} <small>(click image to edit)</small></label>
             <img
               alt={title}
               width="200"
@@ -184,14 +184,12 @@ class ImageField extends React.Component<ImageFieldProps, any> {
           <div style={{
             flex: 1,
           }}>
-            {isToggled ? (
+            {isToggled && (
               <div>
                 <TextField
-                  helpText="URL to image"
                   id={id}
-                  label={`New image for ${name}`}
+                  label={`New image for ${label}`}
                   onChange={this.onUrlChange}
-                  // ref="browseField"
                   value={imageUrl}
                 />
                 <input type="button" onClick={this.loadImageFromUrl} value="Load" disabled={isLoadingImage} />
@@ -199,7 +197,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
                   <p>Loading image ... </p>
                 ) : null}
               </div>
-            ) : null}
+            )}
           </div>
           <style jsx>{`
             .InputLabel {
