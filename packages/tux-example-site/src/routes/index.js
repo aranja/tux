@@ -4,7 +4,7 @@ import { TuxProvider } from 'tux'
 import Home from './Home'
 import About from './About'
 
-const publicUrl = process.env.PUBLIC_URL ||
+const publicUrl = process.env.PUBLIC_URL ? process.env.PUBLIC_URL :
   process.env.SERVER ? 'https://localhost:3000' :
   `${location.protocol}//${location.host}/`
 

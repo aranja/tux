@@ -59,15 +59,15 @@ export default (neutrino: any) => {
     .delete('manifest')
 
   // Add source map support for stack traces.
-  if (hasSourceMap) {
-    config
-      .plugin('banner')
-      .use(webpack.BannerPlugin, {
-        banner: `require('source-map-support').install();`,
-        raw: true,
-        entryOnly: true
-      })
-  }
+  config
+    .plugin('banner')
+    .use(webpack.BannerPlugin, {
+      banner:
+        (hasSourceMap ? `require('source-map-support').install();\n`: '') +
+        `process.env.SERVER = 'true';\n`,
+      raw: true,
+      entryOnly: true
+    })
 
   // Disable dev server. This causes neutrino to run `build` instead of `start` for node targets.
   config.devServer.clear()
