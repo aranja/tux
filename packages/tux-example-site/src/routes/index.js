@@ -5,8 +5,8 @@ import Home from './Home'
 import About from './About'
 
 const publicUrl = process.env.PUBLIC_URL ||
-  process.env.BROWSER ? `${location.protocol}//${location.host}/` :
-  'https://localhost:3000'
+  process.env.SERVER ? 'https://localhost:3000' :
+  `${location.protocol}//${location.host}/`
 
 const adapter = createContentfulAdapter({
   space: 'n2difvpz16fj',

@@ -16,7 +16,9 @@ export default (neutrino: any) => {
   // Build into a subfolder so server.js can live outside it.
   config.output
     .path(CLIENT_BUILD)
-  config.plugin('clean').args[0] = [CLIENT_BUILD]
+  if (config.plugins.has('clean')) {
+    config.plugin('clean').args[0] = [CLIENT_BUILD]
+  }
 
   // Use react-app babel preset.
   config.module

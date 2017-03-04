@@ -17,7 +17,7 @@
     "universal-router": "^2.0.0"
   },
   "scripts": {
-    "start": "neutrino start --presets neutrino-preset-tux",
+    "start": "HTTPS=true neutrino start --presets neutrino-preset-tux",
     "build": "neutrino build --presets neutrino-preset-tux",
     "start-server": "neutrino start --presets neutrino-preset-tux/server && node build/server",
     "build-server": "neutrino build --presets neutrino-preset-tux/server"
