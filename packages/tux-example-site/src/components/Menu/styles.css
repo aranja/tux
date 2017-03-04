@@ -1,7 +1,7 @@
 .Menu {
   align-items: center;
-  background: #473bb1;
-  color: #FFF;
+  background: #f8f9fb;
+  color: #333;
   display: flex;
   justify-content: space-between;
   font-size: 1.125rem;
@@ -22,6 +22,7 @@
 }
 
 .Menu-item:last-child {
+  color: #FFF;
   background: #e8008a;
   border-radius: 40px;
   margin-left: 1rem;

@@ -14,7 +14,8 @@
     "pretty-error": "^2.0.2",
     "tux": "^0.1.0",
     "tux-adapter-contentful": "^0.1.0",
-    "universal-router": "^2.0.0"
+    "universal-router": "^2.0.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
     "start": "HTTPS=true neutrino start --presets neutrino-preset-tux",

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import classNames from 'classnames'
 import ModalContainer, { openModal } from '../TuxModalContainer'
-import TuxBar from '../TuxBar'
+import TuxSidebar from '../TuxSidebar'
 import TuxModal from '../TuxModal'
 
 export interface TuxProviderProps {
@@ -17,32 +17,60 @@ class TuxProvider extends Component<TuxProviderProps, any> {
     }),
   }
 
+  state = {
+    isEditing: false,
+    overlayIsActive: false,
+    sidebarIsActive: false,
+  }
+
   getChildContext() {
     return {
       tux: {
-        isEditing: true,
+        isEditing: this.state.isEditing,
         editModel: this.editModel,
         adapter: this.props.adapter,
       },
     }
   }
 
-  editModel = (model: any) => {
-    return openModal(
+  editModel = async (model: any) => {
+    // Modal has been opened.
+    this.setState({
+      overlayIsActive: true
+    })
+
+    await openModal(
       <TuxModal model={model} />
     )
+
+    // Wait for openModal promise to resolve,
+    // which means that the modal has been closed.
+    this.setState({
+      overlayIsActive: false
+    })
+  }
+
+  onClickEdit = () => {
+    const { isEditing } = this.state
+
+    this.setState({
+      isEditing: !isEditing
+    })
   }
 
   render() {
+    const { isEditing, sidebarIsActive, overlayIsActive } = this.state
+
     return (
-      <div>
+      <div className="TuxProvider">
+        <TuxSidebar
+          isEditing={isEditing}
+          sidebarIsActive={sidebarIsActive}
+          overlayIsActive={overlayIsActive}
+          onClickEdit={this.onClickEdit}
+        />
         {this.props.children}
-        <MuiThemeProvider>
-          <div>
-            <ModalContainer />
-            <TuxBar />
-          </div>
-        </MuiThemeProvider>
+        <ModalContainer />
       </div>
     )
   }

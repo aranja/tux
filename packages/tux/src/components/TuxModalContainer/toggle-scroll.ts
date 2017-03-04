@@ -10,7 +10,13 @@ export function calculateScrollbarWidth({ className = defaultClassName } = {}) {
   function calculateWidth() {
     // Temporary div to measure widths
     const scroll = document.createElement('div')
-    const css = 'height: 50px; left: -50px; overflow: scroll; position: fixed; top: -50px; width: 50px;'
+    const css =
+      'height: 50px; ' +
+      'left: -50px; ' +
+      'overflow: scroll; ' +
+      'position: fixed; ' +
+      'top: -50px; ' +
+      'width: 50px;'
     scroll.setAttribute('style', css)
     document.body.appendChild(scroll)
 

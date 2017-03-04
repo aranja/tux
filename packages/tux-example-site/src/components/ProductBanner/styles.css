@@ -1,39 +1,63 @@
 .ProductBanner {
   align-items: center;
-  background: #473bb1;
-  color: #FFF;
+  background: #f8f9fb;
+  color: #333;
   display: flex;
   height: 40rem;
-  padding: 0 5rem;
+  position: relative;
   overflow: hidden;
 }
 
-.ProductBanner-image {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  flex: 0 1 40%;
+.ProductBanner-imageWrap {
   height: 100%;
-  margin-right: 5rem;
-  max-height: 35rem;
-  width: 100%;
+  position: absolute;
+  right: 0;
 }
 
+.ProductBanner-image {
+  height: 60%;
+  margin: 20% 0;
+}
+
+
 .ProductBanner-content {
-  flex: 0 1 60%;
-  max-width: 35rem;
-  padding-left: 1rem;
-  transform: translate(0, -25%);
+  width: 60%;
+}
+
+.ProductBanner-content > * {
+  display: block;
+  margin: 0 auto;
+  max-width: 28rem;
 }
 
 .ProductBanner-heading {
   line-height: 1.2;
-  font-size: 3.375rem;
+  font-size: 2.45rem;
   font-weight: 300;
   padding-bottom: 2rem;
 }
 
 .ProductBanner-text {
-  font-size: 1.375rem;
+  font-size: 1rem;
   font-weight: 300;
+}
+
+@media (min-width: 1440px) {
+  .ProductBanner-image {
+    height: 80%;
+    margin: 10% 0;
+  }
+
+  .ProductBanner-heading {
+    font-size: 3.375rem;
+    padding-bottom: 2rem;
+  }
+
+  .ProductBanner-text {
+    font-size: 1.375rem;
+  }
+
+  .ProductBanner-content > * {
+    max-width: 35rem;
+  }
 }

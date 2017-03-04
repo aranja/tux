@@ -43,7 +43,8 @@ export class ContentfulAdapter {
     // There is a total of three apis:
     // Content Delivery API - Access Token passed publicly to adapter.
     // Content Management API - Access Token returned from OAuth2 flow and saved in localStorage.
-    // Content Preview API - Access Token manually queried through Admin API, then saved in localStorage.
+    // Content Preview API - Access Token manually queried through Admin API, then saved in
+    // localStorage.
 
     // No private apis on server for now.
     if (typeof window === 'undefined') {
@@ -135,8 +136,8 @@ export class ContentfulAdapter {
   }
 
   async login() {
-    const loginUrl = `https://be.contentful.com/oauth/authorize?response_type=token&client_id=${this.clientId}&redirect_uri=${this.redirectUri}&scope=content_management_manage`
-    location.href = loginUrl
+    location.href = `https://be.contentful.com/oauth/authorize?response_type=token&` +
+      `client_id=${this.clientId}&redirect_uri=${this.redirectUri}&scope=content_management_manage`
   }
 
   async logout() {

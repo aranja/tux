@@ -11,7 +11,9 @@ interface State<DataProps> {
 type InnerProps<OuterProps, DataProps> = OuterProps & DataProps & RefreshProp
 
 function connect<DataProps>(fn: (api: any) => Promise<DataProps>) {
-  return function wrap<OuterProps>(InnerComponent: React.ComponentClass<InnerProps<OuterProps, DataProps>>): React.ComponentClass<OuterProps> {
+  return function wrap<OuterProps>(
+    InnerComponent: React.ComponentClass<InnerProps<OuterProps, DataProps>>
+  ): React.ComponentClass<OuterProps> {
     class TuxConnection extends React.Component<OuterProps, State<DataProps>> {
       static contextTypes = {
         tux: React.PropTypes.object,
