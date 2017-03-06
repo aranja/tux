@@ -18,7 +18,7 @@ const MarkdownField = ({ id, value, label, onChange }: MarkdownField) => (
       label={label}
       id={id}
       value={value}
-      onChange={onChange}
+      onChange={(event: React.FormEvent<any>) => onChange(event.target.value)}
     />
     <style jsx>{`
         .MarkdownField {
