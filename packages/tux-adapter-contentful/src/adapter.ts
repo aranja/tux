@@ -102,13 +102,70 @@ export class ContentfulAdapter {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in to save.')
     }
-    const newModel = await this.managementApi.saveEntry(model)
+
+    await this.managementApi.saveEntry(model)
     this.triggerChange()
-    return newModel
   }
 
-  load(model: any) {
-    return this.managementApi && this.managementApi.getEntry(model.sys.id)
+  async createAssetFromFile(file: any, title: string) {
+    if (!this.managementApi) {
+      throw new Error('Manager api not defined, please log in to save.')
+    }
+
+    const upload = await this.managementApi.createUpload(file)
+    const asset = await this.managementApi.createAssetFromUpload(
+      upload,
+      'en-US',
+      title,
+      file.type,
+      file.name
+    )
+
+    return asset
+  }
+
+  async createAssetFromUrl(url: string, fileName: string, localeName: string, title: string) {
+    if (!this.managementApi) {
+      throw new Error('Manager api not defined, please log in to save.')
+    }
+
+    const asset = await this.managementApi.createAssetFromUrl({
+      fields: {
+        title: {
+          [localeName]: title
+        },
+        file: {
+          [localeName]: {
+            contentType: 'image/jpeg',
+            fileName,
+            upload: url,
+          }
+        }
+      }
+    })
+
+    await this.managementApi.processAsset(
+      asset.sys.id,
+      localeName,
+      asset.sys.version
+    )
+
+    return asset
+  }
+
+  async load(model: any) {
+    if (!this.managementApi) {
+      throw new Error('Manager api not defined, please log in get a scheme.')
+    }
+
+    return this.managementApi.getEntry(model.sys.id)
+  }
+
+  loadAsset(model: any) {
+    if (!this.managementApi) {
+      throw new Error('Manager api not defined, please log in get a scheme.')
+    }
+    return this.managementApi.getAsset(model.sys.id)
   }
 
   async currentUser() {
