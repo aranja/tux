@@ -130,11 +130,11 @@ export class Tux {
     return { element, context }
   }
 
-  private renderWrapper(wrappers: Array<Function>) {
+  private renderWrapper(wrappers: Array<WrapRender>, context: Context) {
     const wrapRender = wrappers.shift()
     if (wrapRender) {
-      wrapRender(wrappers[0])
-      this.renderWrapper(wrappers)
+      wrapRender(wrappers[0], context)
+      this.renderWrapper(wrappers, context)
     }
   }
 }

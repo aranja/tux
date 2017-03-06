@@ -103,5 +103,32 @@ describe('tux.use', () => {
 
     tux.use({ wrapClientRender }).startClient()
   })
+
+  test.skip('wrapClientRender can modify the context', (done) => {
+    const tux = createTux({
+      renderToDom: (element: ReactElement<any>) => {
+        console.log('element')
+        done()
+      }
+    })
+
+    tux.use({
+      wrapClientRender(render, context) {
+        console.log('wrapClientRender 1', context)
+        context.htmlProps.someEdit = 'someEdit'
+        render()
+      }
+    })
+
+    tux.use({
+      wrapClientRender(render, context) {
+        console.log('wrapClientRender 2', context)
+        context.htmlProps.someEdit += ' anotherEdit'
+        render()
+      }
+    })
+
+    tux.startClient()
+  })
 })
 
