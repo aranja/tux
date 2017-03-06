@@ -15,9 +15,8 @@ describe('tux.use', () => {
 
   test('creates a base context', async () => {
     const tux = createTux()
-    const element = await tux.getElement()
-    const { props } = shallow(element).instance()
-    expect(props).toHaveProperty('context', { htmlProps: {} })
+    const { context } = await tux.getElement()
+    expect(context).toEqual({ htmlProps: {} })
   })
 
   test('createElement gets wrapped', async () => {
@@ -29,7 +28,7 @@ describe('tux.use', () => {
       },
     })
 
-    const element = await tux.getElement()
+    const { element } = await tux.getElement()
     const wrapper = shallow(element)
     const instance = wrapper.instance()
 
@@ -54,11 +53,9 @@ describe('tux.use', () => {
       }
     })
 
-    const element = await tux.getElement()
-    const wrapper = shallow(element)
-    const { props } = wrapper.instance()
+    const { context } = await tux.getElement()
 
-    expect(props).toHaveProperty('context', {
+    expect(context).toEqual({
       htmlProps: {
         someEdit: 'someEdit anotherEdit',
       },
@@ -75,7 +72,7 @@ describe('tux.use', () => {
       },
     })
 
-    const element = await tux.getElement()
+    const { element } = await tux.getElement()
     const wrapper = shallow(element)
 
     expect(wrapper.html()).toBe('<div class="wrap"></div>')

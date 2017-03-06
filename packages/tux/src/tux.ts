@@ -84,7 +84,7 @@ export class Tux {
   }
 
   async startClient() {
-    const element = await this.getElement()
+    const { element, context } = await this.getElement()
 
     this.wrapClientRenderers.push(() => {
       const { renderToDOM, container } = this.config
@@ -94,17 +94,17 @@ export class Tux {
       }
     })
 
-    this.renderWrapper(this.wrapClientRenderers)
+    this.renderWrapper(this.wrapClientRenderers, context)
   }
 
   async startServer() {
-    const element = await this.getElement()
+    const { element, context } = await this.getElement()
 
     this.wrapServerRenderers.push(() => {
       this.config.renderToString(element)
     })
 
-    this.renderWrapper(this.wrapServerRenderers)
+    this.renderWrapper(this.wrapServerRenderers, context)
   }
 
   async getElement() {
@@ -125,7 +125,9 @@ export class Tux {
       return createElement(await next, context)
     }
 
-    return await next()
+    const element = await next()
+
+    return { element, context }
   }
 
   private renderWrapper(wrappers: Array<Function>) {
