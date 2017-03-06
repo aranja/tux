@@ -5,23 +5,20 @@ import DayPicker, { DateUtils } from 'react-day-picker'
 import { tuxColors, tuxInputStyles, tuxDatePickerStyles } from '../../styles'
 import { fade } from '../../utils/color'
 
+const DATE_FORMAT = 'YYYY-MM-DD'
+
 class DatePicker extends Component {
-  componentDidMount() {
-    const { value } = this.props
-  }
+
+  clickedInside = false
+
   componentWillUnmount() {
     clearTimeout(this.clickTimeout)
   }
 
   state = {
     showOverlay: false,
-    value: moment(this.props.value).format('L'),
+    value: moment(this.props.value).format(DATE_FORMAT),
   }
-
-  input = null
-  daypicker = null
-  clickedInside = false
-  clickTimeout = null
 
   handleContainerMouseDown = () => {
     this.clickedInside = true
@@ -51,26 +48,13 @@ class DatePicker extends Component {
     }
   }
 
-  handleInputChange = (e) => {
-    const { targetValue } = e.target
-    const momentDay = moment(targetValue, 'L', true)
-    if (momentDay.isValid()) {
-      this.setState({
-        value: targetValue,
-      }, () => {
-        this.daypicker.showMonth(this.state.selectedDay)
-      })
-    } else {
-      this.setState({ value: targetValue, selectedDay: null })
-    }
-  }
-
-  handleDayClick = (day) => {
+  handleDayClick = (day, modifiers, event) => {
+    this.props.onChange(event)
     this.setState({
-      value: moment(day).format('L'),
+      value: moment(day).format(DATE_FORMAT),
       selectedDay: day,
       showOverlay: false,
-    });
+    })
     this.input.blur()
   }
 
@@ -87,14 +71,12 @@ class DatePicker extends Component {
           ref={(el) => {this.input = el}}
           placeholder="Select a date"
           value={value}
-          onChange={this.handleInputChange}
           onFocus={this.handleInputFocus}
           onBlur={this.handleInputBlur}
         />
         { showOverlay &&
           <div className="TuxDayPicker-overlay">
             <DayPicker
-              ref={(el) => { this.daypicker = el }}
               initialMonth={selectedDay || undefined}
               onDayClick={ this.handleDayClick }
               selectedDays={ day => DateUtils.isSameDay(selectedDay, day) }
