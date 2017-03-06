@@ -4,7 +4,9 @@ import { fade } from '../../utils/color'
 import { timeSince } from '../../utils/time'
 import MarkdownField from '../fields/MarkdownField'
 import TextField from '../fields/TextField'
+import DatePicker from '../fields/DatePicker'
 import TuxSpinner from '../Spinner/Spinner'
+
 
 interface Field {
   id: string
@@ -32,6 +34,9 @@ function componentForField({ id, type, control: { widgetId } }: FieldComponent) 
     return null
   if (widgetId === 'markdown') {
     return MarkdownField
+  }
+  if (widgetId === 'datePicker') {
+    return DatePicker
   }
   else {
     return TextField

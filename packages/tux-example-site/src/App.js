@@ -3,6 +3,7 @@ import './reset.css'
 import './index.css'
 import './megadraft.css'
 import './megadraft-fixes.css'
+import './icons.css'
 
 // These are the variables that will be accessible from the React context.
 const ContextType = {
