@@ -103,7 +103,7 @@ class ManagementApi {
     })
   }
 
-  createAsset(body : any) {
+  createAsset(body: any) {
     const url = `/spaces/${this.space}/assets`
     return this.post(url, body, 'application/json')
   }
