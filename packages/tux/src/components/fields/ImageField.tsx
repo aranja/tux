@@ -173,26 +173,20 @@ class ImageField extends React.Component<ImageFieldProps, any> {
       const title = fullModel.fields.title['en-US']
       const url = fullModel.fields.file['en-US'].url
       return (
-        <div style={{
-          display: 'flex',
-        }}>
-          <div style={{
-            flex: 1,
-          }}>
+        <div>
+          <div>
             <label className="InputLabel">
               {label} <small>(click image to edit)</small>
             </label>
             <img
               alt={title}
-              width="200"
-              height="200"
-              src={`${url}?w=200&h=200`}
+              width="128"
+              height="auto"
+              src={`${url}?w=128`}
               onClick={this.onCardClick}
             />
           </div>
-          <div style={{
-            flex: 1,
-          }}>
+          <div>
             {isToggled && (
               <div>
                 <BrowseField
