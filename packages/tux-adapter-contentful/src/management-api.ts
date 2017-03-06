@@ -20,7 +20,10 @@ class ManagementApi {
   }
 
   get(url: string, params?: Object): Promise<any> {
-    return this.client.get(url, { params }).then(result => result.data) as Promise<any>
+    return this.client.get(
+      url,
+      { params }
+    ).then(result => result.data) as Promise<any>
   }
 
   put(url: string, body: any, version: string): Promise<any> {
@@ -31,19 +34,107 @@ class ManagementApi {
     }).then(result => result.data) as Promise<any>
   }
 
+  post(url: string, body: any, contentType: string) {
+    return this.client.post(url, body, {
+      headers: {
+        'Content-Type': contentType,
+      }
+    }).then(result => result.data) as Promise<any>
+  }
+
   getEntry(id: string) {
-    return this.get(`/spaces/${this.space}/entries/${id}`)
+    return this._getEntity(id, 'entries')
+  }
+
+  getAsset(id: string) {
+    return this._getEntity(id, 'assets')
+  }
+
+  _getEntity(id: string, entityPath: string) {
+    return this.get(`/spaces/${this.space}/${entityPath}/${id}`)
   }
 
   async saveEntry(entry: any) {
-    const { fields, sys: { id, version } } = entry
-    const newEntry = await this.put(`/spaces/${this.space}/entries/${id}`, { fields }, version)
+    return this._save(entry, 'entries')
+  }
+
+  async saveAsset(asset: any) {
+    return this._save(asset, 'assets')
+  }
+
+  processAsset(id: string, localeName: string, version: any) {
+    const url = `/spaces/${this.space}/assets/${id}/files/${localeName}/process`
+    return this.put(url, null, version)
+  }
+
+  async _save(entity: any, entityPath: string) {
+    const { fields, sys: { id, version } } = entity
+    const url = `/spaces/${this.space}/${entityPath}/${id}`
+    const newEntry = await this.put(url, { fields }, version)
 
     if (this.previewApi) {
       this.previewApi.override(this.formatForDelivery(newEntry))
     }
 
     return newEntry
+  }
+
+  createUpload(file: File) {
+    const url = `https://upload.contentful.com/spaces/${this.space}/uploads`
+
+    return new Promise((resolve, reject) => {
+      const request = new XMLHttpRequest()
+      request.open('POST', url, true)
+      request.setRequestHeader('Content-Type', 'application/octet-stream')
+      request.setRequestHeader(
+        'Authorization',
+        this.client.defaults.headers.Authorization
+      )
+      request.onload = () => {
+        resolve(request.response.data)
+      }
+
+      request.onerror = () => {
+        reject('Could not create upload')
+      }
+
+      request.send(file)
+    })
+  }
+
+  createAssetFromUpload(
+    upload: any,
+    localeName: string,
+    title: string,
+    contentType: string,
+    fileName: string
+  ) {
+    const url = `https://upload.contentful.com/spaces/${this.space}/assets`
+    const body = {
+      fields: {
+        title: {
+          [localeName]: title,
+        },
+        file: {
+          [localeName]: {
+            contentType,
+            fileName,
+            uploadFrom: {
+              sys: {
+                upload,
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return this.post(url, body, 'application/json')
+  }
+
+  createAssetFromUrl(upload: any) {
+    const url = `/spaces/${this.space}/assets`
+    return this.post(url, upload, 'application/json')
   }
 
   async getTypeMeta(type: string) {

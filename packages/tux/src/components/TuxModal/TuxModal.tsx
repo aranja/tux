@@ -1,18 +1,12 @@
 import React from 'react'
+
 import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 import { fade } from '../../utils/color'
 import { timeSince } from '../../utils/time'
 import MarkdownField from '../fields/MarkdownField'
 import TextField from '../fields/TextField'
 import TuxSpinner from '../Spinner/Spinner'
-
-interface Field {
-  id: string
-  value: string
-  label: string
-  helpText: string
-  onChange: (e: React.FormEvent<any>) => void
-}
+import ImageField from '../fields/ImageField'
 
 interface FieldComponent {
   id: string
@@ -32,8 +26,9 @@ function componentForField({ id, type, control: { widgetId } }: FieldComponent) 
     return null
   if (widgetId === 'markdown') {
     return MarkdownField
-  }
-  else {
+  } else if (id === 'image' || id === 'icon') {
+    return ImageField
+  } else {
     return TextField
   }
 }
@@ -65,10 +60,12 @@ class TuxModal extends React.Component<any, State> {
     })
   }
 
-  onChange(event: React.ChangeEvent<any>, type: {id: string}) {
+  onChange(value: any, type: {id: string}) {
     const { fullModel } = this.state
     const field = fullModel.fields[type.id]
-    field['en-US'] = event.target.value
+
+    field['en-US'] = value
+
     this.setState({fullModel})
   }
 
