@@ -111,12 +111,14 @@ class ImageField extends React.Component<ImageFieldProps, any> {
       isLoadingImage: true,
     })
 
-    const asset = await this.context.tux.adapter.createAssetFromFile(files[0])
+    const asset = await this.context.tux.adapter.createAssetFromFile(files[0], 'Some title')
 
     onChange({
-      id: asset.sys.id,
-      linkType: 'Asset',
-      type: 'Link'
+      sys: {
+        id: asset.sys.id,
+        linkType: 'Asset',
+        type: 'Link'
+      }
     }, {
       type: this.props.id
     })
@@ -193,18 +195,12 @@ class ImageField extends React.Component<ImageFieldProps, any> {
           }}>
             {isToggled && (
               <div>
-                <TextField
+                <BrowseField
                   id={id}
                   label={`New image for ${label}`}
-                  onChange={this.onUrlChange}
-                  value={imageUrl}
+                  onChange={this.onFileChange}
+                  value=""
                 />
-                <input
-                  disabled={isLoadingImage}
-                  onClick={this.loadImageFromUrl}
-                  type="button"
-                  value="Load"
-                  />
                 {isLoadingImage ? (
                   <p>Loading image ... </p>
                 ) : null}

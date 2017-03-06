@@ -108,23 +108,36 @@ export class ContentfulAdapter {
     }
 
     const upload = await this.managementApi.createUpload(file)
-    const asset = await this.managementApi.createAssetFromUpload(
-      upload,
-      'en-US',
-      title,
-      file.type,
-      file.name
-    )
+    if (upload.sys) {
+      const localeName = 'en-US'
+      const assetBody = {
+        fields: {
+          title: {
+            [localeName]: title,
+          },
+          file: {
+            [localeName]: {
+              contentType: file.type,
+              fileName: file.name,
+              uploadFrom: {
+                sys: {
+                  type: 'Link',
+                  linkType: 'Upload',
+                  id: upload.sys.id,
+                },
+              }
+            }
+          }
+        }
+      }
 
-    return asset
+      return await this._createAsset(assetBody, 'upload')
+    }
+    return null
   }
 
   async createAssetFromUrl(url: string, fileName: string, localeName: string, title: string) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in to save.')
-    }
-
-    const asset = await this.managementApi.createAssetFromUrl({
+    const assetBody = {
       fields: {
         title: {
           [localeName]: title
@@ -137,14 +150,24 @@ export class ContentfulAdapter {
           }
         }
       }
-    })
+    }
 
-    await this.managementApi.processAsset(
-      asset.sys.id,
-      localeName,
-      asset.sys.version
-    )
+    return await this._createAsset(assetBody, 'url')
+  }
 
+  async _createAsset(body: any, bodyType: string) {
+    if (!this.managementApi) {
+      throw new Error('Manager api not defined, please log in to save.')
+    }
+
+    const asset = await this.managementApi.createAsset(body)
+    if (asset) {
+      await this.managementApi.processAsset(
+        asset.sys.id,
+        'en-US',
+        asset.sys.version
+      )
+    }
     return asset
   }
 
