@@ -11,6 +11,7 @@
     "test": "lerna run test"
   },
   "dependencies": {
+    "@types/react-day-picker": "^1.2.37",
     "moment": "^2.17.1",
     "react": "^15.4.2",
     "react-day-picker": "^5.1.1",

@@ -7,15 +7,25 @@ import { fade } from '../../utils/color'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
 
-class DatePicker extends Component<any, any> {
+export interface State {
+  selectedDay: string | null
+  showOverlay: boolean
+  value: string
+}
 
+class DatePicker extends Component<any, State> {
+  private clickTimeout: number
+  private input: {
+    focus: () => any
+    blur: () => any
+  }
   clickedInside = false
 
   componentWillUnmount() {
     clearTimeout(this.clickTimeout)
   }
 
-  state = {
+  state: State = {
     selectedDay: null,
     showOverlay: false,
     value: moment(this.props.value).format(DATE_FORMAT),
@@ -278,7 +288,7 @@ class DatePicker extends Component<any, any> {
         }
 
         .TuxDayPicker-input {
-          background: ${tuxInputStyles.backgroundColor};
+          background: ${tuxDatePickerStyles.backgroundColor};
           border: 1px solid ${tuxInputStyles.borderColor};
           border-radius: 3px;
           color: ${tuxColors.textDark};
