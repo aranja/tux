@@ -91,7 +91,8 @@ class ManagementApi {
         this.client.defaults.headers.Authorization
       )
       request.onload = () => {
-        resolve(request.response.data)
+        const data = JSON.parse(request.response)
+        resolve(data)
       }
 
       request.onerror = () => {
@@ -102,39 +103,9 @@ class ManagementApi {
     })
   }
 
-  createAssetFromUpload(
-    upload: any,
-    localeName: string,
-    title: string,
-    contentType: string,
-    fileName: string
-  ) {
-    const url = `https://upload.contentful.com/spaces/${this.space}/assets`
-    const body = {
-      fields: {
-        title: {
-          [localeName]: title,
-        },
-        file: {
-          [localeName]: {
-            contentType,
-            fileName,
-            uploadFrom: {
-              sys: {
-                upload,
-              }
-            }
-          }
-        }
-      }
-    }
-
-    return this.post(url, body, 'application/json')
-  }
-
-  createAssetFromUrl(upload: any) {
+  createAsset(body: any) {
     const url = `/spaces/${this.space}/assets`
-    return this.post(url, upload, 'application/json')
+    return this.post(url, body, 'application/json')
   }
 
   async getTypeMeta(type: string) {
