@@ -49,7 +49,6 @@ class DatePicker extends Component {
   }
 
   handleDayClick = (day, modifiers, event) => {
-    this.props.onChange(event)
     this.setState({
       value: moment(day).format(DATE_FORMAT),
       selectedDay: day,
@@ -71,6 +70,7 @@ class DatePicker extends Component {
           ref={(el) => {this.input = el}}
           placeholder="Select a date"
           value={value}
+          onChange={(event) => onChange(event.target.value)}
           onFocus={this.handleInputFocus}
           onBlur={this.handleInputBlur}
         />
@@ -78,8 +78,8 @@ class DatePicker extends Component {
           <div className="TuxDayPicker-overlay">
             <DayPicker
               initialMonth={selectedDay || undefined}
-              onDayClick={ this.handleDayClick }
-              selectedDays={ day => DateUtils.isSameDay(selectedDay, day) }
+              onDayClick={this.handleDayClick}
+              selectedDays={day => DateUtils.isSameDay(selectedDay, day)}
             />
           </div>
         }

@@ -11,7 +11,7 @@ interface TextField {
 const TextField = ({ id, value, label, onChange }: TextField) => (
   <div className="Input">
     <label className="InputLabel">{label}</label>
-    <input className="InputField" label={label} id={id} value={value} onChange={onChange} />
+    <input className="InputField" label={label} id={id} value={value} onChange={(event) => onChange(event.target.value)} />
       <style jsx>{`
         .Input {
           align-items: center;
