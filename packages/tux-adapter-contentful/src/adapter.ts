@@ -137,10 +137,6 @@ export class ContentfulAdapter {
   }
 
   async createAssetFromUrl(url: string, fileName: string, localeName: string, title: string) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in to save.')
-    }
-
     const assetBody = {
       fields: {
         title: {
