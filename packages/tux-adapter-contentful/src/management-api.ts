@@ -80,29 +80,26 @@ class ManagementApi {
   }
 
   createUpload(file: File) {
-    // const url = `https://upload.contentful.com/spaces/${this.space}/uploads`
-    // // this.post(url, file, 'application/octet-stream')
-    //
-    // const promise = new Promise((resolve, reject) => {
-    //   const request = new XMLHttpRequest()
-    //   request.open('POST', url, true)
-    //   request.setRequestHeader('Content-Type', 'application/octet-stream')
-    //   request.setRequestHeader(
-    //     'Authorization',
-    //     'Bearer b9c30085503d94228c03bf433742f6c23c59c49ff61770a2631a22b9b07807fc'
-    //   )
-    //   request.onload = () => {
-    //     resolve(request.response.data)
-    //   }
-    //
-    //   request.onerror = () => {
-    //     reject('Could not create upload')
-    //   }
-    //
-    //   request.send(file)
-    // })
-    //
-    // return promise
+    const url = `https://upload.contentful.com/spaces/${this.space}/uploads`
+
+    return new Promise((resolve, reject) => {
+      const request = new XMLHttpRequest()
+      request.open('POST', url, true)
+      request.setRequestHeader('Content-Type', 'application/octet-stream')
+      request.setRequestHeader(
+        'Authorization',
+        this.client.defaults.headers.Authorization
+      )
+      request.onload = () => {
+        resolve(request.response.data)
+      }
+
+      request.onerror = () => {
+        reject('Could not create upload')
+      }
+
+      request.send(file)
+    })
   }
 
   createAssetFromUpload(
