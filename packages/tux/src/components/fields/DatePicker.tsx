@@ -7,7 +7,7 @@ import { fade } from '../../utils/color'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
 
-class DatePicker extends Component {
+class DatePicker extends Component<any, any> {
 
   clickedInside = false
 
@@ -50,12 +50,20 @@ class DatePicker extends Component {
   }
 
   handleDayClick = (day, modifiers, event) => {
+    const dateValue = moment(day).format(DATE_FORMAT)
     this.setState({
-      value: moment(day).format(DATE_FORMAT),
+      value: dateValue,
       selectedDay: day,
       showOverlay: false,
     })
     this.input.blur()
+
+    this.onDateChange(dateValue)
+  }
+
+  onDateChange = (value: string) => {
+    const { onChange } = this.props
+    onChange(value)
   }
 
   render() {
@@ -71,7 +79,7 @@ class DatePicker extends Component {
           ref={(el) => {this.input = el}}
           placeholder="Select a date"
           value={value}
-          onChange={(event) => onChange(event.target.value)}
+          onChange={(event) => this.onDateChange(event.target.value)}
           onFocus={this.handleInputFocus}
           onBlur={this.handleInputBlur}
         />
