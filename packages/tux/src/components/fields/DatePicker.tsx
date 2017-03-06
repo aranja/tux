@@ -16,6 +16,7 @@ class DatePicker extends Component {
   }
 
   state = {
+    selectedDay: null,
     showOverlay: false,
     value: moment(this.props.value).format(DATE_FORMAT),
   }
@@ -58,7 +59,7 @@ class DatePicker extends Component {
   }
 
   render() {
-    const { visible, selectedDay, showOverlay, value } = this.state
+    const { selectedDay, showOverlay, value } = this.state
     const { id, label, onChange } = this.props
 
     return (
