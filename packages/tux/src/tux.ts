@@ -24,7 +24,7 @@ export interface Middleware {
 }
 
 export interface Config {
-  container?: Element,
+  container?: () => null | Element,
   renderToDOM: (element: ReactElement | null, container: Element) => string
   renderToString: (element: ReactElement) => string
 }
@@ -87,7 +87,11 @@ export class Tux {
     const element = await this.getElement()
 
     this.wrapClientRenderers.push(() => {
-      this.config.renderToDOM(element, this.config.container as Element)
+      const { renderToDOM, container } = this.config
+
+      if (typeof container === 'function') {
+        renderToDOM(element, container())
+      }
     })
 
     this.renderWrapper(this.wrapClientRenderers)
@@ -135,6 +139,7 @@ export class Tux {
 
 export default function createTux(config = {}) {
   return new Tux(Object.assign({
+    container: () => null,
     renderToDOM: ReactDOM.render,
     renderToString: ReactDOMServer.renderToString,
   }, config))
