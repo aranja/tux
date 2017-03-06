@@ -26,9 +26,3 @@ export const tuxButtonStyles = {
     borderColor: '#188E18',
   }
 }
-
-export default {
-  tuxColors,
-  tuxInputStyles,
-  tuxButtonStyles
-}
