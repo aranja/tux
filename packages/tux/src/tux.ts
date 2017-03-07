@@ -31,6 +31,11 @@ export type Config = {
   renderToString?: (element: ReactElement) => string
 }
 
+export function createContext(newContext?: Object): Context {
+  const htmlProps = {}
+  return Object.assign({ htmlProps }, newContext)
+}
+
 async function createBase(renderChildren: null | (() => Promise<ReactElement>), context: Context) {
   const element = renderChildren && await renderChildren()
 
