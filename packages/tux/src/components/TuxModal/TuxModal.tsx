@@ -3,6 +3,7 @@ import React from 'react'
 import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 import { fade } from '../../utils/color'
 import { timeSince } from '../../utils/time'
+import moment from 'moment'
 import MarkdownField from '../fields/MarkdownField'
 import TextField from '../fields/TextField'
 import DatePicker from '../fields/DatePicker'
@@ -135,9 +136,11 @@ class TuxModal extends React.Component<any, State> {
               {typeMeta.fields.map(this.renderField)}
             </div>
             <div className="TuxModal-meta">
+            { fullModel.sys.updatedAt && (
               <p className="TuxModal-metaLastUpdated">
-                Last updated {timeSince(new Date(fullModel.sys.updatedAt))} ago
+                Last updated {moment(new Date(fullModel.sys.updatedAt)).fromNow()}
               </p>
+            ) }
             </div>
           </form>
         ) : (
@@ -150,7 +153,8 @@ class TuxModal extends React.Component<any, State> {
             margin: 0;
             margin-left: auto;
             max-width: 800px;
-            height: 100%;
+            height: 100vh;
+            overflow: auto;
             padding: 0;
             position: relative;
             width: 60%;
