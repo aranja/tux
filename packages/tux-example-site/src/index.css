@@ -15,6 +15,7 @@ html {
   font-size: calc(15.29577px + .18779vw);
 }
 
+
 @media (min-width: 1440px) {
   html {
     font-size: 16px;
@@ -28,4 +29,8 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   line-height: 1.5;
   max-width: 1655px;
+}
+
+.u-noScroll {
+  overflow: hidden;
 }

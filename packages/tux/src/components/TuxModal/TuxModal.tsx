@@ -3,8 +3,10 @@ import React from 'react'
 import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 import { fade } from '../../utils/color'
 import { timeSince } from '../../utils/time'
+import moment from 'moment'
 import MarkdownField from '../fields/MarkdownField'
 import TextField from '../fields/TextField'
+import DatePicker from '../fields/DatePicker'
 import TuxSpinner from '../Spinner/Spinner'
 import ImageField from '../fields/ImageField'
 
@@ -26,9 +28,14 @@ function componentForField({ id, type, control: { widgetId } }: FieldComponent) 
     return null
   if (widgetId === 'markdown') {
     return MarkdownField
-  } else if (id === 'image' || id === 'icon') {
-    return ImageField
-  } else {
+  }
+  if (widgetId === 'datePicker') {
+    return DatePicker
+  }
+  if (id === 'image' || id === 'icon') {
+   return ImageField
+  }
+  else {
     return TextField
   }
 }
@@ -127,11 +134,13 @@ class TuxModal extends React.Component<any, State> {
             </div>
             <div className="TuxModal-content">
               {typeMeta.fields.map(this.renderField)}
-            </div>
-            <div className="TuxModal-meta">
-              <p className="TuxModal-metaLastUpdated">
-                Last updated {timeSince(new Date(fullModel.sys.updatedAt))} ago
-              </p>
+              <div className="TuxModal-meta">
+              { fullModel.sys.updatedAt && (
+                <p className="TuxModal-metaLastUpdated">
+                Last updated {moment(new Date(fullModel.sys.updatedAt)).fromNow()}
+                </p>
+              ) }
+              </div>
             </div>
           </form>
         ) : (
@@ -144,7 +153,8 @@ class TuxModal extends React.Component<any, State> {
             margin: 0;
             margin-left: auto;
             max-width: 800px;
-            height: 100%;
+            height: 100vh;
+            overflow: auto;
             padding: 0;
             position: relative;
             width: 60%;
@@ -203,6 +213,7 @@ class TuxModal extends React.Component<any, State> {
             margin: 0;
             padding: 10px 24px;
             text-align: center;
+            transition: background 0.25s, color 0.25s, border-color 0.25s;
             vertical-align: baseline;
           }
 
@@ -211,7 +222,7 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-button.TuxModal-button--green {
-            color: #FFF;
+            color: ${tuxButtonStyles.greenTheme.textColor};
             background: ${tuxButtonStyles.greenTheme.backgroundColor};
             border-color: ${tuxButtonStyles.greenTheme.borderColor};
           }
