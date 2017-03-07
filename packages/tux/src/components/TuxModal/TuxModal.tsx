@@ -134,13 +134,13 @@ class TuxModal extends React.Component<any, State> {
             </div>
             <div className="TuxModal-content">
               {typeMeta.fields.map(this.renderField)}
-            </div>
-            <div className="TuxModal-meta">
-            { fullModel.sys.updatedAt && (
-              <p className="TuxModal-metaLastUpdated">
+              <div className="TuxModal-meta">
+              { fullModel.sys.updatedAt && (
+                <p className="TuxModal-metaLastUpdated">
                 Last updated {moment(new Date(fullModel.sys.updatedAt)).fromNow()}
-              </p>
-            ) }
+                </p>
+              ) }
+              </div>
             </div>
           </form>
         ) : (
