@@ -3,46 +3,8 @@ import classNames from 'classnames'
 
 import { tuxInputStyles } from '../../styles'
 import TextField from './TextField'
+import BrowseField from './BrowseField'
 
-class BrowseField extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props)
-  }
-
-  onChange = (event: React.FormEvent<any>) => {
-    const { onChange } = this.props
-    const { input } = this.refs
-
-    if (input.files.length) {
-      onChange(input.files)
-    }
-  }
-
-  render() {
-    const { id, value, onChange } = this.props
-
-    return (
-      <div>
-        <label htmlFor={id}>
-          New image
-        </label>
-        <input
-          className="BrowseField-fileInput"
-          id={id}
-          onChange={this.onChange}
-          ref="input"
-          type="file"
-          value={value}
-        />
-        <style jsx>{`
-          .BrowseField-fileInput {
-
-          }
-        `}</style>
-      </div>
-    )
-  }
-}
 
 export interface ImageFieldProps {
   field: string | Array<string>,
@@ -61,6 +23,7 @@ export interface ImageFieldProps {
   },
 }
 
+
 class ImageField extends React.Component<ImageFieldProps, any> {
   static contextTypes = {
     tux: React.PropTypes.object,
@@ -70,7 +33,6 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     super(props)
 
     this.state = {
-      isToggled: false,
       imageUrl: '',
       fullModel: null,
     }
@@ -97,11 +59,6 @@ class ImageField extends React.Component<ImageFieldProps, any> {
         fullModel
       })
     }
-  }
-
-  onCardClick = () => {
-    const { isToggled } = this.state
-    this.setState({ isToggled: !isToggled})
   }
 
   onFileChange = async(files: FileList) => {
@@ -167,49 +124,50 @@ class ImageField extends React.Component<ImageFieldProps, any> {
 
   render() {
     const { value, id, onChange, label } = this.props
-    const { isToggled, imageUrl, fullModel, isLoadingImage } = this.state
+    const { imageUrl, fullModel, isLoadingImage } = this.state
 
     if (fullModel) {
       const title = fullModel.fields.title['en-US']
       const url = fullModel.fields.file['en-US'].url
       return (
-        <div>
-          <div>
-            <label className="InputLabel">
-              {label} <small>(click image to edit)</small>
-            </label>
-            <img
+          <div className="ImageField">
+            <label className="InputLabel">{label}</label>
+            <div className="ImageField-preview">
+              <img
+              className="ImageField-previewImage"
               alt={title}
               width="128"
               height="auto"
               src={`${url}?w=128`}
-              onClick={this.onCardClick}
+              />
+            </div>
+            <BrowseField
+              id={id}
+              label={`New image for ${label}`}
+              onChange={this.onFileChange}
+              value=""
             />
+            {isLoadingImage ? (
+              <p>Loading image ... </p>
+            ) : null}
+            <style jsx>{`
+              .ImageField-preview {
+                background: white;
+                border: 1px solid ${tuxInputStyles.borderColor};
+                border-radius: 3px;
+                display: inline-block;
+                padding: 6px;
+              }
+              .InputLabel {
+                color: ${tuxInputStyles.labelTextColor};
+                font-size: 16px;
+                font-weight: 300;
+                line-height: 24px;
+                padding: 4px 0;
+                text-transform: capitalize;
+              }
+            `}</style>
           </div>
-          <div>
-            {isToggled && (
-              <div>
-                <BrowseField
-                  id={id}
-                  label={`New image for ${label}`}
-                  onChange={this.onFileChange}
-                  value=""
-                />
-                {isLoadingImage ? (
-                  <p>Loading image ... </p>
-                ) : null}
-              </div>
-            )}
-          </div>
-          <style jsx>{`
-            .InputLabel {
-              color: ${tuxInputStyles.labelTextColor};
-              display: block;
-              font-size: 14px;
-              line-height: 24px;
-            }
-          `}</style>
-        </div>
       )
     }
     return (
