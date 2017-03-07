@@ -165,5 +165,18 @@ describe('tux.use', () => {
 
     tux.startServer()
   })
+
+  test('render wrappers are not required', (done) => {
+    const tux = createTux({
+      renderToDOM(element: ReactElement<any>) {
+        const { props } = shallow(element).instance()
+        expect(props).toHaveProperty('context', {
+          htmlProps: {},
+        })
+        done()
+      }
+    })
+    tux.startClient()
+  })
 })
 
