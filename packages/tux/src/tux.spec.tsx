@@ -35,12 +35,6 @@ describe('tux.use', () => {
     expect(tux.use({})).toBe(tux)
   })
 
-  test('creates a base context', async () => {
-    const tux = createTux()
-    const { context } = await tux.getElement()
-    expect(context).toEqual({ htmlProps: {} })
-  })
-
   test('createElement gets wrapped', async () => {
     const tux = createTux()
 
@@ -50,7 +44,7 @@ describe('tux.use', () => {
       },
     })
 
-    const { element } = await tux.getElement()
+    const element = await tux.getElement()
     const wrapper = shallow(element)
     const instance = wrapper.instance()
 
@@ -75,7 +69,8 @@ describe('tux.use', () => {
       }
     })
 
-    const { context } = await tux.getElement()
+    const context = createContext()
+    await tux.getElement(context)
 
     expect(context).toEqual({
       htmlProps: {
@@ -94,82 +89,46 @@ describe('tux.use', () => {
       },
     })
 
-    const { element } = await tux.getElement()
+    const element = await tux.getElement()
     const wrapper = shallow(element)
 
     expect(wrapper.html()).toBe('<div class="wrap"></div>')
   })
 
-  test('can wrap server render', (done) => {
-    const wrapServerRender = jest.fn((render) => render())
-
-    const tux = createTux({
-      renderToString() {
-        expect(wrapServerRender).toBeCalled()
-        done()
-        return ''
-      }
+  test('middleware is not required', async () => {
+    const tux = createTux()
+    const element = await tux.getElement()
+    expect(element.props).toHaveProperty('context', {
+      htmlProps: {},
     })
+  })
+})
 
-    tux.use({ wrapServerRender }).startServer()
+describe('tux.renderServer', () => {
+  it('should be callable', () => {
+    const tux = createTux()
+    expect(typeof tux.renderServer).toBe('function')
   })
 
-  test('can wrap client render', (done) => {
-    const wrapClientRender = jest.fn((render) => render())
-
-    const tux = createTux({
-      renderToDOM() {
-        expect(wrapClientRender).toBeCalled()
-        done()
-      }
-    })
-
-    tux.use({ wrapClientRender }).startClient()
+  it('should return the string returned from the callback', () => {
+    const tux = createTux()
+    const body = tux.renderServer(createContext(), () => 'foo')
+    expect(body).toBe('foo')
   })
 
-  test('wrapClientRender can modify the context', (done) => {
-    const tux = createTux({
-      renderToDOM(element: ReactElement<any>) {
-        const { props } = shallow(element).instance()
-        expect(props).toHaveProperty('context', {
-          htmlProps: {
-            someEdit: 'someEdit anotherEdit',
-          },
-        })
-        done()
-      }
-    })
-
-    tux.use({
-      wrapClientRender(render, context) {
-        context.htmlProps.someEdit = 'someEdit'
-        render()
-      }
-    })
-
-    tux.use({
-      wrapClientRender(render, context) {
-        context.htmlProps.someEdit += ' anotherEdit'
-        render()
-      }
-    })
-
-    tux.startClient()
+  test('unfolds the middleware chain', () => {
+    const wrapServerRender1 = jest.fn((render) => render())
+    const wrapServerRender2 = jest.fn((render) => render())
+    const tux = createTux()
+    tux.use({ wrapServerRender: wrapServerRender1 })
+    tux.use({ wrapServerRender: wrapServerRender2 })
+    tux.renderServer(createContext(), () => '')
+    expect(wrapServerRender1).toBeCalled()
+    expect(wrapServerRender2).toBeCalled()
   })
 
-  test('wrapServerRender can modify the context', (done) => {
-    const tux = createTux({
-      renderToString(element: ReactElement<any>) {
-        const { props } = shallow(element).instance()
-        expect(props).toHaveProperty('context', {
-          htmlProps: {
-            someEdit: 'someEdit anotherEdit',
-          },
-        })
-        done()
-        return ''
-      }
-    })
+  test('wrapServerRender can modify the context', () => {
+    const tux = createTux()
 
     tux.use({
       wrapServerRender(render, context) {
@@ -185,33 +144,64 @@ describe('tux.use', () => {
       }
     })
 
-    tux.startServer()
+    const context = createContext()
+    tux.renderServer(context, () => '')
+    expect(context).toHaveProperty('htmlProps', {
+      someEdit: 'someEdit anotherEdit',
+    })
+  })
+})
+
+describe('tux.renderClient', () => {
+  it('should be callable', () => {
+    const tux = createTux()
+    expect(typeof tux.renderClient).toBe('function')
   })
 
-  test('render wrappers are not required', (done) => {
-    const tux = createTux({
-      renderToDOM(element: ReactElement<any>) {
-        const { props } = shallow(element).instance()
-        expect(props).toHaveProperty('context', {
-          htmlProps: {},
-        })
-        done()
+  it('unfolds the middleware chain', () => {
+    const wrapClientRender1 = jest.fn((render) => render())
+    const wrapClientRender2 = jest.fn((render) => render())
+    const tux = createTux()
+    tux.use({ wrapClientRender: wrapClientRender1 })
+    tux.use({ wrapClientRender: wrapClientRender2 })
+    tux.renderClient(createContext(), () => '')
+    expect(wrapClientRender1).toBeCalled()
+    expect(wrapClientRender2).toBeCalled()
+  })
+
+  it('can modify the context', () => {
+    const tux = createTux()
+
+    tux.use({
+      wrapClientRender(render, context) {
+        context.htmlProps.someEdit = 'someEdit'
+        render()
       }
     })
-    tux.startClient()
+
+    tux.use({
+      wrapClientRender(render, context) {
+        context.htmlProps.someEdit += ' anotherEdit'
+        render()
+      }
+    })
+
+    const context = createContext()
+    tux.renderClient(context, () => '')
+    expect(context).toHaveProperty('htmlProps', {
+      someEdit: 'someEdit anotherEdit',
+    })
   })
 
-  test('startClient should return a promise that is resolved after render', async () => {
+  it('should have after render callback', async () => {
+    const tux = createTux()
+    const context = createContext()
     let hasRendered = false
 
-    const tux = createTux({
-      renderToDOM(element, container, onComplete) {
-        hasRendered = true
-        onComplete()
-      }
+    await tux.renderClient(context, () => {
+      hasRendered = true
     })
 
-    await tux.startClient()
     expect(hasRendered).toBeTruthy()
   })
 })

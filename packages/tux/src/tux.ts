@@ -1,6 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import ReactDOMServer from 'react-dom/server'
 
 export interface Context {
   htmlProps: any
@@ -21,14 +19,6 @@ export interface Middleware {
   createElement?: WrapElement
   wrapClientRender?: WrapRender
   wrapServerRender?: WrapRender
-}
-
-export type Config = {
-  loadContainer?: () => null | Element,
-  renderToDOM?:
-    (element: ReactElement | null, loadContainer: Element | null, afterRender: Function) =>
-      void
-  renderToString?: (element: ReactElement) => string
 }
 
 export function createContext(newContext?: Object): Context {
@@ -66,18 +56,6 @@ export class Tux {
   protected wrapClientRenderers: Array<WrapRender> = []
   protected wrapServerRenderers: Array<WrapRender> = []
 
-  private config: Config
-  private context: Context
-  private initialRender: boolean
-
-  constructor(config: Config) {
-    this.initialRender = true
-    this.config = config
-    this.context = {
-      htmlProps: {},
-    }
-  }
-
   use(middleware: Middleware) {
     if (typeof middleware.createElement !== 'undefined') {
       this.elementWrappers.push(middleware.createElement)
@@ -94,40 +72,8 @@ export class Tux {
     return this
   }
 
-  async startClient() {
-    return new Promise(afterRender => {
-      const { renderToDOM, loadContainer } = this.config
-
-      if (typeof loadContainer !== 'function' || typeof renderToDOM !== 'function') {
-        return
-      }
-
-      this.renderWrapper(this.wrapClientRenderers, async () => {
-        const { element, context } = await this.getElement()
-        renderToDOM(element, loadContainer(), () => {
-          afterRender()
-        })
-      })
-    })
-  }
-
-  async startServer() {
-    const { renderToString } = this.config
-
-    if (typeof renderToString !== 'function') {
-      return
-    }
-
-    this.renderWrapper(this.wrapServerRenderers, async () => {
-      const { element } = await this.getElement()
-      renderToString(element)
-    })
-  }
-
-  async getElement(): Promise<{ element: ReactElement, context: Context }> {
+  async getElement(context: Context = createContext()): Promise<ReactElement> {
     const elementWrappers = [createBase, ...this.elementWrappers]
-    const context = this.context
-
     let index = 0
 
     async function next(): Promise<any> {
@@ -138,12 +84,27 @@ export class Tux {
       return createElement(renderChildren, context)
     }
 
-    const element = await next()
-    return { element, context }
+    return await next()
   }
 
-  private renderWrapper(wrappers: Array<WrapRender>, onComplete: () => void) {
-    const context = this.context
+  renderClient(context: Context, onRender: Function) {
+    return new Promise(resolve => {
+      this.renderWrapper(this.wrapClientRenderers, context, () => {
+        onRender()
+        resolve()
+      })
+    })
+  }
+
+  renderServer(context: Context, onRender: Function) {
+    let body: string = ''
+    this.renderWrapper(this.wrapServerRenderers, context, () => {
+      body = onRender()
+    })
+    return body
+  }
+
+  private renderWrapper(wrappers: Array<WrapRender>, context: Context, onComplete: () => void) {
     let index = 0
 
     if (wrappers.length === 0) {
@@ -160,10 +121,6 @@ export class Tux {
   }
 }
 
-export default function createTux(config?: Config) {
-  return new Tux(Object.assign({
-    loadContainer: () => null,
-    renderToDOM: ReactDOM.render,
-    renderToString: ReactDOMServer.renderToString,
-  }, config || {}))
+export default function createTux() {
+  return new Tux()
 }
