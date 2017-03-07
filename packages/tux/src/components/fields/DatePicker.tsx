@@ -149,6 +149,7 @@ class DatePicker extends Component<any, State> {
           position: absolute;
           position: absolute;
           top: 70px;
+          z-index: 2;
         }
 
         .TuxDayPicker :global(.DayPicker-Month) {
