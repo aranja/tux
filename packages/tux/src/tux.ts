@@ -23,10 +23,10 @@ export interface Middleware {
   wrapServerRender?: WrapRender
 }
 
-export interface Config {
+export type Config = {
   loadContainer?: () => null | Element,
-  renderToDOM: (element: ReactElement | null, loadContainer: Element) => string
-  renderToString: (element: ReactElement) => string
+  renderToDOM?: (element: ReactElement | null, loadContainer: Element | null) => void
+  renderToString?: (element: ReactElement) => string
 }
 
 async function createBase(renderChildren: null | (() => Promise<ReactElement>), context: Context) {
@@ -85,23 +85,27 @@ export class Tux {
 
   async startClient() {
     const { element, context } = await this.getElement()
+    const { renderToDOM, loadContainer } = this.config
+
+    if (typeof loadContainer !== 'function' || typeof renderToDOM !== 'function') {
+      return
+    }
+
     this.renderWrapper(this.wrapClientRenderers, context, () => {
-      const { renderToDOM, loadContainer } = this.config
-
-      if (typeof loadContainer !== 'function') {
-        return
-      }
-
-
-
-      renderToDOM(element, loadContainer() as Element)
+      renderToDOM(element, loadContainer())
     })
   }
 
   async startServer() {
     const { element, context } = await this.getElement()
+    const { renderToString } = this.config
+
+    if (typeof renderToString !== 'function') {
+      return
+    }
+
     this.renderWrapper(this.wrapServerRenderers, context, () => {
-      this.config.renderToString(element)
+      renderToString(element)
     })
   }
 
@@ -140,10 +144,10 @@ export class Tux {
   }
 }
 
-export default function createTux(config = {}) {
+export default function createTux(config?: Config) {
   return new Tux(Object.assign({
     loadContainer: () => null,
     renderToDOM: ReactDOM.render,
     renderToString: ReactDOMServer.renderToString,
-  }, config))
+  }, config || {}))
 }

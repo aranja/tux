@@ -85,6 +85,7 @@ describe('tux.use', () => {
       renderToString() {
         expect(wrapServerRender).toBeCalled()
         done()
+        return ''
       }
     })
 
@@ -144,6 +145,7 @@ describe('tux.use', () => {
           },
         })
         done()
+        return ''
       }
     })
 
