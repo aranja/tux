@@ -213,6 +213,7 @@ class TuxModal extends React.Component<any, State> {
             margin: 0;
             padding: 10px 24px;
             text-align: center;
+            transition: background 0.25s, color 0.25s, border-color 0.25s;
             vertical-align: baseline;
           }
 
@@ -221,7 +222,7 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-button.TuxModal-button--green {
-            color: #FFF;
+            color: ${tuxButtonStyles.greenTheme.textColor};
             background: ${tuxButtonStyles.greenTheme.backgroundColor};
             border-color: ${tuxButtonStyles.greenTheme.borderColor};
           }

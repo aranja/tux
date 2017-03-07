@@ -24,5 +24,6 @@ export const tuxButtonStyles = {
   greenTheme: {
     backgroundColor: '#3BB172',
     borderColor: '#188E18',
+    textColor: '#FFFFFF',
   }
 }

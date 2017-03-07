@@ -151,6 +151,8 @@ class ImageField extends React.Component<ImageFieldProps, any> {
               <p>Loading image ... </p>
             ) : null}
             <style jsx>{`
+              .ImageField {
+              }
               .ImageField-preview {
                 background: white;
                 border: 1px solid ${tuxInputStyles.borderColor};
