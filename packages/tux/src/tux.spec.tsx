@@ -104,17 +104,21 @@ describe('tux.use', () => {
     tux.use({ wrapClientRender }).startClient()
   })
 
-  test.skip('wrapClientRender can modify the context', (done) => {
+  test('wrapClientRender can modify the context', (done) => {
     const tux = createTux({
-      renderToDom: (element: ReactElement<any>) => {
-        console.log('element')
+      renderToDOM(element: ReactElement<any>) {
+        const { props } = shallow(element).instance()
+        expect(props).toHaveProperty('context', {
+          htmlProps: {
+            someEdit: 'someEdit anotherEdit',
+          },
+        })
         done()
       }
     })
 
     tux.use({
       wrapClientRender(render, context) {
-        console.log('wrapClientRender 1', context)
         context.htmlProps.someEdit = 'someEdit'
         render()
       }
@@ -122,13 +126,42 @@ describe('tux.use', () => {
 
     tux.use({
       wrapClientRender(render, context) {
-        console.log('wrapClientRender 2', context)
         context.htmlProps.someEdit += ' anotherEdit'
         render()
       }
     })
 
     tux.startClient()
+  })
+
+  test('wrapServerRender can modify the context', (done) => {
+    const tux = createTux({
+      renderToString(element: ReactElement<any>) {
+        const { props } = shallow(element).instance()
+        expect(props).toHaveProperty('context', {
+          htmlProps: {
+            someEdit: 'someEdit anotherEdit',
+          },
+        })
+        done()
+      }
+    })
+
+    tux.use({
+      wrapServerRender(render, context) {
+        context.htmlProps.someEdit = 'someEdit'
+        render()
+      }
+    })
+
+    tux.use({
+      wrapServerRender(render, context) {
+        context.htmlProps.someEdit += ' anotherEdit'
+        render()
+      }
+    })
+
+    tux.startServer()
   })
 })
 
