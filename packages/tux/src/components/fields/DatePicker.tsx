@@ -262,7 +262,7 @@ class DatePicker extends Component<any, State> {
           right: 16px;
         }
 
-        /*Modifiers*/
+        /* Modifiers */
         .TuxDayPicker :global(.DayPicker-Day--today) {
           font-weight: 500;
         }
@@ -304,7 +304,6 @@ class DatePicker extends Component<any, State> {
           border-color: ${tuxInputStyles.greenTheme.borderColor};
           outline: 1px solid ${tuxInputStyles.greenTheme.borderColor};
         }
-
       `}</style>
       </div>
     )

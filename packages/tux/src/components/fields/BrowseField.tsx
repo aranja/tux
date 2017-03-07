@@ -42,6 +42,7 @@ class BrowseField extends Component<any, any> {
             width: 0;
             overflow: hidden;
           }
+
           .BrowseField-button {
             background: ${tuxButtonStyles.backgroundColor};
             border-radius: 2px;
