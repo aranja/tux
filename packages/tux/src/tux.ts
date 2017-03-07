@@ -60,11 +60,15 @@ export class Tux {
   protected wrapServerRenderers: Array<WrapRender> = []
 
   private config: Config
+  private context: Context
   private initialRender: boolean
 
   constructor(config: Config) {
     this.initialRender = true
     this.config = config
+    this.context = {
+      htmlProps: {},
+    }
   }
 
   use(middleware: Middleware) {
@@ -84,34 +88,34 @@ export class Tux {
   }
 
   async startClient() {
-    const { element, context } = await this.getElement()
     const { renderToDOM, loadContainer } = this.config
 
     if (typeof loadContainer !== 'function' || typeof renderToDOM !== 'function') {
       return
     }
 
-    this.renderWrapper(this.wrapClientRenderers, context, () => {
+    this.renderWrapper(this.wrapClientRenderers, async () => {
+      const { element, context } = await this.getElement()
       renderToDOM(element, loadContainer())
     })
   }
 
   async startServer() {
-    const { element, context } = await this.getElement()
     const { renderToString } = this.config
 
     if (typeof renderToString !== 'function') {
       return
     }
 
-    this.renderWrapper(this.wrapServerRenderers, context, () => {
+    this.renderWrapper(this.wrapServerRenderers, async () => {
+      const { element } = await this.getElement()
       renderToString(element)
     })
   }
 
   async getElement(): Promise<{ element: ReactElement, context: Context }> {
-    const context = { htmlProps: {} }
     const elementWrappers = [createBase, ...this.elementWrappers]
+    const context = this.context
 
     let index = 0
 
@@ -132,7 +136,8 @@ export class Tux {
     return { element, context }
   }
 
-  private renderWrapper(wrappers: Array<WrapRender>, context: Context, onComplete: () => void) {
+  private renderWrapper(wrappers: Array<WrapRender>, onComplete: () => void) {
+    const context = this.context
     let index = 0
 
     function render() {
