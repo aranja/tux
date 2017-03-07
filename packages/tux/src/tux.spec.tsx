@@ -178,5 +178,19 @@ describe('tux.use', () => {
     })
     tux.startClient()
   })
+
+  test('startClient should return a promise that is resolved after render', async () => {
+    let hasRendered = false
+
+    const tux = createTux({
+      renderToDOM(element, container, onComplete) {
+        hasRendered = true
+        onComplete()
+      }
+    })
+
+    await tux.startClient()
+    expect(hasRendered).toBeTruthy()
+  })
 })
 

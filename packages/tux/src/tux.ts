@@ -25,7 +25,9 @@ export interface Middleware {
 
 export type Config = {
   loadContainer?: () => null | Element,
-  renderToDOM?: (element: ReactElement | null, loadContainer: Element | null) => void
+  renderToDOM?:
+    (element: ReactElement | null, loadContainer: Element | null, afterRender: Function) =>
+      void
   renderToString?: (element: ReactElement) => string
 }
 
@@ -88,15 +90,19 @@ export class Tux {
   }
 
   async startClient() {
-    const { renderToDOM, loadContainer } = this.config
+    return new Promise(afterRender => {
+      const { renderToDOM, loadContainer } = this.config
 
-    if (typeof loadContainer !== 'function' || typeof renderToDOM !== 'function') {
-      return
-    }
+      if (typeof loadContainer !== 'function' || typeof renderToDOM !== 'function') {
+        return
+      }
 
-    this.renderWrapper(this.wrapClientRenderers, async () => {
-      const { element, context } = await this.getElement()
-      renderToDOM(element, loadContainer())
+      this.renderWrapper(this.wrapClientRenderers, async () => {
+        const { element, context } = await this.getElement()
+        renderToDOM(element, loadContainer(), () => {
+          afterRender()
+        })
+      })
     })
   }
 
