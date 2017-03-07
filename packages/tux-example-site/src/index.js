@@ -21,4 +21,8 @@ tux.use({
   }
 })
 
-tux.startClient()
+tux.startClient().then(() => {
+  if (window.ga) {
+    window.ga('send', 'pageview', location.pathname)
+  }
+})
