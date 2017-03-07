@@ -120,19 +120,14 @@ export class Tux {
     let index = 0
 
     async function next(): Promise<any> {
-      const createElement = elementWrappers[index]
-
-      if (elementWrappers[index + 1] == null) {
-        return createElement(() => Promise.resolve(null), context)
-      }
-
-      index += 1
-
-      return createElement(await next, context)
+      const createElement = elementWrappers[index++]
+      const renderChildren = elementWrappers[index]
+        ? await next
+        : () => Promise.resolve(null)
+      return createElement(renderChildren, context)
     }
 
     const element = await next()
-
     return { element, context }
   }
 
