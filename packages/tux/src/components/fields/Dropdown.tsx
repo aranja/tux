@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { tuxColors, tuxInputStyles } from '../../styles'
 
 interface Dropdown {
@@ -10,20 +10,56 @@ interface Dropdown {
   onChange: (e: React.FormEvent<any>) => void
 }
 
-const Dropdown = ({ id, value, label, dropdownValues, onChange }: Dropdown) => (
-  <div className="Dropdown">
-    <label className="InputLabel">{label}: current value is {value}</label>
-    <select>
-      {dropdownValues.map((value) => (
-        <option key={value}>{value}</option>
-      ))}
-    </select>
-      <style jsx>{`
-        .Dropdown {
+export interface State {
+  selectedValue: string | null,
+}
 
-        }
-      `}</style>
-  </div>
-)
+class Dropdown extends Component<any, State> {
+  state: State = {
+    selectedValue: null,
+  }
+
+  componentDidMount() {
+    const { value } = this.props
+    console.log(value)
+    this.setState({
+      selectedValue: value
+    })
+  }
+
+  handleChange = (value: string) => {
+    const { onChange } = this.props
+
+    this.setState({
+      selectedValue: value
+    })
+
+    onChange(value)
+  }
+
+  render() {
+    const { id, value, label, dropdownValues, onChange } = this.props
+    const { selectedValue } = this.state
+
+    return (
+      <div className="Dropdown">
+        <label className="InputLabel">{label}</label>
+        <select
+          onChange={(event: React.ChangeEvent<any>) => this.handleChange(event.target.value)}
+        >
+          {dropdownValues.map((value: string) => (
+            <option key={value} selected={value === selectedValue}>{value}</option>
+          ))}
+        </select>
+          <style jsx>{`
+            .Dropdown {
+
+            }
+          `}</style>
+      </div>
+    )
+  }
+
+}
 
 export default Dropdown
