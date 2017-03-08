@@ -3,27 +3,24 @@ import UniversalRouter from 'universal-router'
 import queryString from 'query-string'
 
 const router = (routes) => ({
-  async createElement(renderChildren, context) {
-    let element
-
+  async createElement(_, context) {
     try {
-      ({ element } = await UniversalRouter.resolve(routes, context.route))
+      context.route = await UniversalRouter.resolve(routes, {
+        path: context.history.location.pathname,
+        query: queryString.parse(context.history.location.search),
+      })
+      context.htmlProps.title = context.route.title
+      return context.route.element
     } catch (error) {
       context.htmlProps.title = error.message
-      element = <ErrorReporter error={error}/>
+      return (
+        <div>
+          <h1>404 Page not found</h1>
+          {error.message}
+        </div>
+      )
     }
-
-    return element
   },
-
-  wrapClientRender(render, context) {
-    context.route = {
-      path: window.location.pathname,
-      query: queryString.parse(location.search),
-      previousLocation: context.route ? context.route.previousLocation : null,
-    }
-    render()
-  }
 })
 
 export default router
