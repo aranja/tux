@@ -9,7 +9,7 @@ import tux from './tux'
 import { createContext } from 'tux/lib/tux'
 
 const app = express()
-
+  
 app.use(express.static(path.join(__dirname, 'static'), { index: false }))
 
 /**
@@ -26,12 +26,11 @@ app.get('*', async (req, res, next) => {
     const element = await tux.getElement(context)
     const body = tux.renderServer(context, () => ReactDOMServer.renderToString(element))
     const html = ReactDOMServer.renderToStaticMarkup(
-      <Html assets={context.assets} title={context.htmlProps.title}>
+      <Html assets={context.assets} context={{ data: context.data }} {...context.htmlProps}>
         {body}
       </Html>
     )
 
-    res.status(context.route.status || 200)
     res.send(`<!doctype html>${html}`)
   } catch (err) {
     next(err)

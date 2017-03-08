@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-
+import Helmet from 'react-helmet'
 /**
  * This component is a template for the HTML file. You can add webfonts, meta tags,
  * or analytics to this file.
@@ -21,7 +21,7 @@ import React, { PropTypes } from 'react'
  *     additional route specific props, e.g. a serialized store and meta tags.
  */
 
-const Html = ({ children, title, assets }) => (
+const Html = ({ children, assets, title, context }) => (
   // <!doctype html> is prepended externally.
   <html lang="en">
     <head>
@@ -34,13 +34,15 @@ const Html = ({ children, title, assets }) => (
     </head>
     <body>
       <div id="root" dangerouslySetInnerHTML={{ __html: children }} />
+      <script dangerouslySetInnerHTML={{
+        __html: `window.SSR_CONTEXT = ${JSON.stringify(context)};`
+      }} />
     </body>
   </html>
 )
 
 Html.propTypes = {
   children: PropTypes.string,
-  title: PropTypes.string,
   assets: PropTypes.objectOf(PropTypes.string).isRequired,
 }
 

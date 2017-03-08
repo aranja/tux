@@ -4,7 +4,7 @@ import { createContext } from 'tux/lib/tux'
 import tux from './tux'
 
 const container = document.getElementById('root')
-const context = createContext()
+const context = createContext(window.SSR_CONTEXT || {})
 
 context.refresh = async () => {
   const element = await tux.getElement(context)
