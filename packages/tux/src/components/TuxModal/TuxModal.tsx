@@ -2,42 +2,20 @@ import React from 'react'
 
 import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 import { fade } from '../../utils/color'
-import { timeSince } from '../../utils/time'
 import moment from 'moment'
 import MarkdownField from '../fields/MarkdownField'
 import TextField from '../fields/TextField'
 import DatePicker from '../fields/DatePicker'
 import TuxSpinner from '../Spinner/Spinner'
 import ImageField from '../fields/ImageField'
-
-interface FieldComponent {
-  id: string
-  type: string
-  control: {
-    widgetId: string
-  }
-}
+import TagEditor from '../fields/TagEditor'
+import Radio from '../fields/Radio'
+import Boolean from '../fields/Boolean'
+import Dropdown from '../fields/Dropdown'
 
 export interface State {
   fullModel: any | null
   typeMeta: any | null
-}
-
-function componentForField({ id, type, control: { widgetId } }: FieldComponent) {
-  if (type === 'Array')
-    return null
-  if (widgetId === 'markdown') {
-    return MarkdownField
-  }
-  if (widgetId === 'datePicker') {
-    return DatePicker
-  }
-  if (id === 'image' || id === 'icon') {
-   return ImageField
-  }
-  else {
-    return TextField
-  }
 }
 
 class TuxModal extends React.Component<any, State> {
@@ -91,24 +69,110 @@ class TuxModal extends React.Component<any, State> {
   renderField = (type: any) => {
     const { fullModel } = this.state
     const helpText = type.control.settings && type.control.settings.helpText
-    const InputComponent = componentForField(type)
     const field = fullModel.fields[type.id]
     const value = field && field['en-US']
+    const widgetId = type.control.widgetId
 
-    if (!InputComponent) {
-      return null
+    if (widgetId === 'boolean') {
+      return (
+        <div key={type.id}>
+          <Boolean
+            id={type.id}
+            boolLabels={Object.values(type.control.settings)}
+            value={value}
+            label={type.name}
+            helpText={helpText}
+            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
+          />
+        </div>
+      )
     }
-    return (
-      <div key={type.id}>
-        <InputComponent
-          id={type.id}
-          value={value}
-          label={type.name}
-          helpText={helpText}
-          onChange={event => this.onChange(event, type)}
-        />
-      </div>
-    )
+
+    else if (widgetId === 'markdown') {
+      return (
+        <div key={type.id}>
+          <MarkdownField
+            id={type.id}
+            value={value}
+            label={type.name}
+            helpText={helpText}
+            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
+          />
+        </div>
+      )
+    }
+
+    else if (widgetId === 'datePicker') {
+      return (
+        <div key={type.id}>
+          <DatePicker
+            id={type.id}
+            value={value}
+            label={type.name}
+            helpText={helpText}
+            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
+          />
+        </div>
+      )
+    }
+
+    else if (widgetId === 'assetLinkEditor') {
+      return (
+        <div key={type.id}>
+          <ImageField
+            id={type.id}
+            value={value}
+            label={type.name}
+            helpText={helpText}
+            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
+          />
+        </div>
+      )
+    }
+
+    else if (widgetId === 'radio') {
+      return (
+        <div key={type.id}>
+          <Radio
+            id={type.id}
+            value={value}
+            label={type.name}
+            helpText={helpText}
+            choices={type.validations[0].in}
+            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
+          />
+        </div>
+      )
+    }
+
+    else if (widgetId === 'dropdown') {
+      return (
+        <div key={type.id}>
+          <Dropdown
+            dropdownValues={type.validations[0].in}
+            id={type.id}
+            value={value}
+            label={type.name}
+            helpText={helpText}
+            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
+          />
+        </div>
+      )
+    }
+
+    else {
+      return (
+        <div key={type.id}>
+          <TextField
+            id={type.id}
+            value={value}
+            label={type.name}
+            helpText={helpText}
+            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
+          />
+        </div>
+      )
+    }
   }
 
   render() {

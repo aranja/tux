@@ -5,6 +5,7 @@ interface TextField {
   id: string
   value: string
   label: string
+  helpText: string
   onChange: (e: React.FormEvent<any>) => void
 }
 
