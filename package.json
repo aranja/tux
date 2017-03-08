@@ -48,6 +48,7 @@
     "styled-jsx": "^0.5.4",
     "tslint": "^4.4.2",
     "typescript": "^2.1.5",
+    "webpack": "^2.2.1",
     "yargs": "^6.6.0"
   },
   "babel": {
