@@ -11,17 +11,17 @@ interface Dropdown {
 }
 
 export interface State {
-  selectedValue: string | null,
+  selectedValue: string | undefined,
 }
 
 class Dropdown extends Component<any, State> {
   state: State = {
-    selectedValue: null,
+    selectedValue: undefined,
   }
 
   componentDidMount() {
     const { value } = this.props
-    console.log(value)
+
     this.setState({
       selectedValue: value
     })
@@ -46,9 +46,10 @@ class Dropdown extends Component<any, State> {
         <label className="InputLabel">{label}</label>
         <select
           onChange={(event: React.ChangeEvent<any>) => this.handleChange(event.target.value)}
+          value={selectedValue}
         >
           {dropdownValues.map((value: string) => (
-            <option key={value} selected={value === selectedValue}>{value}</option>
+            <option key={value}>{value}</option>
           ))}
         </select>
           <style jsx>{`
