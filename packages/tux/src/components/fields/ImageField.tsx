@@ -151,6 +151,10 @@ class ImageField extends React.Component<ImageFieldProps, any> {
               <p>Loading image ... </p>
             ) : null}
             <style jsx>{`
+              .ImageField {
+                display: inline-flex;
+                flex-direction: column;
+              }
               .ImageField-preview {
                 background: white;
                 border: 1px solid ${tuxInputStyles.borderColor};

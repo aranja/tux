@@ -59,6 +59,7 @@ class BrowseField extends Component<any, any> {
             text-align: center;
             transition: all 0.25s;
             vertical-align: baseline;
+            width: 100%;
           }
 
           .BrowseField-button:hover {
