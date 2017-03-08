@@ -3,8 +3,8 @@ import { tuxColors, tuxInputStyles } from '../../styles'
 
 interface Checkbox {
   id: string
-  value: string
-  label: string
+  value?: string
+  label?: string
   checked: boolean
   onChange: (e: React.FormEvent<any>) => void
 }
@@ -16,7 +16,7 @@ const Checkbox = ({ id, value, label, checked, onChange }: Checkbox) => (
       type="checkbox"
       id={id}
       checked={checked}
-      onChange={(event) => {this.onChangeValue(event.target.checked)}}
+      onChange={onChange}
     />
     <div className="CheckboxIndicator"></div>
     <style jsx>{`

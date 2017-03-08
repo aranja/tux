@@ -3,19 +3,19 @@ import { tuxColors, tuxInputStyles } from '../../styles'
 import Checkbox from './Checkbox'
 
 export interface State {
-  trueOrFalse: boolean | null,
+  booleanValue: boolean | null,
 }
 
 class Boolean extends Component<any, State> {
   state: State = {
-    trueOrFalse: null,
+    booleanValue: null,
   }
 
   componentDidMount() {
     const { value } = this.props
-    console.log(value)
+
     this.setState({
-      trueOrFalse: value
+      booleanValue: value
     })
   }
 
@@ -23,13 +23,14 @@ class Boolean extends Component<any, State> {
     const { onChange } = this.props
 
     this.setState({
-      trueOrFalse: checked
+      booleanValue: checked
     })
+
     onChange(checked)
   }
 
   render() {
-    const { trueOrFalse } = this.state
+    const { booleanValue } = this.state
     const { id, label, boolLabels } = this.props
     const trueLabel = boolLabels[0]
     const falseLabel = boolLabels[1]
@@ -39,26 +40,22 @@ class Boolean extends Component<any, State> {
         <label className="Boolean-inputLabel">
           {label}
         </label>
-        <label
-          className="Boolean is-true"
-          htmlFor={trueLabel}>
-            {trueLabel}
-            <Checkbox
-              id={trueLabel}
-              checked={trueOrFalse === true}
-              onChange={(event) => {this.onChangeValue(event.target.checked)}}
-            />
+        <label className="Boolean" htmlFor={trueLabel}>
+          {trueLabel}
+          <Checkbox
+            id={trueLabel}
+            checked={booleanValue === true}
+            onChange={() => this.onChangeValue(true)}
+          />
         </label>
 
-        <label
-          className="Boolean is-false"
-          htmlFor={falseLabel}>
-            {falseLabel}
-            <Checkbox
-              id={falseLabel}
-              checked={trueOrFalse === false}
-              onChange={(event) => {this.onChangeValue(event.target.checked)}}
-            />
+        <label className="Boolean" htmlFor={falseLabel}>
+          {falseLabel}
+          <Checkbox
+            id={falseLabel}
+            checked={booleanValue === false}
+            onChange={() => this.onChangeValue(false)}
+          />
         </label>
 
       <style jsx>{`
