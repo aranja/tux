@@ -1,4 +1,5 @@
 import createBrowserHistory from 'history/createBrowserHistory'
+import createMemoryHistory from 'history/createMemoryHistory'
 import React, { Component, PropTypes } from 'react'
 
 const ContextType = {
@@ -22,13 +23,21 @@ class HistoryProvider extends Component {
   }
 }
 
-const history = (config = {}) => ({
+const history = () => ({
   async createElement(renderChildren, context) {
     let { history } = context
+
     if (!history) {
-      context.history = history = createBrowserHistory(config)
-      history.listen(context.refresh)
+      if (context.ssr) {
+        history = createMemoryHistory(context.request.url)
+      } else {
+        history = createBrowserHistory()
+        history.listen(context.refresh)
+      }
+
+      context.history = history
     }
+
     const children = await renderChildren()
     return (
       <HistoryProvider context={{ history }}>

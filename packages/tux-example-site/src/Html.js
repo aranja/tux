@@ -21,26 +21,26 @@ import React, { PropTypes } from 'react'
  *     additional route specific props, e.g. a serialized store and meta tags.
  */
 
-const Html = ({ app, assets }) => (
+const Html = ({ children, title, assets }) => (
   // <!doctype html> is prepended externally.
   <html lang="en">
     <head>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Tux</title>
-
+      <title>{title}</title>
       <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,400i" rel="stylesheet" />
       <script src={assets['manifest.js']} defer />
       <script src={assets['index.js']} defer />
     </head>
     <body>
-      <div id="root" dangerouslySetInnerHTML={{ __html: app }} />
+      <div id="root" dangerouslySetInnerHTML={{ __html: children }} />
     </body>
   </html>
 )
 
 Html.propTypes = {
-  app: PropTypes.string,
+  children: PropTypes.string,
+  title: PropTypes.string,
   assets: PropTypes.objectOf(PropTypes.string).isRequired,
 }
 
