@@ -1,4 +1,3 @@
-import React from 'react'
 import app from './App'
 import routes from './routes'
 import history from './middleware/history'
