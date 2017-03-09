@@ -26,7 +26,7 @@ app.get('*', async (req, res, next) => {
     const element = await tux.getElement(context)
     const body = tux.renderServer(context, () => ReactDOMServer.renderToString(element))
     const html = ReactDOMServer.renderToStaticMarkup(
-      <Html assets={context.assets} context={{ data: context.data }} {...context.htmlProps}>
+      <Html assets={context.assets} {...context.htmlProps}>
         {body}
       </Html>
     )

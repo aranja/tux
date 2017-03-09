@@ -21,7 +21,7 @@ import React, { PropTypes } from 'react'
  *     additional route specific props, e.g. a serialized store and meta tags.
  */
 
-const Html = ({ children, assets, title, context }) => (
+const Html = ({ children, assets, title }) => (
   // <!doctype html> is prepended externally.
   <html lang="en">
     <head>
@@ -34,9 +34,6 @@ const Html = ({ children, assets, title, context }) => (
     </head>
     <body>
       <div id="root" dangerouslySetInnerHTML={{ __html: children }} />
-      <script dangerouslySetInnerHTML={{
-        __html: `window.SSR_CONTEXT = ${JSON.stringify(context)};`
-      }} />
     </body>
   </html>
 )
