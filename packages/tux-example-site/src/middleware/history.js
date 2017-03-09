@@ -28,7 +28,7 @@ const history = () => ({
     let { history } = context
 
     if (!history) {
-      if (context.ssr) {
+      if (context.request) {
         history = createMemoryHistory(context.request.url)
       } else {
         history = createBrowserHistory()
