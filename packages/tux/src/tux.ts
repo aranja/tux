@@ -1,7 +1,11 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 export interface Context {
   htmlProps: any
+  refresh?:
+    (onComplete: Function) =>
+      Promise<any>
 }
 
 export type ReactElement =
@@ -24,6 +28,18 @@ export interface Middleware {
 export function createContext(newContext?: Object): Context {
   const htmlProps = {}
   return Object.assign({ htmlProps }, newContext)
+}
+
+export function startClient(tux: Tux, domNode: Element) {
+  const context = createContext()
+  async function refresh(onComplete = () => {}) {
+    const element = await tux.getElement(context)
+    return await tux.renderClient(context, () => {
+      ReactDOM.render(element, domNode, onComplete)
+    })
+  }
+  context.refresh = refresh
+  return refresh()
 }
 
 async function createBase(renderChildren: null | (() => Promise<ReactElement>), context: Context) {

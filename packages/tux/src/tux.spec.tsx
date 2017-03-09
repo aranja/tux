@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { shallow } from 'enzyme'
-import createTux, { createContext } from './tux'
+import createTux, { createContext, startClient, Tux } from './tux'
 
 describe('createContext', () => {
   it('should be callable', () => {
@@ -241,3 +241,71 @@ describe('tux.renderClient', () => {
   })
 })
 
+describe('startClient', () => {
+  let appRoot: Element
+  let tux: Tux
+
+  beforeEach(() => {
+    tux = createTux()
+    appRoot = document.createElement('div')
+    document.body.appendChild(appRoot)
+  })
+
+  it('should be callable', () => {
+    expect(typeof startClient).toBe('function')
+  })
+
+  it('should return a promise', () => {
+    const client = startClient(tux, appRoot)
+    expect(typeof client.then).toBe('function')
+    expect(typeof client.catch).toBe('function')
+  })
+
+  it('should await getElement before rendering', async () => {
+    let runOrder = 0
+    tux.getElement = jest.fn(() => { runOrder = 2 })
+    tux.renderClient = jest.fn(() => { runOrder *= 4 })
+    await startClient(tux, appRoot)
+    expect(tux.getElement).toHaveBeenCalled()
+    expect(tux.renderClient).toHaveBeenCalled()
+    expect(runOrder).toBe(8)
+  })
+
+  it('should add a refresh function on the context', async () => {
+    let context = { refresh: null }
+    tux.getElement = jest.fn((internalContext) => { context = internalContext })
+    tux.renderClient = jest.fn()
+    await startClient(tux, appRoot)
+    expect(typeof context.refresh).toBe('function')
+  })
+
+  it('should render a React component to the appRoot', async () => {
+    tux.use(() => <div>React Element</div>)
+    await startClient(tux, appRoot)
+    expect(appRoot.innerHTML).toMatchSnapshot()
+  })
+
+  it('should rerender when refresh is called', async (done) => {
+    let renderCount = 0
+
+    function onComplete() {
+      expect(renderCount).toBe(2)
+      done()
+    }
+
+    tux.use(() => <div>Render count {++renderCount}</div>)
+
+    tux.use({
+      wrapClientRender(render, context) {
+        if (renderCount === 1 && context.refresh) {
+          context.refresh(onComplete)
+        }
+        render()
+      }
+    })
+
+    await startClient(tux, appRoot)
+    expect(renderCount).toBe(1)
+    expect(appRoot.textContent).toBe('Render count 1')
+  })
+})

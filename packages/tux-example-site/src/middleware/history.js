@@ -32,7 +32,9 @@ const history = () => ({
         history = createMemoryHistory(context.request.url)
       } else {
         history = createBrowserHistory()
-        history.listen(context.refresh)
+        history.listen(() => {
+          context.refresh()
+        })
       }
 
       context.history = history
