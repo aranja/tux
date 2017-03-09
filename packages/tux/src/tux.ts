@@ -63,15 +63,24 @@ export class Tux {
       }
     }
 
-    if (typeof middleware.createElement !== 'undefined') {
+    if (middleware.createElement) {
+      if (typeof middleware.createElement !== 'function') {
+        throw new Error('[tux.use] createElement should be a function.')
+      }
       this.elementWrappers.push(middleware.createElement)
     }
 
-    if (typeof middleware.wrapClientRender !== 'undefined') {
+    if (middleware.wrapClientRender) {
+      if (typeof middleware.wrapClientRender !== 'function') {
+        throw new Error('[tux.use] wrapClientRender should be a function.')
+      }
       this.wrapClientRenderers.push(middleware.wrapClientRender)
     }
 
-    if (typeof middleware.wrapServerRender !== 'undefined') {
+    if (middleware.wrapServerRender) {
+      if (typeof middleware.wrapServerRender !== 'function') {
+        throw new Error('[tux.use] wrapServerRender should be a function.')
+      }
       this.wrapServerRenderers.push(middleware.wrapServerRender)
     }
 

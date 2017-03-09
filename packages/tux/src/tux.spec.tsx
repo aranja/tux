@@ -110,6 +110,33 @@ describe('tux.use', () => {
     await tux.getElement()
     expect(createElementMock).toHaveBeenCalled()
   })
+
+  it('should throw when createElement is not a function', () => {
+    const tux = createTux()
+    expect(() => {
+      tux.use({
+        createElement: 'not a function',
+      })
+    }).toThrowErrorMatchingSnapshot()
+  })
+
+  it('should throw when wrapClientRender is not a function', () => {
+    const tux = createTux()
+    expect(() => {
+      tux.use({
+        wrapClientRender: 'not a function',
+      })
+    }).toThrowErrorMatchingSnapshot()
+  })
+
+  it('should throw when wrapServerRender is not a function', () => {
+    const tux = createTux()
+    expect(() => {
+      tux.use({
+        wrapServerRender: 'not a function',
+      })
+    }).toThrowErrorMatchingSnapshot()
+  })
 })
 
 describe('tux.renderServer', () => {
