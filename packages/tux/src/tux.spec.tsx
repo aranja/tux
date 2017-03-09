@@ -102,6 +102,14 @@ describe('tux.use', () => {
       htmlProps: {},
     })
   })
+
+  it('should accept a function [createElement] that returns a promise', async () => {
+    const tux = createTux()
+    const createElementMock = jest.fn(() => Promise.resolve())
+    tux.use(createElementMock)
+    await tux.getElement()
+    expect(createElementMock).toHaveBeenCalled()
+  })
 })
 
 describe('tux.renderServer', () => {

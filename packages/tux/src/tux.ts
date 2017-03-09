@@ -57,6 +57,12 @@ export class Tux {
   protected wrapServerRenderers: Array<WrapRender> = []
 
   use(middleware: Middleware) {
+    if (typeof middleware === 'function') {
+      middleware = {
+        createElement: middleware,
+      }
+    }
+
     if (typeof middleware.createElement !== 'undefined') {
       this.elementWrappers.push(middleware.createElement)
     }
