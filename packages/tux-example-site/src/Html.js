@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import Helmet from 'react-helmet'
+
 /**
  * This component is a template for the HTML file. You can add webfonts, meta tags,
  * or analytics to this file.
