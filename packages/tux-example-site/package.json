@@ -22,7 +22,7 @@
     "build": "npm run build:client",
     "start-server": "npm-run-all --parallel build:client start:server && node build/server",
     "build-server": "npm-run-all --parallel build:client build:server",
-    "start:client": "HTTPS=true neutrino start --presets neutrino-preset-tux",
+    "start:client": "PORT=3000 HTTPS=true neutrino start --presets neutrino-preset-tux",
     "build:client": "neutrino build --presets neutrino-preset-tux",
     "start:server": "neutrino start --presets neutrino-preset-tux/server",
     "build:server": "neutrino build --presets neutrino-preset-tux/server"
