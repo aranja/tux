@@ -181,7 +181,7 @@ class DatePicker extends Component<any, State> {
           width: 32px;
         }
 
-        .TuxDayPicker .TuxDayPicker-inputLabel {
+        .TuxDayPicker-inputLabel {
           color: ${tuxInputStyles.labelTextColor};
           font-size: 16px;
           font-weight: 300;
@@ -190,7 +190,7 @@ class DatePicker extends Component<any, State> {
           text-transform: capitalize;
         }
 
-        .TuxDayPicker .TuxDayPicker-overlay {
+        .TuxDayPicker-overlay {
           background: white;
           box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
           position: absolute;
