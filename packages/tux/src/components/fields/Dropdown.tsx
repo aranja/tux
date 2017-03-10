@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { tuxColors, tuxInputStyles } from '../../styles'
+import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 
 interface Dropdown {
   id: string
@@ -44,35 +44,22 @@ class Dropdown extends Component<any, State> {
     return (
       <div className="Dropdown-wrapper">
         <label className="Dropdown-inputLabel">{label}</label>
-        <select
-          className="Dropdown"
-          onChange={(event: React.ChangeEvent<any>) => this.handleChange(event.target.value)}
-          value={selectedValue}
-        >
-          {dropdownValues.map((value: string) => (
-            <option key={value}>{value}</option>
-          ))}
-        </select>
+        <div className="Dropdown">
+          <select
+            onChange={(event: React.ChangeEvent<any>) => this.handleChange(event.target.value)}
+            value={selectedValue}
+          >
+            {dropdownValues.map((value: string) => (
+              <option key={value}>{value}</option>
+            ))}
+          </select>
+        </div>
         <style jsx>{`
 
           .Dropdown-wrapper {
+            display: inline-flex;
+            flex-direction: column;
             margin-bottom: 20px;
-          }
-
-          .Dropdown {
-            appearance: none;
-            background: white;
-            display: block;
-            appearance: none;
-            border: 1px solid ${tuxInputStyles.borderColor};
-            border-radius: 3px;
-            color: ${tuxColors.textDark};
-            font-family: -apple-system, BlinkMacSystemFont, "Source Sans Pro", "sans-serif";
-            font-size: 16px;
-            font-weight: 300;
-            line-height: 1.5;
-            padding: 5px;
-            width: 260px;
           }
 
           .Dropdown-inputLabel {
@@ -82,6 +69,60 @@ class Dropdown extends Component<any, State> {
             line-height: 24px;
             padding: 5px 0;
             text-transform: capitalize;
+          }
+
+          /* Custom dropdown */
+          .Dropdown {
+            display: inline-block;
+            font-size: 16px;
+            position: relative;
+            vertical-align: middle;
+          }
+
+          .Dropdown select {
+            background-color: white;
+            border: 1px solid ${tuxInputStyles.borderColor};
+            color: inherit;
+            font-size: inherit;
+            padding: 8px;
+            padding-right: 40px;
+            margin: 0;
+            border-radius: 3px;
+            text-indent: 0.01px;
+            -webkit-appearance: button;
+          }
+
+          .Dropdown::before,
+          .Dropdown::after {
+            content: "";
+            font-family: Arial, 'sans-serif';
+            position: absolute;
+            pointer-events: none;
+          }
+
+          .Dropdown::after { /*  Custom dropdown arrow */
+            bottom: 0;
+            content: "▼";
+            font-size: 10px;
+            height: 10px;
+            line-height: 1;
+            margin: auto;
+            right: 12px;
+            top: 0;
+          }
+
+          .Dropdown::before { /*  Custom dropdown arrow cover */
+            background: ${tuxButtonStyles.backgroundColor};
+            border-radius: 0 3px 3px 0;
+            border: 1px solid ${tuxInputStyles.borderColor};
+            bottom: 0;
+            right: 0;
+            top: 0;
+            width: 32px;
+          }
+
+          .Dropdown::after {
+            color: ${tuxButtonStyles.textColor};
           }
         `}</style>
       </div>
