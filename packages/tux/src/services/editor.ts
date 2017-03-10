@@ -10,6 +10,7 @@ export interface Field {
 export interface Meta {
   type: string,
   editorSchema?: Array<Field>,
+  name?: string,
 }
 
 export function registerEditable(type: string, value: Array<Object> | ((editorSchema: Map<string, Field>) => Map<string, Field>)) {

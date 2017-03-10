@@ -19,6 +19,7 @@ export interface Field {
 export interface Meta {
   type: string,
   editorSchema?: Array<Field>,
+  name?: string,
 }
 
 export class ContentfulAdapter {
@@ -118,10 +119,12 @@ export class ContentfulAdapter {
       }
 
       const typeMeta = await this.managementApi.getTypeMeta(type)
+      console.log(typeMeta)
       const editorSchema = this.transformTypeMetaToEditorSchema(typeMeta)
       resolve({
         type,
         editorSchema,
+        name: typeMeta.name,
       })
     })
   }
