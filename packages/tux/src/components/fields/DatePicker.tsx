@@ -114,6 +114,7 @@ class DatePicker extends Component<any, State> {
         .TuxDayPicker {
           display: inline-flex;
           flex-direction: column;
+          margin-bottom: 20px;
           position: relative;
         }
 

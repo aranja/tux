@@ -51,7 +51,7 @@ class Radio extends Component<any, State> {
         .Radio-wrapper {
           display: inline-flex;
           flex-direction: column;
-          margin: 20px 0;
+          margin-bottom: 20px;
         }
 
         .Radio {
@@ -70,7 +70,7 @@ class Radio extends Component<any, State> {
           font-size: 16px;
           font-weight: 300;
           line-height: 24px;
-          padding: 4px 0;
+          padding: 5px 0;
           text-transform: capitalize;
         }
 

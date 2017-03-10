@@ -168,7 +168,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
                 font-size: 16px;
                 font-weight: 300;
                 line-height: 24px;
-                padding: 4px 0;
+                padding: 5px 0;
                 text-transform: capitalize;
               }
             `}</style>

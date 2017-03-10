@@ -233,13 +233,13 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-content {
-            padding: 0 30px;
+            padding: 30px;
           }
 
           .TuxModal-meta {
             font-size: 16px;
+            margin-bottom: 20px;
             text-align: right;
-            padding: 0 30px;
           }
 
           .TuxModal-metaLastUpdated {

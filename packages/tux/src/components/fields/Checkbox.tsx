@@ -21,11 +21,12 @@ const Checkbox = ({ id, value, label, checked, onChange }: Checkbox) => (
     <div className="CheckboxIndicator"></div>
     <style jsx>{`
       .Checkbox {
+        box-sizing: border-box;
+        margin-bottom: 20px;
         opacity: 0;
+        padding: 0;
         position: absolute;
         z-index: -1;
-        box-sizing: border-box;
-        padding: 0;
       }
 
       .CheckboxIndicator {
