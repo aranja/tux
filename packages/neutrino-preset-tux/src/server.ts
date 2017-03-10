@@ -63,7 +63,7 @@ export default (neutrino: any) => {
     .plugin('banner')
     .use(webpack.BannerPlugin, {
       banner:
-        (hasSourceMap ? `require('source-map-support').install();\n`: '') +
+        (hasSourceMap ? `require('source-map-support').install();\n` : '') +
         `process.env.SERVER = 'true';\n`,
       raw: true,
       entryOnly: true
