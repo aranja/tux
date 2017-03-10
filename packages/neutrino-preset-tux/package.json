@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "NODE_ENV=production ../../tasks/build-package.js",
-    "watch": "../../tasks/build-package.js --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "../../tasks/build-package.js --watch"
   },
   "author": "",
   "license": "ISC",
