@@ -25,9 +25,10 @@ describe('editor service', () => {
       { field: '_fieldThatShouldNotBeEditable' },
     ]
 
-    registerEditable(modelName, (schema: any) =>
-      schema.filter((field: any) => field.field !== '_fieldThatShouldNotBeEditable')
-    )
+    registerEditable(modelName, (schema: Map<string, Field>) => {
+      schema.delete('_fieldThatShouldNotBeEditable')
+      return schema
+    })
 
     const schema = getEditorSchema({
       type: modelName,

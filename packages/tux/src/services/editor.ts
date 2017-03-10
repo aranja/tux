@@ -12,7 +12,7 @@ export interface Meta {
   editorSchema?: Array<Field>,
 }
 
-export function registerEditable(type: string, value: Array<Object> | ((editorSchema: Array<Field>) => Array<Field>)) {
+export function registerEditable(type: string, value: Array<Object> | ((editorSchema: Map<string, Field>) => Map<string, Field>)) {
   schema.set(type, value)
 }
 
@@ -35,7 +35,11 @@ export function getEditorSchema(meta: Meta): Array<Field> {
       result = userDefinedSchema
     } else if (userDefinedSchema instanceof Function) {
       // operate on adapter schema with user provided function
-      result = userDefinedSchema(adapterSchema)
+      const schemaAsMap = new Map(adapterSchema.map(field => [field.field, field]))
+      const editedSchema = userDefinedSchema(schemaAsMap)
+      for (const field of editedSchema) {
+        result.push(field)
+      }
     }
   }
   return result
