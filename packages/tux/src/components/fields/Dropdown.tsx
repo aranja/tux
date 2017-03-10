@@ -45,6 +45,7 @@ class Dropdown extends Component<any, State> {
       <div className="Dropdown">
         <label className="InputLabel">{label}</label>
         <select
+          className="Dropdown-field"
           onChange={(event: React.ChangeEvent<any>) => this.handleChange(event.target.value)}
           value={selectedValue}
         >
@@ -52,11 +53,17 @@ class Dropdown extends Component<any, State> {
             <option key={value}>{value}</option>
           ))}
         </select>
-          <style jsx>{`
-            .Dropdown {
-
-            }
-          `}</style>
+        <style jsx>{`
+          .Dropdown-field {
+            appearance: none;
+            background: white;
+            border-radius: 0;
+            border: 1px solid #cbcbcb;
+            display: block;
+            margin: 5px;
+            padding: 5px 10px;
+          }
+        `}</style>
       </div>
     )
   }
