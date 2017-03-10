@@ -5,7 +5,6 @@ import { fade } from '../../utils/color'
 import { timeSince } from '../../utils/time'
 import moment from 'moment'
 import TuxSpinner from '../Spinner/Spinner'
-import '../fields'
 import { Field } from '../../services/editor'
 
 import { getEditorSchema } from '../../services/editor'
@@ -19,7 +18,7 @@ export interface Field {
 
 export interface State {
   fullModel: any | null
-  typeMeta: any | null
+  meta: any | null
   editorSchema: Array<Field>
 }
 
@@ -30,7 +29,7 @@ class TuxModal extends React.Component<any, State> {
 
   state: State = {
     fullModel: null,
-    typeMeta: null,
+    meta: null,
     editorSchema: [],
   }
 
@@ -39,21 +38,16 @@ class TuxModal extends React.Component<any, State> {
 
     const [
       fullModel,
-      typeMeta,
       meta,
     ] = await Promise.all([
       this.context.tux.adapter.load(model),
-      this.context.tux.adapter.getSchema(model),
       this.context.tux.adapter.getMeta(model),
     ])
 
-    const editorSchema = getEditorSchema(meta)
-    console.log(editorSchema)
-
     this.setState({
       fullModel,
-      typeMeta,
-      editorSchema,
+      meta,
+      editorSchema: getEditorSchema(meta),
     })
   }
 
@@ -100,14 +94,14 @@ class TuxModal extends React.Component<any, State> {
   }
 
   render() {
-    const { fullModel, typeMeta, editorSchema } = this.state
+    const { fullModel, meta, editorSchema } = this.state
     return (
       <div className="TuxModal">
         {fullModel ? (
           <form onSubmit={this.onSubmit}>
             <div className="TuxModal-topBar">
               <h1 className="TuxModal-title">
-                Editing <strong className="TuxModal-modelName">{typeMeta.name}</strong>
+                Editing <strong className="TuxModal-modelName">{meta.name}</strong>
               </h1>
               <div className="TuxModal-buttons">
                 <button

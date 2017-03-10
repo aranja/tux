@@ -1,5 +1,6 @@
 import QueryApi from './query-api'
 import ManagementApi from './management-api'
+import widgetIdToEditorField from './widget-to-editor-component'
 
 export interface Config {
   space: string
@@ -106,14 +107,40 @@ export class ContentfulAdapter {
     return this.managementApi.getTypeMeta(model.sys.contentType.sys.id)
   }
 
-  getMeta(model: any): Promise<Meta> {
-    return new Promise((resolve, reject) => {
-      const modelName = model.sys.contentType.sys.id
+  getMeta(model: string | Object): Promise<Meta> {
+    return new Promise(async(resolve, reject) => {
+      if (!this.managementApi) {
+        return reject('Manager api not defined, please log in get a scheme.')
+      }
+
+      const modelName = this._getModelName(model)
+      const typeMeta = await this.managementApi.getTypeMeta(modelName)
+      const editorSchema = this.transformTypeMetaToEditorSchema(typeMeta)
       resolve({
         type: modelName,
-        editorSchema: [],
+        editorSchema,
       })
     })
+  }
+
+  _getModelName(model: any) {
+    if (typeof model === 'string') {
+      return model
+    } else if (typeof model === 'object') {
+      return model.sys.contentType.sys.id
+    }
+  }
+
+  transformTypeMetaToEditorSchema(typeMeta: any) {
+    return typeMeta.fields.map(this.transformTypeFieldToEditorField)
+  }
+
+  transformTypeFieldToEditorField(typeMetaField: any) {
+    return {
+      field: typeMetaField.id,
+      label: typeMetaField.name,
+      component: widgetIdToEditorField[typeMetaField.control.widgetId]
+    }
   }
 
   async save(model: any) {

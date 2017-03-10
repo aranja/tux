@@ -11,7 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.15.3"
+    "axios": "^0.15.3",
+    "tux": "^0.1.0"
   },
   "peerDependencies": {
     "react": "^15.0.0"
