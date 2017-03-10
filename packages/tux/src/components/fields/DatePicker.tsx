@@ -9,7 +9,7 @@ import { fade } from '../../utils/color'
 const DATE_FORMAT = 'YYYY-MM-DD'
 
 export interface State {
-  selectedDay: string | null
+  selectedDay: Date | null
   showOverlay: boolean
   value: string
 }
@@ -21,6 +21,12 @@ class DatePicker extends Component<any, State> {
     blur: () => any
   }
   clickedInside = false
+
+  componentDidMount() {
+    this.setState({
+      selectedDay: moment(this.props.value).toDate()
+    })
+  }
 
   componentWillUnmount() {
     clearTimeout(this.clickTimeout)
@@ -60,7 +66,7 @@ class DatePicker extends Component<any, State> {
     }
   }
 
-  handleDayClick = (day, modifiers, event) => {
+  handleDayClick = (day: Date, modifiers: any, event: any) => {
     const dateValue = moment(day).format(DATE_FORMAT)
     this.setState({
       value: dateValue,
@@ -103,6 +109,7 @@ class DatePicker extends Component<any, State> {
             />
           </div>
         }
+
       <style jsx>{`
         .TuxDayPicker {
           display: inline-flex;
