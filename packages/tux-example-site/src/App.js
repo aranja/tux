@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import './reset.css'
 import './index.css'
+import './icons.css'
 import './megadraft.css'
 import './megadraft-fixes.css'
 

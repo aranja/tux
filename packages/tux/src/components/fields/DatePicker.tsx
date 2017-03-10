@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import moment from 'moment'
 import DayPicker, { DateUtils } from 'react-day-picker'
-import { tuxColors, tuxInputStyles } from '../../styles'
+import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 import { tuxDatePickerStyles } from './DatePicker.styles'
 import { fade } from '../../utils/color'
 
@@ -88,34 +88,34 @@ class DatePicker extends Component<any, State> {
     const { id, label, onChange } = this.props
 
     return (
-      <div className="TuxDayPicker" onMouseDown={ this.handleContainerMouseDown }>
+      <div className="TuxDayPicker-wrapper" onMouseDown={ this.handleContainerMouseDown }>
         <label className="TuxDayPicker-inputLabel">{ label }</label>
-        <input
-          className="TuxDayPicker-input"
-          type="text"
-          ref={(el) => {this.input = el}}
-          placeholder="Select a date"
-          value={value}
-          onChange={(event) => this.onDateChange(event.target.value)}
+        <div className="TuxDayPicker"
           onFocus={this.handleInputFocus}
-          onBlur={this.handleInputBlur}
-        />
-        { showOverlay &&
-          <div className="TuxDayPicker-overlay">
-            <DayPicker
-              initialMonth={selectedDay || undefined}
-              onDayClick={this.handleDayClick}
-              selectedDays={day => DateUtils.isSameDay(selectedDay, day)}
-            />
-          </div>
-        }
+          onBlur={this.handleInputBlur}>
+          <input
+            type="text"
+            ref={(el) => {this.input = el}}
+            placeholder="Select a date"
+            value={value}
+            onChange={(event) => this.onDateChange(event.target.value)}
+          />
+          { showOverlay &&
+            <div className="TuxDayPicker-overlay">
+              <DayPicker
+                initialMonth={selectedDay || undefined}
+                onDayClick={this.handleDayClick}
+                selectedDays={day => DateUtils.isSameDay(selectedDay, day)}
+              />
+            </div>
+          }
+        </div>
 
       <style jsx>{`
-        .TuxDayPicker {
+        .TuxDayPicker-wrapper {
           display: inline-flex;
           flex-direction: column;
           margin-bottom: 20px;
-          position: relative;
         }
 
         .TuxDayPicker :global(.DayPicker) {
@@ -129,17 +129,56 @@ class DatePicker extends Component<any, State> {
           width: 260px;
         }
 
-        .TuxDayPicker .TuxDayPicker-input {
+        .TuxDayPicker {
+          position: relative;
+        }
+
+        .TuxDayPicker input {
           appearance: none;
-          border-radius: 3px;
           border: 1px solid ${tuxInputStyles.borderColor};
+          border-radius: 3px;
           color: ${tuxColors.textDark};
+          cursor: pointer;
           font-family: -apple-system, BlinkMacSystemFont, "Source Sans Pro", "sans-serif";
           font-size: 16px;
           font-weight: 300;
           line-height: 1.5;
           padding: 5px;
           width: 260px;
+        }
+
+
+        .TuxDayPicker::before,
+        .TuxDayPicker::after {
+          content: "";
+          font-family: Arial, 'sans-serif';
+          position: absolute;
+          pointer-events: none;
+        }
+
+        .TuxDayPicker::after {
+          bottom: 0;
+          content: "\\F4C5";
+          color: ${tuxButtonStyles.textColor};
+          font-family: "mfg_labs_iconsetregular";
+          font-size: 16px;
+          height: 16px;
+          line-height: 1;
+          margin: auto;
+          right: 8px;
+          top: 0;
+        }
+
+
+        .TuxDayPicker::before {
+          background: ${tuxButtonStyles.backgroundColor};
+          border-radius: 0 3px 3px 0;
+          border: 1px solid ${tuxInputStyles.borderColor};
+          bottom: 0;
+          right: 0;
+          top: 0;
+          transition: all 0.25s;
+          width: 32px;
         }
 
         .TuxDayPicker .TuxDayPicker-inputLabel {
@@ -156,7 +195,7 @@ class DatePicker extends Component<any, State> {
           box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
           position: absolute;
           position: absolute;
-          top: 70px;
+          top: 38px;
           z-index: 2;
         }
 

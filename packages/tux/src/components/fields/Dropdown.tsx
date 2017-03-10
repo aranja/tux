@@ -71,25 +71,25 @@ class Dropdown extends Component<any, State> {
             text-transform: capitalize;
           }
 
-          /* Custom dropdown */
           .Dropdown {
             display: inline-block;
             font-size: 16px;
             position: relative;
-            vertical-align: middle;
           }
 
           .Dropdown select {
+            appearance: button;
             background-color: white;
+            border-radius: 3px;
             border: 1px solid ${tuxInputStyles.borderColor};
             color: inherit;
+            cursor: pointer;
             font-size: inherit;
-            padding: 8px;
-            padding-right: 40px;
             margin: 0;
-            border-radius: 3px;
+            padding-right: 40px;
+            padding: 8px;
             text-indent: 0.01px;
-            -webkit-appearance: button;
+            width: 260px;
           }
 
           .Dropdown::before,
@@ -100,18 +100,19 @@ class Dropdown extends Component<any, State> {
             pointer-events: none;
           }
 
-          .Dropdown::after { /*  Custom dropdown arrow */
+          .Dropdown::after {
             bottom: 0;
+            color: ${tuxButtonStyles.textColor};
             content: "▼";
             font-size: 10px;
             height: 10px;
             line-height: 1;
             margin: auto;
             right: 12px;
-            top: 0;
+            top: 2px;
           }
 
-          .Dropdown::before { /*  Custom dropdown arrow cover */
+          .Dropdown::before {
             background: ${tuxButtonStyles.backgroundColor};
             border-radius: 0 3px 3px 0;
             border: 1px solid ${tuxInputStyles.borderColor};
@@ -119,10 +120,6 @@ class Dropdown extends Component<any, State> {
             right: 0;
             top: 0;
             width: 32px;
-          }
-
-          .Dropdown::after {
-            color: ${tuxButtonStyles.textColor};
           }
         `}</style>
       </div>

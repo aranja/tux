@@ -64,7 +64,6 @@ class BrowseField extends Component<any, any> {
 
           .BrowseField-button:hover {
             background: ${tuxButtonStyles.greenTheme.backgroundColor};
-            border-radius: 2px;
             border: 1px solid ${tuxButtonStyles.greenTheme.borderColor};
             color: ${tuxButtonStyles.greenTheme.textColor};
           }
