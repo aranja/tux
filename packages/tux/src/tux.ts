@@ -1,7 +1,11 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 export interface Context {
   htmlProps: any
+  refresh?:
+    (onComplete: () => void) =>
+      Promise<any>
 }
 
 export type ReactElement =
@@ -24,6 +28,18 @@ export interface Middleware {
 export function createContext(newContext?: Object): Context {
   const htmlProps = {}
   return Object.assign({ htmlProps }, newContext)
+}
+
+export function startClient(tux: Tux, domNode: Element) {
+  const context = createContext()
+  async function refresh(onComplete = () => {}) {
+    const element = await tux.getElement(context)
+    return await tux.renderClient(context, () => {
+      ReactDOM.render(element, domNode, onComplete)
+    })
+  }
+  context.refresh = refresh
+  return refresh()
 }
 
 async function createBase(renderChildren: null | (() => Promise<ReactElement>), context: Context) {
@@ -56,16 +72,31 @@ export class Tux {
   protected wrapClientRenderers: Array<WrapRender> = []
   protected wrapServerRenderers: Array<WrapRender> = []
 
-  use(middleware: Middleware) {
-    if (typeof middleware.createElement !== 'undefined') {
+  use(middleware: WrapElement | Middleware) {
+    if (typeof middleware === 'function') {
+      middleware = {
+        createElement: middleware,
+      }
+    }
+
+    if (middleware.createElement) {
+      if (typeof middleware.createElement !== 'function') {
+        throw new Error('[tux.use] createElement should be a function.')
+      }
       this.elementWrappers.push(middleware.createElement)
     }
 
-    if (typeof middleware.wrapClientRender !== 'undefined') {
+    if (middleware.wrapClientRender) {
+      if (typeof middleware.wrapClientRender !== 'function') {
+        throw new Error('[tux.use] wrapClientRender should be a function.')
+      }
       this.wrapClientRenderers.push(middleware.wrapClientRender)
     }
 
-    if (typeof middleware.wrapServerRender !== 'undefined') {
+    if (middleware.wrapServerRender) {
+      if (typeof middleware.wrapServerRender !== 'function') {
+        throw new Error('[tux.use] wrapServerRender should be a function.')
+      }
       this.wrapServerRenderers.push(middleware.wrapServerRender)
     }
 

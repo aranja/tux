@@ -2,16 +2,14 @@ import path from 'path'
 import express from 'express'
 import PrettyError from 'pretty-error'
 import React from 'react'
-import ReactDOM from 'react-dom/server'
-import UniversalRouter from 'universal-router'
-import createMemoryHistory from 'history/createMemoryHistory'
+import ReactDOMServer from 'react-dom/server'
 import assets from 'asset-manifest'
-import routes from './routes'
-import App from './App'
 import Html from './Html'
+import tux from './tux'
+import { createContext } from 'tux/lib/tux'
 
 const app = express()
-
+  
 app.use(express.static(path.join(__dirname, 'static'), { index: false }))
 
 /**
@@ -19,28 +17,20 @@ app.use(express.static(path.join(__dirname, 'static'), { index: false }))
  */
 app.get('*', async (req, res, next) => {
   try {
-    const route = await UniversalRouter.resolve(routes, {
-      path: req.path,
-      query: req.query,
+    const context = createContext({
+      assets,
+      request: req,
+      response: res,
     })
 
-    if (route.redirect) {
-      res.redirect(route.status || 302, route.redirect)
-      return
-    }
+    const element = await tux.getElement(context)
+    const body = tux.renderServer(context, () => ReactDOMServer.renderToString(element))
+    const html = ReactDOMServer.renderToStaticMarkup(
+      <Html assets={context.assets} {...context.htmlProps}>
+        {body}
+      </Html>
+    )
 
-    // Global (context) variables that can be easily accessed from any React component
-    // https://facebook.github.io/react/docs/context.html
-    const context = {
-      history: createMemoryHistory(req.url),
-    }
-
-    const data = { ...route }
-    data.assets = assets
-    data.app = ReactDOM.renderToString(<App context={context}>{route.element}</App>)
-
-    const html = ReactDOM.renderToStaticMarkup(<Html {...data} />)
-    res.status(route.status || 200)
     res.send(`<!doctype html>${html}`)
   } catch (err) {
     next(err)
@@ -56,13 +46,12 @@ pe.skipPackage('express')
 
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   console.log(pe.render(err)) // eslint-disable-line no-console
-  const html = ReactDOM.renderToStaticMarkup(
+  const html = ReactDOMServer.renderToStaticMarkup(
     <Html
       title="Internal Server Error"
       description={err.message}
-      app={err.toString()}
       assets={assets}
-    />,
+    >{err.toString()}</Html>
   )
   res.status(err.status || 500)
   res.send(`<!doctype html>${html}`)
