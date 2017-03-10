@@ -17,7 +17,7 @@ class Radio extends Component<any, State> {
     })
   }
 
-  onChangeValue = (choice) => {
+  onChangeValue = (choice: string) => {
     const { onChange } = this.props
     this.setState({
       checkedValue: choice
@@ -49,7 +49,9 @@ class Radio extends Component<any, State> {
 
       <style jsx>{`
         .Radio-wrapper {
-            margin: 20px 0;
+          display: inline-flex;
+          flex-direction: column;
+          margin: 20px 0;
         }
 
         .Radio {

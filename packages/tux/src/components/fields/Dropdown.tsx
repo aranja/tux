@@ -43,7 +43,7 @@ class Dropdown extends Component<any, State> {
 
     return (
       <div className="Dropdown">
-        <label className="InputLabel">{label}</label>
+        <label className="Dropdown-inputLabel">{label}</label>
         <select
           className="Dropdown-field"
           onChange={(event: React.ChangeEvent<any>) => this.handleChange(event.target.value)}
@@ -54,14 +54,29 @@ class Dropdown extends Component<any, State> {
           ))}
         </select>
         <style jsx>{`
+          .Dropdown-inputLabel {
+            color: ${tuxInputStyles.labelTextColor};
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 24px;
+            padding: 4px 0;
+            text-transform: capitalize;
+          }
+
           .Dropdown-field {
             appearance: none;
             background: white;
-            border-radius: 0;
-            border: 1px solid #cbcbcb;
             display: block;
-            margin: 5px;
-            padding: 5px 10px;
+            appearance: none;
+            border: 1px solid ${tuxInputStyles.borderColor};
+            border-radius: 3px;
+            color: ${tuxColors.textDark};
+            font-family: -apple-system, BlinkMacSystemFont, "Source Sans Pro", "sans-serif";
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.5;
+            padding: 5px;
+            width: 260px;
           }
         `}</style>
       </div>

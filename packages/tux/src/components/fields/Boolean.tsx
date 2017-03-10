@@ -60,7 +60,9 @@ class Boolean extends Component<any, State> {
 
       <style jsx>{`
         .Boolean-wrapper {
-            margin: 20px 0;
+          display: inline-flex;
+          flex-direction: column;
+          margin: 20px 0;
         }
 
         .Boolean {
