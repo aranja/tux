@@ -1,5 +1,4 @@
 const schema = new Map()
-const userSchema = new Map()
 
 export interface Field {
   field: string,
@@ -13,49 +12,31 @@ export interface Meta {
   editorSchema?: Array<Field>,
 }
 
-export function registerEditable(type: string, value: any) {
-  const typeOfValue = typeof value
-
-  if (typeOfValue === 'object') {
-    _registerFields(type, value)
-  } else if (typeOfValue === 'function') {
-    _registerProcedure(type, value)
-  }
+export function registerEditable(type: string, value: Array<Field> | ((editorSchema: Array<Field>) => Array<Field>)) {
+  schema.set(type, value)
 }
 
 export function getEditorSchema(meta: Meta): Array<Field> {
-  const typeSchema = schema.get(meta.type)
-  const userSchemaForType = userSchema.get(meta.type)
-
-  console.log(`getEditorSchema: ${schema.has(meta.type)} ${userSchema.has(meta.type)}`)
+  const adapterSchema = meta.editorSchema
+  const userDefinedSchema = schema.get(meta.type)
 
   let result = []
-  if (typeSchema && !userSchemaForType) {
-    result = _listFromObject(typeSchema)
-  } else if (!typeSchema && userSchemaForType) {
-    result = _listFromObject(userSchemaForType)
-  } else if (typeSchema && userSchemaForType) {
-    const finalSchemaForType = Object.assign(userSchemaForType || {}, typeSchema || {})
-    result = _listFromObject(finalSchemaForType)
+  if (adapterSchema && !userDefinedSchema) {
+    result = adapterSchema
+  } else if (!adapterSchema && userDefinedSchema) {
+    if (userDefinedSchema instanceof Array) {
+      result = userDefinedSchema
+    }
+    // else, if the userDefinedSchema is a function to operate on current schema
+    // we do not have any schema to operate on, so return an empty array
+  } else if (adapterSchema && userDefinedSchema) {
+    if (userDefinedSchema instanceof Array) {
+      // overwrite adapter schema
+      result = userDefinedSchema
+    } else if (userDefinedSchema instanceof Function) {
+      // operate on adapter schema with user provided function
+      result = userDefinedSchema(adapterSchema)
+    }
   }
-  console.log(result)
   return result
-}
-
-function _listFromObject(obj: any) {
-  const result = []
-  for (const objKey of Object.keys(obj)) {
-    result.push(obj[objKey])
-  }
-  return result
-}
-
-function _registerFields(type: string, value: Array<Field>) {
-  console.log(`registering fields for ${type}`)
-  userSchema.set(type, value)
-}
-
-function _registerProcedure(type: string, procedure: (editorSchema: Array<Field>) => Array<Field>) {
-  console.log(`registering callback for ${type}`)
-  userSchema.set(type, procedure(userSchema.get(type)))
 }

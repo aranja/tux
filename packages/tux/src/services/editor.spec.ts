@@ -1,5 +1,5 @@
 
-import { registerEditable, getEditorSchema } from './editor'
+import { registerEditable, getEditorSchema, Field, Meta } from './editor'
 
 describe('editor service', () => {
   it('can register editable and receive editor schema', () => {
@@ -20,21 +20,20 @@ describe('editor service', () => {
   it('can register fields and then filter them with a procedure', () => {
     const modelName = 'post'
     const fields = [
-      { field: 'keep' },
-      { field: 'keep' },
-      { field: 'remove' },
-      { field: 'keep' },
+      { field: 'firstName' },
+      { field: 'lastName' },
+      { field: '_fieldThatShouldNotBeEditable' },
     ]
 
-    registerEditable(modelName, fields)
-    let schema = getEditorSchema({ type: modelName })
-    expect(schema).toHaveLength(4)
-
     registerEditable(modelName, (schema: any) =>
-      schema.filter((field: any) => field.field === 'keep')
+      schema.filter((field: any) => field.field !== '_fieldThatShouldNotBeEditable')
     )
 
-    schema = getEditorSchema({ type: modelName })
-    expect(schema).toHaveLength(3)
+    const schema = getEditorSchema({
+      type: modelName,
+      editorSchema: fields,
+    })
+    expect(fields).toHaveLength(3)
+    expect(schema).toHaveLength(2)
   })
 })
