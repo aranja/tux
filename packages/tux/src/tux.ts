@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { createElement, Component } from 'react'
 import ReactDOM from 'react-dom'
+import { renderToString, renderToStaticMarkup } from 'react-dom/server'
 
 export interface Context {
   htmlProps: any
@@ -40,6 +41,46 @@ export function startClient(tux: Tux, domNode: Element) {
   }
   context.refresh = refresh
   return refresh()
+}
+
+export function serve(tux: Tux, config: {
+  assets?: any,
+  Document?: React.ComponentClass<any>,
+} = {}) {
+  if (typeof config.Document === 'undefined') {
+    throw new Error()
+  }
+  return async function server(request?: any, response?: any, next?: Function) {
+    const context = createContext({ request, response })
+    let html = ''
+
+    try {
+      const element = await tux.getElement(context)
+      const body = tux.renderServer(context, () => renderToString(element))
+      const { htmlProps, request, response, ...rest } = context
+      html = renderToStaticMarkup(createElement(config.Document, {
+        ...htmlProps,
+        assets: config.assets || {},
+        context: { ...rest },
+      }, body))
+    } catch (error) {
+      const { htmlProps, request, response, ...rest } = context
+      html = renderToStaticMarkup(createElement(config.Document, {
+        ...htmlProps,
+        assets: config.assets || {},
+        context: { ...rest },
+        title: 'Internal Server Error',
+        description: error.message,
+      }, error.toString()))
+
+      response.status(error.status || 500)
+
+      if (typeof next === 'function') {
+        next(error)
+      }
+    }
+    response.send(`<!doctype html>${html}`)
+  }
 }
 
 async function createBase(renderChildren: null | (() => Promise<ReactElement>), context: Context) {

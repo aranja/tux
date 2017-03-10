@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { shallow } from 'enzyme'
-import createTux, { createContext, startClient, Tux } from './tux'
+import createTux, { createContext, startClient, serve, Tux } from './tux'
 
 describe('createContext', () => {
   it('should be callable', () => {
@@ -307,5 +307,17 @@ describe('startClient', () => {
     await startClient(tux, appRoot)
     expect(renderCount).toBe(1)
     expect(appRoot.textContent).toBe('Render count 1')
+  })
+})
+
+describe('serve', () => {
+  let tux: Tux
+
+  beforeEach(() => {
+    tux = createTux()
+  })
+
+  it('should be callable', () => {
+    expect(typeof serve).toBe('function')
   })
 })
