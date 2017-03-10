@@ -66,7 +66,7 @@
 
 .megadraft-modal__button__label {
   margin: 0;
-  font-family: Open Sans, sans-serif;
+  font-family: inherit;
   width: 129px;
   height: 40px;
   font-size: 14px;
@@ -155,7 +155,7 @@
 }
 
 .megadraft-editor .DraftEditor-root, .megadraft-editor .toolbar {
-  font-family: Open Sans, sans-serif;
+  font-family: inherit;
   color: #181818;
   font-size: 1.125rem;
   letter-spacing: -0.037rem;
@@ -217,7 +217,7 @@
 }
 
 .megadraft-editor h2 {
-  font-family: Open Sans, Sans-serif;
+  font-family: inherit;
   font-weight: 700;
   font-size: 1.5rem;
   letter-spacing: -0.056rem;
