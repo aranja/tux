@@ -4,40 +4,23 @@ import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 import { fade } from '../../utils/color'
 import { timeSince } from '../../utils/time'
 import moment from 'moment'
-import MarkdownField from '../fields/MarkdownField'
-import TextField from '../fields/TextField'
-import DatePicker from '../fields/DatePicker'
 import TuxSpinner from '../Spinner/Spinner'
-import ImageField from '../fields/ImageField'
+import '../fields'
+import { Field } from '../../services/editor'
 
-interface FieldComponent {
-  id: string
-  type: string
-  control: {
-    widgetId: string
-  }
+import { getEditorSchema } from '../../services/editor'
+
+export interface Field {
+  field: string,
+  label: string,
+  component: any,
+  props?: Object
 }
 
 export interface State {
   fullModel: any | null
   typeMeta: any | null
-}
-
-function componentForField({ id, type, control: { widgetId } }: FieldComponent) {
-  if (type === 'Array')
-    return null
-  if (widgetId === 'markdown') {
-    return MarkdownField
-  }
-  if (widgetId === 'datePicker') {
-    return DatePicker
-  }
-  if (id === 'image' || id === 'icon') {
-   return ImageField
-  }
-  else {
-    return TextField
-  }
+  editorSchema: Array<Field>
 }
 
 class TuxModal extends React.Component<any, State> {
@@ -48,6 +31,7 @@ class TuxModal extends React.Component<any, State> {
   state: State = {
     fullModel: null,
     typeMeta: null,
+    editorSchema: [],
   }
 
   async componentDidMount() {
@@ -56,20 +40,26 @@ class TuxModal extends React.Component<any, State> {
     const [
       fullModel,
       typeMeta,
+      meta,
     ] = await Promise.all([
       this.context.tux.adapter.load(model),
       this.context.tux.adapter.getSchema(model),
+      this.context.tux.adapter.getMeta(model),
     ])
+
+    const editorSchema = getEditorSchema(meta)
+    console.log(editorSchema)
 
     this.setState({
       fullModel,
       typeMeta,
+      editorSchema,
     })
   }
 
-  onChange(value: any, type: {id: string}) {
+  onChange(value: any, type: string) {
     const { fullModel } = this.state
-    const field = fullModel.fields[type.id]
+    const field = fullModel.fields[type]
 
     field['en-US'] = value
 
@@ -88,31 +78,29 @@ class TuxModal extends React.Component<any, State> {
     this.props.onClose(true)
   }
 
-  renderField = (type: any) => {
+  renderField = (field: Field) => {
     const { fullModel } = this.state
-    const helpText = type.control.settings && type.control.settings.helpText
-    const InputComponent = componentForField(type)
-    const field = fullModel.fields[type.id]
-    const value = field && field['en-US']
+    const InputComponent = field.component
+    const fullModelField = fullModel.fields[field.field]
+    const value = fullModelField && fullModelField['en-US']
 
     if (!InputComponent) {
       return null
     }
     return (
-      <div key={type.id}>
+      <div key={field.field}>
         <InputComponent
-          id={type.id}
+          id={field.field}
           value={value}
-          label={type.name}
-          helpText={helpText}
-          onChange={event => this.onChange(event, type)}
+          label={field.field}
+          onChange={event => this.onChange(event, field.field)}
         />
       </div>
     )
   }
 
   render() {
-    const { fullModel, typeMeta } = this.state
+    const { fullModel, typeMeta, editorSchema } = this.state
     return (
       <div className="TuxModal">
         {fullModel ? (
@@ -133,7 +121,7 @@ class TuxModal extends React.Component<any, State> {
               </div>
             </div>
             <div className="TuxModal-content">
-              {typeMeta.fields.map(this.renderField)}
+              {editorSchema.map(this.renderField)}
               <div className="TuxModal-meta">
               { fullModel.sys.updatedAt && (
                 <p className="TuxModal-metaLastUpdated">

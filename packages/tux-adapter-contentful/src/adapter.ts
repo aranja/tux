@@ -8,6 +8,19 @@ export interface Config {
   redirectUri: string
 }
 
+export interface Field {
+  field: string,
+  label: string,
+  component: any,
+  props?: Object
+}
+
+
+export interface Meta {
+  type: string,
+  editorSchema?: Array<Field>,
+}
+
 export class ContentfulAdapter {
   private space: string
   private clientId: string
@@ -91,6 +104,16 @@ export class ContentfulAdapter {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }
     return this.managementApi.getTypeMeta(model.sys.contentType.sys.id)
+  }
+
+  getMeta(model: any): Promise<Meta> {
+    return new Promise((resolve, reject) => {
+      const modelName = model.sys.contentType.sys.id
+      resolve({
+        type: modelName,
+        editorSchema: [],
+      })
+    })
   }
 
   async save(model: any) {

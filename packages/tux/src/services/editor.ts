@@ -12,7 +12,7 @@ export interface Meta {
   editorSchema?: Array<Field>,
 }
 
-export function registerEditable(type: string, value: Array<Field> | ((editorSchema: Array<Field>) => Array<Field>)) {
+export function registerEditable(type: string, value: Array<Object> | ((editorSchema: Array<Field>) => Array<Field>)) {
   schema.set(type, value)
 }
 
