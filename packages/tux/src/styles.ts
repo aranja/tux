@@ -1,12 +1,14 @@
 export const tuxColors = {
-  textLight: '#FFFFFF',
+  colorBlack: '#000000',
+  colorGreen: '#3BB172',
+  colorPink: '#E8008A',
+  colorPurple: '#473BB1',
+  colorSnow: '#FAFAFA',
+  colorDirtySnow: '#E5EBED',
+  colorWhite: '#FFFFFF',
   textDark: '#313131',
   textGray: '#3C4858',
-  colorWhite: '#FFFFFF',
-  colorBlack: '#000000',
-  colorPink: '#E8008A',
-  colorSnow: '#FAFAFA',
-  colorPurple: '#473BB1',
+  textLight: '#FFFFFF',
 }
 
 export const tuxInputStyles = {
