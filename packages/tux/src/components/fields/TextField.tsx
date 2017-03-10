@@ -16,7 +16,7 @@ const TextField = ({ id, value, label, onChange }: TextField) => (
       className="InputField"
       id={id}
       label={label}
-      onChange={(event: React.FormEvent<any>) => onChange(event.target.value)}
+      onChange={(event: React.FormEvent<HTMLSelectElement>) => onChange(event.target.value)}
       value={value}
     />
       <style jsx>{`
