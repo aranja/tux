@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 export interface Context {
   htmlProps: any
   refresh?:
-    (onComplete: Function) =>
+    (onComplete: () => void) =>
       Promise<any>
 }
 
