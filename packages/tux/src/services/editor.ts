@@ -24,28 +24,37 @@ export function getEditorSchema(meta: Meta): Array<Field> {
   const adapterSchema = meta.editorSchema
   const userDefinedSchema = schema.get(meta.type)
 
-  if (adapterSchema && !userDefinedSchema) {
+  const hasOnlyAdapterSchema = adapterSchema && !userDefinedSchema
+  const hasOnlyUserDefinedSchema = !adapterSchema && userDefinedSchema
+  const hasBothSchemas = adapterSchema && userDefinedSchema
+
+  if (hasOnlyAdapterSchema) {
     return adapterSchema
-  } else if (!adapterSchema && userDefinedSchema) {
+  } else if (hasOnlyUserDefinedSchema) {
     if (userDefinedSchema instanceof Array) {
       return userDefinedSchema
     }
     // else, if the userDefinedSchema is a function to operate on current schema
     // we do not have any schema to operate on, so return an empty array
-  } else if (adapterSchema && userDefinedSchema) {
+  } else if (hasBothSchemas) {
     if (userDefinedSchema instanceof Array) {
       // overwrite adapter schema
       return userDefinedSchema
     } else if (userDefinedSchema instanceof Function) {
       // operate on adapter schema with user provided function
-      const schemaAsMap = new Map(adapterSchema.map(field => [field.field, field]))
-      const editedSchema = userDefinedSchema(schemaAsMap)
-      const result = []
-      for (const field of editedSchema) {
-        result.push(field)
-      }
-      return result
+      return _mergeSchemas(adapterSchema, userDefinedSchema)
     }
   }
   return []
+}
+
+function _mergeSchemas(adapterSchema: Array<Field>, userFunction: Function) {
+  const schemaAsMap = new Map(adapterSchema.map(field => [field.field, field]))
+  userFunction(schemaAsMap)
+
+  const result = []
+  for (const [fieldName, field] of schemaAsMap) {
+    result.push(field)
+  }
+  return result
 }
