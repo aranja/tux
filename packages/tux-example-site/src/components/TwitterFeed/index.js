@@ -4,8 +4,11 @@ import peopleAreSaying from './text'
 import './styles.css'
 
 class TwitterFeed extends Component {
-  state = {
-    users: null
+  constructor(props) {
+    super(props)
+    this.state = {
+      users: null
+    }
   }
 
   async componentDidMount() {

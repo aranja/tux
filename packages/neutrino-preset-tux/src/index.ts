@@ -1,6 +1,8 @@
 import react from 'neutrino-preset-react'
 import JsxHtmlPlugin from 'jsx-html-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
+import { NamedModulesPlugin } from 'webpack'
+
 import { INDEX, CLIENT_BUILD, MODULES, ASSET_MANIFEST, HTML } from './paths'
 
 export default (neutrino: any) => {
@@ -20,15 +22,6 @@ export default (neutrino: any) => {
     config.plugin('clean').args[0] = [CLIENT_BUILD]
   }
 
-  // Use react-app babel preset.
-  config.module
-    .rule('compile')
-    .loader('babel', () => ({
-      options: {
-        presets: [require.resolve('babel-preset-react-app')],
-      }
-    }))
-
   // Generate a manifest file which contains a mapping of all asset filenames
   // to their corresponding output file so that tools can pick it up without
   // having to parse `index.html`.
@@ -43,13 +36,12 @@ export default (neutrino: any) => {
   config
     .plugin('html')
     .use(JsxHtmlPlugin, {
-      babel: {
-        babelrc: false,
-        presets: [
-          [require.resolve('babel-preset-react-app')],
-        ],
-      },
       manifestFileName: ASSET_MANIFEST,
       template: HTML,
     })
+
+  if (process.env.NODE_ENV === 'development') {
+    // Named modules in development to make hot reloads more readable.
+    config.plugin('named-modules').use(NamedModulesPlugin)
+  }
 }

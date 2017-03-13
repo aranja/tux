@@ -16,17 +16,22 @@ const tsProject = ts.createProject('tsconfig.json')
 // with or without es2015 module syntax.
 const babelConfig = es2015 => ({
   plugins: [
-    "styled-jsx/babel",
+    'styled-jsx/babel',
     ['transform-runtime', {
       helpers: false,
       polyfill: false,
       regenerator: true,
     }],
   ],
-  "presets": [
-    "react",
-    ["es2015", { "modules": es2015 ? false : 'commonjs' }],
+  presets: [
+    'react',
+    ['es2015', { 'modules': es2015 ? false : 'commonjs' }],
   ],
+  env: {
+    development: {
+      plugins: [require.resolve('react-hot-loader/babel')]
+    }
+  }
 })
 
 gulp.task('clean', () => {

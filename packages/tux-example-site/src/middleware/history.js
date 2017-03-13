@@ -7,13 +7,6 @@ const ContextType = {
 }
 
 class HistoryProvider extends Component {
-  static propTypes = {
-    context: PropTypes.shape(ContextType).isRequired,
-    children: PropTypes.element.isRequired,
-  }
-
-  static childContextTypes = ContextType
-
   getChildContext() {
     return this.props.context
   }
@@ -22,6 +15,12 @@ class HistoryProvider extends Component {
     return React.Children.only(this.props.children)
   }
 }
+HistoryProvider.propTypes = {
+  context: PropTypes.shape(ContextType).isRequired,
+  children: PropTypes.element.isRequired,
+}
+
+HistoryProvider.childContextTypes = ContextType
 
 const history = () => ({
   async createElement(renderChildren, context) {
