@@ -21,27 +21,28 @@ export function getEditorSchema(meta: Meta): Array<Field> {
   const adapterSchema = meta.editorSchema
   const userDefinedSchema = schema.get(meta.type)
 
-  let result = []
   if (adapterSchema && !userDefinedSchema) {
-    result = adapterSchema
+    return adapterSchema
   } else if (!adapterSchema && userDefinedSchema) {
     if (userDefinedSchema instanceof Array) {
-      result = userDefinedSchema
+      return userDefinedSchema
     }
     // else, if the userDefinedSchema is a function to operate on current schema
     // we do not have any schema to operate on, so return an empty array
   } else if (adapterSchema && userDefinedSchema) {
     if (userDefinedSchema instanceof Array) {
       // overwrite adapter schema
-      result = userDefinedSchema
+      return userDefinedSchema
     } else if (userDefinedSchema instanceof Function) {
       // operate on adapter schema with user provided function
       const schemaAsMap = new Map(adapterSchema.map(field => [field.field, field]))
       const editedSchema = userDefinedSchema(schemaAsMap)
+      const result = []
       for (const field of editedSchema) {
         result.push(field)
       }
+      return result
     }
   }
-  return result
+  return []
 }
