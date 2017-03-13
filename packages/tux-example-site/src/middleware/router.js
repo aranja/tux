@@ -5,17 +5,12 @@ import queryString from 'query-string'
 const router = (routes) => ({
   async createElement(renderChildren, context) {
     try {
-      context.route = await UniversalRouter.resolve(routes, {
+      return await UniversalRouter.resolve(routes, {
+        context,
         path: context.history.location.pathname,
         query: queryString.parse(context.history.location.search),
       })
-      if (context.response) {
-        context.response.status(200)
-      }
-      context.htmlProps.title = context.route.title
-      return context.route.element
     } catch (error) {
-      context.htmlProps.title = error.message
       if (context.response) {
         context.response.status(404)
       }

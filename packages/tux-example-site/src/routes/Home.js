@@ -1,5 +1,5 @@
 import React from 'react'
-import { Editable, connect } from 'tux'
+import { Editable } from 'tux'
 import { H1, H2 } from '../components/typography'
 import ProductBanner from '../components/ProductBanner'
 import Menu from '../components/Menu'
@@ -13,9 +13,7 @@ import Pricetable from '../components/Pricetable'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
-const Home = ({ pages, articles, sellPoints, pricetable, testimonial, gallery, carousel }) => {
-
-  if (!pages) return null
+const Home = ({ pages, sellPoints, pricetable, testimonial, carousel }) => {
   const page = pages.items[0]
 
   return (
@@ -36,7 +34,7 @@ const Home = ({ pages, articles, sellPoints, pricetable, testimonial, gallery, c
         <Testimonial testimonial={testimonial.items}/>
       </Section>
       <Section backgroundColor="#F5F7FA">
-        <H1>What People Say About Tux</H1>
+        <H1>BLABLA People Say About Tux</H1>
         <H2>Totally random and unbiased selection of people</H2>
         <TwitterFeed />
         <SocialPlug>
@@ -52,12 +50,4 @@ const Home = ({ pages, articles, sellPoints, pricetable, testimonial, gallery, c
   )
 }
 
-export default connect(async contentful => ({
-  pages: await contentful.getEntries({ content_type: 'page' }),
-  articles: await contentful.getEntries({ content_type: 'article', order: '-sys.createdAt' }),
-  sellPoints: await contentful.getEntries({ content_type: 'sellPoint' }),
-  pricetable: await contentful.getEntries({ content_type: 'priceTable', order: 'sys.createdAt' }),
-  testimonial: await contentful.getEntries({ content_type: 'testimony' }),
-  gallery: await contentful.getEntries({ content_type: 'gallery' }),
-  carousel: await contentful.getEntries({ content_type: 'carousel' }),
-}))(Home)
+export default Home
