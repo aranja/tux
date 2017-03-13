@@ -1,0 +1,27 @@
+.Article {
+  margin: auto;
+  width: 70%;
+}
+
+.Article-heading {
+  font-size: 1.8rem;
+  padding-bottom: 0.333rem;
+}
+
+.Article-text {
+  font-size: 1.15rem;
+  font-weight: 300;
+  line-height: 1.65;
+  max-width: 80%;
+  padding: 2em 0;
+}
+
+.Article-meta {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+.Article-metaAuthor {
+  font-weight: 400;
+}

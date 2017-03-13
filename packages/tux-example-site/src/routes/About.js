@@ -3,7 +3,7 @@ import { Editable, connect } from 'tux'
 import { H1, H2 } from '../components/typography'
 import Pricetable from '../components/Pricetable'
 import Menu from '../components/Menu'
-import SellPoints from '../components/SellPoints'
+import Articles from '../components/Articles'
 import Gallery from '../components/Gallery'
 import ProductBanner from '../components/ProductBanner'
 import Section from '../components/Section'
@@ -21,19 +21,20 @@ const About = ({ pages, articles, sellPoints, gallery, testimonial, pricetable }
   return (
     <div className="p-About">
       <Menu />
-        <ProductBanner image={ProductBannerImage}>
-          <div className="ProductBanner-heading"><Editable model={page} field="fields.content.title" /></div>
-          <div className="ProductBanner-text"><Editable model={page} field="fields.content.subtitle" /></div>
-        </ProductBanner>      <Section>
-        <H1><Editable model={page} field="fields.content.tagline" /></H1>
-        <SellPoints sellPoints={sellPoints.items} />
-      </Section>
+      <ProductBanner image={ProductBannerImage}>
+        <div className="ProductBanner-heading"><Editable model={page} field="fields.content.title" /></div>
+        <div className="ProductBanner-text"><Editable model={page} field="fields.content.subtitle" /></div>
+      </ProductBanner>
       <Section>
         <H1>Who is using Tux</H1>
         <Gallery galleryItems={gallery.items} />
         <SocialPlug>
           Are you using Tux? <strong>Let us know on Twitter</strong>
         </SocialPlug>
+      </Section>
+      <Section>
+        <H1>From Our Blog</H1>
+        <Articles />
       </Section>
       <Section>
         <Testimonial testimonial={testimonial.items}/>
