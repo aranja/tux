@@ -124,7 +124,7 @@ export class ContentfulAdapter {
   _getModelType(model: any) {
     if (typeof model === 'string') {
       return model
-    } else if (typeof model === 'object') {
+    } else if (model instanceof Object) {
       return model.sys.contentType.sys.id
     }
     return null
