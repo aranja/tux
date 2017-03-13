@@ -1,0 +1,22 @@
+{
+  "name": "neutrino-preset-tux",
+  "version": "0.1.0",
+  "description": "Neutrino preset for building tux websites",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "NODE_ENV=production ../../tasks/build-package.js",
+    "watch": "../../tasks/build-package.js --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-preset-react-app": "^2.1.1",
+    "jsx-html-webpack-plugin": "0.1.0",
+    "neutrino-preset-react": "4.2.2",
+    "webpack-manifest-plugin": "^1.1.0",
+    "webpack-node-externals": "^1.5.4"
+  },
+  "peerDependencies": {
+    "neutrino": "^4.0.0"
+  }
+}
