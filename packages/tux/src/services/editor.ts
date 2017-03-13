@@ -13,8 +13,10 @@ export interface Meta {
   name?: string,
 }
 
-export function registerEditable(type: string,
-  value: Array<Object> | ((editorSchema: Map<string, Field>) => Map<string, Field>)) {
+export function registerEditable(
+  type: string,
+  value: Array<Field> | ((editorSchema: Map<string, Field>) => Map<string, Field>)
+) {
   schema.set(type, value)
 }
 
