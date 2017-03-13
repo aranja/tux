@@ -152,7 +152,7 @@ export class ContentfulAdapter {
     if (widgetId === 'boolean') {
       props.boolLabels = Object.values(typeMetaField.control.settings)
     } else if (widgetId === 'dropdown') {
-      props.dropdownValues= typeMetaField.validations[0].in
+      props.dropdownValues = typeMetaField.validations[0].in
     } else if (widgetId === 'radio') {
       props.choices = typeMetaField.validations[0].in
     }
