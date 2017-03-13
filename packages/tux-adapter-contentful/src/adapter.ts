@@ -135,18 +135,16 @@ export class ContentfulAdapter {
   }
 
   transformTypeMetaFieldToEditorField = (typeMetaField: any) => {
-    const extraProps = this._getExtraPropsForType(typeMetaField)
+    const props = this._getPropsForType(typeMetaField)
     return {
       field: typeMetaField.id,
       label: typeMetaField.name,
       component: widgetIdToEditor[typeMetaField.control.widgetId],
-      props: {
-        ...extraProps
-      }
+      props,
     }
   }
 
-  _getExtraPropsForType(typeMetaField: any) {
+  _getPropsForType(typeMetaField: any) {
     const widgetId = typeMetaField.control.widgetId
     const props = {}
     if (widgetId === 'boolean') {
