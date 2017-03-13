@@ -16,14 +16,18 @@ See it in action by checking out our [demo video]({{video_url}}) or by installin
 * Staging and production modes
 * Bring your own dependencies
 
+## TuxProvider
+
+The `<TuxProvider />` component wraps the React application and maintains all of Tux's state. When in admin mode it provides the application with `<TuxSidebar />` and `<TuxModal />` which are the Tux UI components.
+
 ## Adapters
 
 Adapters are Tux's way of communicating with different content management systems. To do this securely the [Tux Management API]({{management-api}}) maintains a OAuth2 connection with the CMS.
 
 The adapter handles fetching available data from the CMS and listens for and submits changes.
-Each CMS comes with its own structures, APIs and limitations which the adapter handles.
+Each CMS comes with its own content structure, APIs and limitations which the adapter handles.
 
-See available adapters in the [list of available Tux Adapters]({{available-adapters}}).
+See the [List of Available Tux Adapters]({{available-adapters}}) for the complete list of adapters.
 
 ```javascript
 // An example, using the default Contentful adapter
@@ -41,6 +45,8 @@ const adapter = createContentfulAdapter({
   <App />
 </TuxProvider>
 ```
+
+
 
 ## Introducing Editable
 
@@ -72,9 +78,9 @@ class MyCustomDateEditor extends Component {
 }
 ```
 
-## Custom dependencies
+## Handling dependencies
 
-It should be easy for developers to bring their dependencies, like a router or a state container, into their Tux setup without complicating server rendering. To solve this we built [react-middleware]{{react-middlewere}}.
+It should be easy for developers to bring their dependencies, like a router or a state container, into their Tux setup without complicating server rendering. To solve this we built [react-middleware]({{react-middleware}}).
 
 ```javascript
 import tux, { startClient } from 'tux'
