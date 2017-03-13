@@ -119,7 +119,6 @@ export class ContentfulAdapter {
       }
 
       const typeMeta = await this.managementApi.getTypeMeta(type)
-      console.log(typeMeta)
       const editorSchema = this.transformTypeMetaToEditorSchema(typeMeta)
       resolve({
         type,

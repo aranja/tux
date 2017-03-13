@@ -9,13 +9,6 @@ import { Field } from '../../services/editor'
 
 import { getEditorSchema } from '../../services/editor'
 
-export interface Field {
-  field: string,
-  label: string,
-  component: any,
-  props?: Object
-}
-
 export interface State {
   fullModel: any | null
   meta: any | null
@@ -85,9 +78,10 @@ class TuxModal extends React.Component<any, State> {
       <div key={field.field}>
         <InputComponent
           id={field.field}
-          value={value}
           label={field.field}
           onChange={event => this.onChange(event, field.field)}
+          value={value}
+          {...field.props}
         />
       </div>
     )
