@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import image from './ProductBannerImage.png'
 
 /**
  * This component is a template for the HTML file. You can add webfonts, meta tags,

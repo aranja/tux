@@ -5,13 +5,14 @@ import classNames from 'classnames'
 import './styles.css'
 
 class Carousel extends React.Component {
-
-  state = {
-    currentIndex: 0,
-  }
-
-  onDotClick = currentIndex => () => {
-    this.setState({ currentIndex })
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentIndex: 0,
+    }
+    this.onDotClick = currentIndex => () => {
+      this.setState({ currentIndex })
+    }
   }
 
   render() {

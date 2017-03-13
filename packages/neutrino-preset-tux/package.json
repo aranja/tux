@@ -10,9 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel-preset-react-app": "^2.1.1",
     "jsx-html-webpack-plugin": "0.1.0",
     "neutrino-preset-react": "4.2.2",
+    "neutrino-preset-web": "4.2.2",
+    "webpack": "^2.2.1",
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-node-externals": "^1.5.4"
   },
