@@ -18,7 +18,12 @@ See it in action by checking out our [demo video]({{video_url}}) or by installin
 
 ## Adapters
 
-Adapters are Tux's way of communicating with different CMS. To do this securely the [Tux Management API]({{management-api}}) maintains a OAuth2 connection with the CMS.
+Adapters are Tux's way of communicating with different content management systems. To do this securely the [Tux Management API]({{management-api}}) maintains a OAuth2 connection with the CMS.
+
+The adapter handles fetching available data from the CMS and listens for and submits changes.
+Each CMS comes with its own structures, APIs and limitations which the adapter handles.
+
+See available adapters in the [list of available Tux Adapters]({{available-adapters}}).
 
 ```javascript
 // An example, using the default Contentful adapter
