@@ -100,13 +100,6 @@ export class ContentfulAdapter {
     return this.previewApi || this.deliveryApi
   }
 
-  getSchema(model: any) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in get a scheme.')
-    }
-    return this.managementApi.getTypeMeta(model.sys.contentType.sys.id)
-  }
-
   getMeta(model: string | Object): Promise<Meta> {
     return new Promise(async(resolve, reject) => {
       if (!this.managementApi) {
