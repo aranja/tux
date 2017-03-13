@@ -2,12 +2,10 @@ import React from 'react'
 
 import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 import { fade } from '../../utils/color'
-import { timeSince } from '../../utils/time'
 import moment from 'moment'
 import TuxSpinner from '../Spinner/Spinner'
-import { Field } from '../../services/editor'
 
-import { getEditorSchema } from '../../services/editor'
+import { getEditorSchema, Field } from '../../services/editor'
 
 export interface State {
   fullModel: any | null
@@ -46,9 +44,10 @@ class TuxModal extends React.Component<any, State> {
 
   onChange(value: any, type: string) {
     const { fullModel } = this.state
-    const field = fullModel.fields[type]
-
-    field['en-US'] = value
+    if (!fullModel.fields[type]) {
+      fullModel.fields[type] = {}
+    }
+    fullModel.fields[type]['en-US'] = value
 
     this.setState({fullModel})
   }
@@ -67,14 +66,12 @@ class TuxModal extends React.Component<any, State> {
 
   renderField = (field: Field) => {
     const { fullModel } = this.state
+
     const InputComponent = field.component
     const fullModelField = fullModel.fields[field.field]
     const value = fullModelField && fullModelField['en-US']
 
-    if (!InputComponent) {
-      return null
-    }
-    return (
+    return InputComponent && (
       <div key={field.field}>
         <InputComponent
           id={field.field}
@@ -145,13 +142,13 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-content {
-            padding: 0 30px;
+            padding: 30px;
           }
 
           .TuxModal-meta {
             font-size: 16px;
+            margin-bottom: 20px;
             text-align: right;
-            padding: 0 30px;
           }
 
           .TuxModal-metaLastUpdated {

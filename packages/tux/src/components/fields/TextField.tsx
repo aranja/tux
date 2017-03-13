@@ -5,6 +5,7 @@ interface TextField {
   id: string
   value: string
   label: string
+  helpText: string
   onChange: (e: React.FormEvent<any>) => void
 }
 
@@ -15,7 +16,7 @@ const TextField = ({ id, value, label, onChange }: TextField) => (
       className="InputField"
       id={id}
       label={label}
-      onChange={(event: React.FormEvent<any>) => onChange(event.target.value)}
+      onChange={(event: React.FormEvent<HTMLSelectElement>) => onChange(event.target.value)}
       value={value}
     />
       <style jsx>{`
@@ -24,7 +25,7 @@ const TextField = ({ id, value, label, onChange }: TextField) => (
           border-radius: 3px;
           display: flex;
           flex-wrap: wrap;
-          margin: 20px 0;
+          margin-bottom: 20px;
         }
 
         .InputLabel {
@@ -32,7 +33,7 @@ const TextField = ({ id, value, label, onChange }: TextField) => (
           font-size: 16px;
           font-weight: 300;
           line-height: 24px;
-          padding: 4px 0;
+          padding: 5px 0;
           text-transform: capitalize;
         }
 

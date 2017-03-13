@@ -55,15 +55,21 @@ class BrowseField extends Component<any, any> {
             line-height: 1.3;
             margin: 0;
             margin-top: 5px;
-            padding: 6px 24px;
+            padding: 6px;
             text-align: center;
             transition: all 0.25s;
             vertical-align: baseline;
+            width: 100%;
+          }
+
+          .BrowseField-button::before {
+            content: "\\f068";
+            font-family: "mfg_labs_iconsetregular";
+            padding-right: 10px;
           }
 
           .BrowseField-button:hover {
             background: ${tuxButtonStyles.greenTheme.backgroundColor};
-            border-radius: 2px;
             border: 1px solid ${tuxButtonStyles.greenTheme.borderColor};
             color: ${tuxButtonStyles.greenTheme.textColor};
           }

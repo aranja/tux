@@ -21,8 +21,10 @@ const About = ({ pages, articles, sellPoints, gallery, testimonial, pricetable }
   return (
     <div className="p-About">
       <Menu />
-      <ProductBanner image={ProductBannerImage} heading="You make the website, we'll handle the content" text="Hand-crafted with so much love that you have no idea. In recusandae cum vero at commodi, ad tempore molestiae. Autem repellat adipisci aperiam atque tenetur accusamus, ipsa sit amet, consectetur adipisicing elit." />
-      <Section>
+        <ProductBanner image={ProductBannerImage}>
+          <div className="ProductBanner-heading"><Editable model={page} field="fields.content.title" /></div>
+          <div className="ProductBanner-text"><Editable model={page} field="fields.content.subtitle" /></div>
+        </ProductBanner>      <Section>
         <H1><Editable model={page} field="fields.content.tagline" /></H1>
         <SellPoints sellPoints={sellPoints.items} />
       </Section>

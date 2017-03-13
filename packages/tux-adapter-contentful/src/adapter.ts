@@ -134,12 +134,29 @@ export class ContentfulAdapter {
     return typeMeta.fields.map(this.transformTypeMetaFieldToEditorField)
   }
 
-  transformTypeMetaFieldToEditorField(typeMetaField: any) {
+  transformTypeMetaFieldToEditorField = (typeMetaField: any) => {
+    const extraProps = this._getExtraPropsForType(typeMetaField)
     return {
       field: typeMetaField.id,
       label: typeMetaField.name,
-      component: widgetIdToEditor[typeMetaField.control.widgetId]
+      component: widgetIdToEditor[typeMetaField.control.widgetId],
+      props: {
+        ...extraProps
+      }
     }
+  }
+
+  _getExtraPropsForType(typeMetaField: any) {
+    const widgetId = typeMetaField.control.widgetId
+    const props = {}
+    if (widgetId === 'boolean') {
+      props.boolLabels = Object.values(typeMetaField.control.settings)
+    } else if (widgetId === 'dropdown') {
+      props.dropdownValues= typeMetaField.validations[0].in
+    } else if (widgetId === 'radio') {
+      props.choices = typeMetaField.validations[0].in
+    }
+    return props
   }
 
   async save(model: any) {
