@@ -73,13 +73,11 @@ class TuxSidebar extends React.Component<any, State> {
           <li><a href="/">Documentation</a></li>
           <li><a href="/">Tux on Github</a></li>
         </ul>
-        {user && (
-          <div className="TuxSidebar-user">
-            <a onClick={this.login} className="TuxSidebar-signInOut">
-              {user ? 'Sign out' : 'Sign in'}
-            </a>
-          </div>
-        )}
+        <div className="TuxSidebar-user">
+          <a onClick={this.login} className="TuxSidebar-signInOut">
+            {user ? 'Sign out' : 'Sign in'}
+          </a>
+        </div>
 
         <style jsx>{`
           .TuxSidebar {

@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { createElement, Component } from 'react'
 import ReactDOM from 'react-dom'
-import ReactDOMServer from 'react-dom/server'
+import { renderToString, renderToStaticMarkup } from 'react-dom/server'
 
 export interface Context {
   htmlProps: any
+  refresh?:
+    (onComplete: () => void) =>
+      Promise<any>
 }
 
 export type ReactElement =
@@ -14,7 +17,7 @@ export type WrapElement =
     Promise<ReactElement>
 
 export type WrapRender =
-  (render: Function, context?: Object) =>
+  (render: Function, context: Context) =>
     void
 
 export interface Middleware {
@@ -23,10 +26,61 @@ export interface Middleware {
   wrapServerRender?: WrapRender
 }
 
-export interface Config {
-  container?: Element,
-  renderToDOM: (element: ReactElement | null, container: Element) => string
-  renderToString: (element: ReactElement) => string
+export function createContext(newContext?: Object): Context {
+  const htmlProps = {}
+  return Object.assign({ htmlProps }, newContext)
+}
+
+export function startClient(tux: Tux, domNode: Element) {
+  const context = createContext()
+  async function refresh(onComplete = () => {}) {
+    const element = await tux.getElement(context)
+    return await tux.renderClient(context, () => {
+      ReactDOM.render(element, domNode, onComplete)
+    })
+  }
+  context.refresh = refresh
+  return refresh()
+}
+
+export function serve(tux: Tux, config: {
+  assets?: any,
+  Document?: React.ComponentClass<any>,
+} = {}) {
+  if (typeof config.Document === 'undefined') {
+    throw new Error()
+  }
+  return async function server(request?: any, response?: any, next?: Function) {
+    const context = createContext({ request, response })
+    let html = ''
+
+    try {
+      const element = await tux.getElement(context)
+      const body = tux.renderServer(context, () => renderToString(element))
+      const { htmlProps, request, response, ...rest } = context
+      html = renderToStaticMarkup(createElement(config.Document, {
+        ...htmlProps,
+        assets: config.assets || {},
+        context: { ...rest },
+      }, body))
+    } catch (error) {
+      const { htmlProps, request, response, ...rest } = context
+      html = renderToStaticMarkup(createElement(config.Document, {
+        ...htmlProps,
+        assets: config.assets || {},
+        context: { ...rest },
+        title: 'Internal Server Error',
+        description: error.message,
+      }, error.toString()))
+
+      response.status(error.status || 500)
+
+      if (typeof next === 'function') {
+        next(error)
+      }
+    }
+    response.send(`<!doctype html>${html}`)
+  }
 }
 
 async function createBase(renderChildren: null | (() => Promise<ReactElement>), context: Context) {
@@ -59,83 +113,86 @@ export class Tux {
   protected wrapClientRenderers: Array<WrapRender> = []
   protected wrapServerRenderers: Array<WrapRender> = []
 
-  private config: Config
-  private initialRender: boolean
+  use(middleware: WrapElement | Middleware) {
+    if (typeof middleware === 'function') {
+      middleware = {
+        createElement: middleware,
+      }
+    }
 
-  constructor(config: Config) {
-    this.initialRender = true
-    this.config = config
-  }
-
-  use(middleware: Middleware) {
-    if (typeof middleware.createElement !== 'undefined') {
+    if (middleware.createElement) {
+      if (typeof middleware.createElement !== 'function') {
+        throw new Error('[tux.use] createElement should be a function.')
+      }
       this.elementWrappers.push(middleware.createElement)
     }
 
-    if (typeof middleware.wrapClientRender !== 'undefined') {
+    if (middleware.wrapClientRender) {
+      if (typeof middleware.wrapClientRender !== 'function') {
+        throw new Error('[tux.use] wrapClientRender should be a function.')
+      }
       this.wrapClientRenderers.push(middleware.wrapClientRender)
     }
 
-    if (typeof middleware.wrapServerRender !== 'undefined') {
+    if (middleware.wrapServerRender) {
+      if (typeof middleware.wrapServerRender !== 'function') {
+        throw new Error('[tux.use] wrapServerRender should be a function.')
+      }
       this.wrapServerRenderers.push(middleware.wrapServerRender)
     }
 
     return this
   }
 
-  async startClient() {
-    const element = await this.getElement()
-
-    this.wrapClientRenderers.push(() => {
-      this.config.renderToDOM(element, this.config.container as Element)
-    })
-
-    this.renderWrapper(this.wrapClientRenderers)
-  }
-
-  async startServer() {
-    const element = await this.getElement()
-
-    this.wrapServerRenderers.push(() => {
-      this.config.renderToString(element)
-    })
-
-    this.renderWrapper(this.wrapServerRenderers)
-  }
-
-  async getElement() {
-    const context = { htmlProps: {} }
+  async getElement(context: Context = createContext()): Promise<ReactElement> {
     const elementWrappers = [createBase, ...this.elementWrappers]
-
     let index = 0
 
     async function next(): Promise<any> {
-      const createElement = elementWrappers[index]
-
-      if (elementWrappers[index + 1] == null) {
-        return createElement(() => Promise.resolve(null), context)
-      }
-
-      index += 1
-
-      return createElement(await next, context)
+      const createElement = elementWrappers[index++]
+      const renderChildren = elementWrappers[index]
+        ? await next
+        : () => Promise.resolve(null)
+      return createElement(renderChildren, context)
     }
 
     return await next()
   }
 
-  private renderWrapper(wrappers: Array<Function>) {
-    const wrapRender = wrappers.shift()
-    if (wrapRender) {
-      wrapRender(wrappers[0])
-      this.renderWrapper(wrappers)
+  renderClient(context: Context, onRender: Function) {
+    return new Promise(resolve => {
+      this.renderWrapper(this.wrapClientRenderers, context, () => {
+        onRender()
+        resolve()
+      })
+    })
+  }
+
+  renderServer(context: Context, onRender: Function) {
+    let body: string = ''
+    this.renderWrapper(this.wrapServerRenderers, context, () => {
+      body = onRender()
+    })
+    return body
+  }
+
+  private renderWrapper(wrappers: Array<WrapRender>, context: Context, onComplete: () => void) {
+    let index = 0
+
+    if (wrappers.length === 0) {
+      onComplete()
+      return
     }
+
+    function render() {
+      const wrap = wrappers[index++]
+      wrap(wrappers[index] == null ? onComplete : render, context)
+    }
+
+    render()
   }
 }
 
-export default function createTux(config = {}) {
-  return new Tux(Object.assign({
-    renderToDOM: ReactDOM.render,
-    renderToString: ReactDOMServer.renderToString,
-  }, config))
+export default function createTux() {
+  return new Tux()
 }

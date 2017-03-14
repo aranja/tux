@@ -20,19 +20,16 @@ type Props = {
 }
 
 class HistoryLink extends React.Component {
-  static contextTypes = {
-    history: React.PropTypes.object,
-  }
-
-  static defaultProps = {
-    blank: false,
-  }
-
   context : {
     history?: History,
   }
 
   props : Props
+
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
 
   isRemote() {
     const { href } = this.props
@@ -55,7 +52,7 @@ class HistoryLink extends React.Component {
     return actualBlank ? '_blank' : undefined
   }
 
-  handleClick = (event : SyntheticMouseEvent) => {
+  handleClick(event : SyntheticMouseEvent) {
     if (this.props.onClick) {
       this.props.onClick(event)
     }
@@ -96,6 +93,13 @@ class HistoryLink extends React.Component {
       {children}
     </a>
   }
+}
+HistoryLink.contextTypes = {
+  history: React.PropTypes.object,
+}
+
+HistoryLink.defaultProps = {
+  blank: false,
 }
 
 export default HistoryLink

@@ -15,7 +15,7 @@ export interface ContentfulJsonAsset extends ContentfulJsonItem {
 }
 export interface ContentfulQueryResponse {
   items: ContentfulJsonItem[],
-  includes: {
+  includes?: {
     Asset?: ContentfulJsonAsset[],
     Entry?: ContentfulJsonEntry[],
   },

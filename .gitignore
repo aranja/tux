@@ -5,6 +5,7 @@ lerna-debug.log
 # production
 packages/*/lib
 packages/*/es
+packages/*/build
 packages/*/coverage
 
 # dependencies
