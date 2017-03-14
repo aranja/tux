@@ -27,7 +27,6 @@ describe('editor service', () => {
 
     registerEditable(modelName, (schema: Map<string, Field>) => {
       schema.delete('_fieldThatShouldNotBeEditable')
-      return schema
     })
 
     const schema = getEditorSchema({
