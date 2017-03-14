@@ -2,7 +2,7 @@ import QueryApi from './query-api'
 import ManagementApi from './management-api'
 import generateEditorSchema from './editors'
 
-import { extractLocale } from './locale'
+import { extractLocale, injectLocale } from './locale'
 
 import { Field, Meta } from 'tux'
 
@@ -145,7 +145,8 @@ export class ContentfulAdapter {
       throw new Error('Manager api not defined, please log in to save.')
     }
 
-    await this.managementApi.saveEntry(model)
+    const modelWithLocale = injectLocale(model)
+    await this.managementApi.saveEntry(modelWithLocale)
     this.triggerChange()
   }
 

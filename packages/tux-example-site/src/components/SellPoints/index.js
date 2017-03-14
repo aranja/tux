@@ -3,7 +3,10 @@ import { Editable } from 'tux'
 
 import './styles.css'
 
-const SellPoints = ({ sellPoints }) => (
+const SellPoints = ({ sellPoints }) => {
+  console.log(sellPoints)
+
+  return (
   <div className="SellPoints">
     {sellPoints && sellPoints.slice(0, 3).map((point, index) => (
       <Editable key={index} model={point} className="SellPoint">
@@ -15,6 +18,6 @@ const SellPoints = ({ sellPoints }) => (
       </Editable>
     ))}
   </div>
-)
+)}
 
 export default SellPoints
