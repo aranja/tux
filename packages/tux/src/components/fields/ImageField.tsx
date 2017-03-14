@@ -76,8 +76,6 @@ class ImageField extends React.Component<ImageFieldProps, any> {
         linkType: 'Asset',
         type: 'Link'
       }
-    }, {
-      type: this.props.id
     })
 
     this.setState({

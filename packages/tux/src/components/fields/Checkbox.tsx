@@ -16,7 +16,7 @@ const Checkbox = ({ id, value, label, checked, onChange }: Checkbox) => (
       type="checkbox"
       id={id}
       checked={checked}
-      onChange={(event) => onChange(event.target.value, id)}
+      onChange={(event) => onChange(event.target.value)}
     />
     <div className="CheckboxIndicator"></div>
     <style jsx>{`

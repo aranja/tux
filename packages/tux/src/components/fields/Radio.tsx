@@ -22,7 +22,7 @@ class Radio extends Component<any, State> {
     this.setState({
       checkedValue: choice
     })
-    onChange(choice, this.props.id)
+    onChange(choice)
   }
 
   render() {

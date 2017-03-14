@@ -34,7 +34,7 @@ class Dropdown extends Component<any, State> {
       selectedValue: value
     })
 
-    onChange(value, this.props.id)
+    onChange(value)
   }
 
   render() {
