@@ -17,7 +17,3 @@ export function injectLocale(model: any) {
   }
   return model
 }
-
-function _copy(target: Object) {
-  return JSON.parse(JSON.stringify(target))
-}

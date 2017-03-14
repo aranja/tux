@@ -65,8 +65,7 @@ class TuxModal extends React.Component<any, State> {
     const { fullModel } = this.state
 
     const InputComponent = field.component
-    const fullModelField = fullModel.fields[field.field]
-    const value = fullModelField && fullModelField
+    const value = fullModel.fields[field.field]
 
     return InputComponent && (
       <div key={field.field}>
