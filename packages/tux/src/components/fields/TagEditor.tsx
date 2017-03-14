@@ -14,6 +14,7 @@ class TagEditor extends Component<TagEditorProps, any> {
   state = {
     tags: []
   }
+
   componentWillUnmount() {
     this.isUnmounting = true
   }
@@ -22,16 +23,17 @@ class TagEditor extends Component<TagEditorProps, any> {
     const { value } = this.props
     const prevTags: Array<string> = []
     const isArray = value instanceof Array
-
+    console.log(value)
     if (value && isArray) {
       value.map((value) => {
         prevTags.push(value)
       })
+
+      this.setState({
+        tags: prevTags
+      })
     }
 
-    this.setState({
-      tags: prevTags
-    })
   }
 
   onItemAdded = (newTags) => {
@@ -65,10 +67,18 @@ class TagEditor extends Component<TagEditorProps, any> {
     return (
       <div className="TagEditor">
         <label className="TagEditor-label">{label}</label>
-        <input className="TagEditor-input" placeholder="Add item" onClick={this.handleOnKeyUp} onKeyUp={this.handleOnKeyUp} />
+        <input
+          className="TagEditor-input"
+          placeholder="Add item"
+          onClick={this.handleOnKeyUp}
+          onKeyUp={this.handleOnKeyUp}
+        />
         <div className="TagEditor-tags">
           {value && value.map((singleValue) => (
-            <p key={singleValue} className="TagEditor-tag">{singleValue}<span className="TagEditor-tagButton">x</span></p>
+            <p key={singleValue} className="TagEditor-tag">
+              {singleValue}
+              <span className="TagEditor-tagButton"></span>
+            </p>
           ))}
         </div>
           <style jsx>{`
@@ -114,7 +124,8 @@ class TagEditor extends Component<TagEditorProps, any> {
             }
 
             .TagEditor-tagButton::after {
-                content: "\274C";
+                content: "\\274C";
+                padding-left: 10px;
             }
 
             .TagEditor-input {
