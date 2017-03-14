@@ -1,11 +1,27 @@
 import QueryApi from './query-api'
 import ManagementApi from './management-api'
+import generateEditorSchema from './editors'
+
+import { Field, Meta } from 'tux'
 
 export interface Config {
   space: string
   deliveryToken: string
   clientId: string
   redirectUri: string
+}
+
+export interface Field {
+  field: string,
+  label: string,
+  component: any,
+  props?: Object
+}
+
+export interface Meta {
+  type: string,
+  editorSchema?: Array<Field>,
+  name?: string,
 }
 
 export class ContentfulAdapter {
@@ -91,11 +107,35 @@ export class ContentfulAdapter {
     return this.previewApi || this.deliveryApi
   }
 
-  getSchema(model: any) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in get a scheme.')
+  getMeta(model: string | Object): Promise<Meta> {
+    return new Promise(async(resolve, reject) => {
+      if (!this.managementApi) {
+        return reject('Manager api not defined, please log in get a scheme.')
+      }
+
+      const type = this._getModelType(model)
+      if (!type) {
+        return reject('Invalid type')
+      }
+
+      const typeMeta = await this.managementApi.getTypeMeta(type)
+      const editorSchema = generateEditorSchema(typeMeta)
+
+      resolve({
+        type,
+        editorSchema,
+        name: typeMeta.name,
+      })
+    })
+  }
+
+  _getModelType(model: any) {
+    if (typeof model === 'string') {
+      return model
+    } else if (model instanceof Object) {
+      return model.sys.contentType.sys.id
     }
-    return this.managementApi.getTypeMeta(model.sys.contentType.sys.id)
+    return null
   }
 
   async save(model: any) {
