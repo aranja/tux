@@ -14,14 +14,10 @@
   text-align: justify;
 }
 
-.Article-text:not(:first-child) {
-  padding-top: 1.85rem;
-}
-
 .Article-column {
-  padding: 2.5rem 0;
+  padding: 1.85rem 0;
   column-count: 2;
-  column-gap: 4rem;
+  column-gap: 3.7rem;
 }
 
 .Article-meta {

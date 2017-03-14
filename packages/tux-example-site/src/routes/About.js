@@ -33,7 +33,7 @@ const About = ({ pages, articles, sellPoints, gallery, testimonial, pricetable }
       </Section>
       <Section>
         <H1>From Our Blog</H1>
-        <Articles />
+        <Articles articles={articles} />
       </Section>
       <Section>
         <H1>Get our Product for the Best Price</H1>
