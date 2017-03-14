@@ -26,7 +26,7 @@ class Boolean extends Component<any, State> {
       booleanValue: checked
     })
 
-    onChange(checked)
+    onChange(checked, this.props.id)
   }
 
   render() {

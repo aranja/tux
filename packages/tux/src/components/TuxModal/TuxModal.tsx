@@ -3,19 +3,14 @@ import React from 'react'
 import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 import { fade } from '../../utils/color'
 import moment from 'moment'
-import MarkdownField from '../fields/MarkdownField'
-import TextField from '../fields/TextField'
-import DatePicker from '../fields/DatePicker'
 import TuxSpinner from '../Spinner/Spinner'
-import ImageField from '../fields/ImageField'
-import TagEditor from '../fields/TagEditor'
-import Radio from '../fields/Radio'
-import Boolean from '../fields/Boolean'
-import Dropdown from '../fields/Dropdown'
+
+import { getEditorSchema, Field } from '../../services/editor'
 
 export interface State {
   fullModel: any | null
-  typeMeta: any | null
+  meta: any | null
+  editorSchema: Array<Field>
 }
 
 class TuxModal extends React.Component<any, State> {
@@ -25,7 +20,8 @@ class TuxModal extends React.Component<any, State> {
 
   state: State = {
     fullModel: null,
-    typeMeta: null,
+    meta: null,
+    editorSchema: [],
   }
 
   async componentDidMount() {
@@ -33,23 +29,25 @@ class TuxModal extends React.Component<any, State> {
 
     const [
       fullModel,
-      typeMeta,
+      meta,
     ] = await Promise.all([
       this.context.tux.adapter.load(model),
-      this.context.tux.adapter.getSchema(model),
+      this.context.tux.adapter.getMeta(model),
     ])
 
     this.setState({
       fullModel,
-      typeMeta,
+      meta,
+      editorSchema: getEditorSchema(meta),
     })
   }
 
-  onChange(value: any, type: {id: string}) {
+  onChange(value: any, type: string) {
     const { fullModel } = this.state
-    const field = fullModel.fields[type.id]
-
-    field['en-US'] = value
+    if (!fullModel.fields[type]) {
+      fullModel.fields[type] = {}
+    }
+    fullModel.fields[type]['en-US'] = value
 
     this.setState({fullModel})
   }
@@ -66,124 +64,35 @@ class TuxModal extends React.Component<any, State> {
     this.props.onClose(true)
   }
 
-  renderField = (type: any) => {
+  renderField = (field: Field) => {
     const { fullModel } = this.state
-    const helpText = type.control.settings && type.control.settings.helpText
-    const field = fullModel.fields[type.id]
-    const value = field && field['en-US']
-    const widgetId = type.control.widgetId
 
-    if (widgetId === 'boolean') {
-      return (
-        <div key={type.id}>
-          <Boolean
-            id={type.id}
-            boolLabels={Object.values(type.control.settings)}
-            value={value}
-            label={type.name}
-            helpText={helpText}
-            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
-          />
-        </div>
-      )
-    }
+    const InputComponent = field.component
+    const fullModelField = fullModel.fields[field.field]
+    const value = fullModelField && fullModelField['en-US']
 
-    else if (widgetId === 'markdown') {
-      return (
-        <div key={type.id}>
-          <MarkdownField
-            id={type.id}
-            value={value}
-            label={type.name}
-            helpText={helpText}
-            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
-          />
-        </div>
-      )
-    }
-
-    else if (widgetId === 'datePicker') {
-      return (
-        <div key={type.id}>
-          <DatePicker
-            id={type.id}
-            value={value}
-            label={type.name}
-            helpText={helpText}
-            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
-          />
-        </div>
-      )
-    }
-
-    else if (widgetId === 'assetLinkEditor') {
-      return (
-        <div key={type.id}>
-          <ImageField
-            id={type.id}
-            value={value}
-            label={type.name}
-            helpText={helpText}
-            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
-          />
-        </div>
-      )
-    }
-
-    else if (widgetId === 'radio') {
-      return (
-        <div key={type.id}>
-          <Radio
-            id={type.id}
-            value={value}
-            label={type.name}
-            helpText={helpText}
-            choices={type.validations[0].in}
-            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
-          />
-        </div>
-      )
-    }
-
-    else if (widgetId === 'dropdown') {
-      return (
-        <div key={type.id}>
-          <Dropdown
-            dropdownValues={type.validations[0].in}
-            id={type.id}
-            value={value}
-            label={type.name}
-            helpText={helpText}
-            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
-          />
-        </div>
-      )
-    }
-
-    else {
-      return (
-        <div key={type.id}>
-          <TextField
-            id={type.id}
-            value={value}
-            label={type.name}
-            helpText={helpText}
-            onChange={(event: React.FormEvent<any>) => this.onChange(event, type)}
-          />
-        </div>
-      )
-    }
+    return InputComponent && (
+      <div key={field.field}>
+        <InputComponent
+          id={field.field}
+          label={field.field}
+          onChange={(value: any) => this.onChange(value, field.field)}
+          value={value}
+          {...field.props}
+        />
+      </div>
+    )
   }
 
   render() {
-    const { fullModel, typeMeta } = this.state
+    const { fullModel, meta, editorSchema } = this.state
     return (
       <div className="TuxModal">
         {fullModel ? (
           <form onSubmit={this.onSubmit}>
             <div className="TuxModal-topBar">
               <h1 className="TuxModal-title">
-                Editing <strong className="TuxModal-modelName">{typeMeta.name}</strong>
+                Editing <strong className="TuxModal-modelName">{meta.name}</strong>
               </h1>
               <div className="TuxModal-buttons">
                 <button
@@ -197,7 +106,7 @@ class TuxModal extends React.Component<any, State> {
               </div>
             </div>
             <div className="TuxModal-content">
-              {typeMeta.fields.map(this.renderField)}
+              {editorSchema.map(this.renderField)}
               <div className="TuxModal-meta">
               { fullModel.sys.updatedAt && (
                 <p className="TuxModal-metaLastUpdated">
