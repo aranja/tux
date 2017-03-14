@@ -1,5 +1,6 @@
 import React from 'react'
 import { Editable } from 'tux'
+import Helmet from 'react-helmet'
 import { H1, H2 } from '../components/typography'
 import Pricetable from '../components/Pricetable'
 import Menu from '../components/Menu'
@@ -18,6 +19,9 @@ const About = ({ pages, sellPoints, gallery, testimonial, pricetable }) => {
 
   return (
     <div className="p-About">
+      <Helmet
+        title="About - Tux Demo Site"
+      />
       <Menu />
       <ProductBanner image={ProductBannerImage}>
         <div className="ProductBanner-heading"><Editable model={page} field="fields.content.title" /></div>

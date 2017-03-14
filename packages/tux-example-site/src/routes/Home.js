@@ -1,5 +1,6 @@
 import React from 'react'
 import { Editable } from 'tux'
+import Helmet from 'react-helmet'
 import { H1, H2 } from '../components/typography'
 import ProductBanner from '../components/ProductBanner'
 import Menu from '../components/Menu'
@@ -18,6 +19,9 @@ const Home = ({ pages, sellPoints, pricetable, testimonial, carousel }) => {
 
   return (
     <div className="p-Home">
+      <Helmet
+        title="Tux Demo Site"
+      />
       <Menu />
       <ProductBanner image={ProductBannerImage}>
         <div className="ProductBanner-heading"><Editable model={page} field="fields.content.title" /></div>

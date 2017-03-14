@@ -4,6 +4,7 @@ import history from './middleware/history'
 import router from './middleware/router'
 import tux from './middleware/tux'
 import hot from './middleware/hot'
+import helmet from './middleware/helmet'
 import createTux from 'tux/lib/tux'
 
 import './reset.css'
@@ -26,4 +27,5 @@ export default createTux()
   .use(history())
   .use(hot(refresh => {module.hot.accept('./routes', refresh)}))
   .use(tux({ adapter }))
+  .use(helmet())
   .use(router(routes))
