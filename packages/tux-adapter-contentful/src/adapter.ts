@@ -2,6 +2,8 @@ import QueryApi from './query-api'
 import ManagementApi from './management-api'
 import generateEditorSchema from './editors'
 
+import { extractLocale } from './locale'
+
 import { Field, Meta } from 'tux'
 
 export interface Config {
@@ -221,14 +223,16 @@ export class ContentfulAdapter {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }
 
-    return this.managementApi.getEntry(model.sys.id)
+    const entry = await this.managementApi.getEntry(model.sys.id)
+    return extractLocale(entry)
   }
 
-  loadAsset(model: any) {
+  async loadAsset(model: any) {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }
-    return this.managementApi.getAsset(model.sys.id)
+    const asset = await this.managementApi.getAsset(model.sys.id)
+    return extractLocale(asset)
   }
 
   async currentUser() {

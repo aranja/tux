@@ -125,8 +125,8 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     const { imageUrl, fullModel, isLoadingImage } = this.state
 
     if (fullModel) {
-      const title = fullModel.fields.title['en-US']
-      const url = fullModel.fields.file['en-US'].url
+      const title = fullModel.fields.title
+      const url = fullModel.fields.file.url
       return (
           <div className="ImageField">
             <label className="InputLabel">{label}</label>

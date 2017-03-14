@@ -44,10 +44,7 @@ class TuxModal extends React.Component<any, State> {
 
   onChange(value: any, type: string) {
     const { fullModel } = this.state
-    if (!fullModel.fields[type]) {
-      fullModel.fields[type] = {}
-    }
-    fullModel.fields[type]['en-US'] = value
+    fullModel.fields[type] = value
 
     this.setState({fullModel})
   }
@@ -69,7 +66,7 @@ class TuxModal extends React.Component<any, State> {
 
     const InputComponent = field.component
     const fullModelField = fullModel.fields[field.field]
-    const value = fullModelField && fullModelField['en-US']
+    const value = fullModelField && fullModelField
 
     return InputComponent && (
       <div key={field.field}>
