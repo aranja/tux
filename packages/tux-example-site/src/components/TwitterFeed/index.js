@@ -11,7 +11,15 @@ class TwitterFeed extends Component {
     }
   }
 
-  async componentDidMount() {
+  componentWillUnmount() {
+    this.isUnmounted = true
+  }
+
+  componentDidMount() {
+    this.fetchFeeds()
+  }
+
+  async fetchFeeds() {
     const responses = await Promise.all([
       fetch('https://randomuser.me/api/'),
       fetch('https://randomuser.me/api/'),
@@ -21,9 +29,13 @@ class TwitterFeed extends Component {
       fetch('https://randomuser.me/api/')
     ])
 
-    this.setState({
-      users: await Promise.all(responses.map(response => response.json()))
-    })
+    const users = await Promise.all(responses.map(response => response.json()))
+
+    if (!this.isUnmounted) {
+      this.setState({
+        users
+      })
+    }
   }
 
   render() {
