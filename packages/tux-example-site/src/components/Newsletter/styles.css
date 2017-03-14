@@ -6,7 +6,9 @@
 
 .Newsletter-register {
   display: flex;
+  margin: auto;
   margin-bottom: 4.35rem;
+  width: 90%;
 }
 .Newsletter-registerInput {
   border-radius: 5px 0 0 5px;
