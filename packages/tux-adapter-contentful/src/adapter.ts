@@ -1,6 +1,6 @@
 import QueryApi from './query-api'
 import ManagementApi from './management-api'
-import widgetIdToEditor from './widget-to-editor'
+import generateEditorSchema from './editors'
 
 import { Field, Meta } from 'tux'
 
@@ -114,7 +114,8 @@ export class ContentfulAdapter {
       }
 
       const typeMeta = await this.managementApi.getTypeMeta(type)
-      const editorSchema = this.transformTypeMetaToEditorSchema(typeMeta)
+      const editorSchema = generateEditorSchema(typeMeta)
+
       resolve({
         type,
         editorSchema,
@@ -130,33 +131,6 @@ export class ContentfulAdapter {
       return model.sys.contentType.sys.id
     }
     return null
-  }
-
-  transformTypeMetaToEditorSchema(typeMeta: any) {
-    return typeMeta.fields.map(this.transformTypeMetaFieldToEditorField)
-  }
-
-  transformTypeMetaFieldToEditorField = (typeMetaField: any) => {
-    const props = this._getPropsForType(typeMetaField)
-    return {
-      field: typeMetaField.id,
-      label: typeMetaField.name,
-      component: widgetIdToEditor[typeMetaField.control.widgetId],
-      props,
-    }
-  }
-
-  _getPropsForType(typeMetaField: any) {
-    const widgetId = typeMetaField.control.widgetId
-    const props = {}
-    if (widgetId === 'boolean') {
-      props.boolLabels = Object.values(typeMetaField.control.settings)
-    } else if (widgetId === 'dropdown') {
-      props.dropdownValues = typeMetaField.validations[0].in
-    } else if (widgetId === 'radio') {
-      props.choices = typeMetaField.validations[0].in
-    }
-    return props
   }
 
   async save(model: any) {
