@@ -4,12 +4,11 @@ import Helmet from 'react-helmet'
 import { H1, H2 } from '../components/typography'
 import Pricetable from '../components/Pricetable'
 import Menu from '../components/Menu'
-import SellPoints from '../components/SellPoints'
+import Articles from '../components/Articles'
 import Gallery from '../components/Gallery'
 import ProductBanner from '../components/ProductBanner'
 import Section from '../components/Section'
 import SocialPlug from '../components/SocialPlug'
-import Testimonial from '../components/Testimonial'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
@@ -28,10 +27,6 @@ const About = ({ pages, sellPoints, gallery, testimonial, pricetable }) => {
         <div className="ProductBanner-text"><Editable model={page} field="fields.content.subtitle" /></div>
       </ProductBanner>
       <Section>
-        <H1><Editable model={page} field="fields.content.tagline" /></H1>
-        <SellPoints sellPoints={sellPoints.items} />
-      </Section>
-      <Section>
         <H1>Who is using Tux</H1>
         <Gallery galleryItems={gallery.items} />
         <SocialPlug>
@@ -39,7 +34,8 @@ const About = ({ pages, sellPoints, gallery, testimonial, pricetable }) => {
         </SocialPlug>
       </Section>
       <Section>
-        <Testimonial testimonial={testimonial.items}/>
+        <H1>From Our Blog</H1>
+        <Articles articles={articles} />
       </Section>
       <Section>
         <H1>Get our Product for the Best Price</H1>

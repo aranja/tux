@@ -27,7 +27,7 @@
 }
 
 .Gallery-itemCopy {
-  text-align: justify;
+  font-weight: 300;
   line-height: 1.75;
-  padding-right: 25%;
+  max-width: 85%;
 }

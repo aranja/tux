@@ -10,11 +10,13 @@ import SocialPlug from '../components/SocialPlug'
 import Carousel from '../components/Carousel'
 import Testimonial from '../components/Testimonial'
 import TwitterFeed from '../components/TwitterFeed'
+import Newsletter from '../components/Newsletter'
 import Pricetable from '../components/Pricetable'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
-const Home = ({ pages, sellPoints, pricetable, testimonial, carousel }) => {
+const Home = ({ pages, sellPoints, testimonial, carousel }) => {
+
   const page = pages.items[0]
 
   return (
@@ -46,9 +48,9 @@ const Home = ({ pages, sellPoints, pricetable, testimonial, carousel }) => {
         </SocialPlug>
       </Section>
       <Section>
-        <H1>Get our Product for the Best Price</H1>
-        <H2>Contact us for Enterprise plans</H2>
-        <Pricetable pricetableItems={pricetable.items} />
+        <H1>Sign up for our newsletter, you won't regret it *</H1>
+        <H2>* Unless you don't like cat facts.</H2>
+        <Newsletter />
       </Section>
     </div>
   )

@@ -285,7 +285,7 @@ describe('startClient', () => {
     expect(appRoot.innerHTML).toMatchSnapshot()
   })
 
-  it('should rerender when refresh is called', async (done) => {
+  it('should rerender when refresh is called', (done) => {
     let renderCount = 0
 
     function onComplete() {
@@ -304,9 +304,7 @@ describe('startClient', () => {
       }
     })
 
-    await startClient(tux, appRoot)
-    expect(renderCount).toBe(1)
-    expect(appRoot.textContent).toBe('Render count 1')
+    startClient(tux, appRoot)
   })
 })
 

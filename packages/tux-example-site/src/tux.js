@@ -9,6 +9,7 @@ import createTux from 'tux/lib/tux'
 
 import './reset.css'
 import './index.css'
+import './icons.css'
 import './megadraft.css'
 import './megadraft-fixes.css'
 

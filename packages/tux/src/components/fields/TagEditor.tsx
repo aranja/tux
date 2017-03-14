@@ -1,7 +1,7 @@
 import React from 'react'
 import { tuxColors, tuxInputStyles } from '../../styles'
 
-interface TagEditor {
+export interface TagEditor {
   id: string
   value: string
   label: string
