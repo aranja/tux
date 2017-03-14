@@ -1,6 +1,5 @@
 .Article {
-  margin: auto;
-  width: 70%;
+  padding: 2rem;
 }
 
 .Article-heading {
@@ -12,8 +11,17 @@
   font-size: 1.15rem;
   font-weight: 300;
   line-height: 1.65;
-  max-width: 80%;
-  padding: 2em 0;
+  text-align: justify;
+}
+
+.Article-text:not(:first-child) {
+  padding-top: 1.85rem;
+}
+
+.Article-column {
+  padding: 2.5rem 0;
+  column-count: 2;
+  column-gap: 4rem;
 }
 
 .Article-meta {
@@ -24,4 +32,38 @@
 
 .Article-metaAuthor {
   font-weight: 400;
+  color: currentColor;
+  text-decoration: none;
+}
+
+.Article-metaAuthor:hover {
+  color: #e8008a;
+}
+
+
+.Article-more {
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: #e8008a;
+}
+
+.Article-more:hover {
+  opacity: 1;
+}
+
+.Article-moreText {
+  padding-left: 2.75rem;
+  padding-right: 1rem;
+  letter-spacing: 1px;
+}
+
+.Article-more::before {
+  background-color: #e8008a;
+  content: '';
+  display: block;
+  height: 2px;
+  left: 0px;
+  position: relative;
+  top: 11px;
+  width: 2rem;
 }

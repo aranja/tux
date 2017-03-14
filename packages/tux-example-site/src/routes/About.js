@@ -8,7 +8,6 @@ import Gallery from '../components/Gallery'
 import ProductBanner from '../components/ProductBanner'
 import Section from '../components/Section'
 import SocialPlug from '../components/SocialPlug'
-import Testimonial from '../components/Testimonial'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
@@ -35,9 +34,6 @@ const About = ({ pages, articles, sellPoints, gallery, testimonial, pricetable }
       <Section>
         <H1>From Our Blog</H1>
         <Articles />
-      </Section>
-      <Section>
-        <Testimonial testimonial={testimonial.items}/>
       </Section>
       <Section>
         <H1>Get our Product for the Best Price</H1>
