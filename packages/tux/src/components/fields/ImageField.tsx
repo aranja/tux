@@ -100,7 +100,6 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     const asset = await this.context.tux.adapter.createAssetFromUrl(
       imageUrl,
       'test-image.jpeg',
-      'en-US',
       'Test Image'
     )
 
