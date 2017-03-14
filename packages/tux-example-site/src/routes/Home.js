@@ -14,7 +14,7 @@ import Pricetable from '../components/Pricetable'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
-const Home = ({ pages, articles, sellPoints, pricetable, testimonial, gallery, carousel }) => {
+const Home = ({ pages, sellPoints, testimonial, gallery, carousel }) => {
 
   if (!pages) return null
   const page = pages.items[0]
@@ -47,7 +47,7 @@ const Home = ({ pages, articles, sellPoints, pricetable, testimonial, gallery, c
       <Section>
         <H1>Sign up for our newsletter, you won't regret it *</H1>
         <H2>* Unless you don't like cat facts.</H2>
-        <Newsletter></Newsletter>
+        <Newsletter />
       </Section>
     </div>
   )
@@ -55,9 +55,7 @@ const Home = ({ pages, articles, sellPoints, pricetable, testimonial, gallery, c
 
 export default connect(async contentful => ({
   pages: await contentful.getEntries({ content_type: 'page' }),
-  articles: await contentful.getEntries({ content_type: 'article', order: '-sys.createdAt' }),
   sellPoints: await contentful.getEntries({ content_type: 'sellPoint' }),
-  pricetable: await contentful.getEntries({ content_type: 'priceTable', order: 'sys.createdAt' }),
   testimonial: await contentful.getEntries({ content_type: 'testimony' }),
   gallery: await contentful.getEntries({ content_type: 'gallery' }),
   carousel: await contentful.getEntries({ content_type: 'carousel' }),
