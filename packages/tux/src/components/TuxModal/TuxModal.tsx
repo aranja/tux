@@ -98,6 +98,7 @@ class TuxModal extends React.Component<any, State> {
                 <button
                   className="TuxModal-button"
                   label="Cancel"
+                  type="button"
                   onClick={this.onCancel}>Cancel</button>
                 <button
                   className="TuxModal-button TuxModal-button--green"
