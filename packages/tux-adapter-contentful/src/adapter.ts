@@ -2,6 +2,8 @@ import QueryApi from './query-api'
 import ManagementApi from './management-api'
 import widgetIdToEditor from './widget-to-editor'
 
+import { Field, Meta } from 'tux'
+
 export interface Config {
   space: string
   deliveryToken: string

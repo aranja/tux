@@ -10,3 +10,5 @@ export { default as MarkdownField } from './components/fields/MarkdownField'
 export { default as Radio } from './components/fields/Radio'
 export { default as TagEditor } from './components/fields/TagEditor'
 export { default as TextField } from './components/fields/TextField'
+
+export { registerEditable, getEditorSchema, Field, Meta } from './services/editor'
