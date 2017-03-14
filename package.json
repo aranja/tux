@@ -7,7 +7,7 @@
     "lint": "tslint -c './tslint.json' -e './packages/**/node_modules/**/*' -e './packages/**/es/**/*' -e './packages/**/lib/**/*' './packages/**/*.{ts,tsx}'",
     "lerna": "lerna",
     "bootstrap": "lerna bootstrap --hoist",
-    "watch": "lerna run watch --stream",
+    "watch": "lerna run watch --stream --no-sort",
     "test": "lerna run test"
   },
   "dependencies": {
