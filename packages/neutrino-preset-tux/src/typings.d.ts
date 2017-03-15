@@ -1,7 +1,7 @@
 declare module 'neutrino-preset-react'
 declare module 'css-loader/locals'
 declare module 'webpack-node-externals'
-
+declare module 'extract-text-webpack-plugin'
 
 declare module 'jsx-html-webpack-plugin' {
   import { Plugin } from 'webpack'

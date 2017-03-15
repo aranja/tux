@@ -26,6 +26,7 @@ const Html = ({ children, assets, title }) => (
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>{title}</title>
       <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,400i" rel="stylesheet" />
+      {assets['index.css'] && <link href={assets['index.css']} rel="stylesheet" />}
       <script src={assets['manifest.js']} defer />
       <script src={assets['index.js']} defer />
     </head>
