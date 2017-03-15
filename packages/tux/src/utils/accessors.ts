@@ -16,7 +16,19 @@ export function get(obj: any, key: string | string[]): any {
   return get(nextLevel, restOfKey)
 }
 
-function _splitKey(key: string | string[]) {
+export function set(obj: any, key: string | string[], value: any): void {
+  const parts = _splitKey(key)
+  if (parts.length === 1) {
+    obj[parts[0]] = value
+  } else {
+    const lastKeyPartIndex = parts.length - 1
+    const parent = get(obj, parts.slice(0, lastKeyPartIndex))
+    const lastKeyPart = parts[lastKeyPartIndex]
+    parent[lastKeyPart] = value
+  }
+}
+
+function _splitKey(key: string | string[]): string[] {
   if (key instanceof Array) {
     return key
   }

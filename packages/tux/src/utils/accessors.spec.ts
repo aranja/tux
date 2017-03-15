@@ -1,4 +1,4 @@
-import { get } from './accessors'
+import { get, set } from './accessors'
 
 describe('the get accessor', () => {
   it('can fetch one level deep', () => {
@@ -60,6 +60,32 @@ describe('the get accessor', () => {
       },
     }
 
+    const result = get(source, key)
+    expect(result).toEqual(expected)
+  })
+})
+
+describe('the set accessor', () => {
+  it('can set a value at first level', () => {
+    const expected = 'nice'
+    const key = 'first'
+    const source = {}
+
+    set(source, key, expected)
+    const result = get(source, key)
+    expect(result).toEqual(expected)
+  })
+
+  it('can set a value at third level', () => {
+    const expected = 'nice'
+    const key = 'first.second.third'
+    const source = {
+      first: {
+        second: {}
+      }
+    }
+
+    set(source, key, expected)
     const result = get(source, key)
     expect(result).toEqual(expected)
   })
