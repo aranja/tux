@@ -20,7 +20,7 @@ export function set(obj: any, key: string | string[], value: any): void {
   const parts = _splitKey(key)
   if (parts.length === 1) {
     obj[parts[0]] = value
-  } else {
+  } else if (parts.length > 1) {
     const lastKeyPartIndex = parts.length - 1
     const parent = get(obj, parts.slice(0, lastKeyPartIndex))
     const lastKeyPart = parts[lastKeyPartIndex]
