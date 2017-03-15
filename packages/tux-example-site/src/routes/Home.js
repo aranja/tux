@@ -1,5 +1,6 @@
 import React from 'react'
-import { Editable, connect } from 'tux'
+import { Editable } from 'tux'
+import Helmet from 'react-helmet'
 import { H1, H2 } from '../components/typography'
 import ProductBanner from '../components/ProductBanner'
 import Menu from '../components/Menu'
@@ -14,13 +15,15 @@ import Pricetable from '../components/Pricetable'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
-const Home = ({ pages, sellPoints, testimonial, gallery, carousel }) => {
+const Home = ({ pages, sellPoints, testimonial, carousel }) => {
 
-  if (!pages) return null
   const page = pages.items[0]
 
   return (
     <div className="p-Home">
+      <Helmet
+        title="Tux Demo Site"
+      />
       <Menu />
       <ProductBanner image={ProductBannerImage}>
         <div className="ProductBanner-heading"><Editable model={page} field="fields.content.title" /></div>
@@ -53,10 +56,4 @@ const Home = ({ pages, sellPoints, testimonial, gallery, carousel }) => {
   )
 }
 
-export default connect(async contentful => ({
-  pages: await contentful.getEntries({ content_type: 'page' }),
-  sellPoints: await contentful.getEntries({ content_type: 'sellPoint' }),
-  testimonial: await contentful.getEntries({ content_type: 'testimony' }),
-  gallery: await contentful.getEntries({ content_type: 'gallery' }),
-  carousel: await contentful.getEntries({ content_type: 'carousel' }),
-}))(Home)
+export default Home

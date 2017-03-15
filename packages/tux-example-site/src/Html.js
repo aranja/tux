@@ -18,13 +18,17 @@ import image from './ProductBannerImage.png'
  *     additional route specific props, e.g. a serialized store and meta tags.
  */
 
-const Html = ({ children, assets, title }) => (
+const Html = ({ children, assets, helmet }) => (
   // <!doctype html> is prepended externally.
-  <html lang="en">
+  <html {...helmet && helmet.htmlAttributes.toComponent()}>
     <head>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>{title}</title>
+      {helmet && [
+        helmet.title.toComponent(),
+        helmet.meta.toComponent(),
+        helmet.link.toComponent(),
+      ]}
       <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,400i" rel="stylesheet" />
       {assets['index.css'] && <link href={assets['index.css']} rel="stylesheet" />}
       <script src={assets['manifest.js']} defer />
