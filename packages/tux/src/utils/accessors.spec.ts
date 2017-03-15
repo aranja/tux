@@ -41,4 +41,13 @@ describe('the get accessor', () => {
     const result = get(source, key)
     expect(result).toEqual(expected)
   })
+
+  it('returns null if key does not exist', () => {
+    const key = 'first.second.third'
+    const expected = null
+    const source = {}
+
+    const result = get(source, key)
+    expect(result).toEqual(expected)
+  })
 })

@@ -6,8 +6,8 @@
  * @returns {Object} the property value or 'null'.
  */
 export function get(obj: any, keyName: string): any {
-  if (keyName.length === 0) {
-    return obj
+  if (keyName.length === 0 || !obj) {
+    return obj ? obj : null
   }
 
   const parts = keyName.split('.')
