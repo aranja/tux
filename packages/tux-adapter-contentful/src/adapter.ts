@@ -179,6 +179,23 @@ export class ContentfulAdapter {
     return null
   }
 
+  formatAssetForLinking(asset: any) {
+    return {
+      sys: {
+        id: asset.sys.id,
+        linkType: 'Asset',
+        type: 'Link',
+      }
+    }
+  }
+
+  getIdOfEntity(entity: any) {
+    if (!entity.sys) {
+      return null
+    }
+    return entity.sys.id
+  }
+
   async createAssetFromUrl(url: string, fileName: string, title: string) {
     const assetBody = {
       fields: {

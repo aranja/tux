@@ -5,6 +5,7 @@ import { fade } from '../../utils/color'
 import moment from 'moment'
 import TuxSpinner from '../Spinner/Spinner'
 
+import { get, set } from '../../utils/accessors'
 import { getEditorSchema, Field } from '../../services/editor'
 
 export interface State {
@@ -44,9 +45,8 @@ class TuxModal extends React.Component<any, State> {
 
   onChange(value: any, type: string) {
     const { fullModel } = this.state
-    fullModel.fields[type] = value
-
-    this.setState({fullModel})
+    set(fullModel, type, value)
+    this.setState({ fullModel })
   }
 
   onCancel = () => {
@@ -65,7 +65,7 @@ class TuxModal extends React.Component<any, State> {
     const { fullModel } = this.state
 
     const InputComponent = field.component
-    const value = fullModel.fields[field.field]
+    const value = get(fullModel, field.field)
 
     return InputComponent && (
       <div key={field.field}>

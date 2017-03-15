@@ -25,7 +25,7 @@ export default function generateEditorSchema(typeMeta: any) {
 function _transformTypeMetaFieldToEditorField(typeMetaField: any) {
   const props = _getPropsForType(typeMetaField)
   return {
-    field: typeMetaField.id,
+    field: `fields.${typeMetaField.id}`,
     label: typeMetaField.name,
     component: widgetIdToEditor[typeMetaField.control.widgetId],
     props,
