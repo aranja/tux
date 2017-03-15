@@ -40,7 +40,7 @@ const Home = ({ pages, sellPoints, testimonial, carousel }) => {
         <Testimonial testimonial={testimonial.items}/>
       </Section>
       <Section backgroundColor="#F5F7FA">
-        <H1>BLABLA People Say About Tux</H1>
+        <H1>What People Say About Tux</H1>
         <H2>Totally random and unbiased selection of people</H2>
         <TwitterFeed />
         <SocialPlug>
