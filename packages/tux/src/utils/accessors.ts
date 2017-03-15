@@ -1,8 +1,8 @@
 /**
  * Gets the value of a property on an object.
  *
- * @param {Object} obj The value to be clamped
- * @param {String} key The lower boundary of the output range
+ * @param {Object} obj The object to get from
+ * @param {String} key The key, can also be an array of strings
  * @returns {Object} the property value or 'null'.
  */
 export function get(obj: any, key: string | string[]): any {
@@ -16,6 +16,13 @@ export function get(obj: any, key: string | string[]): any {
   return get(nextLevel, restOfKey)
 }
 
+/**
+ * Sets the value of a property on an object.
+ *
+ * @param {Object} obj The object to change
+ * @param {String} key The key, can also be an array of strings
+ * @param {Object} value The value to place in the object
+ */
 export function set(obj: any, key: string | string[], value: any): void {
   const parts = _splitKey(key)
   if (parts.length === 1) {
