@@ -1,6 +1,5 @@
 export { default as TuxProvider } from './components/TuxProvider'
 export { default as Editable } from './components/Editable'
-export { default as connect } from './connect'
 
 export { default as BooleanField } from './components/fields/Boolean'
 export { default as DatePicker } from './components/fields/DatePicker'
