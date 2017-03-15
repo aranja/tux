@@ -16,7 +16,6 @@ function setField<T>(model: any, field: FieldRef, editorState: T) {
   }
 
   let localized = field.slice()
-  localized.splice(2, 0, 'en-US')
 
   localized.reduce((object, key, index) => {
     if (index === localized.length - 1) {
