@@ -89,4 +89,22 @@ describe('the set accessor', () => {
     const result = get(source, key)
     expect(result).toEqual(expected)
   })
+
+  it('can create path to key if it does not exist', () => {
+    const expected = 'nice'
+    const key = 'first.second.third'
+    const source = {}
+    set(source, key, expected)
+    const result = get(source, key)
+    expect(result).toEqual(expected)
+  })
+
+  it('can create first level key', () => {
+    const expected = 'nice'
+    const key = 'first'
+    const source = {}
+    set(source, key, expected)
+    const result = get(source, key)
+    expect(result).toEqual(expected)
+  })
 })

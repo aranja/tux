@@ -12,7 +12,7 @@ export function get(obj: any, key: string | string[]): any {
 
   const parts = _splitKey(key)
   const nextLevel = obj[parts[0]]
-  const restOfKey = parts.slice(1, parts.length).join('.')
+  const restOfKey = parts.slice(1, parts.length)
   return get(nextLevel, restOfKey)
 }
 
@@ -25,14 +25,22 @@ export function get(obj: any, key: string | string[]): any {
  */
 export function set(obj: any, key: string | string[], value: any): void {
   const parts = _splitKey(key)
-  if (parts.length === 1) {
-    obj[parts[0]] = value
-  } else if (parts.length > 1) {
-    const lastKeyPartIndex = parts.length - 1
-    const parent = get(obj, parts.slice(0, lastKeyPartIndex))
-    const lastKeyPart = parts[lastKeyPartIndex]
-    parent[lastKeyPart] = value
+  if (parts.length === 0) {
+    return
   }
+
+  const currentKey = parts[0]
+  if (parts.length === 1) {
+    obj[currentKey] = value
+    return
+  }
+
+  if (!obj[currentKey]) {
+    obj[currentKey] = {}
+  }
+
+  const restOfKey = parts.slice(1, parts.length)
+  set(obj[currentKey], restOfKey, value)
 }
 
 function _splitKey(key: string | string[]): string[] {
