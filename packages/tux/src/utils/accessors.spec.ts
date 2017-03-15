@@ -50,4 +50,17 @@ describe('the get accessor', () => {
     const result = get(source, key)
     expect(result).toEqual(expected)
   })
+
+  it('can handle when key is array', () => {
+    const expected = 'nice'
+    const key = ['first', 'second']
+    const source = {
+      first: {
+        second: expected,
+      },
+    }
+
+    const result = get(source, key)
+    expect(result).toEqual(expected)
+  })
 })
