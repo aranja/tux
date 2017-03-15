@@ -18,27 +18,12 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
   }
 
   state: EditableInlineState = {
-    editorState: editorStateFromRaw(null)
+    editorState: editorStateFromRaw(get(this.props.model, this.props.field))
   }
 
   timer: number
 
-  constructor(props: EditableInlineProps) {
-    super(props)
-
-    const { model, field } = props
-    const content = get(model, field)
-
-    if (content) {
-      this.state = {
-        editorState: editorStateFromRaw(content)
-      }
-    }
-
-    this.saveChanges = this.saveChanges.bind(this)
-  }
-
-  async saveChanges() {
+  saveChanges = async () => {
     const { model, field } = this.props
     const { editorState } = this.state
 
@@ -49,7 +34,7 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
     this.context.tux.adapter.save(fullModel)
   }
 
-  onEditorChange(editorState: EditorState) {
+  onEditorChange = (editorState: EditorState) => {
     this.setState({ editorState })
     if (this.timer) {
       window.clearTimeout(this.timer)
@@ -62,14 +47,12 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
   }
 
   render() {
-    const { children, field, model, onChange } = this.props
-    const isEditing = this.context.tux && this.context.tux.isEditing
-
     return (
       <MegadraftEditor
         editorState={this.state.editorState}
-        onChange={this.onEditorChange.bind(this)}
-        sidebarRendererFn={this.getCustomSidebar}/>
+        onChange={this.onEditorChange}
+        sidebarRendererFn={this.getCustomSidebar}
+      />
     )
   }
 }
