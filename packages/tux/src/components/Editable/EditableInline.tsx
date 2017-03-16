@@ -1,30 +1,6 @@
 import React from 'react'
 import { MegadraftEditor, editorStateFromRaw, editorStateToJSON, EditorState } from 'megadraft'
-
-type FieldRef = string | string[]
-
-function getField<T>(model: any, field: FieldRef): T {
-  if (typeof field === 'string')
-    return getField<T>(model, field.split('.'))
-  return field.reduce((object, key) => object[key], model)
-}
-
-function setField<T>(model: any, field: FieldRef, editorState: T) {
-  if (typeof field === 'string') {
-    setField(model, field.split('.'), editorState)
-    return
-  }
-
-  let localized = field.slice()
-  localized.splice(2, 0, 'en-US')
-
-  localized.reduce((object, key, index) => {
-    if (index === localized.length - 1) {
-      object[key] = JSON.parse(editorStateToJSON(editorState))
-    }
-    return object[key]
-  }, model)
-}
+import { get, set } from '../../utils/accessors'
 
 export interface EditableInlineProps {
   model: any,
@@ -51,9 +27,12 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
     super(props)
 
     const { model, field } = props
-    const content = getField(model, field)
-    this.state = {
-      editorState: editorStateFromRaw(content)
+    const content = get(model, field)
+
+    if (content) {
+      this.state = {
+        editorState: editorStateFromRaw(content)
+      }
     }
 
     this.saveChanges = this.saveChanges.bind(this)
@@ -64,7 +43,8 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
     const { editorState } = this.state
 
     let fullModel = await this.context.tux.adapter.load(model)
-    setField(fullModel, field, editorState)
+    const editorStateObj = JSON.parse(editorStateToJSON(editorState))
+    set(fullModel, field, editorStateObj)
 
     this.context.tux.adapter.save(fullModel)
   }
@@ -85,16 +65,12 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
     const { children, field, model, onChange } = this.props
     const isEditing = this.context.tux && this.context.tux.isEditing
 
-    if (isEditing || true) {
-      return (
-        <MegadraftEditor
-          editorState={this.state.editorState}
-          onChange={this.onEditorChange.bind(this)}
-          sidebarRendererFn={this.getCustomSidebar}/>
-      )
-    }
-
-    return <div>{getField(model, field)}</div>
+    return (
+      <MegadraftEditor
+        editorState={this.state.editorState}
+        onChange={this.onEditorChange.bind(this)}
+        sidebarRendererFn={this.getCustomSidebar}/>
+    )
   }
 }
 

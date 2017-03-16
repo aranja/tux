@@ -1,5 +1,6 @@
 import React from 'react'
-import { Editable, connect } from 'tux'
+import { Editable } from 'tux'
+import Helmet from 'react-helmet'
 import { H1, H2 } from '../components/typography'
 import Pricetable from '../components/Pricetable'
 import Menu from '../components/Menu'
@@ -12,13 +13,14 @@ import SocialPlug from '../components/SocialPlug'
 import ProductBannerImage from '../ProductBannerImage.png'
 
 
-const About = ({ pages, articles, sellPoints, gallery, testimonial, pricetable }) => {
-
-  if (!pages) return null
+const About = ({ pages, sellPoints, gallery, testimonial, pricetable }) => {
   const page = pages.items[0]
 
   return (
     <div className="p-About">
+      <Helmet
+        title="About - Tux Demo Site"
+      />
       <Menu />
       <ProductBanner image={ProductBannerImage}>
         <div className="ProductBanner-heading"><Editable model={page} field="fields.content.title" /></div>
@@ -44,11 +46,4 @@ const About = ({ pages, articles, sellPoints, gallery, testimonial, pricetable }
   )
 }
 
-export default connect(async contentful => ({
-  pages: await contentful.getEntries({ content_type: 'page' }),
-  articles: await contentful.getEntries({ content_type: 'article', order: '-sys.createdAt' }),
-  sellPoints: await contentful.getEntries({ content_type: 'sellPoint' }),
-  pricetable: await contentful.getEntries({ content_type: 'priceTable', order: 'sys.createdAt' }),
-  testimonial: await contentful.getEntries({ content_type: 'testimony' }),
-  gallery: await contentful.getEntries({ content_type: 'gallery' }),
-}))(About)
+export default About

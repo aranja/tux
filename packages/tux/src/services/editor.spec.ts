@@ -5,7 +5,7 @@ describe('editor service', () => {
   it('can register editable and receive editor schema', () => {
     const modelName = 'article'
     const fields = [
-      { field: 'testField', label: 'testLabel' }
+      { field: 'fields.testField', label: 'testLabel' }
     ]
 
     registerEditable(modelName, fields)
@@ -20,13 +20,13 @@ describe('editor service', () => {
   it('can register fields and then filter them with a procedure', () => {
     const modelName = 'post'
     const fields = [
-      { field: 'firstName' },
-      { field: 'lastName' },
-      { field: '_fieldThatShouldNotBeEditable' },
+      { field: 'fields.firstName' },
+      { field: 'fields.lastName' },
+      { field: 'fields._fieldThatShouldNotBeEditable' },
     ]
 
     registerEditable(modelName, (schema: Map<string, Field>) => {
-      schema.delete('_fieldThatShouldNotBeEditable')
+      schema.delete('fields._fieldThatShouldNotBeEditable')
     })
 
     const schema = getEditorSchema({
