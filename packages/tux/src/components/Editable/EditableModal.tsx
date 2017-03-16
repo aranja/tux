@@ -6,7 +6,7 @@ export interface EditableModalProps {
   children?: any,
   onChange: Function,
   className: string,
-  shouldDisplayClues: boolean,
+  isLoggedIn: boolean,
 }
 
 class EditableModal extends React.Component<EditableModalProps, any> {
@@ -15,7 +15,7 @@ class EditableModal extends React.Component<EditableModalProps, any> {
   }
 
   async onEdit(): Promise<void> {
-    const { onChange, model } = this.props
+    const { onChange, model, isLoggedIn } = this.props
     const { tux } = this.context
     const isEditing = tux && tux.isEditing
     const didChange = await tux.editModel(model)
@@ -25,17 +25,17 @@ class EditableModal extends React.Component<EditableModalProps, any> {
   }
 
   render() {
-    const { model, children, className, shouldDisplayClues } = this.props
+    const { model, children, className, isLoggedIn } = this.props
     const isEditing = this.context.tux && this.context.tux.isEditing // todo: is this ever true?
     const classes = classNames(
       className,
       'EditableModal',
       isEditing && 'is-editing',
-      shouldDisplayClues && 'display-editable-clue'
+      isLoggedIn && 'display-editable-clue'
     )
 
     return (
-      <div className={classes} onClick={() => this.onEdit()}>
+      <div className={classes} onClick={() => {isLoggedIn && this.onEdit()}}>
         {children}
         <style jsx>{`
           .EditableModal.is-editing {

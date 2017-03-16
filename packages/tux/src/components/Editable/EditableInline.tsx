@@ -7,7 +7,7 @@ export interface EditableInlineProps {
   model: any,
   field: string | Array<string>,
   onChange?: () => void,
-  shouldDisplayClues: boolean,
+  isLoggedIn: boolean,
 }
 
 export interface EditableInlineState {
@@ -64,15 +64,17 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
   }
 
   render() {
-    const { children, field, model, onChange, shouldDisplayClues } = this.props
+    const { children, field, model, onChange, isLoggedIn } = this.props
     const isEditing = this.context.tux && this.context.tux.isEditing
 
     return (
-      <div className={classNames(shouldDisplayClues && 'display-editable-clue')}>
+      <div className={classNames(isLoggedIn && 'display-editable-clue')}>
         <MegadraftEditor
-        editorState={this.state.editorState}
-        onChange={this.onEditorChange.bind(this)}
-        sidebarRendererFn={this.getCustomSidebar}/>
+          readOnly={!isLoggedIn}
+          editorState={this.state.editorState}
+          onChange={this.onEditorChange.bind(this)}
+          sidebarRendererFn={this.getCustomSidebar}
+        />
         <style jsx>{`
           .display-editable-clue {
             animation: editableClue 1s;

@@ -8,7 +8,7 @@ export interface EditableProps {
   onChange: Function,
   children: any,
   className: string,
-  shouldDisplayClues: boolean,
+  isLoggedIn: boolean,
 }
 
 class Editable extends React.Component<EditableProps, any> {
@@ -17,7 +17,7 @@ class Editable extends React.Component<EditableProps, any> {
   }
 
   state = {
-    shouldDisplayClues: false,
+    isLoggedIn: false,
   }
 
   async componentDidMount() {
@@ -25,17 +25,17 @@ class Editable extends React.Component<EditableProps, any> {
 
     if (user) {
       this.setState({
-        shouldDisplayClues: true,
+        isLoggedIn: true,
       })
     }
   }
 
   render() {
     const { children, field, model, onChange, className } = this.props
-    const { shouldDisplayClues } = this.state
+    const { isLoggedIn } = this.state
     const isEditing = this.context.tux && this.context.tux.isEditing
     if (field) {
-      return <EditableInline model={model} field={field} shouldDisplayClues={shouldDisplayClues}/>
+      return <EditableInline model={model} field={field} isLoggedIn={isLoggedIn}/>
     }
 
     return (
@@ -43,7 +43,7 @@ class Editable extends React.Component<EditableProps, any> {
       className={className}
       model={model}
       onChange={onChange}
-      shouldDisplayClues={shouldDisplayClues}
+      isLoggedIn={isLoggedIn}
       >
         {children}
       </EditableModal>
