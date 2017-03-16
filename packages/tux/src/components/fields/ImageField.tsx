@@ -1,10 +1,10 @@
 import React from 'react'
 import classNames from 'classnames'
+import { get } from '../../utils/accessors'
 
 import { tuxInputStyles } from '../../styles'
 import TextField from './TextField'
 import BrowseField from './BrowseField'
-
 
 export interface ImageFieldProps {
   field: string | Array<string>,
@@ -14,13 +14,7 @@ export interface ImageFieldProps {
   label: string,
   name: string,
   onChange: Function,
-  value: {
-    sys: {
-      id: string,
-      type: string,
-      linkType: string,
-    }
-  },
+  value: any,
 }
 
 
@@ -48,11 +42,14 @@ class ImageField extends React.Component<ImageFieldProps, any> {
   }
 
   async componentWillReceiveProps(props: ImageFieldProps) {
-    if (!props.value || !props.value.sys) {
+    if (!props.value) {
       return
     }
 
-    if (props.value.sys.id !== this.props.value.sys.id) {
+    const nextValueId = this.context.tux.adapter.getIdOfEntity(props.value)
+    const currentValueId = this.context.tux.adapter.getIdOfEntity(this.props.value)
+
+    if ((nextValueId !== currentValueId) && nextValueId !== null) {
       const fullModel = await this.context.tux.adapter.loadAsset(props.value)
 
       this.setState({
@@ -69,14 +66,9 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     })
 
     const asset = await this.context.tux.adapter.createAssetFromFile(files[0], 'Some title')
+    const linkableAsset = this.context.tux.adapter.formatAssetForLinking(asset)
 
-    onChange({
-      sys: {
-        id: asset.sys.id,
-        linkType: 'Asset',
-        type: 'Link'
-      }
-    })
+    onChange(linkableAsset)
 
     this.setState({
       isLoadingImage: false,
@@ -89,44 +81,14 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     })
   }
 
-  loadImageFromUrl = async() => {
-    const { onChange } = this.props
-    const { imageUrl } = this.state
-
-    this.setState({
-      isLoadingImage: true,
-    })
-
-    const asset = await this.context.tux.adapter.createAssetFromUrl(
-      imageUrl,
-      'test-image.jpeg',
-      'en-US',
-      'Test Image'
-    )
-
-    onChange({
-      sys: {
-        id: asset.sys.id,
-        linkType: 'Asset',
-        type: 'Link'
-      }
-    }, {
-      type: this.props.id
-    })
-
-    this.setState({
-      isLoadingImage: false,
-      imageUrl: '',
-    })
-  }
-
   render() {
     const { value, id, onChange, label } = this.props
     const { imageUrl, fullModel, isLoadingImage } = this.state
 
     if (fullModel) {
-      const title = fullModel.fields.title['en-US']
-      const url = fullModel.fields.file['en-US'].url
+      const title = get(fullModel, 'fields.title')
+      const url = get(fullModel, 'fields.file.url')
+
       return (
           <div className="ImageField">
             <label className="InputLabel">{label}</label>

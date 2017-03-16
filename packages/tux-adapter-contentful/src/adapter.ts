@@ -2,6 +2,8 @@ import QueryApi from './query-api'
 import ManagementApi from './management-api'
 import generateEditorSchema from './editors'
 
+import { extractLocale, injectLocale } from './locale'
+
 import { Field, Meta } from 'tux'
 
 export interface Config {
@@ -143,7 +145,8 @@ export class ContentfulAdapter {
       throw new Error('Manager api not defined, please log in to save.')
     }
 
-    await this.managementApi.saveEntry(model)
+    const modelWithLocale = injectLocale(model)
+    await this.managementApi.saveEntry(modelWithLocale)
     this.triggerChange()
   }
 
@@ -154,23 +157,18 @@ export class ContentfulAdapter {
 
     const upload = await this.managementApi.createUpload(file)
     if (upload.sys) {
-      const localeName = 'en-US'
       const assetBody = {
         fields: {
-          title: {
-            [localeName]: title,
-          },
+          title: title,
           file: {
-            [localeName]: {
-              contentType: file.type,
-              fileName: file.name,
-              uploadFrom: {
-                sys: {
-                  type: 'Link',
-                  linkType: 'Upload',
-                  id: upload.sys.id,
-                },
-              }
+            contentType: file.type,
+            fileName: file.name,
+            uploadFrom: {
+              sys: {
+                type: 'Link',
+                linkType: 'Upload',
+                id: upload.sys.id,
+              },
             }
           }
         }
@@ -181,18 +179,31 @@ export class ContentfulAdapter {
     return null
   }
 
-  async createAssetFromUrl(url: string, fileName: string, localeName: string, title: string) {
+  formatAssetForLinking(asset: any) {
+    return {
+      sys: {
+        id: asset.sys.id,
+        linkType: 'Asset',
+        type: 'Link',
+      }
+    }
+  }
+
+  getIdOfEntity(entity: any) {
+    if (!entity.sys) {
+      return null
+    }
+    return entity.sys.id
+  }
+
+  async createAssetFromUrl(url: string, fileName: string, title: string) {
     const assetBody = {
       fields: {
-        title: {
-          [localeName]: title
-        },
+        title: title,
         file: {
-          [localeName]: {
-            contentType: 'image/jpeg',
-            fileName,
-            upload: url,
-          }
+          contentType: 'image/jpeg',
+          fileName,
+          upload: url,
         }
       }
     }
@@ -205,7 +216,7 @@ export class ContentfulAdapter {
       throw new Error('Manager api not defined, please log in to save.')
     }
 
-    const asset = await this.managementApi.createAsset(body)
+    const asset = await this.managementApi.createAsset(injectLocale(body))
     if (asset) {
       await this.managementApi.processAsset(
         asset.sys.id,
@@ -221,14 +232,16 @@ export class ContentfulAdapter {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }
 
-    return this.managementApi.getEntry(model.sys.id)
+    const entry = await this.managementApi.getEntry(model.sys.id)
+    return extractLocale(entry)
   }
 
-  loadAsset(model: any) {
+  async loadAsset(model: any) {
     if (!this.managementApi) {
       throw new Error('Manager api not defined, please log in get a scheme.')
     }
-    return this.managementApi.getAsset(model.sys.id)
+    const asset = await this.managementApi.getAsset(model.sys.id)
+    return extractLocale(asset)
   }
 
   async currentUser() {

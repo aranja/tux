@@ -1,25 +1,24 @@
 import { LOCALS_LOADER } from './paths'
 
-export default function fixRulesForServer(rules: any) {
+export default function fixRulesForServer(neutrino: any) {
+  const rules = neutrino.config.module.rules
   rules.values().forEach((rule: any) => {
-    if (rule.loaders.has('css')) {
-      rule.loader('css', () => ({ loader: LOCALS_LOADER }))
-      rule.loaders.delete('style')
+    if (rule.uses.has('css')) {
+      rule.use('css').loader(LOCALS_LOADER)
+      rule.uses.delete('style')
     }
-    if (rule.loaders.has('url')) {
-      rule.loader('url', fixFileLoader)
+    if (rule.uses.has('url')) {
+      rule.use('url').tap(fixFileLoader)
     }
-    if (rule.loaders.has('file')) {
-      rule.loader('file', fixFileLoader)
+    if (rule.uses.has('file')) {
+      rule.use('file').tap(fixFileLoader)
     }
   })
 }
 
-function fixFileLoader(loader: any) {
+function fixFileLoader(options: any) {
   return {
-    options: {
-      ...loader.options,
-      emitFile: false,
-    },
+    ...options,
+    emitFile: false,
   }
 }

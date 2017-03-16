@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import path from 'path'
 import express from 'express'
 import PrettyError from 'pretty-error'

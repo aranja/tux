@@ -5,6 +5,7 @@ import { fade } from '../../utils/color'
 import moment from 'moment'
 import TuxSpinner from '../Spinner/Spinner'
 
+import { get, set } from '../../utils/accessors'
 import { getEditorSchema, Field } from '../../services/editor'
 
 export interface State {
@@ -44,12 +45,8 @@ class TuxModal extends React.Component<any, State> {
 
   onChange(value: any, type: string) {
     const { fullModel } = this.state
-    if (!fullModel.fields[type]) {
-      fullModel.fields[type] = {}
-    }
-    fullModel.fields[type]['en-US'] = value
-
-    this.setState({fullModel})
+    set(fullModel, type, value)
+    this.setState({ fullModel })
   }
 
   onCancel = () => {
@@ -68,8 +65,7 @@ class TuxModal extends React.Component<any, State> {
     const { fullModel } = this.state
 
     const InputComponent = field.component
-    const fullModelField = fullModel.fields[field.field]
-    const value = fullModelField && fullModelField['en-US']
+    const value = get(fullModel, field.field)
 
     return InputComponent && (
       <div key={field.field}>
@@ -98,6 +94,7 @@ class TuxModal extends React.Component<any, State> {
                 <button
                   className="TuxModal-button"
                   label="Cancel"
+                  type="button"
                   onClick={this.onCancel}>Cancel</button>
                 <button
                   className="TuxModal-button TuxModal-button--green"
