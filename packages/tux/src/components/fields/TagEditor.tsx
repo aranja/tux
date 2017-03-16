@@ -16,14 +16,18 @@ class TagEditor extends Component<TagEditorProps, any> {
   }
 
   componentWillUnmount() {
+    this.tagEditor.removeEventListener('keypress', this.handleOnKeyUp)
     this.isUnmounting = true
   }
 
   componentDidMount() {
+    this.tagEditor.addEventListener('keypress', this.handleOnKeyUp)
+
     const { value } = this.props
     const prevTags: Array<string> = []
     const isArray = value instanceof Array
-    console.log(value)
+
+
     if (value && isArray) {
       value.map((value) => {
         prevTags.push(value)
@@ -44,10 +48,12 @@ class TagEditor extends Component<TagEditorProps, any> {
     }
   }
 
-  handleOnKeyUp = (event: React.ChangeEvent<any>) => {
+  handleOnKeyUp = (event) => {
     if (event.key !== 'Enter') {
       return
     }
+
+    event.preventDefault()
 
     const { onChange } = this.props
     const { tags } = this.state
@@ -68,10 +74,10 @@ class TagEditor extends Component<TagEditorProps, any> {
       <div className="TagEditor">
         <label className="TagEditor-label">{label}</label>
         <input
+          ref={(tagEditor) => {this.tagEditor = tagEditor}}
           className="TagEditor-input"
           placeholder="Add item"
           onClick={this.handleOnKeyUp}
-          onKeyUp={this.handleOnKeyUp}
         />
         <div className="TagEditor-tags">
           {value && value.map((singleValue) => (
