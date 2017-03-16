@@ -12,7 +12,6 @@ import SocialPlug from '../components/SocialPlug'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
-
 const About = ({ pages, sellPoints, gallery, testimonial, pricetable, articles }) => {
   const page = pages.items[0]
 
@@ -23,8 +22,8 @@ const About = ({ pages, sellPoints, gallery, testimonial, pricetable, articles }
       />
       <Menu />
       <ProductBanner image={ProductBannerImage}>
-        <div className="ProductBanner-heading"><Editable model={page} field="fields.content.title" /></div>
-        <div className="ProductBanner-text"><Editable model={page} field="fields.content.subtitle" /></div>
+        <div className="ProductBanner-heading"><Editable model={page} field="fields.content.title2" /></div>
+        <div className="ProductBanner-text"><Editable model={page} field="fields.content.subtitle2" /></div>
       </ProductBanner>
       <Section>
         <H1>Who is using Tux</H1>

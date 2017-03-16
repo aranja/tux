@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import { MegadraftEditor, editorStateFromRaw, editorStateToJSON, EditorState } from 'megadraft'
 import { get, set } from '../../utils/accessors'
 
@@ -6,6 +7,7 @@ export interface EditableInlineProps {
   model: any,
   field: string | Array<string>,
   onChange?: () => void,
+  shouldDisplayClues: boolean,
 }
 
 export interface EditableInlineState {
@@ -62,14 +64,30 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
   }
 
   render() {
-    const { children, field, model, onChange } = this.props
+    const { children, field, model, onChange, shouldDisplayClues } = this.props
     const isEditing = this.context.tux && this.context.tux.isEditing
 
     return (
-      <MegadraftEditor
+      <div className={classNames(shouldDisplayClues && 'display-editable-clue')}>
+        <MegadraftEditor
         editorState={this.state.editorState}
         onChange={this.onEditorChange.bind(this)}
         sidebarRendererFn={this.getCustomSidebar}/>
+        <style jsx>{`
+          .display-editable-clue {
+            animation: editableClue 1s;
+            animation-repeat-count: 3;
+          }
+          @keyframes editableClue {
+            from {
+              background: rgba(232, 0, 138, 0.2);
+            }
+            to {
+              background: rgba(232, 0, 138, 0);
+            }
+          }
+        `}</style>
+      </div>
     )
   }
 }
