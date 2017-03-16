@@ -181,7 +181,7 @@ class TuxSidebar extends React.Component<any, State> {
           }
 
           .TuxSidebar-user {
-            bottom: 25px;
+            bottom: 50px;
             left: 0; right: 0;
             margin: auto;
             position: absolute;

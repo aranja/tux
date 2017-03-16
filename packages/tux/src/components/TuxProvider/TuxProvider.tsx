@@ -80,7 +80,9 @@ class TuxProvider extends Component<TuxProviderProps, any> {
     const { isEditing, sidebarIsActive, overlayIsActive } = this.state
     return (
       <div className="TuxProvider" style={{paddingTop: isEditing && 36}}>
-        <AlertBar isActive={isEditing} />
+        {isEditing && (
+          <AlertBar />
+        )}
         <TuxSidebar
           isEditing={isEditing}
           sidebarIsActive={sidebarIsActive}
