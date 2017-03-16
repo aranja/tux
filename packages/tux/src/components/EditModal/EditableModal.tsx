@@ -1,10 +1,10 @@
 import React from 'react'
 
-export interface EditableModalProps {
+export interface EditModalProps {
   children?: any,
 }
 
-class EditableModal extends React.Component<EditableModalProps, any> {
+class EditModal extends React.Component<EditModalProps, any> {
   static contextTypes = {
     model: React.PropTypes.object,
   }
@@ -21,18 +21,9 @@ class EditableModal extends React.Component<EditableModalProps, any> {
 
   render() {
     const { children, ...props } = this.props
-    const isEditing = this.context.tux && this.context.tux.isEditing
     return (
       <div {...props} onClick={this.onEdit}>
         {children}
-        <style jsx>{`
-          .EditableModal.is-editing {
-            cursor: pointer;
-          }
-          .EditableModal.is-editing, .EditableModal.is-editing > * {
-            outline: 1px solid aquamarine !important;
-          }
-        `}</style>
       </div>
     )
   }

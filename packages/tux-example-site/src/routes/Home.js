@@ -27,30 +27,30 @@ const Home = ({ pages, sellPoints, testimonial, carousel }) => {
       <Menu />
       <Editable model={page}>
         <ProductBanner image={ProductBannerImage} />
-        <Section>
-          <H1><EditInline field="fields.content.tagline" /></H1>
-          <SellPoints sellPoints={sellPoints.items} />
-        </Section>
-        <Section>
-          <Carousel carouselItems={carousel.items}/>
-        </Section>
-        <Section>
-          <Testimonial testimonial={testimonial.items}/>
-        </Section>
-        <Section backgroundColor="#F5F7FA">
-          <H1>What People Say About Tux</H1>
-          <H2>Totally random and unbiased selection of people</H2>
-          <TwitterFeed />
-          <SocialPlug>
-            Are you using Tux? <strong>Let us know on Twitter</strong>
-          </SocialPlug>
-        </Section>
-        <Section>
-          <H1>Sign up for our newsletter, you won't regret it *</H1>
-          <H2>* Unless you don't like cat facts.</H2>
-          <Newsletter />
-        </Section>
       </Editable>
+      <Section>
+        <H1><EditInline field="fields.content.tagline" /></H1>
+        <SellPoints sellPoints={sellPoints.items} />
+      </Section>
+      <Section>
+        <Carousel carouselItems={carousel.items}/>
+      </Section>
+      <Section>
+        <Testimonial testimonial={testimonial.items}/>
+      </Section>
+      <Section backgroundColor="#F5F7FA">
+        <H1>What People Say About Tux</H1>
+        <H2>Totally random and unbiased selection of people</H2>
+        <TwitterFeed />
+        <SocialPlug>
+          Are you using Tux? <strong>Let us know on Twitter</strong>
+        </SocialPlug>
+      </Section>
+      <Section>
+        <H1>Sign up for our newsletter, you won't regret it *</H1>
+        <H2>* Unless you don't like cat facts.</H2>
+        <Newsletter />
+      </Section>
     </div>
   )
 }

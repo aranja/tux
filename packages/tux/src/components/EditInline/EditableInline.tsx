@@ -32,27 +32,21 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
   }
 
   render() {
+    const { children } = this.props
     const { editorState } = this.state
-    const { save, load, children, field, ...props } = this.props
-    const contentFromAdapter = editorState.getCurrentContent().hasText()
 
-    return (
-      <div {...props}>
-        {contentFromAdapter
-          ? (
-            <MegadraftEditor
-              editorState={editorState}
-              onChange={this.onEditorChange}
-              sidebarRendererFn={this.getCustomSidebar}
-              readOnly={this.context.readOnly}
-            />
-          )
-          : (
-            children
-          )
-        }
-      </div>
-    )
+    if (editorState.getCurrentContent().hasText()) {
+      return (
+        <MegadraftEditor
+          editorState={editorState}
+          onChange={this.onEditorChange}
+          sidebarRendererFn={this.getCustomSidebar}
+          readOnly={this.context.readOnly}
+        />
+      )
+    }
+
+    return children ? children : null
   }
 }
 
