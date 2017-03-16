@@ -68,27 +68,12 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
     const isEditing = this.context.tux && this.context.tux.isEditing
 
     return (
-      <div className={classNames(isLoggedIn && 'display-editable-clue')}>
-        <MegadraftEditor
-          readOnly={!isEditing}
-          editorState={this.state.editorState}
-          onChange={this.onEditorChange.bind(this)}
-          sidebarRendererFn={this.getCustomSidebar}
-        />
-        <style jsx>{`
-          .display-editable-clue {
-            animation: editableClue 1s;
-          }
-          @keyframes editableClue {
-            from {
-              background: rgba(232, 0, 138, 0.2);
-            }
-            to {
-              background: rgba(232, 0, 138, 0);
-            }
-          }
-        `}</style>
-      </div>
+      <MegadraftEditor
+        readOnly={!isEditing}
+        editorState={this.state.editorState}
+        onChange={this.onEditorChange.bind(this)}
+        sidebarRendererFn={this.getCustomSidebar}
+      />
     )
   }
 }

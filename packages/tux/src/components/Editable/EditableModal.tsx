@@ -32,31 +32,11 @@ class EditableModal extends React.Component<EditableModalProps, any> {
       className,
       'EditableModal',
       isEditing && 'is-editing',
-      isLoggedIn && 'display-editable-clue'
     )
 
     return (
       <div className={classes} onClick={() => {isEditing && this.onEdit()}}>
         {children}
-        <style jsx>{`
-          .EditableModal.is-editing {
-            cursor: pointer;
-          }
-          .EditableModal.is-editing, .EditableModal.is-editing > * {
-            outline: 1px solid aquamarine !important;
-          }
-          .display-editable-clue {
-            animation: editableClue 1s;
-          }
-          @keyframes editableClue {
-            from {
-              background: rgba(232, 0, 138, 0.2);
-            }
-            to {
-              background: rgba(232, 0, 138, 0);
-            }
-          }
-        `}</style>
       </div>
     )
   }
