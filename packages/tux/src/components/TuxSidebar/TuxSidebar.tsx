@@ -89,7 +89,7 @@ class TuxSidebar extends React.Component<any, State> {
             right: 0;
             height: 100%;
             min-height: 100vh;
-            z-index: 100;
+            z-index: 20;
             box-shadow: 7px 1px 10px ${fade(tuxColors.colorBlack, 0.2)};
             transform: translateX(100%);
             transition: transform 0.4s ease-out;
@@ -119,7 +119,7 @@ class TuxSidebar extends React.Component<any, State> {
             bottom: 135px;
             transform: rotateZ(-90deg);
             width: 100px;
-            z-index: 101;
+            z-index: 30;
           }
 
           /*Sneak peak on hover*/

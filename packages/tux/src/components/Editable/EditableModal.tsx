@@ -26,7 +26,8 @@ class EditableModal extends React.Component<EditableModalProps, any> {
 
   render() {
     const { model, children, className, isLoggedIn } = this.props
-    const isEditing = this.context.tux && this.context.tux.isEditing // todo: is this ever true?
+    const isEditing = this.context.tux && this.context.tux.isEditing
+
     const classes = classNames(
       className,
       'EditableModal',
@@ -35,7 +36,7 @@ class EditableModal extends React.Component<EditableModalProps, any> {
     )
 
     return (
-      <div className={classes} onClick={() => {isLoggedIn && this.onEdit()}}>
+      <div className={classes} onClick={() => {isEditing && this.onEdit()}}>
         {children}
         <style jsx>{`
           .EditableModal.is-editing {

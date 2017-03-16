@@ -33,7 +33,7 @@ class Editable extends React.Component<EditableProps, any> {
   render() {
     const { children, field, model, onChange, className } = this.props
     const { isLoggedIn } = this.state
-    const isEditing = this.context.tux && this.context.tux.isEditing
+    const isEditing = isLoggedIn && this.context.tux && this.context.tux.isEditing
     if (field) {
       return <EditableInline model={model} field={field} isLoggedIn={isLoggedIn}/>
     }

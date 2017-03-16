@@ -70,7 +70,7 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
     return (
       <div className={classNames(isLoggedIn && 'display-editable-clue')}>
         <MegadraftEditor
-          readOnly={!isLoggedIn}
+          readOnly={!isEditing}
           editorState={this.state.editorState}
           onChange={this.onEditorChange.bind(this)}
           sidebarRendererFn={this.getCustomSidebar}
