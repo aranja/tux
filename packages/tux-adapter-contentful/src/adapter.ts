@@ -31,8 +31,6 @@ export class ContentfulAdapter {
   private clientId: string
   private redirectUri: string
   private deliveryApi: QueryApi
-  private previewApi: any
-  private managementApi: ManagementApi | null
   private listeners: Array<Function>
 
   constructor({space, deliveryToken, clientId, redirectUri}: Config) {
@@ -40,20 +38,16 @@ export class ContentfulAdapter {
     this.clientId = clientId
     this.redirectUri = redirectUri
     this.deliveryApi = new QueryApi(space, deliveryToken, 'cdn')
-    this.previewApi = null
-    this.managementApi = null
     this.listeners = []
-    // this.initPrivateApis()
   }
 
   getManagementApi() {
     return new Promise(async (resolve, reject) => {
-      const managementToken = this.getManagementToken()
+      const managementToken = localStorage.getItem('contentfulManagementToken')
       if (!managementToken) {
         return reject('No valid managementToken found')
       }
       const managementApi = new ManagementApi(this.space, managementToken)
-      this.setPreviewApi(managementApi)
       const defaultLocale = await managementApi.getDefaultLocaleForSpace(this.space)
       setLocale(defaultLocale)
       resolve(managementApi)
@@ -71,10 +65,16 @@ export class ContentfulAdapter {
     }
   }
 
-  getManagementToken() {
+  private async initPrivateApis() {
+    // There is a total of three apis:
+    // Content Delivery API - Access Token passed publicly to adapter.
+    // Content Management API - Access Token returned from OAuth2 flow and saved in localStorage.
+    // Content Preview API - Access Token manually queried through Admin API, then saved in
+    // localStorage.
+
     // No private apis on server for now.
     if (typeof window === 'undefined') {
-      return null
+      return
     }
 
     // Get auth token after login
@@ -85,17 +85,13 @@ export class ContentfulAdapter {
       location.hash = ''
     }
 
-    return localStorage.getItem('contentfulManagementToken')
-  }
+    const managementToken = localStorage.getItem('contentfulManagementToken')
 
-  async setPreviewApi(managementApi: ManagementApi) {
-    // No private apis on server for now.
-    if (typeof window === 'undefined') {
+    if (!managementToken) {
       return
     }
-    if (managementApi.previewApi) {
-      return
-    }
+
+    const managementApi = new ManagementApi(this.space, managementToken)
 
     let previewToken = localStorage.getItem('contentfulPreviewToken')
     let triggerChange = false
@@ -109,17 +105,20 @@ export class ContentfulAdapter {
       localStorage.setItem('contentfulPreviewToken', previewToken)
     }
 
-    this.previewApi = new QueryApi(this.space, previewToken, 'preview')
-    managementApi.previewApi = this.previewApi
+    const previewApi = new QueryApi(this.space, previewToken, 'preview')
+    managementApi.previewApi = previewApi
 
     if (triggerChange) {
       this.triggerChange()
     }
+
+    return managementApi
   }
 
   async getQueryApi() {
-    await this.getManagementApi()
-    return this.previewApi || this.deliveryApi
+    await this.initPrivateApis()
+    const managementApi = await this.getManagementApi()
+    return managementApi.previewApi || this.deliveryApi
   }
 
   getMeta(model: string | Object): Promise<Meta> {
