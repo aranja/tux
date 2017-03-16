@@ -27,7 +27,6 @@ class TagEditor extends Component<TagEditorProps, any> {
     const prevTags: Array<string> = []
     const isArray = value instanceof Array
 
-
     if (value && isArray) {
       value.map((value) => {
         prevTags.push(value)
@@ -45,6 +44,23 @@ class TagEditor extends Component<TagEditorProps, any> {
 
     if (!this.isUnmounting) {
       onChange(newTags)
+    }
+  }
+
+  onItemDeleted = (tag) => {
+    const { onChange } = this.props
+
+    onChange(tag)
+  }
+
+  handleClickDelete = (item) => {
+    const { tags } = this.state
+    const newTags = tags
+    const tagPosition = newTags.indexOf(item.singleValue)
+
+    if (tagPosition > -1) {
+      newTags.splice(tagPosition, 1)
+      this.onItemDeleted(newTags)
     }
   }
 
@@ -80,10 +96,10 @@ class TagEditor extends Component<TagEditorProps, any> {
           onClick={this.handleOnKeyUp}
         />
         <div className="TagEditor-tags">
-          {value && value.map((singleValue) => (
+          {value instanceof Array && value.map((singleValue) => (
             <p key={singleValue} className="TagEditor-tag">
               {singleValue}
-              <span className="TagEditor-tagButton"></span>
+              <span className="TagEditor-tagButton" onClick={() => this.handleClickDelete({singleValue})}></span>
             </p>
           ))}
         </div>
@@ -104,7 +120,8 @@ class TagEditor extends Component<TagEditorProps, any> {
 
             .TagEditor-tags {
               display: flex;
-              margin: 10px 0;
+              flex-wrap: wrap;
+              margin: 10px -5px;
             }
 
             .TagEditor-tag {
@@ -114,10 +131,10 @@ class TagEditor extends Component<TagEditorProps, any> {
               color: ${tuxInputStyles.labelTextColor};
               font-size: 13px;
               padding: 4px 12px;
+              margin: 5px;
             }
 
             .TagEditor-tag:not(:last-child) {
-              margin-right: 10px;
             }
 
             .TagEditor-tagButton {
