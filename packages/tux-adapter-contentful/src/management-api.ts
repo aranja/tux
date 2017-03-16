@@ -1,16 +1,24 @@
 import axios from 'axios'
 import {AxiosInstance} from 'axios'
 
+let instance: any = null
+
 class ManagementApi {
   private client: AxiosInstance
   private space: string
 
   previewApi: any
 
-  constructor (space: string, accessToken: string) {
-    this.space = space
-    this.previewApi = null
-    this.client = axios.create({
+  constructor(space: string, accessToken: string) {
+    if (instance) {
+      return instance
+    } else {
+      instance = this
+    }
+
+    instance.space = space
+    instance.previewApi = null
+    instance.client = axios.create({
       baseURL: `https://api.contentful.com`,
       headers: {
         'Content-Type': 'application/vnd.contentful.management.v1+json',
@@ -20,14 +28,14 @@ class ManagementApi {
   }
 
   get(url: string, params?: Object): Promise<any> {
-    return this.client.get(
+    return instance.client.get(
       url,
       { params }
     ).then(result => result.data) as Promise<any>
   }
 
   put(url: string, body: any, version: string): Promise<any> {
-    return this.client.put(url, body, {
+    return instance.client.put(url, body, {
       headers: {
         'X-Contentful-Version': version,
       }
@@ -35,7 +43,7 @@ class ManagementApi {
   }
 
   post(url: string, body: any, contentType: string) {
-    return this.client.post(url, body, {
+    return instance.client.post(url, body, {
       headers: {
         'Content-Type': contentType,
       }
@@ -43,44 +51,44 @@ class ManagementApi {
   }
 
   getEntry(id: string) {
-    return this._getEntity(id, 'entries')
+    return instance._getEntity(id, 'entries')
   }
 
   getAsset(id: string) {
-    return this._getEntity(id, 'assets')
+    return instance._getEntity(id, 'assets')
   }
 
   _getEntity(id: string, entityPath: string) {
-    return this.get(`/spaces/${this.space}/${entityPath}/${id}`)
+    return instance.get(`/spaces/${instance.space}/${entityPath}/${id}`)
   }
 
   async saveEntry(entry: any) {
-    return this._save(entry, 'entries')
+    return instance._save(entry, 'entries')
   }
 
   async saveAsset(asset: any) {
-    return this._save(asset, 'assets')
+    return instance._save(asset, 'assets')
   }
 
   processAsset(id: string, localeName: string, version: any) {
-    const url = `/spaces/${this.space}/assets/${id}/files/${localeName}/process`
-    return this.put(url, null, version)
+    const url = `/spaces/${instance.space}/assets/${id}/files/${localeName}/process`
+    return instance.put(url, null, version)
   }
 
   async _save(entity: any, entityPath: string) {
     const { fields, sys: { id, version } } = entity
-    const url = `/spaces/${this.space}/${entityPath}/${id}`
-    const newEntry = await this.put(url, { fields }, version)
+    const url = `/spaces/${instance.space}/${entityPath}/${id}`
+    const newEntry = await instance.put(url, { fields }, version)
 
-    if (this.previewApi) {
-      this.previewApi.override(this.formatForDelivery(newEntry))
+    if (instance.previewApi) {
+      instance.previewApi.override(instance.formatForDelivery(newEntry))
     }
 
     return newEntry
   }
 
   createUpload(file: File) {
-    const url = `https://upload.contentful.com/spaces/${this.space}/uploads`
+    const url = `https://upload.contentful.com/spaces/${instance.space}/uploads`
 
     return new Promise((resolve, reject) => {
       const request = new XMLHttpRequest()
@@ -88,7 +96,7 @@ class ManagementApi {
       request.setRequestHeader('Content-Type', 'application/octet-stream')
       request.setRequestHeader(
         'Authorization',
-        this.client.defaults.headers.Authorization
+        instance.client.defaults.headers.Authorization
       )
       request.onload = () => {
         const data = JSON.parse(request.response)
@@ -104,8 +112,8 @@ class ManagementApi {
   }
 
   createAsset(body: any) {
-    const url = `/spaces/${this.space}/assets`
-    return this.post(url, body, 'application/json')
+    const url = `/spaces/${instance.space}/assets`
+    return instance.post(url, body, 'application/json')
   }
 
   async getTypeMeta(type: string) {
@@ -113,8 +121,8 @@ class ManagementApi {
       contentType,
       editorInterface,
     ] = await Promise.all([
-      this.get(`/spaces/${this.space}/content_types/${type}`),
-      this.get(`/spaces/${this.space}/content_types/${type}/editor_interface`),
+      instance.get(`/spaces/${instance.space}/content_types/${type}`),
+      instance.get(`/spaces/${instance.space}/content_types/${type}/editor_interface`),
     ])
 
     contentType.fields.forEach((field: any) => {
@@ -124,17 +132,38 @@ class ManagementApi {
   }
 
   async getPreviewToken() {
-    const previewApiKeys = await this.get(`/spaces/${this.space}/preview_api_keys`)
+    const previewApiKeys = await instance.get(`/spaces/${instance.space}/preview_api_keys`)
     const apiKey = previewApiKeys.items[0]
     return apiKey && apiKey.accessToken
   }
 
   getUser() {
-    return this.get('/user')
+    return instance.get('/user')
   }
 
   getSpace() {
-    return this.get(`/spaces/${this.space}`)
+    return instance.get(`/spaces/${instance.space}`)
+  }
+
+  getLocalesForSpace(spaceId: string) {
+    return instance.get(`/spaces/${instance.space}/locales`)
+  }
+
+  async getDefaultLocaleForSpace(spaceId: string) {
+    return new Promise(async(resolve, reject) => {
+      if (instance.defaultLocale) {
+        return resolve(instance.defaultLocale)
+      }
+
+      const locales = await instance.getLocalesForSpace(spaceId)
+      for (const locale of locales.items) {
+        if (locale.default) {
+          instance.defaultLocale = locale.internal_code
+          return resolve(instance.defaultLocale)
+        }
+      }
+      return reject('No default locale found')
+    })
   }
 
   formatForDelivery(entry: any) {

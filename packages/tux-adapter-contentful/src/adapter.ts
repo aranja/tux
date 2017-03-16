@@ -2,7 +2,7 @@ import QueryApi from './query-api'
 import ManagementApi from './management-api'
 import generateEditorSchema from './editors'
 
-import { extractLocale, injectLocale } from './locale'
+import { extractLocale, injectLocale, setLocale } from './locale'
 
 import { Field, Meta } from 'tux'
 
@@ -43,7 +43,21 @@ export class ContentfulAdapter {
     this.previewApi = null
     this.managementApi = null
     this.listeners = []
-    this.initPrivateApis()
+    // this.initPrivateApis()
+  }
+
+  getManagementApi() {
+    return new Promise(async (resolve, reject) => {
+      const managementToken = this.getManagementToken()
+      if (!managementToken) {
+        return reject('No valid managementToken found')
+      }
+      const managementApi = new ManagementApi(this.space, managementToken)
+      this.setPreviewApi(managementApi)
+      const defaultLocale = await managementApi.getDefaultLocaleForSpace(this.space)
+      setLocale(defaultLocale)
+      resolve(managementApi)
+    })
   }
 
   triggerChange() {
@@ -57,16 +71,10 @@ export class ContentfulAdapter {
     }
   }
 
-  private async initPrivateApis() {
-    // There is a total of three apis:
-    // Content Delivery API - Access Token passed publicly to adapter.
-    // Content Management API - Access Token returned from OAuth2 flow and saved in localStorage.
-    // Content Preview API - Access Token manually queried through Admin API, then saved in
-    // localStorage.
-
+  getManagementToken() {
     // No private apis on server for now.
     if (typeof window === 'undefined') {
-      return
+      return null
     }
 
     // Get auth token after login
@@ -77,18 +85,22 @@ export class ContentfulAdapter {
       location.hash = ''
     }
 
-    const managementToken = localStorage.getItem('contentfulManagementToken')
+    return localStorage.getItem('contentfulManagementToken')
+  }
 
-    if (!managementToken) {
+  async setPreviewApi(managementApi: ManagementApi) {
+    // No private apis on server for now.
+    if (typeof window === 'undefined') {
       return
     }
-
-    this.managementApi = new ManagementApi(this.space, managementToken)
+    if (managementApi.previewApi) {
+      return
+    }
 
     let previewToken = localStorage.getItem('contentfulPreviewToken')
     let triggerChange = false
     if (!previewToken) {
-      previewToken = await this.managementApi.getPreviewToken()
+      previewToken = await managementApi.getPreviewToken()
       if (!previewToken) {
         console.error('Warning: No access token found for Contentful Preview API.')
         return
@@ -98,29 +110,27 @@ export class ContentfulAdapter {
     }
 
     this.previewApi = new QueryApi(this.space, previewToken, 'preview')
-    this.managementApi.previewApi = this.previewApi
+    managementApi.previewApi = this.previewApi
 
     if (triggerChange) {
       this.triggerChange()
     }
   }
 
-  getQueryApi() {
+  async getQueryApi() {
+    await this.getManagementApi()
     return this.previewApi || this.deliveryApi
   }
 
   getMeta(model: string | Object): Promise<Meta> {
     return new Promise(async(resolve, reject) => {
-      if (!this.managementApi) {
-        return reject('Manager api not defined, please log in get a scheme.')
-      }
-
+      const managementApi = await this.getManagementApi()
       const type = this._getModelType(model)
       if (!type) {
         return reject('Invalid type')
       }
 
-      const typeMeta = await this.managementApi.getTypeMeta(type)
+      const typeMeta = await managementApi.getTypeMeta(type)
       const editorSchema = generateEditorSchema(typeMeta)
 
       resolve({
@@ -141,21 +151,16 @@ export class ContentfulAdapter {
   }
 
   async save(model: any) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in to save.')
-    }
+    const managementApi = await this.getManagementApi()
 
     const modelWithLocale = injectLocale(model)
-    await this.managementApi.saveEntry(modelWithLocale)
+    await managementApi.saveEntry(modelWithLocale)
     this.triggerChange()
   }
 
   async createAssetFromFile(file: any, title: string) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in to save.')
-    }
-
-    const upload = await this.managementApi.createUpload(file)
+    const managementApi = await this.getManagementApi()
+    const upload = await managementApi.createUpload(file)
     if (upload.sys) {
       const assetBody = {
         fields: {
@@ -212,13 +217,10 @@ export class ContentfulAdapter {
   }
 
   async _createAsset(body: any, bodyType: string) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in to save.')
-    }
-
-    const asset = await this.managementApi.createAsset(injectLocale(body))
+    const managementApi = await this.getManagementApi()
+    const asset = await managementApi.createAsset(injectLocale(body))
     if (asset) {
-      await this.managementApi.processAsset(
+      await managementApi.processAsset(
         asset.sys.id,
         'en-US',
         asset.sys.version
@@ -228,34 +230,26 @@ export class ContentfulAdapter {
   }
 
   async load(model: any) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in get a scheme.')
-    }
-
-    const entry = await this.managementApi.getEntry(model.sys.id)
+    const managementApi = await this.getManagementApi()
+    const entry = await managementApi.getEntry(model.sys.id)
     return extractLocale(entry)
   }
 
   async loadAsset(model: any) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in get a scheme.')
-    }
-    const asset = await this.managementApi.getAsset(model.sys.id)
+    const managementApi = await this.getManagementApi()
+    const asset = await managementApi.getAsset(model.sys.id)
     return extractLocale(asset)
   }
 
   async currentUser() {
-    if (!this.managementApi) {
-      return null
-    }
-
+    const managementApi = await this.getManagementApi()
     try {
       let [
         user,
         space,
       ] = await Promise.all([
-        this.managementApi.getUser(),
-        this.managementApi.getSpace(),
+        managementApi.getUser(),
+        managementApi.getSpace(),
       ])
 
       user.space = space
