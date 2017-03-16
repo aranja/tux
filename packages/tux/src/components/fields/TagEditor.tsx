@@ -99,7 +99,10 @@ class TagEditor extends Component<TagEditorProps, any> {
           {value instanceof Array && value.map((singleValue) => (
             <p key={singleValue} className="TagEditor-tag">
               {singleValue}
-              <span className="TagEditor-tagButton" onClick={() => this.handleClickDelete({singleValue})}></span>
+              <span
+                className="TagEditor-tagButton"
+                onClick={() => this.handleClickDelete({singleValue})}>
+              </span>
             </p>
           ))}
         </div>
