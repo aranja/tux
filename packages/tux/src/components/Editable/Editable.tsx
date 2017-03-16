@@ -1,13 +1,8 @@
 import React from 'react'
-import EditableInline from './EditableInline'
-import EditableModal from './EditableModal'
 
 export interface EditableProps {
   model: any,
-  field: string | Array<string>,
-  onChange: Function,
   children: any,
-  className: string,
 }
 
 class Editable extends React.Component<EditableProps, any> {
@@ -15,19 +10,55 @@ class Editable extends React.Component<EditableProps, any> {
     tux: React.PropTypes.object,
   }
 
-  render() {
-    const { children, field, model, onChange, className } = this.props
-    const isEditing = this.context.tux && this.context.tux.isEditing
+  static childContextTypes = {
+    model: React.PropTypes.object,
+    readOnly: React.PropTypes.bool,
+  }
 
-    if (field) {
-      return <EditableInline model={model} field={field} />
+  private isMounded: boolean
+
+  state = {
+    readOnly: true,
+  }
+
+  componentDidMount() {
+    this.isMounded = true
+    this.init()
+  }
+
+  componentWillUnmount() {
+    this.isMounded = false
+  }
+
+  getChildContext() {
+    return {
+      model: this.props.model,
+      readOnly: this.state.readOnly,
     }
+  }
 
-    return (
-      <EditableModal className={className} model={model} onChange={onChange}>
-        {children}
-      </EditableModal>
-    )
+  async init(): Promise<void> {
+    let readOnly = false
+    try {
+      readOnly = (await this.context.tux.adapter.currentUser()) == null
+    } finally {
+      if (this.isMounded) {
+        this.setState({ readOnly })
+      }
+    }
+  }
+
+  onLoad = async (model: any) => {
+    return model
+  }
+
+  onSave = async (model: any) => {
+
+  }
+
+  render() {
+    const { children, modal, ...props } = this.props
+    return <div {...props}>{children}</div>
   }
 }
 

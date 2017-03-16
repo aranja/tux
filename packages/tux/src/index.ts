@@ -1,5 +1,7 @@
 export { default as TuxProvider } from './components/TuxProvider'
 export { default as Editable } from './components/Editable'
+export { default as EditInline } from './components/EditInline'
+export { default as EditModal } from './components/EditModal'
 
 export { default as BooleanField } from './components/fields/Boolean'
 export { default as DatePicker } from './components/fields/DatePicker'
