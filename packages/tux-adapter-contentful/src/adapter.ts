@@ -111,8 +111,6 @@ export class ContentfulAdapter {
     if (triggerChange) {
       this.triggerChange()
     }
-
-    return managementApi
   }
 
   async getQueryApi() {
