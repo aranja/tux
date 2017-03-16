@@ -46,7 +46,6 @@ class EditableModal extends React.Component<EditableModalProps, any> {
           }
           .display-editable-clue {
             animation: editableClue 1s;
-            animation-repeat-count: 3;
           }
           @keyframes editableClue {
             from {
