@@ -37,8 +37,8 @@ const About = ({ pages, sellPoints, gallery, testimonial, pricetable, articles }
         <Articles articles={articles} />
       </Section>
       <Section>
-        <H1>Get our Product for the Best Price</H1>
-        <H2>Contact us for Enterprise plans</H2>
+        <H1><Editable model={page} field="fields.content.pricetableTitle" /></H1>
+        <H2><Editable model={page} field="fields.content.pricetableSubtitle" /></H2>
         <Pricetable pricetableItems={pricetable.items} />
       </Section>
     </div>
