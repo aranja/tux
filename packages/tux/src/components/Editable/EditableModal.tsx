@@ -37,6 +37,13 @@ class EditableModal extends React.Component<EditableModalProps, any> {
     return (
       <div className={classes} onClick={() => {isEditing && this.onEdit()}}>
         {children}
+        <style jsx>{`
+          .EditableModal.is-editing:hover {
+            cursor: pointer;
+            outline: 1px dashed rgba(128, 128, 128, 0.7);
+          }
+        `}
+        </style>
       </div>
     )
   }

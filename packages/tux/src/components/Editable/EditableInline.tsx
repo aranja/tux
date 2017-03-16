@@ -66,14 +66,27 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
   render() {
     const { children, field, model, onChange, isLoggedIn } = this.props
     const isEditing = this.context.tux && this.context.tux.isEditing
+    const classes = classNames(
+      'EditableInline',
+      isEditing && 'is-editing',
+    )
 
     return (
-      <MegadraftEditor
-        readOnly={!isEditing}
-        editorState={this.state.editorState}
-        onChange={this.onEditorChange.bind(this)}
-        sidebarRendererFn={this.getCustomSidebar}
-      />
+      <div className={classes}>
+        <MegadraftEditor
+          readOnly={!isEditing}
+          editorState={this.state.editorState}
+          onChange={this.onEditorChange.bind(this)}
+          sidebarRendererFn={this.getCustomSidebar}
+        />
+        <style jsx>{`
+          .EditableInline.is-editing:hover {
+            cursor: text;
+            outline: 1px dashed rgba(128, 128, 128, 0.7);
+          }
+        `}
+        </style>
+      </div>
     )
   }
 }
