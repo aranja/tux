@@ -13,7 +13,7 @@ import SocialPlug from '../components/SocialPlug'
 import ProductBannerImage from '../ProductBannerImage.png'
 
 
-const About = ({ pages, sellPoints, gallery, testimonial, pricetable }) => {
+const About = ({ pages, sellPoints, gallery, testimonial, pricetable, articles }) => {
   const page = pages.items[0]
 
   return (
