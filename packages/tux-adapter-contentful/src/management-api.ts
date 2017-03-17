@@ -24,14 +24,10 @@ class ManagementApi {
   }
 
   get(url: string, params?: Object): Promise<any> {
-    console.log(`### get: ${url}`)
     return this.client.get(
       url,
       { params }
-    ).then(result => {
-      console.log(result.data)
-      return result.data
-    }) as Promise<any>
+    ).then(result => result.data) as Promise<any>
   }
 
   put(url: string, body: any, version: string): Promise<any> {
@@ -63,11 +59,11 @@ class ManagementApi {
     return extractLocale(entity, this.currentLocale)
   }
 
-  async saveEntry(entry: any) {
+  saveEntry(entry: any) {
     return this._save(entry, 'entries')
   }
 
-  async saveAsset(asset: any) {
+  saveAsset(asset: any) {
     return this._save(asset, 'assets')
   }
 
@@ -80,13 +76,20 @@ class ManagementApi {
     const entityWithLocale = injectLocale(entity, this.currentLocale)
     const { fields, sys: { id, version } } = entityWithLocale
     const url = `/spaces/${this.space}/${entityPath}/${id}`
-    const newEntry = await this.put(url, { fields }, version)
+    const newEntity = await this.put(url, { fields }, version)
 
     if (this.previewApi) {
-      this.previewApi.override(this.formatForDelivery(newEntry))
+      this.previewApi.override(this.formatForDelivery(newEntity))
     }
 
-    return newEntry
+    await this._publish(newEntity, entityPath)
+    return newEntity
+  }
+
+  _publish(entity: any, entityPath: string) {
+    const { id, version } = entity.sys
+    const url = `/spaces/${this.space}/${entityPath}/${id}/published`
+    return this.put(url, null, version)
   }
 
   createUpload(file: File) {
@@ -113,9 +116,14 @@ class ManagementApi {
     })
   }
 
-  createAsset(body: any) {
+  async createAsset(body: any) {
     const url = `/spaces/${this.space}/assets`
-    return this.post(url, body, 'application/json')
+    const bodyWithLocale = injectLocale(body, this.currentLocale)
+    const asset = await this.post(url, bodyWithLocale, 'application/json')
+    await this.processAsset(asset.sys.id, asset.sys.version)
+    asset.sys.version += 1
+    await this._publish(asset, 'assets')
+    return asset
   }
 
   async getTypeMeta(type: string) {

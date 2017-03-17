@@ -42,22 +42,15 @@ export class ContentfulAdapter {
   }
 
   async getManagementApi() {
-    console.log('- getManagementApi:start')
     if (!this.managementApi) {
-      console.log('- initPrivateApis:start')
       await this.initPrivateApis()
-      console.log('- initPrivateApis:end')
     }
 
     if (this.managementApi) {
-      console.log('- managementApi.getDefaultLocaleForSpace:start')
       await this.managementApi.getDefaultLocaleForSpace(this.space)
-      console.log('- managementApi.getDefaultLocaleForSpace:end')
-      console.log('- getManagementApi:end:success')
       return this.managementApi
     }
-    console.log('- getManagementApi:end:fail')
-    return null
+    throw 'Could not initialize management API'
   }
 
   triggerChange() {
@@ -111,10 +104,8 @@ export class ContentfulAdapter {
       localStorage.setItem('contentfulPreviewToken', previewToken)
     }
 
-    console.log('-# attaching privateApi:start')
     const previewApi = new QueryApi(this.space, previewToken, 'preview')
     this.managementApi.previewApi = previewApi
-    console.log('-# attaching privateApi:end')
 
     if (triggerChange) {
       this.triggerChange()
@@ -166,7 +157,7 @@ export class ContentfulAdapter {
     if (!managementApi) {
       throw 'No management api'
     }
-    
+
     const upload = await managementApi.createUpload(file)
     if (upload.sys) {
       const assetBody = {
@@ -225,11 +216,7 @@ export class ContentfulAdapter {
 
   async _createAsset(body: any, bodyType: string) {
     const managementApi = await this.getManagementApi()
-    const asset = await managementApi.createAsset(injectLocale(body))
-    if (asset && managementApi) {
-      await managementApi.processAsset(asset.sys.id, asset.sys.version)
-    }
-    return asset
+    return managementApi.createAsset(body)
   }
 
   async load(model: any) {
