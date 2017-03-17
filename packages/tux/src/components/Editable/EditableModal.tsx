@@ -40,6 +40,7 @@ class EditableModal extends React.Component<EditableModalProps, any> {
           .EditableModal.is-editing:hover {
             cursor: pointer;
             outline: 1px dashed rgba(128, 128, 128, 0.7);
+            outline-offset: 10px;
           }
         `}
         </style>

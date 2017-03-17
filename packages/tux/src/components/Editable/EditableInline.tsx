@@ -83,6 +83,7 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
           .EditableInline.is-editing:hover {
             cursor: text;
             outline: 1px dashed rgba(128, 128, 128, 0.7);
+            outline-offset: 10px;
           }
         `}
         </style>
