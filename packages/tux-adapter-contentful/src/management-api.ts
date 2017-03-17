@@ -1,24 +1,20 @@
 import axios from 'axios'
 import {AxiosInstance} from 'axios'
 
-let instance: any = null
+import { extractLocale, injectLocale } from './locale'
 
 class ManagementApi {
   private client: AxiosInstance
   private space: string
+  private currentLocale: string
 
   previewApi: any
 
-  constructor(space: string, accessToken: string) {
-    if (instance) {
-      return instance
-    } else {
-      instance = this
-    }
-
-    instance.space = space
-    instance.previewApi = null
-    instance.client = axios.create({
+  constructor (space: string, accessToken: string) {
+    this.space = space
+    this.previewApi = null
+    this.currentLocale = ''
+    this.client = axios.create({
       baseURL: `https://api.contentful.com`,
       headers: {
         'Content-Type': 'application/vnd.contentful.management.v1+json',
@@ -28,14 +24,18 @@ class ManagementApi {
   }
 
   get(url: string, params?: Object): Promise<any> {
-    return instance.client.get(
+    console.log(`### get: ${url}`)
+    return this.client.get(
       url,
       { params }
-    ).then(result => result.data) as Promise<any>
+    ).then(result => {
+      console.log(result.data)
+      return result.data
+    }) as Promise<any>
   }
 
   put(url: string, body: any, version: string): Promise<any> {
-    return instance.client.put(url, body, {
+    return this.client.put(url, body, {
       headers: {
         'X-Contentful-Version': version,
       }
@@ -43,7 +43,7 @@ class ManagementApi {
   }
 
   post(url: string, body: any, contentType: string) {
-    return instance.client.post(url, body, {
+    return this.client.post(url, body, {
       headers: {
         'Content-Type': contentType,
       }
@@ -51,44 +51,46 @@ class ManagementApi {
   }
 
   getEntry(id: string) {
-    return instance._getEntity(id, 'entries')
+    return this._getEntity(id, 'entries')
   }
 
   getAsset(id: string) {
-    return instance._getEntity(id, 'assets')
+    return this._getEntity(id, 'assets')
   }
 
-  _getEntity(id: string, entityPath: string) {
-    return instance.get(`/spaces/${instance.space}/${entityPath}/${id}`)
+  async _getEntity(id: string, entityPath: string) {
+    const entity = await this.get(`/spaces/${this.space}/${entityPath}/${id}`)
+    return extractLocale(entity, this.currentLocale)
   }
 
   async saveEntry(entry: any) {
-    return instance._save(entry, 'entries')
+    return this._save(entry, 'entries')
   }
 
   async saveAsset(asset: any) {
-    return instance._save(asset, 'assets')
+    return this._save(asset, 'assets')
   }
 
-  processAsset(id: string, localeName: string, version: any) {
-    const url = `/spaces/${instance.space}/assets/${id}/files/${localeName}/process`
-    return instance.put(url, null, version)
+  processAsset(id: string, version: any) {
+    const url = `/spaces/${this.space}/assets/${id}/files/${this.currentLocale}/process`
+    return this.put(url, null, version)
   }
 
   async _save(entity: any, entityPath: string) {
-    const { fields, sys: { id, version } } = entity
-    const url = `/spaces/${instance.space}/${entityPath}/${id}`
-    const newEntry = await instance.put(url, { fields }, version)
+    const entityWithLocale = injectLocale(entity, this.currentLocale)
+    const { fields, sys: { id, version } } = entityWithLocale
+    const url = `/spaces/${this.space}/${entityPath}/${id}`
+    const newEntry = await this.put(url, { fields }, version)
 
-    if (instance.previewApi) {
-      instance.previewApi.override(instance.formatForDelivery(newEntry))
+    if (this.previewApi) {
+      this.previewApi.override(this.formatForDelivery(newEntry))
     }
 
     return newEntry
   }
 
   createUpload(file: File) {
-    const url = `https://upload.contentful.com/spaces/${instance.space}/uploads`
+    const url = `https://upload.contentful.com/spaces/${this.space}/uploads`
 
     return new Promise((resolve, reject) => {
       const request = new XMLHttpRequest()
@@ -96,7 +98,7 @@ class ManagementApi {
       request.setRequestHeader('Content-Type', 'application/octet-stream')
       request.setRequestHeader(
         'Authorization',
-        instance.client.defaults.headers.Authorization
+        this.client.defaults.headers.Authorization
       )
       request.onload = () => {
         const data = JSON.parse(request.response)
@@ -112,8 +114,8 @@ class ManagementApi {
   }
 
   createAsset(body: any) {
-    const url = `/spaces/${instance.space}/assets`
-    return instance.post(url, body, 'application/json')
+    const url = `/spaces/${this.space}/assets`
+    return this.post(url, body, 'application/json')
   }
 
   async getTypeMeta(type: string) {
@@ -121,8 +123,8 @@ class ManagementApi {
       contentType,
       editorInterface,
     ] = await Promise.all([
-      instance.get(`/spaces/${instance.space}/content_types/${type}`),
-      instance.get(`/spaces/${instance.space}/content_types/${type}/editor_interface`),
+      this.get(`/spaces/${this.space}/content_types/${type}`),
+      this.get(`/spaces/${this.space}/content_types/${type}/editor_interface`),
     ])
 
     contentType.fields.forEach((field: any) => {
@@ -132,38 +134,36 @@ class ManagementApi {
   }
 
   async getPreviewToken() {
-    const previewApiKeys = await instance.get(`/spaces/${instance.space}/preview_api_keys`)
+    const previewApiKeys = await this.get(`/spaces/${this.space}/preview_api_keys`)
     const apiKey = previewApiKeys.items[0]
     return apiKey && apiKey.accessToken
   }
 
   getUser() {
-    return instance.get('/user')
+    return this.get('/user')
   }
 
   getSpace() {
-    return instance.get(`/spaces/${instance.space}`)
+    return this.get(`/spaces/${this.space}`)
   }
 
   getLocalesForSpace(spaceId: string) {
-    return instance.get(`/spaces/${instance.space}/locales`)
+    return this.get(`/spaces/${this.space}/locales`)
   }
 
   async getDefaultLocaleForSpace(spaceId: string) {
-    return new Promise(async(resolve, reject) => {
-      if (instance.defaultLocale) {
-        return resolve(instance.defaultLocale)
-      }
+    if (this.currentLocale) {
+      return this.currentLocale
+    }
 
-      const locales = await instance.getLocalesForSpace(spaceId)
-      for (const locale of locales.items) {
-        if (locale.default) {
-          instance.defaultLocale = locale.internal_code
-          return resolve(instance.defaultLocale)
-        }
+    const locales = await this.getLocalesForSpace(spaceId)
+    for (const locale of locales.items) {
+      if (locale.default) {
+        this.currentLocale = locale.internal_code
+        return this.currentLocale
       }
-      return reject('No default locale found')
-    })
+    }
+    return null
   }
 
   formatForDelivery(entry: any) {

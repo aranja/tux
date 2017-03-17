@@ -2,8 +2,6 @@ import QueryApi from './query-api'
 import ManagementApi from './management-api'
 import generateEditorSchema from './editors'
 
-import { extractLocale, injectLocale, setLocale } from './locale'
-
 import { Field, Meta } from 'tux'
 
 export interface Config {
@@ -30,6 +28,7 @@ export class ContentfulAdapter {
   private space: string
   private clientId: string
   private redirectUri: string
+  private managementApi: ManagementApi | null
   private deliveryApi: QueryApi
   private listeners: Array<Function>
 
@@ -37,21 +36,28 @@ export class ContentfulAdapter {
     this.space = space
     this.clientId = clientId
     this.redirectUri = redirectUri
+    this.managementApi = null
     this.deliveryApi = new QueryApi(space, deliveryToken, 'cdn')
     this.listeners = []
   }
 
-  getManagementApi() {
-    return new Promise(async (resolve, reject) => {
-      const managementToken = localStorage.getItem('contentfulManagementToken')
-      if (!managementToken) {
-        return reject('No valid managementToken found')
-      }
-      const managementApi = new ManagementApi(this.space, managementToken)
-      const defaultLocale = await managementApi.getDefaultLocaleForSpace(this.space)
-      setLocale(defaultLocale)
-      resolve(managementApi)
-    })
+  async getManagementApi() {
+    console.log('- getManagementApi:start')
+    if (!this.managementApi) {
+      console.log('- initPrivateApis:start')
+      await this.initPrivateApis()
+      console.log('- initPrivateApis:end')
+    }
+
+    if (this.managementApi) {
+      console.log('- managementApi.getDefaultLocaleForSpace:start')
+      await this.managementApi.getDefaultLocaleForSpace(this.space)
+      console.log('- managementApi.getDefaultLocaleForSpace:end')
+      console.log('- getManagementApi:end:success')
+      return this.managementApi
+    }
+    console.log('- getManagementApi:end:fail')
+    return null
   }
 
   triggerChange() {
@@ -91,12 +97,12 @@ export class ContentfulAdapter {
       return
     }
 
-    const managementApi = new ManagementApi(this.space, managementToken)
+    this.managementApi = new ManagementApi(this.space, managementToken)
 
     let previewToken = localStorage.getItem('contentfulPreviewToken')
     let triggerChange = false
     if (!previewToken) {
-      previewToken = await managementApi.getPreviewToken()
+      previewToken = await this.managementApi.getPreviewToken()
       if (!previewToken) {
         console.error('Warning: No access token found for Contentful Preview API.')
         return
@@ -105,8 +111,10 @@ export class ContentfulAdapter {
       localStorage.setItem('contentfulPreviewToken', previewToken)
     }
 
+    console.log('-# attaching privateApi:start')
     const previewApi = new QueryApi(this.space, previewToken, 'preview')
-    managementApi.previewApi = previewApi
+    this.managementApi.previewApi = previewApi
+    console.log('-# attaching privateApi:end')
 
     if (triggerChange) {
       this.triggerChange()
@@ -114,28 +122,24 @@ export class ContentfulAdapter {
   }
 
   async getQueryApi() {
-    await this.initPrivateApis()
-    const managementApi = await this.getManagementApi()
-    return managementApi.previewApi || this.deliveryApi
+    return this.deliveryApi
   }
 
-  getMeta(model: string | Object): Promise<Meta> {
-    return new Promise(async(resolve, reject) => {
-      const managementApi = await this.getManagementApi()
-      const type = this._getModelType(model)
-      if (!type) {
-        return reject('Invalid type')
-      }
+  async getMeta(model: string | Object) {
+    const managementApi = await this.getManagementApi()
+    const type = this._getModelType(model)
+    if (!type || !managementApi) {
+      return null
+    }
 
-      const typeMeta = await managementApi.getTypeMeta(type)
-      const editorSchema = generateEditorSchema(typeMeta)
+    const typeMeta = await managementApi.getTypeMeta(type)
+    const editorSchema = generateEditorSchema(typeMeta)
 
-      resolve({
-        type,
-        editorSchema,
-        name: typeMeta.name,
-      })
-    })
+    return {
+      type,
+      editorSchema,
+      name: typeMeta.name,
+    }
   }
 
   _getModelType(model: any) {
@@ -149,14 +153,20 @@ export class ContentfulAdapter {
 
   async save(model: any) {
     const managementApi = await this.getManagementApi()
+    if (!managementApi) {
+      throw 'No management api'
+    }
 
-    const modelWithLocale = injectLocale(model)
-    await managementApi.saveEntry(modelWithLocale)
+    await managementApi.saveEntry(model)
     this.triggerChange()
   }
 
   async createAssetFromFile(file: any, title: string) {
     const managementApi = await this.getManagementApi()
+    if (!managementApi) {
+      throw 'No management api'
+    }
+    
     const upload = await managementApi.createUpload(file)
     if (upload.sys) {
       const assetBody = {
@@ -216,26 +226,20 @@ export class ContentfulAdapter {
   async _createAsset(body: any, bodyType: string) {
     const managementApi = await this.getManagementApi()
     const asset = await managementApi.createAsset(injectLocale(body))
-    if (asset) {
-      await managementApi.processAsset(
-        asset.sys.id,
-        'en-US',
-        asset.sys.version
-      )
+    if (asset && managementApi) {
+      await managementApi.processAsset(asset.sys.id, asset.sys.version)
     }
     return asset
   }
 
   async load(model: any) {
     const managementApi = await this.getManagementApi()
-    const entry = await managementApi.getEntry(model.sys.id)
-    return extractLocale(entry)
+    return managementApi ? managementApi.getEntry(model.sys.id) : null
   }
 
   async loadAsset(model: any) {
     const managementApi = await this.getManagementApi()
-    const asset = await managementApi.getAsset(model.sys.id)
-    return extractLocale(asset)
+    return managementApi ? managementApi.getAsset(model.sys.id) : null
   }
 
   async currentUser() {
