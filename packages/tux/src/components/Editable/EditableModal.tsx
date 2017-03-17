@@ -26,18 +26,23 @@ class EditableModal extends React.Component<EditableModalProps, any> {
   render() {
     const { model, children, className } = this.props
     const isEditing = this.context.tux && this.context.tux.isEditing
-    const classes = classNames(className, 'EditableModal', isEditing && 'is-editing')
+
+    const classes = classNames(
+      className,
+      'EditableModal',
+      isEditing && 'is-editing',
+    )
+
     return (
-      <div className={classes} onClick={() => this.onEdit()}>
+      <div className={classes} onClick={() => {isEditing && this.onEdit()}}>
         {children}
         <style jsx>{`
-          .EditableModal.is-editing {
+          .EditableModal.is-editing:hover {
             cursor: pointer;
+            outline: 1px dashed rgba(128, 128, 128, 0.7);
           }
-          .EditableModal.is-editing, .EditableModal.is-editing > * {
-            outline: 1px solid aquamarine !important;
-          }
-        `}</style>
+        `}
+        </style>
       </div>
     )
   }

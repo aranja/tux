@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import { MegadraftEditor, editorStateFromRaw, editorStateToJSON, EditorState } from 'megadraft'
 import { get, set } from '../../utils/accessors'
 
@@ -6,6 +7,7 @@ export interface EditableInlineProps {
   model: any,
   field: string | Array<string>,
   onChange?: () => void,
+  isLoggedIn: boolean,
 }
 
 export interface EditableInlineState {
@@ -62,14 +64,29 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
   }
 
   render() {
-    const { children, field, model, onChange } = this.props
+    const { children, field, model, onChange, isLoggedIn } = this.props
     const isEditing = this.context.tux && this.context.tux.isEditing
+    const classes = classNames(
+      'EditableInline',
+      isEditing && 'is-editing',
+    )
 
     return (
-      <MegadraftEditor
-        editorState={this.state.editorState}
-        onChange={this.onEditorChange.bind(this)}
-        sidebarRendererFn={this.getCustomSidebar}/>
+      <div className={classes}>
+        <MegadraftEditor
+          readOnly={!isEditing}
+          editorState={this.state.editorState}
+          onChange={this.onEditorChange.bind(this)}
+          sidebarRendererFn={this.getCustomSidebar}
+        />
+        <style jsx>{`
+          .EditableInline.is-editing:hover {
+            cursor: text;
+            outline: 1px dashed rgba(128, 128, 128, 0.7);
+          }
+        `}
+        </style>
+      </div>
     )
   }
 }

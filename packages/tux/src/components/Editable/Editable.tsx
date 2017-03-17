@@ -8,6 +8,7 @@ export interface EditableProps {
   onChange: Function,
   children: any,
   className: string,
+  isLoggedIn: boolean,
 }
 
 class Editable extends React.Component<EditableProps, any> {
@@ -15,16 +16,35 @@ class Editable extends React.Component<EditableProps, any> {
     tux: React.PropTypes.object,
   }
 
+  state = {
+    isLoggedIn: false,
+  }
+
+  async componentDidMount() {
+    const user = await this.context.tux.adapter.currentUser()
+
+    if (user) {
+      this.setState({
+        isLoggedIn: true,
+      })
+    }
+  }
+
   render() {
     const { children, field, model, onChange, className } = this.props
-    const isEditing = this.context.tux && this.context.tux.isEditing
-
+    const { isLoggedIn } = this.state
+    const isEditing = isLoggedIn && this.context.tux && this.context.tux.isEditing
     if (field) {
-      return <EditableInline model={model} field={field} />
+      return <EditableInline model={model} field={field} isLoggedIn={isLoggedIn}/>
     }
 
     return (
-      <EditableModal className={className} model={model} onChange={onChange}>
+      <EditableModal
+      className={className}
+      model={model}
+      onChange={onChange}
+      isLoggedIn={isLoggedIn}
+      >
         {children}
       </EditableModal>
     )
