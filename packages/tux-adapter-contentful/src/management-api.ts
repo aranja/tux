@@ -177,7 +177,7 @@ class ManagementApi {
   formatForDelivery(entry: any) {
     Object.keys(entry.fields).forEach(name => {
       const value = entry.fields[name]
-      entry.fields[name] = value && value['en-US']
+      entry.fields[name] = value && value[this.currentLocale]
     })
     return entry
   }
