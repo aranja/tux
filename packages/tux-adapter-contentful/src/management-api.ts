@@ -56,7 +56,7 @@ class ManagementApi {
 
   async _getEntity(id: string, entityPath: string) {
     const entity = await this.get(`/spaces/${this.space}/${entityPath}/${id}`)
-    return extractLocale(entity, this.currentLocale)
+    return this._extractLocale(entity)
   }
 
   saveEntry(entry: any) {
@@ -73,7 +73,7 @@ class ManagementApi {
   }
 
   async _save(entity: any, entityPath: string) {
-    const entityWithLocale = injectLocale(entity, this.currentLocale)
+    const entityWithLocale = await this._injectLocale(entity)
     const { fields, sys: { id, version } } = entityWithLocale
     const url = `/spaces/${this.space}/${entityPath}/${id}`
     const newEntity = await this.put(url, { fields }, version)
@@ -118,7 +118,7 @@ class ManagementApi {
 
   async createAsset(body: any) {
     const url = `/spaces/${this.space}/assets`
-    const bodyWithLocale = injectLocale(body, this.currentLocale)
+    const bodyWithLocale = await this._injectLocale(body)
     const asset = await this.post(url, bodyWithLocale, 'application/json')
     await this.processAsset(asset.sys.id, asset.sys.version)
     asset.sys.version += 1
@@ -180,6 +180,20 @@ class ManagementApi {
       entry.fields[name] = value && value['en-US']
     })
     return entry
+  }
+
+  async _extractLocale(entity: any) {
+    if (!this.currentLocale) {
+      await this.getDefaultLocaleForSpace(this.space)
+    }
+    return extractLocale(entity, this.currentLocale)
+  }
+
+  async _injectLocale(entity: any) {
+    if (!this.currentLocale) {
+      await this.getDefaultLocaleForSpace(this.space)
+    }
+    return injectLocale(entity, this.currentLocale)
   }
 }
 

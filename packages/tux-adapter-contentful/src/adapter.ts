@@ -52,7 +52,6 @@ export class ContentfulAdapter {
     }
 
     if (this.managementApi) {
-      await this.managementApi.getDefaultLocaleForSpace(this.space)
       return this.managementApi
     }
     throw new Error(errorMessages.initializeManagementApi)
