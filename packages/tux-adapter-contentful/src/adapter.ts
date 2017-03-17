@@ -4,6 +4,11 @@ import generateEditorSchema from './editors'
 
 import { Field, Meta } from 'tux'
 
+const errorMessages = {
+  initializeManagementApi: 'Could not initialize management api.',
+  noManagementApi: 'Manager api not defined, please log in to save.'
+}
+
 export interface Config {
   space: string
   deliveryToken: string
@@ -50,7 +55,7 @@ export class ContentfulAdapter {
       await this.managementApi.getDefaultLocaleForSpace(this.space)
       return this.managementApi
     }
-    throw 'Could not initialize management API'
+    throw new Error(errorMessages.initializeManagementApi)
   }
 
   triggerChange() {
@@ -145,7 +150,7 @@ export class ContentfulAdapter {
   async save(model: any) {
     const managementApi = await this.getManagementApi()
     if (!managementApi) {
-      throw 'No management api'
+      throw new Error(errorMessages.noManagementApi)
     }
 
     await managementApi.saveEntry(model)
@@ -155,7 +160,7 @@ export class ContentfulAdapter {
   async createAssetFromFile(file: any, title: string) {
     const managementApi = await this.getManagementApi()
     if (!managementApi) {
-      throw 'No management api'
+      throw new Error(errorMessages.noManagementApi)
     }
 
     const upload = await managementApi.createUpload(file)
