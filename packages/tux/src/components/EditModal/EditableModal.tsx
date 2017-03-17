@@ -20,13 +20,22 @@ class EditModal extends React.Component<EditModalProps, any> {
   }
 
   render() {
-    const { children, ...props } = this.props
+    const { children } = this.props
+    const classes = classNames('EditableModal')
+
     return (
-      <div {...props} onClick={this.onEdit}>
+      <div className={classes} onClick={this.onEdit}>
         {children}
+        <style jsx>{`
+          .EditableModal:hover {
+            cursor: pointer;
+            outline: 1px dashed rgba(128, 128, 128, 0.7);
+          }
+        `}
+        </style>
       </div>
     )
   }
 }
 
-export default EditableModal
+export default EditModal

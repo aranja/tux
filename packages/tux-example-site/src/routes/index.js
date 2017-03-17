@@ -41,12 +41,14 @@ export default [
         gallery,
         testimonial,
         pricetable,
+        articles,
       ] = await Promise.all([
         api.getEntries({ content_type: 'page' }),
         api.getEntries({ content_type: 'sellPoint' }),
         api.getEntries({ content_type: 'gallery' }),
         api.getEntries({ content_type: 'testimony' }),
         api.getEntries({ content_type: 'priceTable', order: 'sys.createdAt' }),
+        api.getEntries({ content_type: 'article', order: '-sys.createdAt' }),
       ])
 
       return (
@@ -56,6 +58,7 @@ export default [
           gallery={gallery}
           testimonial={testimonial}
           pricetable={pricetable}
+          articles={articles}
         />
       )
     }

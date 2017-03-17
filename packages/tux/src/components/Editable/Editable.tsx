@@ -58,7 +58,7 @@ class Editable extends React.Component<EditableProps, any> {
 
   render() {
     const { children } = this.props
-    return children ? children : null
+    return children || null
   }
 }
 
