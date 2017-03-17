@@ -137,9 +137,6 @@ class TagEditor extends Component<TagEditorProps, any> {
               margin: 5px;
             }
 
-            .TagEditor-tag:not(:last-child) {
-            }
-
             .TagEditor-tagButton {
               font-family: 'mfg_labs_iconsetregular';
               font-style: normal;
