@@ -115,7 +115,7 @@ export class ContentfulAdapter {
     }
   }
 
-  async getQueryApi() {
+  getQueryApi() {
     return this.deliveryApi
   }
 

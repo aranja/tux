@@ -8,7 +8,7 @@ const tux = (options) => {
 
   return async (renderChildren, context) => {
     const { refresh } = context
-    context[$$api] = context.api = await adapter.getQueryApi()
+    context[$$api] = context.api = adapter.getQueryApi()
 
     const children = await renderChildren()
     return (
