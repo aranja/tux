@@ -14,7 +14,7 @@ const AlertBar = () => (
         padding: 5px;
         position: fixed;
         text-align: center;
-        top: 0;
+        bottom: 0;
         width: 100%;
         z-index: 50;
       }
