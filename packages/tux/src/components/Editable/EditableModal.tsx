@@ -6,7 +6,6 @@ export interface EditableModalProps {
   children?: any,
   onChange: Function,
   className: string,
-  isLoggedIn: boolean,
 }
 
 class EditableModal extends React.Component<EditableModalProps, any> {
@@ -25,7 +24,7 @@ class EditableModal extends React.Component<EditableModalProps, any> {
   }
 
   render() {
-    const { model, children, className, isLoggedIn } = this.props
+    const { model, children, className } = this.props
     const isEditing = this.context.tux && this.context.tux.isEditing
 
     const classes = classNames(
