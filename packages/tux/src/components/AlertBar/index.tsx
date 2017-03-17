@@ -26,7 +26,9 @@ class AlertBar extends Component {
 
     return (
       <div className={classNames('AlertBar', isHidden && 'is-hidden' )}>
-        <p className="AlertBar-text">You are in edit mode. Any changes you make will be published.</p>
+        <p className="AlertBar-text">
+          You are in edit mode. Any changes you make will be published.
+        </p>
         <style jsx>{`
           .AlertBar {
             background: ${tuxColors.colorPink};
