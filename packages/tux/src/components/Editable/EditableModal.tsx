@@ -15,7 +15,7 @@ class EditableModal extends React.Component<EditableModalProps, any> {
   }
 
   async onEdit(): Promise<void> {
-    const { onChange, model, isLoggedIn } = this.props
+    const { onChange, model } = this.props
     const { tux } = this.context
     const isEditing = tux && tux.isEditing
     const didChange = await tux.editModel(model)
