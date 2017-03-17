@@ -1,26 +1,24 @@
 import React from 'react'
+import { createEditable } from '../Editable/Editable'
 import { MegadraftEditor, editorStateFromRaw, editorStateToJSON, EditorState } from 'megadraft'
 import { get, set } from '../../utils/accessors'
 
-export interface EditableInlineProps {
+export interface Props {
   save: (model: any) => void,
   load: (model: any) => any,
   children?: any,
   field: string | Array<string>,
+  model: any,
+  readOnly: boolean,
 }
 
-export interface EditableInlineState {
+export interface State {
   editorState: any,
 }
 
-class EditableInline extends React.Component<EditableInlineProps, EditableInlineState> {
-  static contextTypes = {
-    model: React.PropTypes.object.isRequired,
-    readOnly: React.PropTypes.bool,
-  }
-
-  state: EditableInlineState = {
-    editorState: editorStateFromRaw(get(this.context.model, this.props.field)),
+class EditInline extends React.Component<Props, State> {
+  state: State = {
+    editorState: editorStateFromRaw(get(this.props.model, this.props.field)),
   }
 
   onEditorChange = (editorState: EditorState) => {
@@ -58,4 +56,4 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
   }
 }
 
-export default EditableInline
+export default createEditable<Props>()(EditInline)

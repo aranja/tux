@@ -1,4 +1,5 @@
 import React from 'react'
+import { createEditable } from '../Editable/Editable'
 
 export interface EditModalProps {
   children?: any,
@@ -10,13 +11,12 @@ class EditModal extends React.Component<EditModalProps, any> {
   }
 
   onEdit = async (): Promise<void> => {
-    // const { onChange } = this.props
-    // const { tux } = this.context
-    // const isEditing = tux && tux.isEditing
-    // const didChange = await tux.editModel(model)
-    // if (isEditing && didChange && onChange) {
-    //   onChange()
-    // }
+    const { onChange } = this.props
+    const { ed } = this.context
+    const didChange = await tux.editModel(model)
+    if (isEditing && didChange && onChange) {
+      onChange()
+    }
   }
 
   render() {
@@ -36,4 +36,5 @@ class EditModal extends React.Component<EditModalProps, any> {
   }
 }
 
-export default EditModal
+export default createEditable()(EditModal)
+

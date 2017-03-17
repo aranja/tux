@@ -1,65 +1,83 @@
-import React from 'react'
+import React, { ComponentClass, StatelessComponent } from 'react'
+import any = jasmine.any
 
-export interface EditableProps {
+export interface Props {
   model: any,
-  children: any,
 }
 
-class Editable extends React.Component<EditableProps, any> {
-  static contextTypes = {
-    tux: React.PropTypes.object,
-  }
+export interface State {
+  readOnly: boolean,
+}
 
-  static childContextTypes = {
-    model: React.PropTypes.object,
-    readOnly: React.PropTypes.bool,
-  }
+export type InnerProps<OriginalProps> = OriginalProps & Props
 
-  private isMounded: boolean
+export function createEditable<OriginalProps>() {
+  return function editable(
+    Editor: ComponentClass<OriginalProps> | StatelessComponent<OriginalProps>
+  ): ComponentClass<Props> {
+    class Editable extends React.Component<InnerProps<OriginalProps>, State> {
+      static contextTypes = {
+        tux: React.PropTypes.object,
+      }
 
-  state = {
-    readOnly: true,
-  }
+      static childContextTypes = {
+        model: React.PropTypes.object,
+        readOnly: React.PropTypes.bool,
+      }
 
-  componentDidMount() {
-    this.isMounded = true
-    this.init()
-  }
+      private isMounded: boolean
 
-  componentWillUnmount() {
-    this.isMounded = false
-  }
+      state = {
+        readOnly: true,
+      }
 
-  getChildContext() {
-    return {
-      model: this.props.model,
-      readOnly: this.state.readOnly,
-    }
-  }
+      componentDidMount() {
+        this.isMounded = true
+        this.init()
+      }
 
-  async init(): Promise<void> {
-    let readOnly = false
-    try {
-      readOnly = (await this.context.tux.adapter.currentUser()) == null
-    } finally {
-      if (this.isMounded) {
-        this.setState({ readOnly })
+      componentWillUnmount() {
+        this.isMounded = false
+      }
+
+      async init(): Promise<void> {
+        let readOnly = false
+        try {
+          readOnly = (await this.context.tux.adapter.currentUser()) == null
+        } finally {
+          if (this.isMounded) {
+            this.setState({ readOnly })
+          }
+        }
+      }
+
+      onModalEdit = async (model: any) => {
+        return model
+      }
+
+      onLoad = async (model: any) => {
+        return model
+      }
+
+      onSave = async (model: any) => {
+
+      }
+    // ...{
+    //   model: this.props.model,
+    //   readOnly: this.state.readOnly,
+    // }
+
+      render() {
+        return <Editor {...this.props} />
       }
     }
-  }
 
-  onLoad = async (model: any) => {
-    return model
-  }
-
-  onSave = async (model: any) => {
-
-  }
-
-  render() {
-    const { children } = this.props
-    return children || null
+    return Editable
   }
 }
 
-export default Editable
+const Internal = ({ children }: { children: any }) => children || null
+
+export default createEditable()(
+  Internal
+)
