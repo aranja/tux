@@ -6,7 +6,6 @@ import { Field, Meta } from 'tux'
 
 const errorMessages = {
   initializeManagementApi: 'Could not initialize management api.',
-  noManagementApi: 'Manager api not defined, please log in to save.'
 }
 
 export interface Config {
@@ -123,7 +122,7 @@ export class ContentfulAdapter {
   async getMeta(model: string | Object) {
     const managementApi = await this.getManagementApi()
     const type = this._getModelType(model)
-    if (!type || !managementApi) {
+    if (!type) {
       return null
     }
 
@@ -148,20 +147,12 @@ export class ContentfulAdapter {
 
   async save(model: any) {
     const managementApi = await this.getManagementApi()
-    if (!managementApi) {
-      throw new Error(errorMessages.noManagementApi)
-    }
-
     await managementApi.saveEntry(model)
     this.triggerChange()
   }
 
   async createAssetFromFile(file: any, title: string) {
     const managementApi = await this.getManagementApi()
-    if (!managementApi) {
-      throw new Error(errorMessages.noManagementApi)
-    }
-
     const upload = await managementApi.createUpload(file)
     if (upload.sys) {
       const assetBody = {
@@ -225,12 +216,12 @@ export class ContentfulAdapter {
 
   async load(model: any) {
     const managementApi = await this.getManagementApi()
-    return managementApi ? managementApi.getEntry(model.sys.id) : null
+    return managementApi.getEntry(model.sys.id)
   }
 
   async loadAsset(model: any) {
     const managementApi = await this.getManagementApi()
-    return managementApi ? managementApi.getAsset(model.sys.id) : null
+    return managementApi.getAsset(model.sys.id)
   }
 
   async currentUser() {
