@@ -40,17 +40,17 @@ const Home = ({ pages, sellPoints, testimonial, carousel }) => {
         <Testimonial testimonial={testimonial.items}/>
       </Section>
       <Section backgroundColor="#F5F7FA">
-        <H1>What People Say About Tux</H1>
-        <H2>Totally random and unbiased selection of people</H2>
+        <H1><Editable model={page} field="fields.content.twitterFeedTitle" /></H1>
+        <H2><Editable model={page} field="fields.content.twitterFeedSubtitle" /></H2>
         <TwitterFeed />
         <SocialPlug>
           Are you using Tux? <strong>Let us know on Twitter</strong>
         </SocialPlug>
       </Section>
       <Section>
-        <H1>Sign up for our newsletter, you won't regret it *</H1>
-        <H2>* Unless you don't like cat facts.</H2>
-        <Newsletter />
+        <H1><Editable model={page} field="fields.content.newsletterTitle" /></H1>
+        <H2><Editable model={page} field="fields.content.newsletterSubtitle" /></H2>
+        <Newsletter model={page} />
       </Section>
     </div>
   )

@@ -3,9 +3,12 @@ import classNames from 'classnames'
 import ModalContainer, { openModal } from '../TuxModalContainer'
 import TuxSidebar from '../TuxSidebar'
 import TuxModal from '../TuxModal'
+import AlertBar from '../AlertBar'
 
 export interface TuxProviderProps {
-  adapter: Object
+  adapter: {
+    currentUser: Function
+  }
 }
 
 class TuxProvider extends Component<TuxProviderProps, any> {
@@ -21,7 +24,9 @@ class TuxProvider extends Component<TuxProviderProps, any> {
     isEditing: false,
     overlayIsActive: false,
     sidebarIsActive: false,
+    isLoggedIn: false,
   }
+
 
   getChildContext() {
     return {
@@ -30,6 +35,16 @@ class TuxProvider extends Component<TuxProviderProps, any> {
         editModel: this.editModel,
         adapter: this.props.adapter,
       },
+    }
+  }
+
+  async componentDidMount() {
+    const user = await this.props.adapter.currentUser()
+
+    if (user) {
+      this.setState({
+        isLoggedIn: true,
+      })
     }
   }
 
@@ -51,18 +66,23 @@ class TuxProvider extends Component<TuxProviderProps, any> {
   }
 
   onClickEdit = () => {
-    const { isEditing } = this.state
+    // Todo set isEditing state in localStorage
+    const { isEditing, isLoggedIn } = this.state
 
-    this.setState({
-      isEditing: !isEditing
-    })
+    if (isLoggedIn) {
+      this.setState({
+        isEditing: !isEditing
+      })
+    }
   }
 
   render() {
     const { isEditing, sidebarIsActive, overlayIsActive } = this.state
-
     return (
-      <div className="TuxProvider">
+      <div className="TuxProvider" style={{paddingBottom: isEditing && 36}}>
+        {isEditing && (
+          <AlertBar />
+        )}
         <TuxSidebar
           isEditing={isEditing}
           sidebarIsActive={sidebarIsActive}

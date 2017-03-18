@@ -6,6 +6,7 @@ import {
   MarkdownField,
   Radio,
   TextField,
+  TagEditor,
 } from 'tux'
 
 const widgetIdToEditor = {
@@ -16,6 +17,7 @@ const widgetIdToEditor = {
   markdown: MarkdownField,
   radio: Radio,
   singleLine: TextField,
+  tagEditor: TagEditor,
 }
 
 export default function generateEditorSchema(typeMeta: any) {
@@ -24,6 +26,7 @@ export default function generateEditorSchema(typeMeta: any) {
 
 function _transformTypeMetaFieldToEditorField(typeMetaField: any) {
   const props = _getPropsForType(typeMetaField)
+
   return {
     field: `fields.${typeMetaField.id}`,
     label: typeMetaField.name,
