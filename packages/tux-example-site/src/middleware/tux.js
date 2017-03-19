@@ -12,7 +12,7 @@ const tux = (options) => {
 
     const children = await renderChildren()
     return (
-      <TuxProvider adapter={adapter} onRefresh={refresh}>
+      <TuxProvider adapter={adapter} onChange={refresh}>
         {children}
       </TuxProvider>
     )
