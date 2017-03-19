@@ -1,8 +1,9 @@
+import Neutrino from 'neutrino'
 import { LOCALS_LOADER } from './paths'
 
-export default function fixRulesForServer(neutrino: any) {
+export default function fixRulesForServer(neutrino: Neutrino) {
   const rules = neutrino.config.module.rules
-  rules.values().forEach((rule: any) => {
+  rules.values().forEach(rule => {
     if (rule.uses.has('css')) {
       rule.use('css').loader(LOCALS_LOADER)
       rule.uses.delete('style')

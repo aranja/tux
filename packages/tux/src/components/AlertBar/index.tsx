@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { tuxColors } from '../../styles'
 
-class AlertBar extends Component {
+class AlertBar extends Component<any, any> {
   hideDelay = 1500
 
   state = {

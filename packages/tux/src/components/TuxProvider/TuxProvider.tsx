@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
-import classNames from 'classnames'
-import ModalContainer, { openModal } from '../TuxModalContainer'
-import TuxSidebar from '../TuxSidebar'
-import TuxModal from '../TuxModal'
-import AlertBar from '../AlertBar'
+import adminOnly from '../../utils/adminOnly'
 
 export interface TuxProviderProps {
-  adapter: {
-    currentUser: Function
-  }
-  onChange: () => {}
+  adapter: any
 }
 
 class TuxProvider extends Component<TuxProviderProps, any> {
@@ -21,82 +14,22 @@ class TuxProvider extends Component<TuxProviderProps, any> {
     }),
   }
 
-  state = {
-    isEditing: false,
-    overlayIsActive: false,
-    sidebarIsActive: false,
-    isLoggedIn: false,
-  }
-
-
   getChildContext() {
     return {
       tux: {
-        isEditing: this.state.isEditing,
+        isEditing: false,
         editModel: this.editModel,
         adapter: this.props.adapter,
       },
     }
   }
 
-  async componentDidMount() {
-    const user = await this.props.adapter.currentUser()
-
-    if (user) {
-      this.setState({
-        isLoggedIn: true,
-      })
-    }
-  }
-
-  editModel = async (model: any) => {
-    // Modal has been opened.
-    this.setState({
-      overlayIsActive: true
-    })
-
-    const changed = await openModal(
-      <TuxModal model={model} />
-    )
-
-    // Wait for openModal promise to resolve,
-    // which means that the modal has been closed.
-    this.setState({
-      overlayIsActive: false
-    })
-
-    // TODO: Make consistent for all Editable components?
-    if (changed) {
-      this.props.onChange()
-    }
-  }
-
-  onClickEdit = () => {
-    // Todo set isEditing state in localStorage
-    const { isEditing, isLoggedIn } = this.state
-
-    if (isLoggedIn) {
-      this.setState({
-        isEditing: !isEditing
-      })
-    }
-  }
+  editModel = adminOnly('context.tux.editModel')
 
   render() {
-    const { isEditing, sidebarIsActive, overlayIsActive } = this.state
     return (
-      <div className="TuxProvider" style={{paddingBottom: isEditing && 36}}>
-        {isEditing && (
-          <AlertBar />
-        )}
-        <TuxSidebar
-          isEditing={isEditing}
-          sidebarIsActive={sidebarIsActive}
-          overlayIsActive={overlayIsActive}
-          onClickEdit={this.onClickEdit}
-        />
+      <div>
         {this.props.children}
-        <ModalContainer />
       </div>
     )
   }
