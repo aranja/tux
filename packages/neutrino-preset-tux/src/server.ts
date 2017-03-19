@@ -1,20 +1,20 @@
-import react from 'neutrino-preset-react'
 import webpack from 'webpack'
+import Neutrino from 'neutrino'
 import nodeExternals from 'webpack-node-externals'
+import shared from './shared'
 import { PKG, SERVER, MODULES, ASSET_MANIFEST_EXTERNAL } from './paths'
 import fixRulesForServer from './fixRulesForServer'
 
 const pkgConfig = require(PKG)
 
-export default (neutrino: any) => {
+export default (neutrino: Neutrino) => {
   const { config } = neutrino
 
-  // Extend react preset.
-  neutrino.use(react)
+  // Build for the server.
+  process.env.SERVER = 'true'
 
-  // Resolve dependencies here.
-  config.resolve.modules.add(MODULES).prepend('node_modules')
-  config.resolveLoader.modules.add(MODULES)
+  // Extend shared config.
+  neutrino.use(shared)
 
   const hasSourceMap =
     (pkgConfig.dependencies && 'source-map-support' in pkgConfig.dependencies) ||
@@ -45,15 +45,15 @@ export default (neutrino: any) => {
   // Tweak module rules to work on server.
   neutrino.use(fixRulesForServer)
 
-  // Map `import assets from 'asset-manifest'` to asset-manifest.json from client build.
   config.externals([
-    nodeExternals(),
+    // Include tux packages so they get the same env and .admin.js resolution.
+    nodeExternals({ whitelist: /tux/ }),
+    // Map `import assets from 'asset-manifest'` to asset-manifest.json from client build.
     { 'asset-manifest': ASSET_MANIFEST_EXTERNAL },
   ])
 
   // Disable plugins which are not useful in node.js.
   config.plugins
-    .delete('env')
     .delete('chunk')
     .delete('html')
     .delete('hot')
@@ -67,8 +67,7 @@ export default (neutrino: any) => {
     .plugin('banner')
     .use(webpack.BannerPlugin, [{
       banner:
-        (hasSourceMap ? `require('source-map-support').install();\n` : '') +
-        `process.env.SERVER = 'true';\n`,
+        (hasSourceMap ? `require('source-map-support').install();\n` : ''),
       raw: true,
       entryOnly: true
     }])

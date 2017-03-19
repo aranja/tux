@@ -1,3 +1,4 @@
 src/*.jsx
 src/*.jsx.map
 **/*/.DS_Store
+test/consistency/build

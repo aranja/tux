@@ -12,6 +12,7 @@
   "dependencies": {
     "extract-text-webpack-plugin": "2.1.0",
     "jsx-html-webpack-plugin": "0.1.0",
+    "neutrino-middleware-env": "5.0.0-beta.1",
     "neutrino-preset-react": "5.0.0-beta.1",
     "neutrino-preset-web": "5.0.0-beta.1",
     "webpack": "^2.2.1",
