@@ -83,29 +83,28 @@ export function serve(tux: Tux, config: {
   }
 }
 
-async function createBase(renderChildren: null | (() => Promise<ReactElement>), context: Context) {
-  const element = renderChildren && await renderChildren()
-
-  class TuxBase extends React.Component<any, any> {
-    static childContextTypes = {
-      htmlProps: React.PropTypes.object.isRequired,
-    }
-
-    static propTypes = {
-      context: React.PropTypes.object,
-      children: React.PropTypes.node,
-    }
-
-    getChildContext() {
-      return this.props.nextContext
-    }
-
-    render() {
-      return element
-    }
+class TuxBase extends React.Component<any, any> {
+  static childContextTypes = {
+    htmlProps: React.PropTypes.object.isRequired,
   }
 
-  return Promise.resolve(React.createElement(TuxBase, { context }))
+  static propTypes = {
+    context: React.PropTypes.object,
+    children: React.PropTypes.node,
+  }
+
+  getChildContext() {
+    return this.props.nextContext
+  }
+
+  render() {
+    return this.props.children
+  }
+}
+
+async function createBase(renderChildren: null | (() => Promise<ReactElement>), context: Context) {
+  const element = renderChildren && await renderChildren()
+  return React.createElement(TuxBase, { context }, element)
 }
 
 export class Tux {

@@ -1,23 +1,19 @@
-import react from 'neutrino-preset-react'
+import Neutrino from 'neutrino'
 import JsxHtmlPlugin from 'jsx-html-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import { NamedModulesPlugin } from 'webpack'
+import shared from './shared'
 import extractCss from './extractCss'
+import { CLIENT_BUILD, ASSET_MANIFEST, HTML } from './paths'
 
-import { INDEX, CLIENT_BUILD, MODULES, ASSET_MANIFEST, HTML } from './paths'
-
-export default (neutrino: any) => {
+export default (neutrino: Neutrino) => {
   const { config } = neutrino
 
   // Build into a subfolder so server.js can live outside it.
   neutrino.options.output = CLIENT_BUILD
 
-  // Extend react preset.
-  neutrino.use(react)
-
-  // Resolve dependencies here.
-  config.resolve.modules.add(MODULES).prepend('node_modules')
-  config.resolveLoader.modules.add(MODULES)
+  // Extend shared config.
+  neutrino.use(shared)
 
   // Generate a manifest file which contains a mapping of all asset filenames
   // to their corresponding output file so that tools can pick it up without

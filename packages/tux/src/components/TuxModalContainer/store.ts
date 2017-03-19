@@ -46,9 +46,9 @@ export function openModal(element: any) {
     const modal = {
       element,
       id,
-      onClose: () => {
+      onClose: (result: any) => {
         removeModal(modal)
-        resolve()
+        resolve(result)
       },
     }
     state = state.concat([modal])
