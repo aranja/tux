@@ -1,33 +1,31 @@
 import React from 'react'
 import { createEditable } from '../Editable/Editable'
+import { EditableProps } from '../Editable'
 
-export interface EditModalProps {
-  children?: any,
+export type EditModalProps = EditableProps & {
+  onChange: Function,
 }
 
 class EditModal extends React.Component<EditModalProps, any> {
-  static contextTypes = {
-    model: React.PropTypes.object,
-  }
-
   onEdit = async (): Promise<void> => {
-    const { onChange } = this.props
-    const { ed } = this.context
-    const didChange = await tux.editModel(model)
-    if (isEditing && didChange && onChange) {
+    const { onChange, onModalEdit, isEditing, model } = this.props
+    if (!isEditing || !onModalEdit) { return }
+    const didChange = await onModalEdit(model)
+    if (didChange && onChange) {
       onChange()
     }
   }
 
   render() {
-    const { children } = this.props
+    const { children, isEditing } = this.props
     return (
-      <div className="EditModal" onClick={this.onEdit}>
+      <div className={`EditModal${isEditing ? ' is-editing' : ''}`} onClick={this.onEdit}>
         {children}
         <style jsx>{`
-          .EditModal:hover {
+          .EditModal.is-editing:hover {
             cursor: pointer;
             outline: 1px dashed rgba(128, 128, 128, 0.7);
+            outline-offset: 10px;
           }
         `}
         </style>

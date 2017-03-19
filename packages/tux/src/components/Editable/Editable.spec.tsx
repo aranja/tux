@@ -1,5 +1,4 @@
 import React from 'react'
-import Editable from './Editable'
 import { createEditable } from './Editable'
 
 describe('createEditable', () => {
@@ -9,13 +8,7 @@ describe('createEditable', () => {
 
   it('should create an editable component', () => {
     const Editable = createEditable()(() => {
+      return <div></div>
     })
-  })
-})
-
-describe('Editable', () => {
-  it('should be a component', () => {
-    const element = <Editable /> as React.ReactElement<any>
-    expect(React.isValidElement(element)).toBeTruthy()
   })
 })

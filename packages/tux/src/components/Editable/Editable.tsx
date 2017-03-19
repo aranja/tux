@@ -1,23 +1,21 @@
 import React, { ComponentClass, StatelessComponent } from 'react'
-import any = jasmine.any
-
-export interface Props {
-  model: any,
-}
+import { EditableProps } from './index'
 
 export interface State {
   readOnly: boolean,
 }
 
-export type InnerProps<OriginalProps> = OriginalProps & Props
-
 export function createEditable<OriginalProps>() {
   return function editable(
-    Editor: ComponentClass<OriginalProps> | StatelessComponent<OriginalProps>
-  ): ComponentClass<Props> {
-    class Editable extends React.Component<InnerProps<OriginalProps>, State> {
+    Editor:
+      ComponentClass<OriginalProps & EditableProps> |
+      StatelessComponent<OriginalProps & EditableProps>
+  ): ComponentClass<EditableProps> {
+    class Editable extends React.Component<OriginalProps & EditableProps, State> {
       static contextTypes = {
         tux: React.PropTypes.object,
+        model: React.PropTypes.object,
+        readOnly: React.PropTypes.bool,
       }
 
       static childContextTypes = {
@@ -28,7 +26,7 @@ export function createEditable<OriginalProps>() {
       private isMounded: boolean
 
       state = {
-        readOnly: true,
+        readOnly: typeof this.context.readOnly === 'undefined' ? true : this.context.readOnly,
       }
 
       componentDidMount() {
@@ -38,6 +36,13 @@ export function createEditable<OriginalProps>() {
 
       componentWillUnmount() {
         this.isMounded = false
+      }
+
+      getChildContext() {
+        return {
+          model: this.props.model,
+          readOnly: this.state.readOnly,
+        }
       }
 
       async init(): Promise<void> {
@@ -52,7 +57,7 @@ export function createEditable<OriginalProps>() {
       }
 
       onModalEdit = async (model: any) => {
-        return model
+        return this.context.tux.editModel(model)
       }
 
       onLoad = async (model: any) => {
@@ -62,13 +67,21 @@ export function createEditable<OriginalProps>() {
       onSave = async (model: any) => {
 
       }
-    // ...{
-    //   model: this.props.model,
-    //   readOnly: this.state.readOnly,
-    // }
 
       render() {
-        return <Editor {...this.props} />
+        const { model } = this.props
+        const { tux: { isEditing } } = this.context
+        return (
+          <Editor
+            {...this.props}
+            model={model || this.context.model || {}}
+            isEditing={isEditing}
+            readOnly={this.state.readOnly}
+            onModalEdit={this.onModalEdit}
+            onLoad={this.onLoad}
+            onSave={this.onSave}
+          />
+        )
       }
     }
 
@@ -76,7 +89,9 @@ export function createEditable<OriginalProps>() {
   }
 }
 
-const Internal = ({ children }: { children: any }) => children || null
+const Internal = ({ children }: EditableProps) => (
+  <span>{children}</span>
+)
 
 export default createEditable()(
   Internal
