@@ -52,6 +52,13 @@ describe('tux.use', () => {
     expect(wrapper.html()).toBe('<div>dummy element</div>')
   })
 
+  test('wraps same TuxBase component each time', async () => {
+    const tux = createTux()
+    const element1 = await tux.getElement()
+    const element2 = await tux.getElement()
+    expect(element1.type).toEqual(element2.type)
+  })
+
   test('createElement can modify the context', async () => {
     const tux = createTux()
 

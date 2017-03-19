@@ -8,6 +8,7 @@ export interface TuxProviderProps {
   adapter: {
     currentUser: Function
   }
+  onChange: () => {}
 }
 
 class TuxProvider extends Component<TuxProviderProps, any> {
@@ -30,14 +31,9 @@ class TuxProvider extends Component<TuxProviderProps, any> {
   async componentDidMount() {
     const user = await this.props.adapter.currentUser()
 
-    if (user) {
-      this.setState({
-        isMounted: true,
-        isLoggedIn: !!user,
-      })
-    }
     this.setState({
       isMounted: true,
+      isLoggedIn: !!user,
     })
   }
 
@@ -57,7 +53,7 @@ class TuxProvider extends Component<TuxProviderProps, any> {
       overlayIsActive: true
     })
 
-    await openModal(
+    const changed = await openModal(
       <TuxModal model={model} />
     )
 
@@ -66,6 +62,11 @@ class TuxProvider extends Component<TuxProviderProps, any> {
     this.setState({
       overlayIsActive: false
     })
+
+    // TODO: Make consistent for all Editable components?
+    if (changed) {
+      this.props.onChange()
+    }
   }
 
   onClickEdit = () => {
