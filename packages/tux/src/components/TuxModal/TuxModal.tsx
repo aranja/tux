@@ -69,13 +69,26 @@ class TuxModal extends React.Component<any, State> {
 
     return InputComponent && (
       <div key={field.field}>
+        <label className="TuxModal-inputLabel">
+          {field.label}
+        </label>
         <InputComponent
           id={field.field}
-          label={field.field}
+          label={field.label}
           onChange={(value: any) => this.onChange(value, field.field)}
           value={value}
           {...field.props}
         />
+        <style jsx>{`
+          .TuxModal-inputLabel {
+            color: ${tuxInputStyles.labelTextColor};
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 24px;
+            padding: 5px 0;
+            text-transform: capitalize;
+          }
+        `}</style>
       </div>
     )
   }
