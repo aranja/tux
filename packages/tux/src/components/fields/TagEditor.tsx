@@ -88,7 +88,6 @@ class TagEditor extends Component<TagEditorProps, any> {
 
     return (
       <div className="TagEditor">
-        <label className="TagEditor-label">{label}</label>
         <input
           ref={(tagEditor) => {this.tagEditor = tagEditor}}
           className="TagEditor-input"
@@ -110,15 +109,6 @@ class TagEditor extends Component<TagEditorProps, any> {
             .TagEditor {
               display: flex;
               flex-direction: column;
-            }
-
-            .TagEditor-label {
-              color: ${tuxInputStyles.labelTextColor};
-              font-size: 16px;
-              font-weight: 300;
-              line-height: 1.5;
-              padding: 4px 0;
-              text-transform: capitalize;
             }
 
             .TagEditor-tags {

@@ -91,7 +91,6 @@ class ImageField extends React.Component<ImageFieldProps, any> {
 
       return (
           <div className="ImageField">
-            <label className="InputLabel">{label}</label>
             <div className="ImageField-preview">
               <img
               className="ImageField-previewImage"
@@ -122,15 +121,6 @@ class ImageField extends React.Component<ImageFieldProps, any> {
                 border-radius: 3px;
                 display: inline-block;
                 padding: 6px;
-              }
-              .InputLabel {
-                color: ${tuxInputStyles.labelTextColor};
-                display: block;
-                font-size: 16px;
-                font-weight: 300;
-                line-height: 24px;
-                padding: 5px 0;
-                text-transform: capitalize;
               }
             `}</style>
           </div>

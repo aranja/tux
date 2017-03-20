@@ -29,9 +29,6 @@ class Radio extends Component<any, State> {
     const { id, label, choices, value } = this.props
     return (
       <div className="Radio-wrapper">
-        <label className="Radio-inputLabel">
-          {label}
-        </label>
         {choices.map((choice: string) => (
           <label
             key={choice}
@@ -64,16 +61,6 @@ class Radio extends Component<any, State> {
           position: relative;
           user-select: none;
         }
-
-        .Radio-inputLabel {
-          color: ${tuxInputStyles.labelTextColor};
-          font-size: 16px;
-          font-weight: 300;
-          line-height: 24px;
-          padding: 5px 0;
-          text-transform: capitalize;
-        }
-
       `}</style>
       </div>
     )

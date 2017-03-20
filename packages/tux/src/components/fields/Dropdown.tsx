@@ -43,7 +43,6 @@ class Dropdown extends Component<any, State> {
 
     return (
       <div className="Dropdown-wrapper">
-        <label className="Dropdown-inputLabel">{label}</label>
         <div className="Dropdown">
           <select
             onChange={(event: React.ChangeEvent<any>) => this.handleChange(event.target.value)}
@@ -60,15 +59,6 @@ class Dropdown extends Component<any, State> {
             display: inline-flex;
             flex-direction: column;
             margin-bottom: 20px;
-          }
-
-          .Dropdown-inputLabel {
-            color: ${tuxInputStyles.labelTextColor};
-            font-size: 16px;
-            font-weight: 300;
-            line-height: 24px;
-            padding: 5px 0;
-            text-transform: capitalize;
           }
 
           .Dropdown {

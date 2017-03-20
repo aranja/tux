@@ -89,7 +89,6 @@ class DatePicker extends Component<any, State> {
 
     return (
       <div className="TuxDayPicker-wrapper" onMouseDown={ this.handleContainerMouseDown }>
-        <label className="TuxDayPicker-inputLabel">{ label }</label>
         <div className="TuxDayPicker"
           onFocus={this.handleInputFocus}
           onBlur={this.handleInputBlur}>
@@ -179,15 +178,6 @@ class DatePicker extends Component<any, State> {
           top: 0;
           transition: all 0.25s;
           width: 32px;
-        }
-
-        .TuxDayPicker-inputLabel {
-          color: ${tuxInputStyles.labelTextColor};
-          font-size: 16px;
-          font-weight: 300;
-          line-height: 24px;
-          padding: 4px 0;
-          text-transform: capitalize;
         }
 
         .TuxDayPicker-overlay {

@@ -11,7 +11,6 @@ interface MarkdownField {
 
 const MarkdownField = ({ id, value, label, onChange }: MarkdownField) => (
   <div className="MarkdownField">
-    <label className="MarkdownField-label">{label}</label>
     <textarea
       rows={12}
       className="MarkdownField-textArea"
@@ -27,15 +26,6 @@ const MarkdownField = ({ id, value, label, onChange }: MarkdownField) => (
           flex-direction: column;
           flex-wrap: wrap;
           margin: 20px 0;
-        }
-
-        .MarkdownField-label {
-          color: ${tuxInputStyles.labelTextColor};
-          font-size: 16px;
-          font-weight: 300;
-          line-height: 1.5;
-          padding: 4px 0;
-          text-transform: capitalize;
         }
 
         .MarkdownField-textArea {

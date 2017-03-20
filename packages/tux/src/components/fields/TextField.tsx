@@ -11,7 +11,6 @@ interface TextField {
 
 const TextField = ({ id, value, label, onChange }: TextField) => (
   <div className="Input">
-    <label className="InputLabel">{label}</label>
     <input
       className="InputField"
       id={id}
@@ -26,15 +25,6 @@ const TextField = ({ id, value, label, onChange }: TextField) => (
           display: flex;
           flex-wrap: wrap;
           margin-bottom: 20px;
-        }
-
-        .InputLabel {
-          color: ${tuxInputStyles.labelTextColor};
-          font-size: 16px;
-          font-weight: 300;
-          line-height: 24px;
-          padding: 5px 0;
-          text-transform: capitalize;
         }
 
         .InputField {

@@ -37,9 +37,6 @@ class Boolean extends Component<any, State> {
 
     return (
       <div className="Boolean-wrapper">
-        <label className="Boolean-inputLabel">
-          {label}
-        </label>
         <label className="Boolean" htmlFor={trueLabel}>
           {trueLabel}
           <Checkbox
@@ -75,16 +72,6 @@ class Boolean extends Component<any, State> {
           position: relative;
           user-select: none;
         }
-
-        .Boolean-inputLabel {
-          color: ${tuxInputStyles.labelTextColor};
-          font-size: 16px;
-          font-weight: 300;
-          line-height: 24px;
-          padding: 5px 0;
-          text-transform: capitalize;
-        }
-
       `}</style>
       </div>
     )
