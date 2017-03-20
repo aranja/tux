@@ -4,17 +4,14 @@ import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 interface MarkdownField {
   id: string
   value: string
-  label: string
-  helpText: string
   onChange: (e: React.FormEvent<any>) => void
 }
 
-const MarkdownField = ({ id, value, label, onChange }: MarkdownField) => (
+const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
   <div className="MarkdownField">
     <textarea
       rows={12}
       className="MarkdownField-textArea"
-      label={label}
       id={id}
       value={value}
       onChange={(event: React.FormEvent<any>) => onChange(event.target.value)}

@@ -4,8 +4,6 @@ import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 interface Dropdown {
   id: string
   value: string
-  label: string
-  helpText: string
   dropdownValues: Array<string>
   onChange: (e: React.FormEvent<any>) => void
 }
@@ -38,7 +36,7 @@ class Dropdown extends Component<any, State> {
   }
 
   render() {
-    const { id, value, label, dropdownValues, onChange } = this.props
+    const { id, value, dropdownValues, onChange } = this.props
     const { selectedValue } = this.state
 
     return (

@@ -4,17 +4,14 @@ import { tuxColors, tuxInputStyles } from '../../styles'
 interface TextField {
   id: string
   value: string
-  label: string
-  helpText: string
   onChange: (e: React.FormEvent<any>) => void
 }
 
-const TextField = ({ id, value, label, onChange }: TextField) => (
+const TextField = ({ id, value, onChange }: TextField) => (
   <div className="Input">
     <input
       className="InputField"
       id={id}
-      label={label}
       onChange={(event: React.FormEvent<HTMLSelectElement>) => onChange(event.target.value)}
       value={value}
     />

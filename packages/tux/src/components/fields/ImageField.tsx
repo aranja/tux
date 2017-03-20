@@ -8,10 +8,8 @@ import BrowseField from './BrowseField'
 
 export interface ImageFieldProps {
   field: string | Array<string>,
-  helpText: string,
   id: string,
   imageUrl: string,
-  label: string,
   name: string,
   onChange: Function,
   value: any,
@@ -82,7 +80,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
   }
 
   render() {
-    const { value, id, onChange, label } = this.props
+    const { value, id, onChange } = this.props
     const { imageUrl, fullModel, isLoadingImage } = this.state
 
     if (fullModel) {
@@ -102,7 +100,6 @@ class ImageField extends React.Component<ImageFieldProps, any> {
             </div>
             <BrowseField
               id={id}
-              label={`New image for ${label}`}
               onChange={this.onFileChange}
               value=""
             />

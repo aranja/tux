@@ -26,7 +26,7 @@ class Radio extends Component<any, State> {
   }
 
   render() {
-    const { id, label, choices, value } = this.props
+    const { id, choices, value } = this.props
     return (
       <div className="Radio-wrapper">
         {choices.map((choice: string) => (

@@ -31,7 +31,7 @@ class Boolean extends Component<any, State> {
 
   render() {
     const { booleanValue } = this.state
-    const { id, label, boolLabels } = this.props
+    const { id, boolLabels } = this.props
     const trueLabel = boolLabels[0]
     const falseLabel = boolLabels[1]
 

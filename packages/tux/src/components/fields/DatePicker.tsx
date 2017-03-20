@@ -85,7 +85,7 @@ class DatePicker extends Component<any, State> {
 
   render() {
     const { selectedDay, showOverlay, value } = this.state
-    const { id, label, onChange } = this.props
+    const { id, onChange } = this.props
 
     return (
       <div className="TuxDayPicker-wrapper" onMouseDown={ this.handleContainerMouseDown }>

@@ -74,7 +74,6 @@ class TuxModal extends React.Component<any, State> {
         </label>
         <InputComponent
           id={field.field}
-          label={field.label}
           onChange={(value: any) => this.onChange(value, field.field)}
           value={value}
           {...field.props}

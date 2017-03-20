@@ -4,8 +4,6 @@ import { tuxColors, tuxInputStyles } from '../../styles'
 export interface TagEditorProps {
   id: string
   value: Array<string>
-  label: string
-  helpText: string
   onChange: (e: React.FormEvent<any>) => void
 }
 
@@ -84,7 +82,7 @@ class TagEditor extends Component<TagEditorProps, any> {
   }
 
   render() {
-    const { id, value, label, onChange } = this.props
+    const { id, value, onChange } = this.props
 
     return (
       <div className="TagEditor">
