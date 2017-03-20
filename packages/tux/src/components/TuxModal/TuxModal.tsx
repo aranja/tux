@@ -68,7 +68,7 @@ class TuxModal extends React.Component<any, State> {
     const value = get(fullModel, field.field)
 
     return InputComponent && (
-      <div key={field.field} className="TuxModal-inputContainer">
+      <div key={field.field}>
         <label className="TuxModal-inputLabel">
           {field.label}
         </label>
@@ -79,13 +79,9 @@ class TuxModal extends React.Component<any, State> {
           {...field.props}
         />
         <style jsx>{`
-          .TuxModal-inputContainer {
-            display: flex;
-            flex-direction: column;
-          }
-
           .TuxModal-inputLabel {
             color: ${tuxInputStyles.labelTextColor};
+            display: block;
             font-size: 16px;
             font-weight: 300;
             line-height: 24px;
