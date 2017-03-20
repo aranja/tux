@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { tuxColors, tuxInputStyles } from '../../styles'
+import { tuxColors, tuxInput } from '../../colors'
 
 export interface TagEditorProps {
   id: string
@@ -116,10 +116,10 @@ class TagEditor extends Component<TagEditorProps, any> {
             }
 
             .TagEditor-tag {
-              background: ${tuxColors.colorWhite};
+              background: ${tuxColors.white};
               border-radius: 20px;
-              border: 1px solid ${tuxInputStyles.borderColor};
-              color: ${tuxInputStyles.labelTextColor};
+              border: 1px solid ${tuxInput.border};
+              color: ${tuxInput.labelText};
               font-size: 13px;
               padding: 4px 12px;
               margin: 5px;
@@ -140,8 +140,8 @@ class TagEditor extends Component<TagEditorProps, any> {
             }
 
             .TagEditor-input {
-              background: ${tuxColors.colorWhite};
-              border: 1px solid ${tuxInputStyles.borderColor};
+              background: ${tuxColors.white};
+              border: 1px solid ${tuxInput.border};
               border-radius: 3px;
               color: ${tuxColors.textDark};
               font-size: 16px;
@@ -151,8 +151,8 @@ class TagEditor extends Component<TagEditorProps, any> {
             }
 
             .TagEditor-input:focus {
-              border-color: ${tuxInputStyles.greenTheme.borderColor};
-              outline: 1px solid ${tuxInputStyles.greenTheme.borderColor};
+              border-color: ${tuxInput.greenTheme.border};
+              outline: 1px solid ${tuxInput.greenTheme.border};
             }
           `}</style>
       </div>

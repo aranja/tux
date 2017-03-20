@@ -2,16 +2,16 @@ import React from 'react'
 import classNames from 'classnames'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import toggleScroll from './toggle-scroll'
-import { getState, setListener, State as StoreState } from './store'
+import { getState, setListener, State as StoreState, Modal } from './store'
 
 export interface State {
   modals: StoreState,
 }
 
-class ModalContainer extends React.Component<any, State> {
+export class ModalContainer extends React.Component<any, State> {
   private listener: () => any
 
-  state: State = {
+  state = {
     modals: getState()
   }
 

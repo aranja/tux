@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
+import { tuxColors, tuxInput, tuxButton } from '../../colors'
 import { fade } from '../../utils/color'
 import moment from 'moment'
 import TuxSpinner from '../Spinner/Spinner'
@@ -80,7 +80,7 @@ class TuxModal extends React.Component<any, State> {
         />
         <style jsx>{`
           .TuxModal-inputLabel {
-            color: ${tuxInputStyles.labelTextColor};
+            color: ${tuxInput.labelText};
             display: block;
             font-size: 16px;
             font-weight: 300;
@@ -131,7 +131,7 @@ class TuxModal extends React.Component<any, State> {
         )}
         <style jsx>{`
           .TuxModal {
-            background: ${tuxColors.colorSnow};
+            background: ${tuxColors.snow};
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             margin: 0;
             margin-left: auto;
@@ -144,7 +144,7 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-topBar {
-            background: ${tuxColors.colorWhite};
+            background: ${tuxColors.white};
             border-bottom: 1px solid rgba(203, 203, 203, 0.53);
             display: flex;
             justify-content: space-between;
@@ -184,10 +184,10 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-button {
-            background: ${tuxButtonStyles.backgroundColor};
+            background: ${tuxButton.background};
             border-radius: 2px;
-            border: 1px solid ${tuxButtonStyles.borderColor};
-            color: ${tuxButtonStyles.textColor};
+            border: 1px solid ${tuxButton.border};
+            color: ${tuxButton.text};
             cursor: pointer;
             display: inline-block;
             font-size: 14px;
@@ -205,9 +205,9 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-button.TuxModal-button--green {
-            color: ${tuxButtonStyles.greenTheme.textColor};
-            background: ${tuxButtonStyles.greenTheme.backgroundColor};
-            border-color: ${tuxButtonStyles.greenTheme.borderColor};
+            color: ${tuxButton.greenTheme.textColor};
+            background: ${tuxButton.greenTheme.background};
+            border-color: ${tuxButton.greenTheme.border};
           }
         `}</style>
       </div>

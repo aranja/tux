@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { tuxColors, tuxInputStyles } from '../../styles'
+import { tuxColors, tuxInput } from '../../colors'
 import Checkbox from './Checkbox'
 
 export interface State {

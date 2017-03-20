@@ -1,10 +1,10 @@
 import React from 'react'
-import { tuxColors, tuxInputStyles } from '../../styles'
+import { tuxColors, tuxInput } from '../../colors'
 
 interface TextField {
   id: string
   value: string
-  onChange: (e: React.FormEvent<any>) => void
+  onChange: (e: React.SyntheticEvent<any>) => void
 }
 
 const TextField = ({ id, value, onChange }: TextField) => (
@@ -12,7 +12,7 @@ const TextField = ({ id, value, onChange }: TextField) => (
     <input
       className="InputField"
       id={id}
-      onChange={(event: React.FormEvent<HTMLSelectElement>) => onChange(event.target.value)}
+      onChange={(event) => onChange(event.target.value)}
       value={value}
     />
       <style jsx>{`
@@ -25,8 +25,8 @@ const TextField = ({ id, value, onChange }: TextField) => (
         }
 
         .InputField {
-          background: ${tuxColors.colorWhite};
-          border: 1px solid ${tuxInputStyles.borderColor};
+          background: ${tuxColors.white};
+          border: 1px solid ${tuxInput.border};
           border-radius: 3px;
           color: ${tuxColors.textDark};
           font-size: 16px;
@@ -36,8 +36,8 @@ const TextField = ({ id, value, onChange }: TextField) => (
         }
 
         .InputField:focus {
-          border-color: ${tuxInputStyles.greenTheme.borderColor};
-          outline: 1px solid ${tuxInputStyles.greenTheme.borderColor};
+          border-color: ${tuxInput.greenTheme.border};
+          outline: 1px solid ${tuxInput.greenTheme.border};
         }
       `}</style>
   </div>

@@ -1,10 +1,11 @@
 import React from 'react'
-import { tuxColors, tuxInputStyles } from '../../styles'
+import { tuxColors, tuxInput } from '../../colors'
 
 interface Checkbox {
   id: string
   value?: string
   checked: boolean
+  label?: string,
   onChange: (e: React.FormEvent<any>) => void
 }
 
@@ -29,8 +30,8 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       }
 
       .CheckboxIndicator {
-        background: ${tuxColors.colorSnow};
-        border: 1px solid ${tuxInputStyles.borderColor};
+        background: ${tuxColors.snow};
+        border: 1px solid ${tuxInput.border};
         border-radius: 2px;
         height: 20px;
         left: 0;
@@ -40,7 +41,7 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       }
 
       .CheckboxIndicator::after {
-        border: solid ${tuxColors.colorWhite};
+        border: solid ${tuxColors.white};
         border-width: 0 2px 2px 0;
         content: '';
         height: 10px;
@@ -54,8 +55,8 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       }
 
       .Checkbox:checked ~ .CheckboxIndicator {
-        background: ${tuxColors.colorGreen};
-        border: 1px solid ${tuxColors.colorGreen};
+        background: ${tuxColors.green};
+        border: 1px solid ${tuxColors.green};
       }
 
       .Checkbox:checked ~ .CheckboxIndicator::after {

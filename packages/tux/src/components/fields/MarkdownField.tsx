@@ -1,5 +1,5 @@
 import React from 'react'
-import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
+import { tuxColors, tuxInput, tuxButton } from '../../colors'
 
 interface MarkdownField {
   id: string
@@ -26,8 +26,8 @@ const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
         }
 
         .MarkdownField-textArea {
-          background: ${tuxColors.colorWhite};
-          border: 1px solid ${tuxInputStyles.borderColor};
+          background: ${tuxColors.white};
+          border: 1px solid ${tuxInput.border};
           border-radius: 3px;
           color: ${tuxColors.textDark};
           font-size: 16px;
@@ -36,8 +36,8 @@ const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
         }
 
         .MarkdownField-textArea:focus {
-          border-color: ${tuxInputStyles.greenTheme.borderColor};
-          outline: 1px solid ${tuxInputStyles.greenTheme.borderColor};
+          border-color: ${tuxInput.greenTheme.border};
+          outline: 1px solid ${tuxInput.greenTheme.border};
         }
       `}</style>
   </div>

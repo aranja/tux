@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { get } from '../../utils/accessors'
 
-import { tuxInputStyles } from '../../styles'
+import { tuxInput } from '../../colors'
 import TextField from './TextField'
 import BrowseField from './BrowseField'
 
@@ -114,7 +114,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
               }
               .ImageField-preview {
                 background: white;
-                border: 1px solid ${tuxInputStyles.borderColor};
+                border: 1px solid ${tuxInput.border};
                 border-radius: 3px;
                 display: inline-block;
                 padding: 6px;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { tuxButtonStyles } from '../../styles'
+import { tuxButton } from '../../colors'
 
 class BrowseField extends Component<any, any> {
   constructor(props: any) {
@@ -44,10 +44,10 @@ class BrowseField extends Component<any, any> {
           }
 
           .BrowseField-button {
-            background: ${tuxButtonStyles.backgroundColor};
+            background: ${tuxButton.background};
             border-radius: 2px;
-            border: 1px solid ${tuxButtonStyles.borderColor};
-            color: ${tuxButtonStyles.textColor};
+            border: 1px solid ${tuxButton.border};
+            color: ${tuxButton.text};
             cursor: pointer;
             display: inline-block;
             font-size: 14px;
@@ -69,9 +69,9 @@ class BrowseField extends Component<any, any> {
           }
 
           .BrowseField-button:hover {
-            background: ${tuxButtonStyles.greenTheme.backgroundColor};
-            border: 1px solid ${tuxButtonStyles.greenTheme.borderColor};
-            color: ${tuxButtonStyles.greenTheme.textColor};
+            background: ${tuxButton.greenTheme.background};
+            border: 1px solid ${tuxButton.greenTheme.border};
+            color: ${tuxButton.greenTheme.textColor};
           }
         `}</style>
       </div>
