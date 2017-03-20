@@ -2,9 +2,11 @@ import QueryApi from './query-api'
 import ManagementApi from './management-api'
 import generateEditorSchema from './editors'
 
-import { extractLocale, injectLocale } from './locale'
-
 import { Field, Meta } from 'tux'
+
+const errorMessages = {
+  initializeManagementApi: 'Could not initialize management api.',
+}
 
 export interface Config {
   space: string
@@ -30,20 +32,28 @@ export class ContentfulAdapter {
   private space: string
   private clientId: string
   private redirectUri: string
-  private deliveryApi: QueryApi
-  private previewApi: any
   private managementApi: ManagementApi | null
+  private deliveryApi: QueryApi
   private listeners: Array<Function>
 
   constructor({space, deliveryToken, clientId, redirectUri}: Config) {
     this.space = space
     this.clientId = clientId
     this.redirectUri = redirectUri
-    this.deliveryApi = new QueryApi(space, deliveryToken, 'cdn')
-    this.previewApi = null
     this.managementApi = null
+    this.deliveryApi = new QueryApi(space, deliveryToken, 'cdn')
     this.listeners = []
-    this.initPrivateApis()
+  }
+
+  async getManagementApi() {
+    if (!this.managementApi) {
+      await this.initPrivateApis()
+    }
+
+    if (this.managementApi) {
+      return this.managementApi
+    }
+    throw new Error(errorMessages.initializeManagementApi)
   }
 
   triggerChange() {
@@ -61,7 +71,6 @@ export class ContentfulAdapter {
     // There is a total of three apis:
     // Content Delivery API - Access Token passed publicly to adapter.
     // Content Management API - Access Token returned from OAuth2 flow and saved in localStorage.
-    // Content Preview API - Access Token manually queried through Admin API, then saved in
     // localStorage.
 
     // No private apis on server for now.
@@ -84,51 +93,28 @@ export class ContentfulAdapter {
     }
 
     this.managementApi = new ManagementApi(this.space, managementToken)
-
-    let previewToken = localStorage.getItem('contentfulPreviewToken')
-    let triggerChange = false
-    if (!previewToken) {
-      previewToken = await this.managementApi.getPreviewToken()
-      if (!previewToken) {
-        console.error('Warning: No access token found for Contentful Preview API.')
-        return
-      }
-      triggerChange = true
-      localStorage.setItem('contentfulPreviewToken', previewToken)
-    }
-
-    this.previewApi = new QueryApi(this.space, previewToken, 'preview')
-    this.managementApi.previewApi = this.previewApi
-
-    if (triggerChange) {
-      this.triggerChange()
-    }
+    this.managementApi.deliveryApi = this.deliveryApi
   }
 
   getQueryApi() {
-    return this.previewApi || this.deliveryApi
+    return this.deliveryApi
   }
 
-  getMeta(model: string | Object): Promise<Meta> {
-    return new Promise(async(resolve, reject) => {
-      if (!this.managementApi) {
-        return reject('Manager api not defined, please log in get a scheme.')
-      }
+  async getMeta(model: string | Object) {
+    const managementApi = await this.getManagementApi()
+    const type = this._getModelType(model)
+    if (!type) {
+      return null
+    }
 
-      const type = this._getModelType(model)
-      if (!type) {
-        return reject('Invalid type')
-      }
+    const typeMeta = await managementApi.getTypeMeta(type)
+    const editorSchema = generateEditorSchema(typeMeta)
 
-      const typeMeta = await this.managementApi.getTypeMeta(type)
-      const editorSchema = generateEditorSchema(typeMeta)
-
-      resolve({
-        type,
-        editorSchema,
-        name: typeMeta.name,
-      })
-    })
+    return {
+      type,
+      editorSchema,
+      name: typeMeta.name,
+    }
   }
 
   _getModelType(model: any) {
@@ -141,21 +127,14 @@ export class ContentfulAdapter {
   }
 
   async save(model: any) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in to save.')
-    }
-
-    const modelWithLocale = injectLocale(model)
-    await this.managementApi.saveEntry(modelWithLocale)
+    const managementApi = await this.getManagementApi()
+    await managementApi.saveEntry(model)
     this.triggerChange()
   }
 
   async createAssetFromFile(file: any, title: string) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in to save.')
-    }
-
-    const upload = await this.managementApi.createUpload(file)
+    const managementApi = await this.getManagementApi()
+    const upload = await managementApi.createUpload(file)
     if (upload.sys) {
       const assetBody = {
         fields: {
@@ -212,50 +191,29 @@ export class ContentfulAdapter {
   }
 
   async _createAsset(body: any, bodyType: string) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in to save.')
-    }
-
-    const asset = await this.managementApi.createAsset(injectLocale(body))
-    if (asset) {
-      await this.managementApi.processAsset(
-        asset.sys.id,
-        'en-US',
-        asset.sys.version
-      )
-    }
-    return asset
+    const managementApi = await this.getManagementApi()
+    return managementApi.createAsset(body)
   }
 
   async load(model: any) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in get a scheme.')
-    }
-
-    const entry = await this.managementApi.getEntry(model.sys.id)
-    return extractLocale(entry)
+    const managementApi = await this.getManagementApi()
+    return managementApi.getEntry(model.sys.id)
   }
 
   async loadAsset(model: any) {
-    if (!this.managementApi) {
-      throw new Error('Manager api not defined, please log in get a scheme.')
-    }
-    const asset = await this.managementApi.getAsset(model.sys.id)
-    return extractLocale(asset)
+    const managementApi = await this.getManagementApi()
+    return managementApi.getAsset(model.sys.id)
   }
 
   async currentUser() {
-    if (!this.managementApi) {
-      return null
-    }
-
+    const managementApi = await this.getManagementApi()
     try {
       let [
         user,
         space,
       ] = await Promise.all([
-        this.managementApi.getUser(),
-        this.managementApi.getSpace(),
+        managementApi.getUser(),
+        managementApi.getSpace(),
       ])
 
       user.space = space
