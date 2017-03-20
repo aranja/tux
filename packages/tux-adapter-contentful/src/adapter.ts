@@ -71,7 +71,6 @@ export class ContentfulAdapter {
     // There is a total of three apis:
     // Content Delivery API - Access Token passed publicly to adapter.
     // Content Management API - Access Token returned from OAuth2 flow and saved in localStorage.
-    // Content Preview API - Access Token manually queried through Admin API, then saved in
     // localStorage.
 
     // No private apis on server for now.
@@ -94,24 +93,7 @@ export class ContentfulAdapter {
     }
 
     this.managementApi = new ManagementApi(this.space, managementToken)
-
-    let previewToken = localStorage.getItem('contentfulPreviewToken')
-    let triggerChange = false
-    if (!previewToken) {
-      previewToken = await this.managementApi.getPreviewToken()
-      if (!previewToken) {
-        console.error('Warning: No access token found for Contentful Preview API.')
-        return
-      }
-      triggerChange = true
-      localStorage.setItem('contentfulPreviewToken', previewToken)
-    }
-
     this.managementApi.deliveryApi = this.deliveryApi
-
-    if (triggerChange) {
-      this.triggerChange()
-    }
   }
 
   getQueryApi() {

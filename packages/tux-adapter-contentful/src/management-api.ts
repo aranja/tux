@@ -141,12 +141,6 @@ class ManagementApi {
     return contentType
   }
 
-  async getPreviewToken() {
-    const previewApiKeys = await this.get(`/spaces/${this.space}/preview_api_keys`)
-    const apiKey = previewApiKeys.items[0]
-    return apiKey && apiKey.accessToken
-  }
-
   getUser() {
     return this.get('/user')
   }
