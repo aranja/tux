@@ -4,8 +4,6 @@ import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 interface Dropdown {
   id: string
   value: string
-  label: string
-  helpText: string
   dropdownValues: Array<string>
   onChange: (e: React.FormEvent<any>) => void
 }
@@ -38,12 +36,11 @@ class Dropdown extends Component<any, State> {
   }
 
   render() {
-    const { id, value, label, dropdownValues, onChange } = this.props
+    const { id, value, dropdownValues, onChange } = this.props
     const { selectedValue } = this.state
 
     return (
       <div className="Dropdown-wrapper">
-        <label className="Dropdown-inputLabel">{label}</label>
         <div className="Dropdown">
           <select
             onChange={(event: React.ChangeEvent<any>) => this.handleChange(event.target.value)}
@@ -60,15 +57,6 @@ class Dropdown extends Component<any, State> {
             display: inline-flex;
             flex-direction: column;
             margin-bottom: 20px;
-          }
-
-          .Dropdown-inputLabel {
-            color: ${tuxInputStyles.labelTextColor};
-            font-size: 16px;
-            font-weight: 300;
-            line-height: 24px;
-            padding: 5px 0;
-            text-transform: capitalize;
           }
 
           .Dropdown {
