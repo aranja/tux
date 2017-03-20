@@ -8,11 +8,11 @@ class ManagementApi {
   private space: string
   private currentLocale: string
 
-  previewApi: any
+  deliveryApi: any
 
   constructor (space: string, accessToken: string) {
     this.space = space
-    this.previewApi = null
+    this.deliveryApi = null
     this.currentLocale = ''
     this.client = axios.create({
       baseURL: `https://api.contentful.com`,
@@ -78,8 +78,8 @@ class ManagementApi {
     const url = `/spaces/${this.space}/${entityPath}/${id}`
     const newEntity = await this.put(url, { fields }, version)
 
-    if (this.previewApi) {
-      this.previewApi.override(this.formatForDelivery(newEntity))
+    if (this.deliveryApi) {
+      this.deliveryApi.override(this.formatForDelivery(newEntity))
     }
 
     await this._publish(newEntity, entityPath)

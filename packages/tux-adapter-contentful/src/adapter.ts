@@ -107,8 +107,7 @@ export class ContentfulAdapter {
       localStorage.setItem('contentfulPreviewToken', previewToken)
     }
 
-    const previewApi = new QueryApi(this.space, previewToken, 'preview')
-    this.managementApi.previewApi = previewApi
+    this.managementApi.deliveryApi = this.deliveryApi
 
     if (triggerChange) {
       this.triggerChange()
