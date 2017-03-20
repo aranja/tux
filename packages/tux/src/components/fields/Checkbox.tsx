@@ -4,12 +4,11 @@ import { tuxColors, tuxInputStyles } from '../../styles'
 interface Checkbox {
   id: string
   value?: string
-  label?: string
   checked: boolean
   onChange: (e: React.FormEvent<any>) => void
 }
 
-const Checkbox = ({ id, value, label, checked, onChange }: Checkbox) => (
+const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
   <span>
     <input
       className="Checkbox"
