@@ -27,16 +27,12 @@ const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
         .MarkdownField-textArea {
           background: ${tuxColors.white};
           border: 1px solid ${tuxInput.border};
-          border-radius: 3px;
           color: ${tuxColors.textDark};
           font-size: 16px;
-          padding: 5px;
+          font-weight: 300;
+          line-height: 1.4;
+          padding: 8px;
           width: 100%;
-        }
-
-        .MarkdownField-textArea:focus {
-          border-color: ${tuxInput.greenTheme.border};
-          outline: 1px solid ${tuxInput.greenTheme.border};
         }
       `}</style>
   </div>

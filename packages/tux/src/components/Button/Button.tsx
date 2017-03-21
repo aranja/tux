@@ -36,19 +36,15 @@ const Button = ({ type, flat, themeColor, raised, onClick, children }: Button) =
         vertical-align: baseline;
       }
 
-      .Button--flat {
-
-      }
-
       .Button--flat:hover {
-        background: ${fade(tuxButton.background, 0.5)};
+        background: rgba(220, 221, 222, 0.4);
       }
 
       .Button--raised {
         background: ${tuxButton.background};
         border: 1px solid ${tuxButton.border};
-        box-shadow: ${fade(tuxColors.black, 0.12)} 0px 1px 6px,
-                    ${fade(tuxColors.black, 0.12)} 0px 1px 4px;
+        box-shadow: ${fade(tuxColors.black, 0.1)} 0px 1px 6px,
+                    ${fade(tuxColors.black, 0.1)} 0px 1px 4px;
       }
 
       .Button + .Button {

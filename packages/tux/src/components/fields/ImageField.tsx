@@ -117,6 +117,10 @@ class ImageField extends React.Component<ImageFieldProps, any> {
                 border-radius: 3px;
                 display: inline-block;
                 padding: 6px;
+                max-height: 140px;
+              }
+              .ImageField-preview > img {
+                height: 100%;
               }
             `}</style>
           </div>

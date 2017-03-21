@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { tuxButton } from '../../colors'
+import { lighten } from '../../utils/color'
 
 class BrowseField extends Component<any, any> {
   constructor(props: any) {
@@ -37,7 +38,7 @@ class BrowseField extends Component<any, any> {
         <style jsx>{`
           .BrowseField-fileInput {
             clip: rect(0, 0, 0, 0);
-            position: absolute !important;
+            position: absolute;
             height: 0;
             width: 0;
             overflow: hidden;
@@ -62,16 +63,14 @@ class BrowseField extends Component<any, any> {
             width: 100%;
           }
 
+          .BrowseField-button:hover {
+            background: ${lighten(tuxButton.background, 0.2)}
+          }
+
           .BrowseField-button::before {
             content: "\\f068";
             font-family: "mfg_labs_iconsetregular";
             padding-right: 10px;
-          }
-
-          .BrowseField-button:hover {
-            background: ${tuxButton.greenTheme.background};
-            border: 1px solid ${tuxButton.greenTheme.border};
-            color: ${tuxButton.greenTheme.textColor};
           }
         `}</style>
       </div>

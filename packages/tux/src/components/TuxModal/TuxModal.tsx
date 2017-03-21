@@ -69,8 +69,8 @@ class TuxModal extends React.Component<any, State> {
     const value = get(fullModel, field.field)
 
     return InputComponent && (
-      <div key={field.field}>
-        <label className="TuxModal-inputLabel ">
+      <div className="InputComponent" key={field.field}>
+        <label className="InputComponent-label ">
           {field.label}
         </label>
         <InputComponent
@@ -80,15 +80,18 @@ class TuxModal extends React.Component<any, State> {
           {...field.props}
         />
         <style jsx>{`
-          .TuxModal-inputLabel {
+          .InputComponent {
+            margin: 16px 0;
+          }
+          .InputComponent-label {
             color: ${tuxInput.labelText};
             display: block;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 300;
             line-height: 24px;
-            padding: 5px 0;
+            padding: 0;
+            padding-bottom: 5px;
             text-transform: capitalize;
-            margin-top: 15px;
           }
         `}</style>
       </div>
@@ -126,11 +129,11 @@ class TuxModal extends React.Component<any, State> {
         )}
         <style jsx>{`
           .TuxModal {
-            background: ${tuxColors.snow};
+            background: #FFF;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             margin: 0;
             margin-left: auto;
-            max-width: 800px;
+            max-width: 650px;
             height: 100vh;
             overflow: auto;
             padding: 0;
@@ -139,7 +142,7 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-topBar {
-            background: ${tuxColors.white};
+            background: #f2f3f6;
             border-bottom: 1px solid rgba(203, 203, 203, 0.53);
             display: flex;
             justify-content: space-between;
@@ -152,7 +155,7 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-content {
-            padding: 30px;
+            padding: 20px 30px;
           }
 
           .TuxModal-meta {

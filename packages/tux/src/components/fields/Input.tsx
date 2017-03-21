@@ -59,7 +59,8 @@ class Input extends Component<Props, State> {
             background: #FFF;
             border: 0;
             font-size: 15px;
-            padding: 10px 5px;
+            padding: 0;
+            padding-bottom: 8px;
             width: 100%;
           }
           .Input-field:focus {
@@ -78,7 +79,7 @@ class Input extends Component<Props, State> {
           }
           .Input-underline--active {
             transition: transform 0.25s cubic-bezier(${decelerationCurve});
-            border-bottom: 1px solid #3bb172;
+            border-bottom: 1px solid ${tuxColors.green};
             margin: 0;
             transform: scaleX(0);
           }

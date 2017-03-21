@@ -20,12 +20,12 @@ export const tuxInput = {
 }
 
 export const tuxButton = {
-  background: '#E5EBED',
+  background: '#E5E6ED',
   border: '#C3CFD5',
   text: '#536171',
   greenTheme: {
     background: '#3BB172',
-    border: '#188E18',
+    border: '#CBCBCB',
     text: '#FFFFFF',
   }
 }

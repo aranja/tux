@@ -29,7 +29,7 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       }
 
       .CheckboxIndicator {
-        background: ${tuxColors.snow};
+        background: ${tuxColors.white};
         border: 1px solid ${tuxInput.border};
         border-radius: 2px;
         height: 20px;
@@ -40,7 +40,7 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       }
 
       .CheckboxIndicator::after {
-        border: solid ${tuxColors.white};
+        border: solid ${tuxColors.green};
         border-width: 0 2px 2px 0;
         content: '';
         height: 10px;
@@ -54,8 +54,7 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       }
 
       .Checkbox:checked ~ .CheckboxIndicator {
-        background: ${tuxColors.green};
-        border: 1px solid ${tuxColors.green};
+        background: #e5e6ed;
       }
 
       .Checkbox:checked ~ .CheckboxIndicator::after {
