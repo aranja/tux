@@ -15,19 +15,6 @@ export interface Config {
   redirectUri: string
 }
 
-export interface Field {
-  field: string,
-  label: string,
-  component: any,
-  props?: Object
-}
-
-export interface Meta {
-  type: string,
-  editorSchema?: Array<Field>,
-  name?: string,
-}
-
 export class ContentfulAdapter {
   private space: string
   private clientId: string
@@ -124,6 +111,12 @@ export class ContentfulAdapter {
       return model.sys.contentType.sys.id
     }
     return null
+  }
+
+  async createModel(modelId: string) {
+    const meta = await this.getMeta(modelId)
+    const managementApi = await this.getManagementApi()
+    return managementApi.createModel(modelId, meta)
   }
 
   async save(model: any) {

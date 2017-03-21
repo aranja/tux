@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {AxiosInstance} from 'axios'
 
+import { Meta } from 'tux'
 import { extractLocale, injectLocale } from './locale'
 
 class ManagementApi {
@@ -38,11 +39,15 @@ class ManagementApi {
     }).then(result => result.data) as Promise<any>
   }
 
-  post(url: string, body: any, contentType: string) {
+  post(url: string, body: any, contentType: string, contentfulContentType: string) {
+    const headers = {
+      'Content-Type': contentType,
+    }
+    if (contentfulContentType) {
+      headers['X-Contentful-Content-Type'] = contentfulContentType
+    }
     return this.client.post(url, body, {
-      headers: {
-        'Content-Type': contentType,
-      }
+      headers,
     }).then(result => result.data) as Promise<any>
   }
 
@@ -57,6 +62,23 @@ class ManagementApi {
   async _getEntity(id: string, entityPath: string) {
     const entity = await this.get(`/spaces/${this.space}/${entityPath}/${id}`)
     return this._extractLocale(entity)
+  }
+
+  async createModel(modelId: string, meta: Meta) {
+    const url = `/spaces/${this.space}/entries/`
+    const model = { fields: {} }
+    for (const field of meta.editorSchema) {
+      const fieldId = field.field.split('.')[1]
+      model.fields[fieldId] = ''
+    }
+    const modelWithLocale = await this._injectLocale(model)
+    console.log('Before posting')
+    console.log(modelWithLocale)
+    const contentType = 'application/vnd.contentful.management.v1+json'
+    const newModel = await this.post(url, { fields: modelWithLocale.fields }, contentType, modelId)
+    console.log('After posting')
+    console.log(newModel)
+    return newModel
   }
 
   saveEntry(entry: any) {
