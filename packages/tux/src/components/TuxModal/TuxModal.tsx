@@ -70,7 +70,7 @@ class TuxModal extends React.Component<any, State> {
 
     return InputComponent && (
       <div key={field.field}>
-        <label className="TuxModal-inputLabel">
+        <label className="TuxModal-inputLabel ">
           {field.label}
         </label>
         <InputComponent
@@ -88,6 +88,7 @@ class TuxModal extends React.Component<any, State> {
             line-height: 24px;
             padding: 5px 0;
             text-transform: capitalize;
+            margin-top: 15px;
           }
         `}</style>
       </div>

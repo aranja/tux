@@ -22,7 +22,6 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
     <style jsx>{`
       .Checkbox {
         box-sizing: border-box;
-        margin-bottom: 20px;
         opacity: 0;
         padding: 0;
         position: absolute;

@@ -110,7 +110,6 @@ class ImageField extends React.Component<ImageFieldProps, any> {
               .ImageField {
                 display: inline-flex;
                 flex-direction: column;
-                margin-bottom: 20px;
               }
               .ImageField-preview {
                 background: white;

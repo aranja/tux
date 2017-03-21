@@ -22,7 +22,6 @@ const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
           display: flex;
           flex-direction: column;
           flex-wrap: wrap;
-          margin-bottom: 20px;
         }
 
         .MarkdownField-textArea {

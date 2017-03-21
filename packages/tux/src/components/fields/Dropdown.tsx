@@ -56,7 +56,6 @@ class Dropdown extends Component<any, State> {
           .Dropdown-wrapper {
             display: inline-flex;
             flex-direction: column;
-            margin-bottom: 20px;
           }
 
           .Dropdown {

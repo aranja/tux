@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import toggleScroll from './toggle-scroll'
 import { getState, setListener, State as StoreState, Modal } from './store'
-import { accelerationCurve, decelerationCurve, standardCurve } from '../../utils/curves'
+import { decelerationCurve, sharpCurve } from '../../utils/curves'
 
 export interface State {
   modals: StoreState,
@@ -125,7 +125,7 @@ export class ModalContainer extends React.Component<any, State> {
 
           .ModalTransition-leave-active {
             transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(${decelerationCurve});
+            transition: transform 0.4s cubic-bezier(${sharpCurve});
           }
         `}</style>
       </div>

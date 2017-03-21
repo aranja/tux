@@ -59,7 +59,6 @@ class Boolean extends Component<any, State> {
         .Boolean-wrapper {
           display: inline-flex;
           flex-direction: column;
-          margin-bottom: 20px;
         }
 
         .Boolean {

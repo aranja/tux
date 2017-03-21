@@ -5,7 +5,7 @@ import {
   ImageField,
   MarkdownField,
   Radio,
-  TextField,
+  Input,
   TagEditor,
 } from 'tux'
 
@@ -16,7 +16,7 @@ const widgetIdToEditor = {
   dropdown: Dropdown,
   markdown: MarkdownField,
   radio: Radio,
-  singleLine: TextField,
+  singleLine: Input,
   tagEditor: TagEditor,
 }
 

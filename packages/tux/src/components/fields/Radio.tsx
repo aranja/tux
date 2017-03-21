@@ -48,7 +48,6 @@ class Radio extends Component<any, State> {
         .Radio-wrapper {
           display: inline-flex;
           flex-direction: column;
-          margin-bottom: 20px;
         }
 
         .Radio {
