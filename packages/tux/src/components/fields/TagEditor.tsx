@@ -1,14 +1,22 @@
 import React, { Component } from 'react'
-import { tuxColors, tuxInput } from '../../colors'
+import { Theme, input } from '../../theme'
 import { darken } from '../../utils/color'
 
 export interface TagEditorProps {
   id: string
   value: Array<string>
-  onChange: (e: React.FormEvent<any>) => void
+  onChange: (e: Array<string>) => void
+}
+
+type Tags = Array<string>
+type TagObj = {
+  singleValue: string
 }
 
 class TagEditor extends Component<TagEditorProps, any> {
+
+  private tagEditor: HTMLElement
+  private isUnmounting: boolean
 
   state = {
     tags: []
@@ -38,23 +46,24 @@ class TagEditor extends Component<TagEditorProps, any> {
 
   }
 
-  onItemAdded = (newTags) => {
+  onItemAdded = (newTags: Tags) => {
     const { onChange } = this.props
-
+    console.log(newTags)
     if (!this.isUnmounting) {
       onChange(newTags)
     }
   }
 
-  onItemDeleted = (tag) => {
+  onItemDeleted = (tag: Tags) => {
     const { onChange } = this.props
 
     onChange(tag)
   }
 
-  handleClickDelete = (item) => {
+  handleClickDelete = (item: TagObj) => {
     const { tags } = this.state
-    const newTags = tags
+
+    const newTags: Tags = tags
     const tagPosition = newTags.indexOf(item.singleValue)
 
     if (tagPosition > -1) {
@@ -63,7 +72,7 @@ class TagEditor extends Component<TagEditorProps, any> {
     }
   }
 
-  handleOnKeyUp = (event) => {
+  handleOnKeyUp = (event: any) => {
     if (event.key !== 'Enter') {
       return
     }
@@ -117,10 +126,10 @@ class TagEditor extends Component<TagEditorProps, any> {
             }
 
             .TagEditor-tag {
-              background: ${tuxColors.gray};
+              background: ${Theme.gray};
               border-radius: 20px;
-              border: 1px solid ${tuxInput.border};
-              color: ${tuxInput.labelText};
+              border: 1px solid ${input.border};
+              color: ${input.labelText};
               display: flex;
               font-size: 12px;
               padding: 5px 15px;
@@ -130,13 +139,13 @@ class TagEditor extends Component<TagEditorProps, any> {
 
             .TagEditor-tagButton {
               cursor: pointer;
-              color: ${tuxColors.gray};
+              color: ${Theme.gray};
               display: flex;
               align-items: center;
               justify-content: center;
               width: 1.5em;
               height: 1.5em;
-              background: ${darken(tuxColors.gray, 0.22)};
+              background: ${darken(Theme.gray, 0.22)};
               font-family: 'mfg_labs_iconsetregular';
               font-style: normal;
               speak: none;
@@ -153,10 +162,10 @@ class TagEditor extends Component<TagEditorProps, any> {
             }
 
             .TagEditor-input {
-              background: ${tuxColors.white};
-              border: 1px solid ${tuxInput.border};
+              background: #FFF;
+              border: 1px solid ${input.border};
               border-radius: 3px;
-              color: ${tuxColors.textDark};
+              color: ${Theme.textDark};
               font-size: 16px;
               padding: 5px;
               line-height: 1.5;
@@ -164,8 +173,8 @@ class TagEditor extends Component<TagEditorProps, any> {
             }
 
             .TagEditor-input:focus {
-              border-color: ${tuxInput.greenTheme.border};
-              outline: 1px solid ${tuxInput.greenTheme.border};
+              border-color: ${input.greenTheme.border};
+              outline: 1px solid ${input.greenTheme.border};
             }
           `}</style>
       </div>

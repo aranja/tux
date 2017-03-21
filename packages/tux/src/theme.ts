@@ -1,30 +1,29 @@
-export const tuxColors = {
-  black: '#000000',
-  green: '#3BB172',
-  pink: '#E8008A',
+export const Theme = {
+  primary: '#3BB172',
+  secondary: '#3A82DF',
+  alert: '#E8008A',
   gray: '#E7E7E7',
-  purple: '#473BB1',
   snow: '#FAFAFA',
-  white: '#FFFFFF',
+  background: '#FFFFFF',
   textDark: '#313131',
   textGray: '#3C4858',
   textLight: '#FFFFFF',
 }
 
-export const tuxInput = {
+export const input = {
   border: '#CBCBCB',
   labelText: '#888888',
   greenTheme: {
-    border: '#3BB172',
+    border: `${Theme.primary}`,
   }
 }
 
-export const tuxButton = {
+export const button = {
   background: '#E5E6ED',
   border: '#C3CFD5',
   text: '#536171',
   greenTheme: {
-    background: '#3BB172',
+    background: `${Theme.primary}`,
     border: '#CBCBCB',
     text: '#FFFFFF',
   }

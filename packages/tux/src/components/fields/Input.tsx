@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { tuxColors, tuxInput } from '../../colors'
+import { Theme, input } from '../../theme'
 import { decelerationCurve, sharpCurve } from '../../utils/curves'
 
 export interface Props {
   id: string
   value: string
-  onChange: (e: React.SyntheticEvent<any>) => void
+  onChange: (e: string) => void
 }
 
 export interface State {
@@ -79,7 +79,7 @@ class Input extends Component<Props, State> {
           }
           .Input-underline--active {
             transition: transform 0.25s cubic-bezier(${decelerationCurve});
-            border-bottom: 1px solid ${tuxColors.green};
+            border-bottom: 1px solid ${Theme.primary};
             margin: 0;
             transform: scaleX(0);
           }

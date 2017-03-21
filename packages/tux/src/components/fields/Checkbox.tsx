@@ -1,12 +1,12 @@
 import React from 'react'
-import { tuxColors, tuxInput } from '../../colors'
+import { Theme, input } from '../../theme'
 
 interface Checkbox {
   id: string
   value?: string
   checked: boolean
   label?: string,
-  onChange: (e: React.FormEvent<any>) => void
+  onChange: (value: boolean) => void
 }
 
 const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
@@ -16,7 +16,7 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       type="checkbox"
       id={id}
       checked={checked}
-      onChange={(event) => onChange(event.target.value)}
+      onChange={(event) => onChange(event.target.checked)}
     />
     <div className="CheckboxIndicator"></div>
     <style jsx>{`
@@ -29,8 +29,8 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       }
 
       .CheckboxIndicator {
-        background: ${tuxColors.white};
-        border: 1px solid ${tuxInput.border};
+        background: #FFF;
+        border: 1px solid ${input.border};
         border-radius: 2px;
         height: 20px;
         left: 0;
@@ -40,7 +40,7 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       }
 
       .CheckboxIndicator::after {
-        border: solid ${tuxColors.green};
+        border: solid ${Theme.primary};
         border-width: 0 2px 2px 0;
         content: '';
         height: 10px;

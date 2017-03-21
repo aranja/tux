@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { tuxColors, tuxInput, tuxButton } from '../../colors'
+import { Theme, input, button } from '../../theme'
 import { fade } from '../../utils/color'
 import moment from 'moment'
 import TuxSpinner from '../Spinner/Spinner'
@@ -84,7 +84,7 @@ class TuxModal extends React.Component<any, State> {
             margin: 16px 0;
           }
           .InputComponent-label {
-            color: ${tuxInput.labelText};
+            color: ${input.labelText};
             display: block;
             font-size: 14px;
             font-weight: 300;
@@ -165,12 +165,12 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-metaLastUpdated {
-            color: ${fade(tuxColors.textGray, 0.5)};
+            color: ${fade(Theme.textGray, 0.5)};
             font-weight: 300;
           }
 
           .TuxModal-title {
-            color: ${tuxColors.textDark};
+            color: ${Theme.textDark};
             font-size: 25px;
             font-weight: 300;
             margin: 0;

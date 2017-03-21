@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { tuxColors } from '../../colors'
+import { Theme } from '../../theme'
 
 class AlertBar extends Component<any, any> {
   hideDelay = 1500
@@ -33,7 +33,7 @@ class AlertBar extends Component<any, any> {
         </p>
         <style jsx>{`
           .AlertBar {
-            background: ${tuxColors.pink};
+            background: ${Theme.alert};
             bottom: 0;
             color: #FFF;
             display: flex;

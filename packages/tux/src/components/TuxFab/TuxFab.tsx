@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { lighten, fade } from '../../utils/color'
-import { tuxColors } from '../../colors'
+import { Theme } from '../../theme'
 
 export interface State {
   user: null | {

@@ -1,10 +1,10 @@
 import React from 'react'
-import { tuxColors, tuxInput, tuxButton } from '../../colors'
+import { Theme, input, button } from '../../theme'
 
 interface MarkdownField {
   id: string
   value: string
-  onChange: (e: React.FormEvent<any>) => void
+  onChange: (value: string) => void
 }
 
 const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
@@ -14,7 +14,7 @@ const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
       className="MarkdownField-textArea"
       id={id}
       value={value}
-      onChange={(event: React.FormEvent<any>) => onChange(event.target.value)}
+      onChange={(event) => onChange(event.target.value)}
     />
     <style jsx>{`
         .MarkdownField {
@@ -25,9 +25,9 @@ const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
         }
 
         .MarkdownField-textArea {
-          background: ${tuxColors.white};
-          border: 1px solid ${tuxInput.border};
-          color: ${tuxColors.textDark};
+          background: #FFF;
+          border: 1px solid ${input.border};
+          color: ${Theme.textDark};
           font-size: 16px;
           font-weight: 300;
           line-height: 1.4;

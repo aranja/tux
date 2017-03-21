@@ -1,32 +1,10 @@
 import React, { Component } from 'react'
-import { tuxColors, tuxInput } from '../../colors'
+import { Theme, input } from '../../theme'
 import Checkbox from './Checkbox'
 
-export interface State {
-}
-
-class Radio extends Component<any, State> {
-  state: State = {
-    checkedValue: null
-  }
-
-  componentDidMount() {
-    const { value } = this.props
-    this.setState({
-      checkedValue: value
-    })
-  }
-
-  onChangeValue = (choice: string) => {
-    const { onChange } = this.props
-    this.setState({
-      checkedValue: choice
-    })
-    onChange(choice)
-  }
-
+class Radio extends Component<any, any> {
   render() {
-    const { id, choices, value } = this.props
+    const { id, choices, value, onChange } = this.props
     return (
       <div className="Radio-wrapper">
         {choices.map((choice: string) => (
@@ -39,7 +17,7 @@ class Radio extends Component<any, State> {
               id={choice}
               label={choice}
               checked={choice === value}
-              onChange={() => {this.onChangeValue(choice)}}
+              onChange={(checked) => { onChange(checked ? choice : null) }}
             />
           </label>
         ))}
