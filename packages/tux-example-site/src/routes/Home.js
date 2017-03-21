@@ -24,7 +24,7 @@ const Home = ({ content, sellPoints, testimonial, carousel }) => (
     <Editable model={content}>
       <ProductBanner image={ProductBannerImage} />
       <Section>
-        <H1><EditInline field="fields.content.tagline" /></H1>
+        <H1><EditInline placeholder="Sell points: Heading" field="fields.content.tagline" /></H1>
         <SellPoints sellPoints={sellPoints.items} />
       </Section>
       <Section>
@@ -34,16 +34,16 @@ const Home = ({ content, sellPoints, testimonial, carousel }) => (
         <Testimonial testimonial={testimonial.items}/>
       </Section>
       <Section backgroundColor="#F5F7FA">
-        <H1><EditInline field="fields.content.twitterFeedTitle" /></H1>
-        <H2><EditInline field="fields.content.twitterFeedSubtitle" /></H2>
+        <H1><EditInline placeholder="Twitter: Heading" field="fields.content.twitterFeedTitle" /></H1>
+        <H2><EditInline placeholder="Twitter: Subtitle" field="fields.content.twitterFeedSubtitle" /></H2>
         <TwitterFeed />
         <SocialPlug>
           Are you using Tux? <strong>Let us know on Twitter</strong>
         </SocialPlug>
       </Section>
       <Section>
-        <H1><EditInline field="fields.content.newsletterTitle" /></H1>
-        <H2><EditInline field="fields.content.newsletterSubtitle" /></H2>
+        <H1><EditInline placeholder="Newsletter: Heading" field="fields.content.newsletterTitle" /></H1>
+        <H2><EditInline placeholder="Newsletter: Subtitle" field="fields.content.newsletterSubtitle" /></H2>
         <Newsletter model={content} />
       </Section>
     </Editable>

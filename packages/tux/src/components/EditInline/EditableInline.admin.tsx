@@ -8,6 +8,7 @@ import { get, set } from '../../utils/accessors'
 export type Props = EditableProps & {
   onSave: (model: any) => Promise<any>,
   onLoad: (model: any) => void,
+  placeholder: string,
   field: string | Array<string>,
 }
 
@@ -49,6 +50,7 @@ class EditInline extends React.Component<Props, State> {
           onChange={this.onEditorChange}
           readOnly={this.context.readOnly}
           children={this.props.children}
+          placeholder={this.props.placeholder}
         />
         <style jsx>{`
           .EditInline.is-editing:hover {

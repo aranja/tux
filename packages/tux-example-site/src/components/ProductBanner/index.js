@@ -6,10 +6,12 @@ const ProductBanner = ({ image }) => (
   <div className="ProductBanner">
     <div className="ProductBanner-content">
       <h1 className="ProductBanner-heading">
-        <EditInline field="fields.content.title" />
+        <EditInline placeholder="ProductBanner heading" field="fields.content.title">
+          Hello
+        </EditInline>
       </h1>
       <div className="ProductBanner-text">
-        <EditInline field="fields.content.subtitle" />
+        <EditInline placeholder="ProductBanner body" field="fields.content.subtitle" />
       </div>
     </div>
     <div className="ProductBanner-imageWrap">
