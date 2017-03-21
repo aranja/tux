@@ -1,15 +1,19 @@
 import axios from 'axios'
 import {AxiosInstance} from 'axios'
 
+import { extractLocale, injectLocale } from './locale'
+
 class ManagementApi {
   private client: AxiosInstance
   private space: string
+  private currentLocale: string
 
-  previewApi: any
+  deliveryApi: any
 
   constructor (space: string, accessToken: string) {
     this.space = space
-    this.previewApi = null
+    this.deliveryApi = null
+    this.currentLocale = ''
     this.client = axios.create({
       baseURL: `https://api.contentful.com`,
       headers: {
@@ -50,33 +54,42 @@ class ManagementApi {
     return this._getEntity(id, 'assets')
   }
 
-  _getEntity(id: string, entityPath: string) {
-    return this.get(`/spaces/${this.space}/${entityPath}/${id}`)
+  async _getEntity(id: string, entityPath: string) {
+    const entity = await this.get(`/spaces/${this.space}/${entityPath}/${id}`)
+    return this._extractLocale(entity)
   }
 
-  async saveEntry(entry: any) {
+  saveEntry(entry: any) {
     return this._save(entry, 'entries')
   }
 
-  async saveAsset(asset: any) {
+  saveAsset(asset: any) {
     return this._save(asset, 'assets')
   }
 
-  processAsset(id: string, localeName: string, version: any) {
-    const url = `/spaces/${this.space}/assets/${id}/files/${localeName}/process`
+  processAsset(id: string, version: any) {
+    const url = `/spaces/${this.space}/assets/${id}/files/${this.currentLocale}/process`
     return this.put(url, null, version)
   }
 
   async _save(entity: any, entityPath: string) {
-    const { fields, sys: { id, version } } = entity
+    const entityWithLocale = await this._injectLocale(entity)
+    const { fields, sys: { id, version } } = entityWithLocale
     const url = `/spaces/${this.space}/${entityPath}/${id}`
-    const newEntry = await this.put(url, { fields }, version)
+    const newEntity = await this.put(url, { fields }, version)
 
-    if (this.previewApi) {
-      this.previewApi.override(this.formatForDelivery(newEntry))
+    if (this.deliveryApi) {
+      this.deliveryApi.override(this.formatForDelivery(newEntity))
     }
 
-    return newEntry
+    await this._publish(newEntity, entityPath)
+    return newEntity
+  }
+
+  _publish(entity: any, entityPath: string) {
+    const { id, version } = entity.sys
+    const url = `/spaces/${this.space}/${entityPath}/${id}/published`
+    return this.put(url, null, version)
   }
 
   createUpload(file: File) {
@@ -103,9 +116,14 @@ class ManagementApi {
     })
   }
 
-  createAsset(body: any) {
+  async createAsset(body: any) {
     const url = `/spaces/${this.space}/assets`
-    return this.post(url, body, 'application/json')
+    const bodyWithLocale = await this._injectLocale(body)
+    const asset = await this.post(url, bodyWithLocale, 'application/json')
+    await this.processAsset(asset.sys.id, asset.sys.version)
+    asset.sys.version += 1
+    await this._publish(asset, 'assets')
+    return asset
   }
 
   async getTypeMeta(type: string) {
@@ -123,12 +141,6 @@ class ManagementApi {
     return contentType
   }
 
-  async getPreviewToken() {
-    const previewApiKeys = await this.get(`/spaces/${this.space}/preview_api_keys`)
-    const apiKey = previewApiKeys.items[0]
-    return apiKey && apiKey.accessToken
-  }
-
   getUser() {
     return this.get('/user')
   }
@@ -137,12 +149,45 @@ class ManagementApi {
     return this.get(`/spaces/${this.space}`)
   }
 
+  getLocalesForSpace(spaceId: string) {
+    return this.get(`/spaces/${this.space}/locales`)
+  }
+
+  async getDefaultLocaleForSpace(spaceId: string) {
+    if (this.currentLocale) {
+      return this.currentLocale
+    }
+
+    const locales = await this.getLocalesForSpace(spaceId)
+    for (const locale of locales.items) {
+      if (locale.default) {
+        this.currentLocale = locale.internal_code
+        return this.currentLocale
+      }
+    }
+    return null
+  }
+
   formatForDelivery(entry: any) {
     Object.keys(entry.fields).forEach(name => {
       const value = entry.fields[name]
-      entry.fields[name] = value && value['en-US']
+      entry.fields[name] = value && value[this.currentLocale]
     })
     return entry
+  }
+
+  async _extractLocale(entity: any) {
+    if (!this.currentLocale) {
+      await this.getDefaultLocaleForSpace(this.space)
+    }
+    return extractLocale(entity, this.currentLocale)
+  }
+
+  async _injectLocale(entity: any) {
+    if (!this.currentLocale) {
+      await this.getDefaultLocaleForSpace(this.space)
+    }
+    return injectLocale(entity, this.currentLocale)
   }
 }
 
