@@ -1,5 +1,5 @@
 import React from 'react'
-import { Editable } from 'tux'
+import { EditModal } from 'tux'
 import classNames from 'classnames'
 
 import './styles.css'
@@ -24,13 +24,15 @@ class Carousel extends React.Component {
           const isActive = index === this.state.currentIndex
 
           return (
-            <Editable key={item.fields.title} model={item} className={classNames('Carousel-item', isActive && 'is-active')}>
-              <div className="Carousel-itemImage" style={{backgroundImage: `url(${item.fields.image.asset.file.url})`}}></div>
-              <div className="Carousel-itemBody">
-                <h1 className="Carousel-itemTitle">{item.fields.title}</h1>
-                <p className="Carousel-itemCopy">{item.fields.text}</p>
+            <EditModal key={item.fields.title} model={item}>
+              <div className={classNames('Carousel-item', isActive && 'is-active')}>
+                <div className="Carousel-itemImage" style={{backgroundImage: `url(${item.fields.image.asset.file.url})`}}></div>
+                <div className="Carousel-itemBody">
+                  <h1 className="Carousel-itemTitle">{item.fields.title}</h1>
+                  <p className="Carousel-itemCopy">{item.fields.text}</p>
+                </div>
               </div>
-            </Editable>
+            </EditModal>
           )
         })}
 

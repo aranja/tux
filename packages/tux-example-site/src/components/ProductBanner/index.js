@@ -2,7 +2,7 @@ import React from 'react'
 import { EditInline } from 'tux'
 import './styles.css'
 
-const ProductBanner = ({ image, model }) => (
+const ProductBanner = ({ image }) => (
   <div className="ProductBanner">
     <div className="ProductBanner-content">
       <h1 className="ProductBanner-heading">

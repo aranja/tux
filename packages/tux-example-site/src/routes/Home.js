@@ -15,19 +15,14 @@ import Pricetable from '../components/Pricetable'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
-const Home = ({ pages, sellPoints, testimonial, carousel }) => {
-
-  const page = pages.items[0]
-
-  return (
-    <div className="p-Home">
-      <Helmet
-        title="Tux Demo Site"
-      />
-      <Menu />
-      <Editable model={page}>
-        <ProductBanner image={ProductBannerImage} />
-      </Editable>
+const Home = ({ content, sellPoints, testimonial, carousel }) => (
+  <div className="p-Home">
+    <Helmet
+      title="Tux Demo Site"
+    />
+    <Menu />
+    <Editable model={content}>
+      <ProductBanner image={ProductBannerImage} />
       <Section>
         <H1><EditInline field="fields.content.tagline" /></H1>
         <SellPoints sellPoints={sellPoints.items} />
@@ -39,20 +34,20 @@ const Home = ({ pages, sellPoints, testimonial, carousel }) => {
         <Testimonial testimonial={testimonial.items}/>
       </Section>
       <Section backgroundColor="#F5F7FA">
-        <H1><Editable model={page} field="fields.content.twitterFeedTitle" /></H1>
-        <H2><Editable model={page} field="fields.content.twitterFeedSubtitle" /></H2>
+        <H1><EditInline field="fields.content.twitterFeedTitle" /></H1>
+        <H2><EditInline field="fields.content.twitterFeedSubtitle" /></H2>
         <TwitterFeed />
         <SocialPlug>
           Are you using Tux? <strong>Let us know on Twitter</strong>
         </SocialPlug>
       </Section>
       <Section>
-        <H1><Editable model={page} field="fields.content.newsletterTitle" /></H1>
-        <H2><Editable model={page} field="fields.content.newsletterSubtitle" /></H2>
-        <Newsletter model={page} />
+        <H1><EditInline field="fields.content.newsletterTitle" /></H1>
+        <H2><EditInline field="fields.content.newsletterSubtitle" /></H2>
+        <Newsletter model={content} />
       </Section>
-    </div>
-  )
-}
+    </Editable>
+  </div>
+)
 
 export default Home

@@ -21,9 +21,11 @@ export default [
         api.getEntries({ content_type: 'carousel' }),
       ])
 
+      const content = pages.items[0] || {}
+
       return (
         <Home
-          pages={pages}
+          content={content}
           sellPoints={sellPoints}
           pricetable={pricetable}
           testimonial={testimonial}
@@ -51,9 +53,11 @@ export default [
         api.getEntries({ content_type: 'article', order: '-sys.createdAt' }),
       ])
 
+      const content = pages.items[1] || {}
+
       return (
         <About
-          pages={pages}
+          content={content}
           sellPoints={sellPoints}
           gallery={gallery}
           testimonial={testimonial}
