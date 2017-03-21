@@ -13,7 +13,8 @@ export interface State {
 }
 const TuxFabColor = '#3a82df';
 const TuxFabActiveColor = '#f11b9e';
-const TuxFabAnimationDelay = 0.12;
+const TuxFabAnimationDelay = 0.05;
+const TuxFabEase = '0,.62,.45,1.13';
 
 class TuxFab extends React.Component<any, State> {
   static contextTypes = {
@@ -101,7 +102,7 @@ class TuxFab extends React.Component<any, State> {
             width: 45px;
             order: 0;
             margin-top: 10px;
-            transition: opacity 0.2s ease, transform 0.4s cubic-bezier(0,.62,.45,1.13);
+            transition: opacity 0.2s ease, transform 0.4s cubic-bezier(${TuxFabEase});
             transition-origin: center;
           }
           .TuxFab-item:hover {
@@ -109,7 +110,7 @@ class TuxFab extends React.Component<any, State> {
           }
           .TuxFab-item::after {
             border-radius: 50%;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1), 0 3px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1), 0 2px 7px rgba(0, 0, 0, 0.05);
             content: '';
             display: block;
             height: 100%;
@@ -124,15 +125,15 @@ class TuxFab extends React.Component<any, State> {
           .TuxFab-mainItem {
             background-color: ${TuxFabColor};
             transform: scale(0.9);
-            transition: transform 0.25s cubic-bezier(0,.62,.45,1.13), background-color 0.15s;
+            transition: transform 0.25s cubic-bezier(${TuxFabEase}), background-color 0.15s;
             color: white;
             order: 1;
             width: 65px;
             height: 65px;
           }
           .TuxFab-mainItem .icon {
-            font-size: 20px;
-            transition: transform 0.15s cubic-bezier(0,.62,.45,1.13);
+            font-size: 23px;
+            transform: scale(0.87);
           }
           .TuxFab:hover .TuxFab-mainItem {
             transform: scale(1);
@@ -140,16 +141,21 @@ class TuxFab extends React.Component<any, State> {
           }
           .TuxFab.is-active .TuxFab-mainItem {
             background: ${TuxFabActiveColor};
+            transform: rotateZ(135deg);
+          }
+          .TuxFab.is-active .TuxFab-mainItem .icon {
+            transform: scale(1);
+            transition: transform 0.25s cubic-bezier(${TuxFabEase});
           }
           .TuxFab-item:not(:first-child) {
             opacity: 0;
           }
           .TuxFab-item:nth-child(2) {
-            transform: translateY(20px) scale(0.8);
+            transform: translateY(30px) scale(0.8);
             transition-delay: ${TuxFabAnimationDelay}s;
           }
           .TuxFab-item:nth-child(3) {
-            transform: translateY(15px) scale(0.8);
+            transform: translateY(20px) scale(0.8);
             transition-delay: ${TuxFabAnimationDelay / 2}s;
           }
           .TuxFab-item:nth-child(4) {

@@ -2,6 +2,7 @@ export const tuxColors = {
   black: '#000000',
   green: '#3BB172',
   pink: '#E8008A',
+  gray: '#E7E7E7',
   purple: '#473BB1',
   snow: '#FAFAFA',
   white: '#FFFFFF',

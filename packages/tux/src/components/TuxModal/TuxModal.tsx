@@ -4,6 +4,7 @@ import { tuxColors, tuxInput, tuxButton } from '../../colors'
 import { fade } from '../../utils/color'
 import moment from 'moment'
 import TuxSpinner from '../Spinner/Spinner'
+import Button from '../Button'
 
 import { get, set } from '../../utils/accessors'
 import { getEditorSchema, Field } from '../../services/editor'
@@ -104,15 +105,8 @@ class TuxModal extends React.Component<any, State> {
                 Editing <strong className="TuxModal-modelName">{meta.name}</strong>
               </h1>
               <div className="TuxModal-buttons">
-                <button
-                  className="TuxModal-button"
-                  label="Cancel"
-                  type="button"
-                  onClick={this.onCancel}>Cancel</button>
-                <button
-                  className="TuxModal-button TuxModal-button--green"
-                  type="submit"
-                  label="Save">Update</button>
+                <Button onClick={this.onCancel}>Cancel</Button>
+                <Button type="submit" themeColor="green" raised>Update</Button>
               </div>
             </div>
             <div className="TuxModal-content">
@@ -151,6 +145,11 @@ class TuxModal extends React.Component<any, State> {
             padding: 30px;
           }
 
+          .TuxModal-buttons {
+            display: flex;
+            justify-content: flex-end;
+          }
+
           .TuxModal-content {
             padding: 30px;
           }
@@ -176,38 +175,6 @@ class TuxModal extends React.Component<any, State> {
           .TuxModal-modelName {
             font-weight: 400;
             text-transform: capitalize;
-          }
-
-          .TuxModal-buttons {
-            display: flex;
-            justify-content: flex-end;
-          }
-
-          .TuxModal-button {
-            background: ${tuxButton.background};
-            border-radius: 2px;
-            border: 1px solid ${tuxButton.border};
-            color: ${tuxButton.text};
-            cursor: pointer;
-            display: inline-block;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.3;
-            margin: 0;
-            padding: 10px 24px;
-            text-align: center;
-            transition: background 0.25s, color 0.25s, border-color 0.25s;
-            vertical-align: baseline;
-          }
-
-          .TuxModal-button + .TuxModal-button {
-            margin-left: 16px;
-          }
-
-          .TuxModal-button.TuxModal-button--green {
-            color: ${tuxButton.greenTheme.textColor};
-            background: ${tuxButton.greenTheme.background};
-            border-color: ${tuxButton.greenTheme.border};
           }
         `}</style>
       </div>

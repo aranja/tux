@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { tuxColors, tuxInput } from '../../colors'
+import { darken } from '../../utils/color'
 
 export interface TagEditorProps {
   id: string
@@ -116,27 +117,39 @@ class TagEditor extends Component<TagEditorProps, any> {
             }
 
             .TagEditor-tag {
-              background: ${tuxColors.white};
+              background: ${tuxColors.gray};
               border-radius: 20px;
               border: 1px solid ${tuxInput.border};
               color: ${tuxInput.labelText};
-              font-size: 13px;
-              padding: 4px 12px;
-              margin: 5px;
+              display: flex;
+              font-size: 12px;
+              padding: 5px 15px;
+              padding-right: 0;
+              margin: 0 3px;
             }
 
             .TagEditor-tagButton {
+              cursor: pointer;
+              color: ${tuxColors.gray};
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 1.5em;
+              height: 1.5em;
+              background: ${darken(tuxColors.gray, 0.22)};
               font-family: 'mfg_labs_iconsetregular';
               font-style: normal;
               speak: none;
               font-weight: normal;
               font-size: 1em;
+              margin: 0 0.5em;
+              border-radius: 50%;
+              transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
               -webkit-font-smoothing: antialiased;
             }
 
             .TagEditor-tagButton::after {
                 content: "\\274C";
-                padding-left: 10px;
             }
 
             .TagEditor-input {
