@@ -64,18 +64,13 @@ class ManagementApi {
     return this._extractLocale(entity)
   }
 
-  async createModel(modelId: string, meta: Meta) {
+  async createModel(model: any, type: string) {
     const url = `/spaces/${this.space}/entries/`
-    const model = { fields: {} }
-    for (const field of meta.editorSchema) {
-      const fieldId = field.field.split('.')[1]
-      model.fields[fieldId] = ''
-    }
     const modelWithLocale = await this._injectLocale(model)
     console.log('Before posting')
     console.log(modelWithLocale)
     const contentType = 'application/vnd.contentful.management.v1+json'
-    const newModel = await this.post(url, { fields: modelWithLocale.fields }, contentType, modelId)
+    const newModel = await this.post(url, { fields: modelWithLocale.fields }, contentType, type)
     console.log('After posting')
     console.log(newModel)
     return newModel

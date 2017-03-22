@@ -3,6 +3,8 @@ export function extractLocale(model: any, locale: string) {
     const fieldValue = model.fields[fieldName][locale]
     if (fieldValue) {
       model.fields[fieldName] = fieldValue
+    } else {
+      model.fields[fieldName] = undefined
     }
   }
   return model

@@ -63,6 +63,19 @@ describe('the get accessor', () => {
     const result = get(source, key)
     expect(result).toEqual(expected)
   })
+
+  it('can fetch empty string', () => {
+    const expected = ''
+    const key = 'fields.value'
+    const source = {
+      fields: {
+        value: '',
+      }
+    }
+
+    const result = get(source, key)
+    expect(result).toEqual(expected)
+  })
 })
 
 describe('the set accessor', () => {

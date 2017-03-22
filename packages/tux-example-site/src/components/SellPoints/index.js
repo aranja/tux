@@ -14,7 +14,7 @@ const SellPoints = ({ sellPoints }) => (
         <p className="SellPoint-copy">{point.fields.text}</p>
       </Editable>
     ))}
-    <ModelCreator modelId="sellPoint" />
+    <ModelCreator type="sellPoint" />
   </div>
 )
 
