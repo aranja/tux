@@ -55,6 +55,7 @@ class Input extends Component<Props, State> {
             width: 100%;
             position: relative;
           }
+
           .Input-field {
             background: #FFF;
             border: 0;
@@ -63,9 +64,11 @@ class Input extends Component<Props, State> {
             padding-bottom: 8px;
             width: 100%;
           }
+
           .Input-field:focus {
             outline: 0;
           }
+
           .Input-underline {
             border: 0;
             bottom: 0;
@@ -73,22 +76,23 @@ class Input extends Component<Props, State> {
             position: absolute;
             width: 100%;
           }
+
           .Input-underline--passive {
             border-bottom: 1px solid #e0e0e0;
             margin: 0;
           }
+
           .Input-underline--active {
             transition: transform 0.25s cubic-bezier(${decelerationCurve});
             border-bottom: 1px solid ${Theme.primary};
             margin: 0;
             transform: scaleX(0);
           }
+
           .Input.has-focus .Input-underline--active {
             transform: scaleX(1);
           }
-          .Input.has-focus .Input-label {
-            transform: scale(0.75);
-          }
+
         `}</style>
       </div>
     )

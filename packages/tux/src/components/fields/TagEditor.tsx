@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 import { Theme, input } from '../../theme'
 import { darken } from '../../utils/color'
+import { decelerationCurve, sharpCurve } from '../../utils/curves'
 
 export interface TagEditorProps {
   id: string
   value: Array<string>
   onChange: (e: Array<string>) => void
+  hasFocus: boolean
 }
 
 type Tags = Array<string>
@@ -19,7 +22,8 @@ class TagEditor extends Component<TagEditorProps, any> {
   private isUnmounting: boolean
 
   state = {
-    tags: []
+    tags: [],
+    hasFocus: false,
   }
 
   componentWillUnmount() {
@@ -72,6 +76,20 @@ class TagEditor extends Component<TagEditorProps, any> {
     }
   }
 
+  handleFocus = () => {
+    const { hasFocus } = this.state
+    this.setState({
+      hasFocus: true,
+    })
+  }
+
+  handleBlur = () => {
+    const { hasFocus } = this.state
+    this.setState({
+      hasFocus: false,
+    })
+  }
+
   handleOnKeyUp = (event: any) => {
     if (event.key !== 'Enter') {
       return
@@ -93,30 +111,35 @@ class TagEditor extends Component<TagEditorProps, any> {
 
   render() {
     const { id, value, onChange } = this.props
+    const { hasFocus } = this.state
 
     return (
-      <div className="TagEditor">
-        <input
-          ref={(tagEditor) => {this.tagEditor = tagEditor}}
-          className="TagEditor-input"
-          placeholder="Add item"
-          onClick={this.handleOnKeyUp}
-        />
+      <div className={classNames('TagEditor', hasFocus && 'has-focus')}>
+        <div className="TagEditor-input">
+          <input
+            ref={(tagEditor) => {this.tagEditor = tagEditor}}
+            className="TagEditor-inputField"
+            placeholder="Add item"
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+          />
+          <hr className="TagEditor-underline TagEditor-underline--passive" />
+          <hr className="TagEditor-underline TagEditor-underline--active" />
+        </div>
         <div className="TagEditor-tags">
           {value instanceof Array && value.map((singleValue) => (
             <p key={singleValue} className="TagEditor-tag">
-              {singleValue}
-              <span
-                className="TagEditor-tagButton"
-                onClick={() => this.handleClickDelete({singleValue})}>
-              </span>
+            {singleValue}
+            <span
+            className="TagEditor-tagButton"
+            onClick={() => this.handleClickDelete({singleValue})}>
+            </span>
             </p>
           ))}
         </div>
           <style jsx>{`
             .TagEditor {
-              display: flex;
-              flex-direction: column;
+
             }
 
             .TagEditor-tags {
@@ -162,19 +185,45 @@ class TagEditor extends Component<TagEditorProps, any> {
             }
 
             .TagEditor-input {
+              width: 100%;
+              position: relative;
+            }
+
+            .TagEditor-inputField {
               background: #FFF;
-              border: 1px solid ${input.border};
-              border-radius: 3px;
-              color: ${Theme.textDark};
-              font-size: 16px;
-              padding: 5px;
-              line-height: 1.5;
+              border: 0;
+              font-size: 15px;
+              padding: 0;
+              padding-bottom: 8px;
               width: 100%;
             }
 
-            .TagEditor-input:focus {
-              border-color: ${input.greenTheme.border};
-              outline: 1px solid ${input.greenTheme.border};
+            .TagEditor-inputField:focus {
+              outline: 0;
+            }
+
+            .TagEditor-underline {
+              border: 0;
+              bottom: 0;
+              left: 0;
+              position: absolute;
+              width: 100%;
+            }
+
+            .TagEditor-underline--passive {
+              border-bottom: 1px solid #e0e0e0;
+              margin: 0;
+            }
+
+            .TagEditor-underline--active {
+              transition: transform 0.25s cubic-bezier(${decelerationCurve});
+              border-bottom: 1px solid ${Theme.primary};
+              margin: 0;
+              transform: scaleX(0);
+            }
+
+            .TagEditor.has-focus .TagEditor-underline--active {
+              transform: scaleX(1);
             }
           `}</style>
       </div>
