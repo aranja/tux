@@ -1,11 +1,12 @@
 import React from 'react'
-import { tuxColors, tuxInputStyles } from '../../styles'
+import { Theme, input } from '../../theme'
 
 interface Checkbox {
   id: string
   value?: string
   checked: boolean
-  onChange: (e: React.FormEvent<any>) => void
+  label?: string,
+  onChange: (value: boolean) => void
 }
 
 const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
@@ -15,13 +16,12 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       type="checkbox"
       id={id}
       checked={checked}
-      onChange={(event) => onChange(event.target.value)}
+      onChange={(event) => onChange(event.target.checked)}
     />
     <div className="CheckboxIndicator"></div>
     <style jsx>{`
       .Checkbox {
         box-sizing: border-box;
-        margin-bottom: 20px;
         opacity: 0;
         padding: 0;
         position: absolute;
@@ -29,8 +29,8 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       }
 
       .CheckboxIndicator {
-        background: ${tuxColors.colorSnow};
-        border: 1px solid ${tuxInputStyles.borderColor};
+        background: #FFF;
+        border: 1px solid ${input.border};
         border-radius: 2px;
         height: 20px;
         left: 0;
@@ -40,7 +40,7 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       }
 
       .CheckboxIndicator::after {
-        border: solid ${tuxColors.colorWhite};
+        border: solid ${Theme.primary};
         border-width: 0 2px 2px 0;
         content: '';
         height: 10px;
@@ -54,8 +54,7 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
       }
 
       .Checkbox:checked ~ .CheckboxIndicator {
-        background: ${tuxColors.colorGreen};
-        border: 1px solid ${tuxColors.colorGreen};
+        background: #e5e6ed;
       }
 
       .Checkbox:checked ~ .CheckboxIndicator::after {

@@ -18,7 +18,7 @@ See it in action by checking out our [demo video]({{video_url}}) or by installin
 
 ## TuxProvider
 
-The `<TuxProvider />` component wraps the React application and maintains all of Tux's state. When in admin mode it provides the application with `<TuxSidebar />` and `<TuxModal />` which are the Tux UI components.
+The `<TuxProvider />` component wraps the React application and maintains all of Tux's state. When in admin mode it provides the application with `<TuxFab />` and `<TuxModal />` which are the Tux UI components.
 
 ## Adapters
 

@@ -11,7 +11,7 @@ export const ImageField = adminOnly('ImageField')
 export const MarkdownField = adminOnly('MarkdownField')
 export const Radio = adminOnly('Radio')
 export const TagEditor = adminOnly('TagEditor')
-export const TextField = adminOnly('TextField')
+export const Input = adminOnly('Input')
 
 export const registerEditable = stub
 export const getEditorSchema = adminOnly('getEditorSchema')
