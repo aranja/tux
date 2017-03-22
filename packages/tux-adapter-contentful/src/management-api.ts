@@ -67,12 +67,8 @@ class ManagementApi {
   async createModel(model: any, type: string) {
     const url = `/spaces/${this.space}/entries/`
     const modelWithLocale = await this._injectLocale(model)
-    console.log('Before posting')
-    console.log(modelWithLocale)
     const contentType = 'application/vnd.contentful.management.v1+json'
     const newModel = await this.post(url, { fields: modelWithLocale.fields }, contentType, type)
-    console.log('After posting')
-    console.log(newModel)
     return newModel
   }
 

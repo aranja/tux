@@ -34,15 +34,11 @@ class TuxModal extends React.Component<TuxModalProps, State> {
   async componentDidMount() {
     const { model, isNew } = this.props
 
-    console.log('setting fullmodel to model')
     let fullModel = model
     if (!isNew) {
-      console.log('modal model is not new, fetching full model')
       fullModel = await this.context.tux.adapter.load(model)
     }
     const meta = await this.context.tux.adapter.getMeta(model)
-
-    console.log(fullModel)
 
     this.setState({
       fullModel,
@@ -58,7 +54,10 @@ class TuxModal extends React.Component<TuxModalProps, State> {
   }
 
   onCancel = () => {
-    this.props.onClose()
+    const { onClose } = this.props
+    if (onClose) {
+      onClose()
+    }
   }
 
   onSubmit = async(event: React.FormEvent<any>) => {
@@ -82,7 +81,6 @@ class TuxModal extends React.Component<TuxModalProps, State> {
 
     const InputComponent = field.component
     const value = get(fullModel, field.field)
-    console.log(`${field.field} value:`, value)
 
     return InputComponent && (
       <div key={field.field}>

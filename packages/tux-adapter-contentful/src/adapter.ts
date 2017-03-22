@@ -116,7 +116,6 @@ export class ContentfulAdapter {
   async createEmptyModel(type: string) {
     const meta = await this.getMeta(type)
     if (!meta) {
-      console.log('no meta')
       return null
     }
 

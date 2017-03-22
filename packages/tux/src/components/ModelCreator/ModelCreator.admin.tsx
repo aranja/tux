@@ -24,10 +24,7 @@ class ModelCreator extends React.Component<ModelCreatorProps, any> {
 
   createModel = async() => {
     const { type } = this.props
-    console.log(type)
     const newModel = await this.context.tux.adapter.createEmptyModel(type)
-
-    console.log(newModel)
 
     const changed = await openModal(
       <TuxModal model={newModel} isNew />
