@@ -38,6 +38,7 @@ class TuxProvider extends Component<TuxProviderProps, any> {
   }
 
   getChildContext() {
+
     return {
       tux: {
         isEditing: this.state.isEditing,

@@ -35,6 +35,7 @@ class AlertBar extends Component<any, any> {
           .AlertBar {
             background: ${Theme.alert};
             bottom: 0;
+            left: 0;
             color: #FFF;
             display: flex;
             justify-content: center;

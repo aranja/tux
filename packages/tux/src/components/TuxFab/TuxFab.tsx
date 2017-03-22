@@ -26,13 +26,6 @@ class TuxFab extends React.Component<any, State> {
     isVisible: false,
   }
 
-  handleVisibility = () => {
-    const { isVisible } = this.state
-    this.setState({
-      isVisible: !isVisible
-    })
-  }
-
   async componentDidMount() {
     const user = await this.context.tux.adapter.currentUser()
 

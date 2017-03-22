@@ -52,7 +52,7 @@ class TagEditor extends Component<TagEditorProps, any> {
 
   onItemAdded = (newTags: Tags) => {
     const { onChange } = this.props
-    console.log(newTags)
+
     if (!this.isUnmounting) {
       onChange(newTags)
     }
