@@ -1,4 +1,4 @@
-import Neutrino from 'neutrino'
+import { Neutrino } from 'neutrino'
 import { EnvironmentPlugin } from 'webpack'
 import { tmpdir } from 'os'
 

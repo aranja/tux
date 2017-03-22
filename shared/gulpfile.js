@@ -53,22 +53,32 @@ gulp.task('build:js', () => {
     .pipe(sourcemaps.init())
     .pipe(tsProject())
 
-  return merge([
-    // CommonJS
-    tsResult.dts
-      .pipe(gulp.dest('lib')),
-    tsResult.js
-      .pipe(clone())
-      .pipe(babel('commonjs'))
-      .pipe(gulp.dest('lib')),
+  const streams = []
 
-    // ES2015 Modules
-    tsResult.dts
-      .pipe(gulp.dest('es')),
-    tsResult.js
-      .pipe(babel('es2015'))
-      .pipe(gulp.dest('es')),
-  ])
+  // CommonJS Modules
+  if (process.env.TARGET !== 'es2015') {
+    streams.push(
+      tsResult.dts
+        .pipe(gulp.dest('lib')),
+      tsResult.js
+        .pipe(clone())
+        .pipe(babel('commonjs'))
+        .pipe(gulp.dest('lib'))
+    )
+  }
+
+  // ES2015 Modules
+  if (process.env.TARGET !== 'commonjs') {
+    streams.push(
+      tsResult.dts
+        .pipe(gulp.dest('es')),
+      tsResult.js
+        .pipe(babel('es2015'))
+        .pipe(gulp.dest('es'))
+    )
+  }
+
+  return merge(streams)
 })
 
 /**
