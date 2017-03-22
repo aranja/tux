@@ -11,10 +11,10 @@ export interface State {
   },
   isVisible: boolean
 }
-const TuxFabColor = '#3a82df';
-const TuxFabActiveColor = '#f11b9e';
-const TuxFabAnimationDelay = 0.05;
-const TuxFabEase = '0,.62,.45,1.13';
+const FabColor = '#3a82df';
+const FabActiveColor = '#f11b9e';
+const FabAnimationDelay = 0.05;
+const FabEase = '0,.62,.45,1.13';
 
 class TuxFab extends React.Component<any, State> {
   static contextTypes = {
@@ -92,7 +92,7 @@ class TuxFab extends React.Component<any, State> {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: ${TuxFabColor};
+            color: ${FabColor};
             text-decoration: none;
             background: #fdfdfd;
             border-radius: 50%;
@@ -102,7 +102,7 @@ class TuxFab extends React.Component<any, State> {
             width: 45px;
             order: 0;
             margin-top: 10px;
-            transition: opacity 0.2s ease, transform 0.4s cubic-bezier(${TuxFabEase});
+            transition: opacity 0.2s ease, transform 0.4s cubic-bezier(${FabEase});
             transition-origin: center;
           }
           .TuxFab-item:hover {
@@ -123,9 +123,9 @@ class TuxFab extends React.Component<any, State> {
             z-index: -1;
           }
           .TuxFab-mainItem {
-            background-color: ${TuxFabColor};
+            background-color: ${FabColor};
             transform: scale(0.9);
-            transition: transform 0.25s cubic-bezier(${TuxFabEase}), background-color 0.15s;
+            transition: transform 0.25s cubic-bezier(${FabEase}), background-color 0.15s;
             color: white;
             order: 1;
             width: 65px;
@@ -137,26 +137,26 @@ class TuxFab extends React.Component<any, State> {
           }
           .TuxFab:hover .TuxFab-mainItem {
             transform: scale(1);
-            background-color: ${lighten(TuxFabColor, 0.1)};
+            background-color: ${lighten(FabColor, 0.1)};
           }
           .TuxFab.is-active .TuxFab-mainItem {
-            background: ${TuxFabActiveColor};
+            background: ${FabActiveColor};
             transform: rotateZ(135deg);
           }
           .TuxFab.is-active .TuxFab-mainItem .icon {
             transform: scale(1);
-            transition: transform 0.25s cubic-bezier(${TuxFabEase});
+            transition: transform 0.25s cubic-bezier(${FabEase});
           }
           .TuxFab-item:not(:first-child) {
             opacity: 0;
           }
           .TuxFab-item:nth-child(2) {
             transform: translateY(30px) scale(0.8);
-            transition-delay: ${TuxFabAnimationDelay}s;
+            transition-delay: ${FabAnimationDelay}s;
           }
           .TuxFab-item:nth-child(3) {
             transform: translateY(20px) scale(0.8);
-            transition-delay: ${TuxFabAnimationDelay / 2}s;
+            transition-delay: ${FabAnimationDelay / 2}s;
           }
           .TuxFab-item:nth-child(4) {
             transform: translateY(10px) scale(0.8);
