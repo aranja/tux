@@ -10,6 +10,7 @@ export interface State {
     spaceName: string
   },
   isVisible: boolean
+  isHovered: boolean
 }
 const FabColor = '#3a82df';
 const FabActiveColor = '#f11b9e';
@@ -24,6 +25,7 @@ class TuxFab extends React.Component<any, State> {
   state: State = {
     user: null,
     isVisible: false,
+    isHovered: false,
   }
 
   async componentDidMount() {
@@ -40,34 +42,50 @@ class TuxFab extends React.Component<any, State> {
     }
   }
 
-  login = () => {
+  handleMouseOver = () => {
+    this.setState({
+      isHovered: true,
+    })
+  }
+
+  handleMouseLeave = () => {
+    const { isHovered } = this.state
+    if (isHovered) {
+      this.setState({
+        isHovered: false,
+      })
+    }
+  }
+
+  handleLogin = () => {
     this.context.tux.adapter.login()
   }
 
   render() {
     const { isEditing, overlayIsActive, onClickEdit } = this.props
-    const { user, isVisible } = this.state
+    const { user, isVisible, isHovered } = this.state
     const classes = classNames('TuxFab', {
       'is-active': isEditing,
       'is-visible': isVisible,
       'has-overlay': overlayIsActive,
+      'is-hovered': isHovered,
     })
-    const activeClassName = 'icon icon-plus'
-    const inActiveClassName = 'icon icon-plus'
+
     return (
-      <div className={classes}>
-          <a
-            className={classNames('TuxFab-item TuxFab-mainItem', isEditing && 'is-active')}
-            onClick={onClickEdit}>
-              <i className={isEditing ? activeClassName : inActiveClassName}></i>
-          </a>
-          <a className="TuxFab-item" href="/"><i className="icon icon-white_question"></i></a>
-          <a className="TuxFab-item" href="/"><i className="icon icon-git"></i></a>
-          <a
-            onClick={this.login}
-            className="TuxFab-item TuxFab-signInOut">
-            <i className="icon icon-user"></i>
-          </a>
+      <div className={classes} onMouseLeave={this.handleMouseLeave}>
+        <a
+          className="TuxFab-item TuxFab-mainItem"
+          onClick={onClickEdit}
+          onMouseOver={this.handleMouseOver}>
+            <i className="icon icon-plus"></i>
+        </a>
+        <a className="TuxFab-item" href="/"><i className="icon icon-white_question"></i></a>
+        <a className="TuxFab-item" href="/"><i className="icon icon-git"></i></a>
+        <a
+          onClick={this.handleLogin}
+          className="TuxFab-item TuxFab-signInOut">
+          <i className="icon icon-user"></i>
+        </a>
 
         <style jsx>{`
           .TuxFab {
@@ -76,9 +94,14 @@ class TuxFab extends React.Component<any, State> {
             cursor: pointer;
             overflow: visible;
             position: fixed;
+            pointer-events: none;
             right: 40px;
             display: flex;
             flex-direction: column;
+          }
+
+          .TuxFab.is-hovered:hover {
+            pointer-events: auto;
           }
 
           .TuxFab-item {
@@ -121,6 +144,7 @@ class TuxFab extends React.Component<any, State> {
             transition: transform 0.25s cubic-bezier(${FabEase}), background-color 0.15s;
             color: white;
             order: 1;
+            pointer-events: auto;
             width: 65px;
             height: 65px;
           }
