@@ -79,10 +79,15 @@ class TuxFab extends React.Component<any, State> {
           onMouseOver={this.handleMouseOver}>
             <i className="icon icon-plus"></i>
         </a>
-        <a className="TuxFab-item" href="/"><i className="icon icon-white_question"></i></a>
-        <a className="TuxFab-item" href="/"><i className="icon icon-git"></i></a>
+        <a className="TuxFab-item" href="/" data-tooltip="Documentation">
+        <i className="icon icon-white_question"></i>
+        </a>
+        <a className="TuxFab-item" href="/" data-tooltip="Tux on Github">
+        <i className="icon icon-git"></i>
+        </a>
         <a
           onClick={this.handleLogin}
+          data-tooltip="Log out"
           className="TuxFab-item TuxFab-signInOut">
           <i className="icon icon-user"></i>
         </a>
@@ -124,29 +129,29 @@ class TuxFab extends React.Component<any, State> {
           .TuxFab-item:hover {
             background: #FFF;
           }
-          .TuxFab-item::after {
+          .TuxFab-item::before {
             border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.05);
             box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1), 0 2px 7px rgba(0, 0, 0, 0.05);
             content: '';
             display: block;
             height: 100%;
             left: 0;
-            transform-origin: center;
-            border: 1px solid rgba(0, 0, 0, 0.05);
             position: absolute;
             top: 0;
+            transform-origin: center;
             width: 100%;
             z-index: -1;
           }
           .TuxFab-mainItem {
             background-color: ${FabColor};
-            transform: scale(0.9);
-            transition: transform 0.25s cubic-bezier(${FabEase}), background-color 0.15s;
             color: white;
+            height: 65px;
             order: 1;
             pointer-events: auto;
+            transform: scale(0.9);
+            transition: transform 0.25s cubic-bezier(${FabEase}), background-color 0.15s;
             width: 65px;
-            height: 65px;
           }
           .TuxFab-mainItem .icon {
             font-size: 23px;
@@ -164,8 +169,29 @@ class TuxFab extends React.Component<any, State> {
             transform: scale(1);
             transition: transform 0.25s cubic-bezier(${FabEase});
           }
-          .TuxFab-item:not(:first-child) {
+          .TuxFab-item:not(.TuxFab-mainItem) {
             opacity: 0;
+          }
+          .TuxFab-item:not(.TuxFab-mainItem)::after {
+            background: rgb(97, 97, 97);
+            border-radius: 2px;
+            box-sizing: content-box;
+            color: white;
+            content: attr(data-tooltip);
+            left: -10px;
+            padding: 2px 10px;
+            position: absolute;
+            text-align: center;
+            transform: translateX(-120%);
+            transition: all 0.25s ease-in-out;
+            white-space: nowrap;
+            opacity: 0;
+            z-index: -1;
+            width: auto;
+          }
+          .TuxFab-item:not(.TuxFab-mainItem):hover::after {
+            transform: translateX(-100%);
+            opacity: 1;
           }
           .TuxFab-item:nth-child(2) {
             transform: translateY(30px) scale(0.8);
