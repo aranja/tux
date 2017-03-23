@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import moment from 'moment'
 import DayPicker, { DateUtils } from 'react-day-picker'
-import { Theme, input, button } from '../../theme'
+import { Theme, input, button, text } from '../../colors'
 import { tuxDatePickerStyles } from './DatePicker.styles'
 import { fade } from '../../utils/color'
 
@@ -110,6 +110,7 @@ class DatePicker extends Component<any, State> {
           }
         </div>
 
+      {/* Todo: replace with tuxTheme.dayPicker */}
       <style jsx>{`
         .TuxDayPicker-wrapper {
           display: inline-flex;
@@ -133,9 +134,9 @@ class DatePicker extends Component<any, State> {
 
         .TuxDayPicker input {
           appearance: none;
-          border: 1px solid ${input.border};
+          border: 1px solid ${input.default.border};
           border-radius: 3px;
-          color: ${Theme.textDark};
+          color: ${text.dark};
           cursor: pointer;
           font-family: -apple-system, BlinkMacSystemFont, "Source Sans Pro", "sans-serif";
           font-size: 16px;
@@ -157,7 +158,7 @@ class DatePicker extends Component<any, State> {
         .TuxDayPicker::after {
           bottom: 0;
           content: "\\F4C5";
-          color: ${button.text};
+          color: ${button.default.text};
           font-family: "mfg_labs_iconsetregular";
           font-size: 16px;
           height: 16px;
@@ -168,9 +169,9 @@ class DatePicker extends Component<any, State> {
         }
 
         .TuxDayPicker::before {
-          background: ${button.background};
+          background: ${button.default.background};
           border-radius: 0 3px 3px 0;
-          border: 1px solid ${input.border};
+          border: 1px solid ${input.default.border};
           bottom: 0;
           right: 0;
           top: 0;
@@ -309,12 +310,12 @@ class DatePicker extends Component<any, State> {
         }
 
         .TuxDayPicker :global(.DayPicker-Day--selected) {
-          background: ${input.greenTheme.border};
+          background: ${input.primary.border};
           color: ${tuxDatePickerStyles.textColorSelected};
         }
 
         .TuxDayPicker :global(.DayPicker-Day--selected:hover) {
-          background: ${input.greenTheme.border};
+          background: ${input.primary.border};
           color: ${tuxDatePickerStyles.textColorSelected};
         }
 
@@ -326,9 +327,9 @@ class DatePicker extends Component<any, State> {
 
         .TuxDayPicker-input {
           background: ${tuxDatePickerStyles.backgroundColor};
-          border: 1px solid ${input.border};
+          border: 1px solid ${input.default.border};
           border-radius: 3px;
-          color: ${Theme.textDark};
+          color: ${text.dark};
           font-size: 16px;
           padding: 5px;
           line-height: 1.5;
@@ -336,8 +337,8 @@ class DatePicker extends Component<any, State> {
         }
 
         .TuxDayPicker-input:focus {
-          border-color: ${input.greenTheme.border};
-          outline: 1px solid ${input.greenTheme.border};
+          border-color: ${input.primary.border};
+          outline: 1px solid ${input.primary.border};
         }
       `}</style>
       </div>

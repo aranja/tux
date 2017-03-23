@@ -1,3 +1,5 @@
+/* Todo: replace with tuxTheme.dayPicker and delete file */
+
 export const tuxDatePickerStyles = {
   backgroundColor: '#FFFFFF',
   backgroundColorOutside: '#FAFAFA',

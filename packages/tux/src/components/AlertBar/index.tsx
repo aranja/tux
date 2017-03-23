@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { Theme } from '../../theme'
+import { Theme } from '../../colors'
 
 class AlertBar extends Component<any, any> {
   hideDelay = 1500

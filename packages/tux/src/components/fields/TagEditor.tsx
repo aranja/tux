@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { Theme, input } from '../../theme'
+import { Theme, input } from '../../colors'
 import { darken } from '../../utils/color'
 import { decelerationCurve, sharpCurve } from '../../utils/curves'
 
@@ -151,8 +151,8 @@ class TagEditor extends Component<TagEditorProps, any> {
             .TagEditor-tag {
               background: ${Theme.gray};
               border-radius: 20px;
-              border: 1px solid ${input.border};
-              color: ${input.labelText};
+              border: 1px solid ${input.default.border};
+              color: ${input.default.labelText};
               display: flex;
               font-size: 12px;
               padding: 5px 15px;

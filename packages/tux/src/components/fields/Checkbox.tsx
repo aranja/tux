@@ -1,5 +1,5 @@
 import React from 'react'
-import { Theme, input } from '../../theme'
+import { Theme, input } from '../../colors'
 
 interface Checkbox {
   id: string
@@ -30,7 +30,7 @@ const Checkbox = ({ id, value, checked, onChange }: Checkbox) => (
 
       .CheckboxIndicator {
         background: #FFF;
-        border: 1px solid ${input.border};
+        border: 1px solid ${input.default.border};
         border-radius: 2px;
         height: 20px;
         left: 0;

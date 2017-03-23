@@ -1,5 +1,5 @@
 import React from 'react'
-import { Theme, input, button } from '../../theme'
+import { text, input } from '../../colors'
 
 interface MarkdownField {
   id: string
@@ -26,8 +26,8 @@ const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
 
         .MarkdownField-textArea {
           background: #FFF;
-          border: 1px solid ${input.border};
-          color: ${Theme.textDark};
+          border: 1px solid ${input.default.border};
+          color: ${text.dark};
           font-size: 16px;
           font-weight: 300;
           line-height: 1.4;

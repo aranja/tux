@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Theme, input } from '../../theme'
 import Checkbox from './Checkbox'
 
 class Radio extends Component<any, any> {

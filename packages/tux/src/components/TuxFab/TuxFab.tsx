@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 import { lighten, fade } from '../../utils/color'
-import { Theme } from '../../theme'
+import { Theme } from '../../colors'
 
 export interface State {
   user: null | {
@@ -12,12 +12,14 @@ export interface State {
   isVisible: boolean
   isHovered: boolean
 }
-const FabColor = '#3a82df';
-const FabActiveColor = '#f11b9e';
-const FabAnimationDelay = 0.05;
-const FabEase = '0,.62,.45,1.13';
 
-class TuxFab extends React.Component<any, State> {
+// Todo: replace with tuxTheme.floatingActionButton
+const FabColor = '#3a82df'
+const FabActiveColor = '#f11b9e'
+const FabAnimationDelay = 0.05
+const FabEase = '0, 0.62, 0.45, 1.13'
+
+class TuxFab extends Component<any, State> {
   static contextTypes = {
     tux: React.PropTypes.object,
   }

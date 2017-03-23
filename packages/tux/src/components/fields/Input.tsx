@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { Theme, input } from '../../theme'
+import { Theme, input } from '../../colors'
 import { decelerationCurve, sharpCurve } from '../../utils/curves'
 
 export interface Props {

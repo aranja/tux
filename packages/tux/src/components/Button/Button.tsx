@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { button } from '../../theme'
+import { button } from '../../colors'
 import { fade, lighten } from '../../utils/color'
 
 export interface ButtonProps {
@@ -28,7 +28,7 @@ const Button = ({ type, themeColor, flat = true, raised, onClick, children }: Bu
           background: transparent;
           border: 0;
           border-radius: 2px;
-          color: ${button.text};
+          color: ${button.default.text};
           cursor: pointer;
           display: inline-block;
           font-size: 14px;
@@ -46,8 +46,8 @@ const Button = ({ type, themeColor, flat = true, raised, onClick, children }: Bu
         }
 
         .Button--raised {
-          background: ${button.background};
-          border: 1px solid ${button.border};
+          background: ${button.default.background};
+          border: 1px solid ${button.default.border};
           box-shadow: ${fade('#000', 0.1)} 0px 1px 6px,
                       ${fade('#000', 0.1)} 0px 1px 4px;
         }
@@ -57,13 +57,13 @@ const Button = ({ type, themeColor, flat = true, raised, onClick, children }: Bu
         }
 
         .Button[data-theme-color="green"] {
-          color: ${button.greenTheme.text};
-          background: ${button.greenTheme.background};
-          border-color: ${button.greenTheme.border};
+          color: ${button.primary.text};
+          background: ${button.primary.background};
+          border-color: ${button.primary.border};
         }
 
         .Button[data-theme-color="green"]:hover {
-          background: ${lighten(button.greenTheme.background, 0.2)};
+          background: ${lighten(button.primary.background, 0.2)};
         }
         `}</style>
       </button>

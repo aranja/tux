@@ -1,5 +1,5 @@
 import React from 'react'
-import { Theme, input } from '../../theme'
+import { Theme, input } from '../../colors'
 import { fade } from '../../utils/color'
 
 const Spinner = () => (

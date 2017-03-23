@@ -1,30 +1,17 @@
-export const Theme = {
-  primary: '#3BB172',
-  secondary: '#3A82DF',
-  alert: '#E8008A',
-  gray: '#E7E7E7',
-  snow: '#FAFAFA',
-  background: '#FFFFFF',
-  textDark: '#313131',
-  textGray: '#3C4858',
-  textLight: '#FFFFFF',
-}
+import merge from 'lodash.merge'
+import { Theme, text, input, button } from './colors'
 
-export const input = {
-  border: '#CBCBCB',
-  labelText: '#888888',
-  greenTheme: {
-    border: `${Theme.primary}`,
-  }
-}
+export default function getTuxTheme(tuxTheme: Object, tuxThemeExtended = {}) {
+  tuxTheme = merge({
 
-export const button = {
-  background: '#E5E6ED',
-  border: '#C3CFD5',
-  text: '#536171',
-  greenTheme: {
-    background: `${Theme.primary}`,
-    border: '#CBCBCB',
-    text: '#FFFFFF',
-  }
+    floatingActionButton: {
+      primaryColor: Theme.primary,
+      activeColor: Theme.active,
+      iconColor: Theme.light,
+      itemAnimationDelay: '0, 0.62, 0.45, 1.13',
+    }
+
+  }, tuxThemeExtended)
+
+  return tuxTheme
 }

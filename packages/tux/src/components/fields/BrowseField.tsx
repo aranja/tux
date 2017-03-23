@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { button } from '../../theme'
+import { button } from '../../colors'
 import { lighten } from '../../utils/color'
 
 class BrowseField extends Component<any, any> {
@@ -45,10 +45,10 @@ class BrowseField extends Component<any, any> {
           }
 
           .BrowseField-button {
-            background: ${button.background};
+            background: ${button.default.background};
             border-radius: 2px;
-            border: 1px solid ${button.border};
-            color: ${button.text};
+            border: 1px solid ${button.default.border};
+            color: ${button.default.text};
             cursor: pointer;
             display: inline-block;
             font-size: 14px;
@@ -64,7 +64,7 @@ class BrowseField extends Component<any, any> {
           }
 
           .BrowseField-button:hover {
-            background: ${lighten(button.background, 0.2)}
+            background: ${lighten(button.default.background, 0.2)}
           }
 
           .BrowseField-button::before {

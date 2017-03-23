@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Theme, input, button } from '../../theme'
+import { Theme, input, button } from '../../colors'
 
 interface Dropdown {
   id: string
@@ -68,7 +68,7 @@ class Dropdown extends Component<any, State> {
             appearance: button;
             background-color: white;
             border-radius: 3px;
-            border: 1px solid ${input.border};
+            border: 1px solid ${input.default.border};
             color: inherit;
             cursor: pointer;
             font-size: inherit;
@@ -89,7 +89,7 @@ class Dropdown extends Component<any, State> {
 
           .Dropdown::after {
             bottom: 0;
-            color: ${button.text};
+            color: ${button.default.text};
             content: "▼";
             font-size: 10px;
             height: 10px;
@@ -100,9 +100,9 @@ class Dropdown extends Component<any, State> {
           }
 
           .Dropdown::before {
-            background: ${button.background};
+            background: ${button.default.background};
             border-radius: 0 3px 3px 0;
-            border: 1px solid ${input.border};
+            border: 1px solid ${input.default.border};
             bottom: 0;
             right: 0;
             top: 0;
