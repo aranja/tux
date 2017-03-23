@@ -13,7 +13,6 @@ export interface Props {
 
 export interface State {
   hasFocus: boolean,
-  value: string,
 }
 
 class Input extends Component<Props, State> {
@@ -23,8 +22,7 @@ class Input extends Component<Props, State> {
     const { value } = props
 
     this.state = {
-      hasFocus: false,
-      value: value ? value : DEFAULT_VALUE
+      hasFocus: false
     }
   }
 
@@ -45,15 +43,15 @@ class Input extends Component<Props, State> {
   }
 
   render() {
-    const { hasFocus, value } = this.state
-    const { id, onChange } = this.props
+    const { hasFocus } = this.state
+    const { id, onChange, value } = this.props
     return (
       <div className={classNames('Input', hasFocus && 'has-focus')}>
         <input
           className="Input-field"
           id={id}
           onChange={(event) => onChange(event.target.value)}
-          value={value}
+          value={value ? value : DEFAULT_VALUE}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />

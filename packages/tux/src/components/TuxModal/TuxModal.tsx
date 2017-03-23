@@ -16,7 +16,7 @@ export interface State {
 }
 
 export interface TuxModalProps {
-  model?: any,
+  model: any,
   onClose?: Function,
   isNew?: any,
 }
