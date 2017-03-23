@@ -7,7 +7,7 @@ import { tuxDatePickerStyles } from './DatePicker.styles'
 import { fade } from '../../utils/color'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
-const defaultValue = moment(new Date()).format(DATE_FORMAT)
+const DEFAULT_VALUE = moment(new Date()).format(DATE_FORMAT)
 
 export interface State {
   selectedDay: Date | null
@@ -27,7 +27,7 @@ class DatePicker extends Component<any, State> {
     super(props)
 
     const { value } = this.props
-    const dateValue = value ? value : defaultValue
+    const dateValue = value ? value : DEFAULT_VALUE
 
     this.state = {
       selectedDay: moment(dateValue).toDate(),
