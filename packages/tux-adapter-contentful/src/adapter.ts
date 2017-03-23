@@ -127,6 +127,16 @@ export class ContentfulAdapter {
     return newModel
   }
 
+  async createEmptyAsset() {
+    return {
+      sys: {
+        linkType: 'Asset',
+        type: 'Link',
+        id: null,
+      }
+    }
+  }
+
   async create(model: any, type: string) {
     const managementApi = await this.getManagementApi()
     await managementApi.createModel(model, type)

@@ -32,13 +32,17 @@ class ImageField extends React.Component<ImageFieldProps, any> {
 
   async componentDidMount() {
     const { value } = this.props
-    if (value && value.sys) {
-      const fullModel = await this.context.tux.adapter.loadAsset(value)
 
-      this.setState({
-        fullModel
-      })
+    let fullModel = null
+    if (value instanceof Object) {
+      fullModel = await this.context.tux.adapter.loadAsset(value)
+    } else {
+      fullModel = this.context.tux.adapter.createEmptyAsset(value)
     }
+
+    this.setState({
+      fullModel
+    })
   }
 
   async componentWillReceiveProps(props: ImageFieldProps) {
