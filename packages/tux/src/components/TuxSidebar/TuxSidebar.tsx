@@ -82,18 +82,19 @@ class TuxSidebar extends React.Component<any, State> {
         <style jsx>{`
           .TuxSidebar {
             background: ${tuxColors.colorSnow};
-            box-sizing: border-box;
-            position: fixed;
-            width: 100%;
-            max-width: 260px;
-            right: 0;
-            height: 100%;
-            min-height: 100vh;
-            z-index: 20;
             box-shadow: 7px 1px 10px ${fade(tuxColors.colorBlack, 0.2)};
+            box-sizing: border-box;
+            height: 100%;
+            max-width: 260px;
+            min-height: 100vh;
+            position: fixed;
+            right: 0;
+            top: 0;
             transform: translateX(100%);
             transition: transform 0.4s ease-out;
+            width: 100%;
             will-change: transform;
+            z-index: 20;
           }
 
           .TuxSidebar.is-visible {

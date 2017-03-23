@@ -113,18 +113,18 @@ export class ContentfulAdapter {
     return null
   }
 
-  async createEmptyModel(type: string) {
-    const meta = await this.getMeta(type)
+  async createEmptyModel(model: any, meta: Meta) {
+    const type = this._getModelType(model)
     if (!meta) {
       return null
     }
 
-    const model = { fields: {}, sys: { contentType: { sys: { id: type } } } }
+    const newModel = { fields: {}, sys: { contentType: { sys: { id: type } } } }
     for (const field of meta.editorSchema) {
       const fieldId = field.field.split('.')[1]
-      model.fields[fieldId] = ''
+      newModel.fields[fieldId] = ''
     }
-    return model
+    return newModel
   }
 
   async create(model: any, type: string) {

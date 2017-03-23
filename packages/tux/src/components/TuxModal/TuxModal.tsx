@@ -15,9 +15,9 @@ export interface State {
 }
 
 export interface TuxModalProps {
-  model: any,
+  model?: any,
   onClose?: Function,
-  isNew?: Boolean,
+  isNew?: any,
 }
 
 class TuxModal extends React.Component<TuxModalProps, State> {
@@ -34,11 +34,14 @@ class TuxModal extends React.Component<TuxModalProps, State> {
   async componentDidMount() {
     const { model, isNew } = this.props
 
-    let fullModel = model
-    if (!isNew) {
+    const meta = await this.context.tux.adapter.getMeta(model)
+    let fullModel = null
+
+    if (isNew) {
+      fullModel = await this.context.tux.adapter.createEmptyModel(model, meta)
+    } else {
       fullModel = await this.context.tux.adapter.load(model)
     }
-    const meta = await this.context.tux.adapter.getMeta(model)
 
     this.setState({
       fullModel,
@@ -71,7 +74,7 @@ class TuxModal extends React.Component<TuxModalProps, State> {
       await this.context.tux.adapter.save(fullModel)
     }
 
-    if(onClose) {
+    if (onClose) {
       onClose(true)
     }
   }

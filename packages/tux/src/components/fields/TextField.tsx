@@ -7,13 +7,15 @@ interface TextField {
   onChange: (e: React.FormEvent<any>) => void
 }
 
+const defaultValue = ''
+
 const TextField = ({ id, value, onChange }: TextField) => (
   <div className="Input">
     <input
       className="InputField"
       id={id}
       onChange={(event: React.FormEvent<HTMLSelectElement>) => onChange(event.target.value)}
-      value={value}
+      value={value ? value : defaultValue}
     />
       <style jsx>{`
         .Input {

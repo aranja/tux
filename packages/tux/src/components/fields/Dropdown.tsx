@@ -36,7 +36,7 @@ class Dropdown extends Component<any, State> {
   }
 
   render() {
-    const { id, value, dropdownValues, onChange } = this.props
+    const { id, dropdownValues, onChange } = this.props
     const { selectedValue } = this.state
 
     return (

@@ -7,13 +7,15 @@ interface MarkdownField {
   onChange: (e: React.FormEvent<any>) => void
 }
 
+const defaultValue = ''
+
 const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
   <div className="MarkdownField">
     <textarea
       rows={12}
       className="MarkdownField-textArea"
       id={id}
-      value={value}
+      value={value ? value : defaultValue}
       onChange={(event: React.FormEvent<any>) => onChange(event.target.value)}
     />
     <style jsx>{`
