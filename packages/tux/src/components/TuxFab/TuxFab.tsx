@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { lighten, fade } from '../../utils/color'
 import { Theme } from '../../theme'
+import { standardCurve } from '../../utils/curves'
 
 export interface State {
   user: null | {
@@ -14,8 +15,8 @@ export interface State {
 }
 const FabColor = '#3a82df';
 const FabActiveColor = '#f11b9e';
-const FabAnimationDelay = 0.05;
-const FabEase = '0,.62,.45,1.13';
+const FabItemAnimationDelay = 0.05;
+const FabItemEase = '0,.62,.45,1.13';
 
 class TuxFab extends React.Component<any, State> {
   static contextTypes = {
@@ -37,7 +38,8 @@ class TuxFab extends React.Component<any, State> {
           name: user.firstName,
           avatarUrl: user.avatarUrl,
           spaceName: user.space.name,
-        }
+        },
+        isVisible: true,
       })
     }
   }
@@ -103,6 +105,12 @@ class TuxFab extends React.Component<any, State> {
             right: 40px;
             display: flex;
             flex-direction: column;
+            transition: all 0.8s cubic-bezier(${standardCurve});
+            transform: translateY(100%);
+          }
+
+          .TuxFab.is-visible {
+            transform: translateY(0);
           }
 
           .TuxFab.is-hovered:hover {
@@ -123,7 +131,7 @@ class TuxFab extends React.Component<any, State> {
             width: 45px;
             order: 0;
             margin-top: 10px;
-            transition: opacity 0.2s ease, transform 0.4s cubic-bezier(${FabEase});
+            transition: opacity 0.2s ease, transform 0.4s cubic-bezier(${FabItemEase});
             transition-origin: center;
           }
           .TuxFab-item:hover {
@@ -150,7 +158,7 @@ class TuxFab extends React.Component<any, State> {
             order: 1;
             pointer-events: auto;
             transform: scale(0.9);
-            transition: transform 0.25s cubic-bezier(${FabEase}), background-color 0.15s;
+            transition: transform 0.25s cubic-bezier(${FabItemEase}), background-color 0.15s;
             width: 65px;
           }
           .TuxFab-mainItem .icon {
@@ -167,7 +175,7 @@ class TuxFab extends React.Component<any, State> {
           }
           .TuxFab.is-active .TuxFab-mainItem .icon {
             transform: scale(1);
-            transition: transform 0.25s cubic-bezier(${FabEase});
+            transition: transform 0.25s cubic-bezier(${FabItemEase});
           }
           .TuxFab-item:not(.TuxFab-mainItem) {
             opacity: 0;
@@ -195,11 +203,11 @@ class TuxFab extends React.Component<any, State> {
           }
           .TuxFab-item:nth-child(2) {
             transform: translateY(30px) scale(0.8);
-            transition-delay: ${FabAnimationDelay}s;
+            transition-delay: ${FabItemAnimationDelay}s;
           }
           .TuxFab-item:nth-child(3) {
             transform: translateY(20px) scale(0.8);
-            transition-delay: ${FabAnimationDelay / 2}s;
+            transition-delay: ${FabItemAnimationDelay / 2}s;
           }
           .TuxFab-item:nth-child(4) {
             transform: translateY(10px) scale(0.8);
