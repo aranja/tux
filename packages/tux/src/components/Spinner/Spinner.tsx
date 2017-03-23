@@ -1,5 +1,5 @@
 import React from 'react'
-import { tuxColors, tuxInputStyles } from '../../styles'
+import { Theme, input } from '../../theme'
 import { fade } from '../../utils/color'
 
 const Spinner = () => (
@@ -8,7 +8,7 @@ const Spinner = () => (
       .Spinner {
         animation: pulse 0.75s infinite;
         animation-delay: 0.25s;
-        background: ${fade(tuxColors.colorPurple, 0.2)};
+        background: ${fade(Theme.primary, 0.2)};
         height: 36px;
         margin: auto;
         position: absolute;
@@ -18,7 +18,7 @@ const Spinner = () => (
       .Spinner::before,
       .Spinner::after {
         animation: pulse 0.75s infinite;
-        background: ${fade(tuxColors.colorPurple, 0.2)};
+        background: ${fade(Theme.primary, 0.2)};
         content: '';
         display: block;
         height: 24px;
@@ -37,7 +37,7 @@ const Spinner = () => (
 
       @keyframes pulse {
         50% {
-          background: ${fade(tuxColors.colorPurple, 0.7)};
+          background: ${fade(Theme.primary, 0.7)};
         }
       }
     `}</style>

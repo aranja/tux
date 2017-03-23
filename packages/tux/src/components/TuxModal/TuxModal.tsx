@@ -1,9 +1,10 @@
 import React from 'react'
 
-import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
+import { Theme, input, button } from '../../theme'
 import { fade } from '../../utils/color'
 import moment from 'moment'
 import TuxSpinner from '../Spinner/Spinner'
+import Button from '../Button'
 
 import { get, set } from '../../utils/accessors'
 import { getEditorSchema, Field } from '../../services/editor'
@@ -86,8 +87,8 @@ class TuxModal extends React.Component<TuxModalProps, State> {
     const value = get(fullModel, field.field)
 
     return InputComponent && (
-      <div key={field.field}>
-        <label className="TuxModal-inputLabel">
+      <div className="InputComponent" key={field.field}>
+        <label className="InputComponent-label ">
           {field.label}
         </label>
         <InputComponent
@@ -97,13 +98,17 @@ class TuxModal extends React.Component<TuxModalProps, State> {
           {...field.props}
         />
         <style jsx>{`
-          .TuxModal-inputLabel {
-            color: ${tuxInputStyles.labelTextColor};
+          .InputComponent {
+            margin: 16px 0;
+          }
+          .InputComponent-label {
+            color: ${input.labelText};
             display: block;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 300;
             line-height: 24px;
-            padding: 5px 0;
+            padding: 0;
+            padding-bottom: 5px;
             text-transform: capitalize;
           }
         `}</style>
@@ -125,15 +130,8 @@ class TuxModal extends React.Component<TuxModalProps, State> {
                 {modalHeading} <strong className="TuxModal-modelName">{meta.name}</strong>
               </h1>
               <div className="TuxModal-buttons">
-                <button
-                  className="TuxModal-button"
-                  label="Cancel"
-                  type="button"
-                  onClick={this.onCancel}>Cancel</button>
-                <button
-                  className="TuxModal-button TuxModal-button--green"
-                  type="submit"
-                  label="Save">{modalAction}</button>
+                <Button onClick={this.onCancel}>Cancel</Button>
+                <Button type="submit" themeColor="green" raised>{modalAction}</Button>
               </div>
             </div>
             <div className="TuxModal-content">
@@ -152,11 +150,11 @@ class TuxModal extends React.Component<TuxModalProps, State> {
         )}
         <style jsx>{`
           .TuxModal {
-            background: ${tuxColors.colorSnow};
+            background: #FFF;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             margin: 0;
             margin-left: auto;
-            max-width: 800px;
+            max-width: 650px;
             height: 100vh;
             overflow: auto;
             padding: 0;
@@ -165,15 +163,20 @@ class TuxModal extends React.Component<TuxModalProps, State> {
           }
 
           .TuxModal-topBar {
-            background: ${tuxColors.colorWhite};
+            background: #f2f3f6;
             border-bottom: 1px solid rgba(203, 203, 203, 0.53);
             display: flex;
             justify-content: space-between;
             padding: 30px;
           }
 
+          .TuxModal-buttons {
+            display: flex;
+            justify-content: flex-end;
+          }
+
           .TuxModal-content {
-            padding: 30px;
+            padding: 20px 30px;
           }
 
           .TuxModal-meta {
@@ -183,12 +186,12 @@ class TuxModal extends React.Component<TuxModalProps, State> {
           }
 
           .TuxModal-metaLastUpdated {
-            color: ${fade(tuxColors.textGray, 0.5)};
+            color: ${fade(Theme.textGray, 0.5)};
             font-weight: 300;
           }
 
           .TuxModal-title {
-            color: ${tuxColors.textDark};
+            color: ${Theme.textDark};
             font-size: 25px;
             font-weight: 300;
             margin: 0;
@@ -197,38 +200,6 @@ class TuxModal extends React.Component<TuxModalProps, State> {
           .TuxModal-modelName {
             font-weight: 400;
             text-transform: capitalize;
-          }
-
-          .TuxModal-buttons {
-            display: flex;
-            justify-content: flex-end;
-          }
-
-          .TuxModal-button {
-            background: ${tuxButtonStyles.backgroundColor};
-            border-radius: 2px;
-            border: 1px solid ${tuxButtonStyles.borderColor};
-            color: ${tuxButtonStyles.textColor};
-            cursor: pointer;
-            display: inline-block;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.3;
-            margin: 0;
-            padding: 10px 24px;
-            text-align: center;
-            transition: background 0.25s, color 0.25s, border-color 0.25s;
-            vertical-align: baseline;
-          }
-
-          .TuxModal-button + .TuxModal-button {
-            margin-left: 16px;
-          }
-
-          .TuxModal-button.TuxModal-button--green {
-            color: ${tuxButtonStyles.greenTheme.textColor};
-            background: ${tuxButtonStyles.greenTheme.backgroundColor};
-            border-color: ${tuxButtonStyles.greenTheme.borderColor};
           }
         `}</style>
       </div>

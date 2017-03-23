@@ -1,10 +1,10 @@
 import React from 'react'
-import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
+import { Theme, input, button } from '../../theme'
 
 interface MarkdownField {
   id: string
   value: string
-  onChange: (e: React.FormEvent<any>) => void
+  onChange: (value: string) => void
 }
 
 const DEFAULT_VALUE = ''
@@ -24,22 +24,17 @@ const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
           display: flex;
           flex-direction: column;
           flex-wrap: wrap;
-          margin-bottom: 20px;
         }
 
         .MarkdownField-textArea {
-          background: ${tuxColors.colorWhite};
-          border: 1px solid ${tuxInputStyles.borderColor};
-          border-radius: 3px;
-          color: ${tuxColors.textDark};
+          background: #FFF;
+          border: 1px solid ${input.border};
+          color: ${Theme.textDark};
           font-size: 16px;
-          padding: 5px;
+          font-weight: 300;
+          line-height: 1.4;
+          padding: 8px;
           width: 100%;
-        }
-
-        .MarkdownField-textArea:focus {
-          border-color: ${tuxInputStyles.greenTheme.borderColor};
-          outline: 1px solid ${tuxInputStyles.greenTheme.borderColor};
         }
       `}</style>
   </div>

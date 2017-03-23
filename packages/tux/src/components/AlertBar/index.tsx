@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { tuxColors } from '../../styles'
+import { Theme } from '../../theme'
 
 class AlertBar extends Component<any, any> {
   hideDelay = 1500
@@ -8,6 +8,8 @@ class AlertBar extends Component<any, any> {
   state = {
     isHidden: false,
   }
+
+  private timer: any
 
   componentDidMount() {
     this.timer = setTimeout(() => {
@@ -31,8 +33,9 @@ class AlertBar extends Component<any, any> {
         </p>
         <style jsx>{`
           .AlertBar {
-            background: ${tuxColors.colorPink};
+            background: ${Theme.alert};
             bottom: 0;
+            left: 0;
             color: #FFF;
             display: flex;
             justify-content: center;
@@ -40,7 +43,8 @@ class AlertBar extends Component<any, any> {
             position: fixed;
             text-align: center;
             transform: 0;
-            transition: transform;
+            transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+            font-size: 14px;
             width: 100%;
             will-change: transform;
             z-index: 50;
@@ -48,11 +52,10 @@ class AlertBar extends Component<any, any> {
           .AlertBar.is-hidden {
             transform: translateY(80%);
             transition-duration: 0.15s;
-            transition-timing-function: ease-out;
           }
           .ALertBar.is-hidden:hover {
             transform: translateY(0);
-            transition-duration: 0.30s;
+            transition-duration: 0.40s;
           }
           .AlertBar-text {
             cursor: default;

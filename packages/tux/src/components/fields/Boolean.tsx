@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { tuxColors, tuxInputStyles } from '../../styles'
+import { Theme, input } from '../../theme'
 import Checkbox from './Checkbox'
 
 export interface State {
@@ -59,7 +59,6 @@ class Boolean extends Component<any, State> {
         .Boolean-wrapper {
           display: inline-flex;
           flex-direction: column;
-          margin-bottom: 20px;
         }
 
         .Boolean {
