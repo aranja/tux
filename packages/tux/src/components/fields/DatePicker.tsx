@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import moment from 'moment'
 import DayPicker, { DateUtils } from 'react-day-picker'
-import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
+import { Theme, input, button } from '../../theme'
 import { tuxDatePickerStyles } from './DatePicker.styles'
 import { fade } from '../../utils/color'
 
@@ -42,7 +42,7 @@ class DatePicker extends Component<any, State> {
     this.clickedInside = true
     // The input's onBlur method is called from a queue right after onMouseDown event.
     // setTimeout adds another callback in the queue, but is called later than onBlur event
-    this.clickTimeout = setTimeout(() => {
+    this.clickTimeout = window.setTimeout(() => {
       this.clickedInside = false
     }, 0)
   }
@@ -114,7 +114,6 @@ class DatePicker extends Component<any, State> {
         .TuxDayPicker-wrapper {
           display: inline-flex;
           flex-direction: column;
-          margin-bottom: 20px;
         }
 
         .TuxDayPicker :global(.DayPicker) {
@@ -134,9 +133,9 @@ class DatePicker extends Component<any, State> {
 
         .TuxDayPicker input {
           appearance: none;
-          border: 1px solid ${tuxInputStyles.borderColor};
+          border: 1px solid ${input.border};
           border-radius: 3px;
-          color: ${tuxColors.textDark};
+          color: ${Theme.textDark};
           cursor: pointer;
           font-family: -apple-system, BlinkMacSystemFont, "Source Sans Pro", "sans-serif";
           font-size: 16px;
@@ -158,7 +157,7 @@ class DatePicker extends Component<any, State> {
         .TuxDayPicker::after {
           bottom: 0;
           content: "\\F4C5";
-          color: ${tuxButtonStyles.textColor};
+          color: ${button.text};
           font-family: "mfg_labs_iconsetregular";
           font-size: 16px;
           height: 16px;
@@ -168,11 +167,10 @@ class DatePicker extends Component<any, State> {
           top: 0;
         }
 
-
         .TuxDayPicker::before {
-          background: ${tuxButtonStyles.backgroundColor};
+          background: ${button.background};
           border-radius: 0 3px 3px 0;
-          border: 1px solid ${tuxInputStyles.borderColor};
+          border: 1px solid ${input.border};
           bottom: 0;
           right: 0;
           top: 0;
@@ -229,7 +227,7 @@ class DatePicker extends Component<any, State> {
         }
 
         .TuxDayPicker :global(.DayPicker-Weekday) {
-          color: ${fade(tuxColors.colorBlack, 0.4)};
+          color: ${fade('#000', 0.4)};
           display: table-cell;
           font-size: 14px;
           padding: 8px;
@@ -311,12 +309,12 @@ class DatePicker extends Component<any, State> {
         }
 
         .TuxDayPicker :global(.DayPicker-Day--selected) {
-          background: ${tuxInputStyles.greenTheme.borderColor};
+          background: ${input.greenTheme.border};
           color: ${tuxDatePickerStyles.textColorSelected};
         }
 
         .TuxDayPicker :global(.DayPicker-Day--selected:hover) {
-          background: ${tuxInputStyles.greenTheme.borderColor};
+          background: ${input.greenTheme.border};
           color: ${tuxDatePickerStyles.textColorSelected};
         }
 
@@ -328,9 +326,9 @@ class DatePicker extends Component<any, State> {
 
         .TuxDayPicker-input {
           background: ${tuxDatePickerStyles.backgroundColor};
-          border: 1px solid ${tuxInputStyles.borderColor};
+          border: 1px solid ${input.border};
           border-radius: 3px;
-          color: ${tuxColors.textDark};
+          color: ${Theme.textDark};
           font-size: 16px;
           padding: 5px;
           line-height: 1.5;
@@ -338,8 +336,8 @@ class DatePicker extends Component<any, State> {
         }
 
         .TuxDayPicker-input:focus {
-          border-color: ${tuxInputStyles.greenTheme.borderColor};
-          outline: 1px solid ${tuxInputStyles.greenTheme.borderColor};
+          border-color: ${input.greenTheme.border};
+          outline: 1px solid ${input.greenTheme.border};
         }
       `}</style>
       </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
+import { Theme, input, button } from '../../theme'
 
 interface Dropdown {
   id: string
@@ -56,7 +56,6 @@ class Dropdown extends Component<any, State> {
           .Dropdown-wrapper {
             display: inline-flex;
             flex-direction: column;
-            margin-bottom: 20px;
           }
 
           .Dropdown {
@@ -69,7 +68,7 @@ class Dropdown extends Component<any, State> {
             appearance: button;
             background-color: white;
             border-radius: 3px;
-            border: 1px solid ${tuxInputStyles.borderColor};
+            border: 1px solid ${input.border};
             color: inherit;
             cursor: pointer;
             font-size: inherit;
@@ -90,7 +89,7 @@ class Dropdown extends Component<any, State> {
 
           .Dropdown::after {
             bottom: 0;
-            color: ${tuxButtonStyles.textColor};
+            color: ${button.text};
             content: "▼";
             font-size: 10px;
             height: 10px;
@@ -101,9 +100,9 @@ class Dropdown extends Component<any, State> {
           }
 
           .Dropdown::before {
-            background: ${tuxButtonStyles.backgroundColor};
+            background: ${button.background};
             border-radius: 0 3px 3px 0;
-            border: 1px solid ${tuxInputStyles.borderColor};
+            border: 1px solid ${input.border};
             bottom: 0;
             right: 0;
             top: 0;

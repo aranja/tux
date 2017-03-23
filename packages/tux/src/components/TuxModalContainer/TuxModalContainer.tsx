@@ -2,16 +2,17 @@ import React from 'react'
 import classNames from 'classnames'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import toggleScroll from './toggle-scroll'
-import { getState, setListener, State as StoreState } from './store'
+import { getState, setListener, State as StoreState, Modal } from './store'
+import { decelerationCurve, sharpCurve } from '../../utils/curves'
 
 export interface State {
   modals: StoreState,
 }
 
-class ModalContainer extends React.Component<any, State> {
+export class ModalContainer extends React.Component<any, State> {
   private listener: () => any
 
-  state: State = {
+  state = {
     modals: getState()
   }
 
@@ -110,14 +111,12 @@ class ModalContainer extends React.Component<any, State> {
           }
 
           .ModalTransition-enter {
-            opacity: 0;
             transform: translateX(100%);
           }
 
           .ModalTransition-enter-active {
-            opacity: 1;
             transform: translateX(0);
-            transition: opacity 0.2s ease-in, transform 0.4s cubic-bezier(.11,.37,.83,.99);
+            transition: transform 450ms cubic-bezier(${decelerationCurve});
           }
 
           .ModalTransition-leave {
@@ -125,9 +124,8 @@ class ModalContainer extends React.Component<any, State> {
           }
 
           .ModalTransition-leave-active {
-            opacity: 0;
             transform: translateX(100%);
-            transition: opacity 0.3s, transform 0.3s ease-in-out;
+            transition: transform 0.4s cubic-bezier(${sharpCurve});
           }
         `}</style>
       </div>
