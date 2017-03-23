@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
 
+const defaultValue = ''
+
 interface Dropdown {
   id: string
   value: string
@@ -21,7 +23,7 @@ class Dropdown extends Component<any, State> {
     const { value } = this.props
 
     this.setState({
-      selectedValue: value
+      selectedValue: value ? value : defaultValue
     })
   }
 

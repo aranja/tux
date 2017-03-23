@@ -122,7 +122,7 @@ export class ContentfulAdapter {
     const newModel = { fields: {}, sys: { contentType: { sys: { id: type } } } }
     for (const field of meta.editorSchema) {
       const fieldId = field.field.split('.')[1]
-      newModel.fields[fieldId] = ''
+      newModel.fields[fieldId] = null
     }
     return newModel
   }
