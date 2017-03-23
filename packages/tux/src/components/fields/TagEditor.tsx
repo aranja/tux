@@ -137,6 +137,7 @@ class TagEditor extends Component<TagEditorProps, any> {
             </p>
           ))}
         </div>
+        {/* Todo: replace with tuxTheme.tagEditor */}
           <style jsx>{`
             .TagEditor {
 

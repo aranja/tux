@@ -3,7 +3,6 @@ import classNames from 'classnames'
 import moment from 'moment'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import { Theme, input, button, text } from '../../colors'
-import { tuxDatePickerStyles } from './DatePicker.styles'
 import { fade } from '../../utils/color'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
@@ -15,12 +14,17 @@ export interface State {
 }
 
 class DatePicker extends Component<any, State> {
+  static contextTypes = {
+    tux: React.PropTypes.object,
+  }
+
   private clickTimeout: number
   private input: {
     focus: () => any
     blur: () => any
   }
   clickedInside = false
+  theme = this.context.tux.theme.dayPicker
 
   componentDidMount() {
     this.setState({
@@ -110,7 +114,6 @@ class DatePicker extends Component<any, State> {
           }
         </div>
 
-      {/* Todo: replace with tuxTheme.dayPicker */}
       <style jsx>{`
         .TuxDayPicker-wrapper {
           display: inline-flex;
@@ -244,7 +247,7 @@ class DatePicker extends Component<any, State> {
         }
 
         .TuxDayPicker :global(.DayPicker-Day) {
-          background: ${tuxDatePickerStyles.backgroundColor};
+          background: ${this.theme.backgroundColor};
           border: 1px solid #eaecec;
           cursor: pointer;
           display: table-cell;
@@ -304,29 +307,29 @@ class DatePicker extends Component<any, State> {
         }
 
         .TuxDayPicker :global(.DayPicker-Day--disabled) {
-          background-color: ${tuxDatePickerStyles.backgroundColorDisabled};
-          color: ${tuxDatePickerStyles.textColor};
+          background-color: ${this.theme.backgroundColorDisabled};
+          color: ${this.theme.textColor};
           cursor: default;
         }
 
         .TuxDayPicker :global(.DayPicker-Day--selected) {
           background: ${input.primary.border};
-          color: ${tuxDatePickerStyles.textColorSelected};
+          color: ${this.theme.textColorSelected};
         }
 
         .TuxDayPicker :global(.DayPicker-Day--selected:hover) {
           background: ${input.primary.border};
-          color: ${tuxDatePickerStyles.textColorSelected};
+          color: ${this.theme.textColorSelected};
         }
 
         .TuxDayPicker :global(.DayPicker-Day--outside) {
-          background: ${tuxDatePickerStyles.backgroundColorOutside};
-          color: ${tuxDatePickerStyles.textColor};
+          background: ${this.theme.backgroundColorOutside};
+          color: ${this.theme.textColor};
           cursor: default;
         }
 
         .TuxDayPicker-input {
-          background: ${tuxDatePickerStyles.backgroundColor};
+          background: ${this.theme.backgroundColor};
           border: 1px solid ${input.default.border};
           border-radius: 3px;
           color: ${text.dark};

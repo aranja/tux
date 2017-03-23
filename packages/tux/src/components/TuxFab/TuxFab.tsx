@@ -13,16 +13,12 @@ export interface State {
   isHovered: boolean
 }
 
-// Todo: replace with tuxTheme.floatingActionButton
-const FabColor = '#3a82df'
-const FabActiveColor = '#f11b9e'
-const FabAnimationDelay = 0.05
-const FabEase = '0, 0.62, 0.45, 1.13'
-
 class TuxFab extends Component<any, State> {
   static contextTypes = {
     tux: React.PropTypes.object,
   }
+
+  theme = this.context.tux.theme
 
   state: State = {
     user: null,
@@ -115,7 +111,7 @@ class TuxFab extends Component<any, State> {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: ${FabColor};
+            color: ${this.theme.floatingActionButton.color};
             text-decoration: none;
             background: #fdfdfd;
             border-radius: 50%;
@@ -125,7 +121,9 @@ class TuxFab extends Component<any, State> {
             width: 45px;
             order: 0;
             margin-top: 10px;
-            transition: opacity 0.2s ease, transform 0.4s cubic-bezier(${FabEase});
+            transition:
+              opacity 0.2s ease,
+              transform 0.4s cubic-bezier(${this.theme.floatingActionButton.itemAnimationEase});
             transition-origin: center;
           }
           .TuxFab-item:hover {
@@ -146,13 +144,15 @@ class TuxFab extends Component<any, State> {
             z-index: -1;
           }
           .TuxFab-mainItem {
-            background-color: ${FabColor};
+            background-color: ${this.theme.floatingActionButton.color};
             color: white;
             height: 65px;
             order: 1;
             pointer-events: auto;
             transform: scale(0.9);
-            transition: transform 0.25s cubic-bezier(${FabEase}), background-color 0.15s;
+            transition:
+              transform 0.25s cubic-bezier(${this.theme.floatingActionButton.itemAnimationEase}),
+              background-color 0.15s;
             width: 65px;
           }
           .TuxFab-mainItem .icon {
@@ -161,15 +161,15 @@ class TuxFab extends Component<any, State> {
           }
           .TuxFab:hover .TuxFab-mainItem {
             transform: scale(1);
-            background-color: ${lighten(FabColor, 0.1)};
+            background-color: ${lighten(this.theme.floatingActionButton.color, 0.1)};
           }
           .TuxFab.is-active .TuxFab-mainItem {
-            background: ${FabActiveColor};
+            background: ${this.theme.floatingActionButton.activeColor};
             transform: rotateZ(135deg);
           }
           .TuxFab.is-active .TuxFab-mainItem .icon {
             transform: scale(1);
-            transition: transform 0.25s cubic-bezier(${FabEase});
+            transition: transform 0.25s cubic-bezier(${this.theme.floatingActionButton.itemAnimationEase});
           }
           .TuxFab-item:not(.TuxFab-mainItem) {
             opacity: 0;
@@ -197,11 +197,11 @@ class TuxFab extends Component<any, State> {
           }
           .TuxFab-item:nth-child(2) {
             transform: translateY(30px) scale(0.8);
-            transition-delay: ${FabAnimationDelay}s;
+            transition-delay: ${this.theme.floatingActionButton.itemAnimationDelay}ms;
           }
           .TuxFab-item:nth-child(3) {
             transform: translateY(20px) scale(0.8);
-            transition-delay: ${FabAnimationDelay / 2}s;
+            transition-delay: ${this.theme.floatingActionButton.itemAnimationDelay / 2}ms;
           }
           .TuxFab-item:nth-child(4) {
             transform: translateY(10px) scale(0.8);

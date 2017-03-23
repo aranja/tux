@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { Theme } from '../../colors'
 
 class AlertBar extends Component<any, any> {
-  hideDelay = 1500
+  static contextTypes = {
+    tux: React.PropTypes.object,
+  }
 
+  theme = this.context.tux.theme.alertBar
+  hideDelay = 1500
   state = {
     isHidden: false,
   }
@@ -33,7 +36,7 @@ class AlertBar extends Component<any, any> {
         </p>
         <style jsx>{`
           .AlertBar {
-            background: ${Theme.alert};
+            background: ${this.theme.backgroundColor};
             bottom: 0;
             left: 0;
             color: #FFF;

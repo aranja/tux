@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ModalContainer, { openModal } from '../TuxModalContainer'
+import getTuxTheme from '../../theme'
 import TuxFab from '../TuxFab'
 import TuxModal from '../TuxModal'
 import AlertBar from '../AlertBar'
@@ -17,6 +18,7 @@ class TuxProvider extends Component<TuxProviderProps, any> {
       isEditing: React.PropTypes.bool.isRequired,
       editModel: React.PropTypes.func.isRequired,
       adapter: React.PropTypes.object.isRequired,
+      theme: React.PropTypes.object.isRequired,
     }),
   }
 
@@ -44,6 +46,7 @@ class TuxProvider extends Component<TuxProviderProps, any> {
         isEditing: this.state.isEditing,
         editModel: this.editModel,
         adapter: this.props.adapter,
+        theme: getTuxTheme(),
       },
     }
   }
