@@ -9,15 +9,15 @@ export default function getTuxTheme(tuxThemeExtended = {}, tuxTheme?: Object) {
       backgroundColor: Theme.alert,
     },
     btn: {
-      color: button.default.text,
       backgroundColor: 'transparent',
+      color: button.default.text,
+      primaryBackgroundColor: button.primary.background,
+      primaryBorderColor: button.primary.border,
+      primaryColor: button.primary.text,
+      primaryHoverBackgroundColor: `${lighten(button.primary.background, 0.2)}`,
       raisedBackgroundColor: button.default.background,
       raisedBorderColor: button.default.border,
       raisedBoxShadow: `${fade('#000', 0.1)} 0px 1px 6px, ${fade('#000', 0.1)} 0px 1px 4px`,
-      primaryColor: button.primary.text,
-      primaryBackgroundColor: button.primary.background,
-      primaryBorderColor: button.primary.border,
-      primaryHoverBackgroundColor: `${lighten(button.primary.background, 0.2)}`,
     },
     dayPicker: {
       arrowColor: button.default.text,
@@ -32,37 +32,38 @@ export default function getTuxTheme(tuxThemeExtended = {}, tuxTheme?: Object) {
       textColorToday: Theme.primary,
     },
     floatingActionButton: {
-      color: Theme.secondary,
       activeColor: Theme.active,
+      color: Theme.secondary,
       iconColor: Theme.light,
-      itemAnimationEase: '0, 0.62, 0.45, 1.13',
       itemAnimationDelay: 50, // ms
+      itemAnimationEase: '0, 0.62, 0.45, 1.13',
     },
     markdownField: {
+      backgroundColor: '#FFF',
       borderColor: input.default.border,
       color: text.dark,
     },
     modal: {
       backgroundColor: '#FFFFFF',
-      titleColor: `${text.dark}`,
       maxWidth: 650, // px
+      metaTextColor: `${fade(text.gray, 0.5)};`,
+      titleColor: `${text.dark}`,
       topBarBackgroundColor: 'F2F3F6',
       topBarBorderBottomColor: 'rgba(203, 203, 203, 0.5)',
       topBarHeight: 100, // px
-      metaTextColor: `${fade(text.gray, 0.5)};`,
     },
     spinner: {
       colorFrom: fade(Theme.primary, 0.2),
       colorTo: fade(Theme.primary, 0.7)
     },
     tagEditor: {
-      backgroundColor: Theme.gray,
-      borderColor: input.default.border,
-      textColor: input.default.labelText,
-      buttonTextColor: Theme.gray,
-      buttonBackgroundColor: darken(Theme.gray, 0.22),
       activeUnderlineColor: Theme.primary,
       activeUnderlineEase: decelerationCurve,
+      backgroundColor: Theme.gray,
+      borderColor: input.default.border,
+      buttonBackgroundColor: darken(Theme.gray, 0.22),
+      buttonTextColor: Theme.gray,
+      textColor: input.default.labelText,
     },
   }, tuxThemeExtended)
 

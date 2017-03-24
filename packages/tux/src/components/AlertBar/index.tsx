@@ -9,7 +9,7 @@ class AlertBar extends Component<any, any> {
     this.hideDelay = 1500
   }
 
-  private theme
+  private theme: any
   private hideDelay: Number
   private timer: any
 
