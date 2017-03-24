@@ -48,7 +48,7 @@ export default function getTuxTheme(tuxThemeExtended = {}, tuxTheme?: Object) {
       maxWidth: 650, // px
       metaTextColor: `${fade(text.gray, 0.5)};`,
       titleColor: `${text.dark}`,
-      topBarBackgroundColor: 'F2F3F6',
+      topBarBackgroundColor: '#F2F3F6',
       topBarBorderBottomColor: 'rgba(203, 203, 203, 0.5)',
       topBarHeight: 100, // px
     },
