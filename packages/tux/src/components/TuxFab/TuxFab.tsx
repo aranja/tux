@@ -179,7 +179,8 @@ class TuxFab extends Component<any, State> {
           }
           .TuxFab.is-active .TuxFab-mainItem .icon {
             transform: scale(1);
-            transition: transform 0.25s cubic-bezier(${this.theme.floatingActionButton.itemAnimationEase});
+            transition: transform 0.25s
+            cubic-bezier(${this.theme.floatingActionButton.itemAnimationEase});
           }
           .TuxFab-item:not(.TuxFab-mainItem) {
             opacity: 0;
