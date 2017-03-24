@@ -25,8 +25,6 @@ class TuxModal extends React.Component<any, State> {
   }
 
   private theme
-  private modalMaxWidth = 650 // px
-  private topBarHeight = 100 // px
   private modal: Element
   private scrollListener: void
 
@@ -143,9 +141,9 @@ class TuxModal extends React.Component<any, State> {
             background: ${this.theme.backgroundColor};
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             margin-left: auto;
-            max-width: ${this.modalMaxWidth}px;
+            max-width: ${this.theme.maxWidth}px;
             padding: 0;
-            padding-top: ${this.topBarHeight}px;
+            padding-top: ${this.theme.topBarHeight}px;
             position: relative;
             overflow: auto;
             min-height: 100vh;
@@ -156,9 +154,9 @@ class TuxModal extends React.Component<any, State> {
             background: ${this.theme.topBarBackgroundColor};
             border-bottom: 1px solid rgba(203, 203, 203, 0.53);
             display: flex;
-            height: ${this.topBarHeight}px;
+            height: ${this.theme.topBarHeight}px;
             justify-content: space-between;
-            max-width: ${this.modalMaxWidth}px;
+            max-width: ${this.theme.maxWidth}px;
             padding: 30px;
             position: fixed;
             top: 0;
