@@ -17,14 +17,14 @@ export interface State {
 class TuxModal extends React.Component<any, State> {
   constructor(props: any, context: any) {
     super(props, context)
-    this.theme = this.context.tuxTheme.modal
+    this.theme = this.context.tux.theme.modal
   }
 
   static contextTypes = {
     tux: React.PropTypes.object,
   }
 
-  private theme
+  private theme: any
   private modal: Element
   private scrollListener: void
 
