@@ -1,10 +1,21 @@
 import merge from 'lodash.merge'
 import { Theme, text, input, button } from './colors'
 import { decelerationCurve, sharpCurve } from './utils/curves'
-import { darken, fade } from './utils/color'
+import { darken, lighten, fade } from './utils/color'
 
 export default function getTuxTheme(tuxThemeExtended = {}, tuxTheme?: Object) {
   tuxTheme = merge({
+    btn: {
+      color: button.default.text,
+      backgroundColor: 'transparent',
+      raisedBackgroundColor: button.default.background,
+      raisedBorderColor: button.default.border,
+      raisedBoxShadow: `${fade('#000', 0.1)} 0px 1px 6px, ${fade('#000', 0.1)} 0px 1px 4px`,
+      primaryColor: button.primary.text,
+      primaryBackgroundColor: button.primary.background,
+      primaryBorderColor: button.primary.border,
+      primaryHoverBackgroundColor: `${lighten(button.primary.background, 0.2)}`,
+    },
     floatingActionButton: {
       color: Theme.secondary,
       activeColor: Theme.active,

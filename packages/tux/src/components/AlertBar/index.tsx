@@ -5,7 +5,7 @@ class AlertBar extends Component<any, any> {
   static contextTypes = {
     tux: React.PropTypes.object,
   }
-
+debugger
   theme = this.context.tux.theme.alertBar
   hideDelay = 1500
   state = {

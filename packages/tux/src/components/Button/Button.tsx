@@ -1,34 +1,47 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 import { button } from '../../colors'
 import { fade, lighten } from '../../utils/color'
 
 export interface ButtonProps {
   type: string
-  themeColor: string
+  primary: boolean
   flat: boolean
   raised: boolean
   onClick: (e: React.SyntheticEvent<any>) => void
   children: any
 }
 
+class Button extends Component<ButtonProps, any> {
+  constructor(props: ButtonProps, context: Object) {
+    super(props, context)
+    this.theme = this.context.tux.theme.btn
+  }
 
-const Button = ({ type, themeColor, flat = true, raised, onClick, children }: ButtonProps) => {
-  const classes = raised ? 'Button--raised' : 'Button--flat'
+  private theme
 
-  return (
-    <button
-    className={classNames('Button', classes)}
-    type={type}
-    onClick={onClick}
-    data-theme-color={themeColor}>
+  static contextTypes = {
+    tux: React.PropTypes.object,
+  }
+
+  render() {
+    const { type, flat = true, primary, raised, onClick, children } = this.props
+
+    return (
+      <button
+      className={
+        classNames('Button',
+        raised ? 'Button--raised' : 'Button--flat',
+        primary && 'button--primary button--raised')}
+      type={type}
+      onClick={onClick}>
       {children}
       <style jsx>{`
         .Button {
           background: transparent;
           border: 0;
           border-radius: 2px;
-          color: ${button.default.text};
+          color: ${this.theme.color};
           cursor: pointer;
           display: inline-block;
           font-size: 14px;
@@ -46,28 +59,29 @@ const Button = ({ type, themeColor, flat = true, raised, onClick, children }: Bu
         }
 
         .Button--raised {
-          background: ${button.default.background};
-          border: 1px solid ${button.default.border};
-          box-shadow: ${fade('#000', 0.1)} 0px 1px 6px,
-                      ${fade('#000', 0.1)} 0px 1px 4px;
+          background: ${this.theme.raisedBackgroundColor};
+          border: 1px solid ${this.theme.raisedBorderColor};
+          box-shadow: ${this.theme.raisedBoxShadow};
         }
 
         .Button + .Button {
           margin-left: 16px;
         }
 
-        .Button[data-theme-color="green"] {
-          color: ${button.primary.text};
-          background: ${button.primary.background};
-          border-color: ${button.primary.border};
+        .Button--primary {
+          color: ${this.theme.primaryColor};
+          background: ${this.theme.primaryBackgroundColor};
+          border-color: ${this.theme.primaryBorderColor};
         }
 
-        .Button[data-theme-color="green"]:hover {
-          background: ${lighten(button.primary.background, 0.2)};
+        .Button--primary:hover {
+          background: ${this.theme.primaryHoverBackgroundColor};
         }
         `}</style>
-      </button>
-    )
+        </button>
+      )
+  }
+
 }
 
 

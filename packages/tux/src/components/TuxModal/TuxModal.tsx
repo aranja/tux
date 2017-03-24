@@ -115,7 +115,7 @@ class TuxModal extends React.Component<any, State> {
               </h1>
               <div className="TuxModal-buttons">
                 <Button onClick={this.onCancel}>Cancel</Button>
-                <Button type="submit" themeColor="green" raised>Update</Button>
+                <Button type="submit" primary>Update</Button>
               </div>
             </div>
             <div className="TuxModal-content">
