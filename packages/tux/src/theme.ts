@@ -5,6 +5,13 @@ import { darken, lighten, fade } from './utils/color'
 
 export default function getTuxTheme(tuxThemeExtended = {}, tuxTheme?: Object) {
   tuxTheme = merge({
+    modal: {
+      backgroundColor: '#FFFFFF',
+      titleColor: `${text.dark}`,
+      topBarBackground: 'F2F3F6',
+      topBarBorderBottomColor: 'rgba(203, 203, 203, 0.5)',
+      metaTextColor: `${fade(text.gray, 0.5)};`
+    },
     btn: {
       color: button.default.text,
       backgroundColor: 'transparent',

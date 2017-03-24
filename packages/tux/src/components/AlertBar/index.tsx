@@ -4,7 +4,7 @@ import classNames from 'classnames'
 class AlertBar extends Component<any, any> {
 
   constructor(props: any, context: any) {
-    super()
+    super(props, context)
     this.theme = this.context.tux.theme.alertBar
     this.hideDelay = 1500
   }

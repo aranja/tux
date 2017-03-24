@@ -15,10 +15,16 @@ export interface State {
 }
 
 class TuxModal extends React.Component<any, State> {
+  constructor(props: any, context: any) {
+    super(props, context)
+    this.theme = this.context.tuxTheme.modal
+  }
+
   static contextTypes = {
     tux: React.PropTypes.object,
   }
 
+  private theme
   private modalMaxWidth = 650 // px
   private topBarHeight = 100 // px
   private modal: Element
@@ -134,7 +140,7 @@ class TuxModal extends React.Component<any, State> {
         )}
         <style jsx>{`
           .TuxModal {
-            background: #FFF;
+            background: ${this.theme.backgroundColor};
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             margin-left: auto;
             max-width: ${this.modalMaxWidth}px;
@@ -147,7 +153,7 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-topBar {
-            background: #f2f3f6;
+            background: ${this.theme.topBarBackgroundColor};
             border-bottom: 1px solid rgba(203, 203, 203, 0.53);
             display: flex;
             height: ${this.topBarHeight}px;
@@ -176,12 +182,12 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-metaLastUpdated {
-            color: ${fade(text.gray, 0.5)};
+            color: ${this.theme.metaTextColor};
             font-weight: 300;
           }
 
           .TuxModal-title {
-            color: ${text.dark};
+            color: ${this.theme.titleColor};
             font-size: 25px;
             font-weight: 300;
             margin: 0;
