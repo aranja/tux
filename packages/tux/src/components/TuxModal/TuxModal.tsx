@@ -139,7 +139,7 @@ class TuxModal extends React.Component<any, State> {
         <style jsx>{`
           .TuxModal {
             background: ${this.theme.backgroundColor};
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            box-shadow: rgba(0, 0, 0, 0.15) -3px 3px 10px, rgba(0, 0, 0, 0.2) -3px 3px 10px;
             margin-left: auto;
             max-width: ${this.theme.maxWidth}px;
             padding: 0;
