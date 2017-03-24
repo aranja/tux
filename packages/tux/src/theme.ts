@@ -5,12 +5,8 @@ import { darken, lighten, fade } from './utils/color'
 
 export default function getTuxTheme(tuxThemeExtended = {}, tuxTheme?: Object) {
   tuxTheme = merge({
-    modal: {
-      backgroundColor: '#FFFFFF',
-      titleColor: `${text.dark}`,
-      topBarBackground: 'F2F3F6',
-      topBarBorderBottomColor: 'rgba(203, 203, 203, 0.5)',
-      metaTextColor: `${fade(text.gray, 0.5)};`
+    alertBar: {
+      backgroundColor: Theme.alert,
     },
     btn: {
       color: button.default.text,
@@ -22,13 +18,6 @@ export default function getTuxTheme(tuxThemeExtended = {}, tuxTheme?: Object) {
       primaryBackgroundColor: button.primary.background,
       primaryBorderColor: button.primary.border,
       primaryHoverBackgroundColor: `${lighten(button.primary.background, 0.2)}`,
-    },
-    floatingActionButton: {
-      color: Theme.secondary,
-      activeColor: Theme.active,
-      iconColor: Theme.light,
-      itemAnimationEase: '0, 0.62, 0.45, 1.13',
-      itemAnimationDelay: 50, // ms
     },
     dayPicker: {
       arrowColor: button.default.text,
@@ -42,6 +31,30 @@ export default function getTuxTheme(tuxThemeExtended = {}, tuxTheme?: Object) {
       textColorSelected: '#FFFFFF',
       textColorToday: Theme.primary,
     },
+    floatingActionButton: {
+      color: Theme.secondary,
+      activeColor: Theme.active,
+      iconColor: Theme.light,
+      itemAnimationEase: '0, 0.62, 0.45, 1.13',
+      itemAnimationDelay: 50, // ms
+    },
+    markdownField: {
+      borderColor: input.default.border,
+      color: text.dark,
+    },
+    modal: {
+      backgroundColor: '#FFFFFF',
+      titleColor: `${text.dark}`,
+      maxWidth: 650, // px
+      topBarBackgroundColor: 'F2F3F6',
+      topBarBorderBottomColor: 'rgba(203, 203, 203, 0.5)',
+      topBarHeight: 100, // px
+      metaTextColor: `${fade(text.gray, 0.5)};`,
+    },
+    spinner: {
+      colorFrom: fade(Theme.primary, 0.2),
+      colorTo: fade(Theme.primary, 0.7)
+    },
     tagEditor: {
       backgroundColor: Theme.gray,
       borderColor: input.default.border,
@@ -51,13 +64,6 @@ export default function getTuxTheme(tuxThemeExtended = {}, tuxTheme?: Object) {
       activeUnderlineColor: Theme.primary,
       activeUnderlineEase: decelerationCurve,
     },
-    spinner: {
-      colorFrom: fade(Theme.primary, 0.2),
-      colorTo: fade(Theme.primary, 0.7)
-    },
-    alertBar: {
-      backgroundColor: Theme.alert,
-    }
   }, tuxThemeExtended)
 
   return tuxTheme
