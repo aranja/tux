@@ -16,7 +16,7 @@ export interface State {
 }
 
 class Input extends Component<Props, State> {
-  constructor(props: Props){
+  constructor(props: Props) {
     super(props)
 
     const { value } = props
