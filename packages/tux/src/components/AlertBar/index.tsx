@@ -2,17 +2,25 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 
 class AlertBar extends Component<any, any> {
+
+  constructor(props: any, context: any) {
+    super()
+    this.theme = this.context.tux.theme.alertBar
+    this.hideDelay = 1500
+  }
+
+  private theme
+  private hideDelay: Number
+  private timer: any
+
   static contextTypes = {
     tux: React.PropTypes.object,
   }
-debugger
-  theme = this.context.tux.theme.alertBar
-  hideDelay = 1500
+
   state = {
     isHidden: false,
   }
 
-  private timer: any
 
   componentDidMount() {
     this.timer = setTimeout(() => {
