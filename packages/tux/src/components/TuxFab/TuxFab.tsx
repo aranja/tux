@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { lighten, fade } from '../../utils/color'
-import { Theme } from '../../colors'
+import { Theme } from '../../theme'
+import { standardCurve } from '../../utils/curves'
 
 export interface State {
   user: null | {
@@ -12,6 +13,10 @@ export interface State {
   isVisible: boolean
   isHovered: boolean
 }
+const FabColor = '#3a82df';
+const FabActiveColor = '#f11b9e';
+const FabItemAnimationDelay = 0.05;
+const FabItemEase = '0,.62,.45,1.13';
 
 class TuxFab extends Component<any, State> {
   static contextTypes = {
@@ -35,7 +40,8 @@ class TuxFab extends Component<any, State> {
           name: user.firstName,
           avatarUrl: user.avatarUrl,
           spaceName: user.space.name,
-        }
+        },
+        isVisible: true,
       })
     }
   }
@@ -101,6 +107,12 @@ class TuxFab extends Component<any, State> {
             right: 40px;
             display: flex;
             flex-direction: column;
+            transition: all 0.8s cubic-bezier(${standardCurve});
+            transform: translateY(100%);
+          }
+
+          .TuxFab.is-visible {
+            transform: translateY(0);
           }
 
           .TuxFab.is-hovered:hover {
@@ -121,9 +133,7 @@ class TuxFab extends Component<any, State> {
             width: 45px;
             order: 0;
             margin-top: 10px;
-            transition:
-              opacity 0.2s ease,
-              transform 0.4s cubic-bezier(${this.theme.floatingActionButton.itemAnimationEase});
+            transition: opacity 0.2s ease, transform 0.4s cubic-bezier(${FabItemEase});
             transition-origin: center;
           }
           .TuxFab-item:hover {
