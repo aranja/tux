@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { text, input, button } from '../../colors'
 import { fade } from '../../utils/color'
 import moment from 'moment'
@@ -20,6 +19,11 @@ class TuxModal extends React.Component<any, State> {
     tux: React.PropTypes.object,
   }
 
+  private modalMaxWidth = 650 // px
+  private topBarHeight = 100 // px
+  private modal: Element
+  private scrollListener: void
+
   state: State = {
     fullModel: null,
     meta: null,
@@ -27,6 +31,7 @@ class TuxModal extends React.Component<any, State> {
   }
 
   async componentDidMount() {
+
     const { model } = this.props
 
     const [
@@ -101,7 +106,7 @@ class TuxModal extends React.Component<any, State> {
   render() {
     const { fullModel, meta, editorSchema } = this.state
     return (
-      <div className="TuxModal">
+      <div className="TuxModal" onScroll={(e) => console.log(e)}>
         {fullModel ? (
           <form onSubmit={this.onSubmit}>
             <div className="TuxModal-topBar">
@@ -131,22 +136,28 @@ class TuxModal extends React.Component<any, State> {
           .TuxModal {
             background: #FFF;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            margin: 0;
             margin-left: auto;
-            max-width: 650px;
-            height: 100vh;
-            overflow: auto;
+            max-width: ${this.modalMaxWidth}px;
             padding: 0;
+            padding-top: ${this.topBarHeight}px;
             position: relative;
-            width: 60%;
+            overflow: auto;
+            min-height: 100vh;
+            transition: all 0.25s ease-out;
           }
 
           .TuxModal-topBar {
             background: #f2f3f6;
             border-bottom: 1px solid rgba(203, 203, 203, 0.53);
             display: flex;
+            height: ${this.topBarHeight}px;
             justify-content: space-between;
+            max-width: ${this.modalMaxWidth}px;
             padding: 30px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
           }
 
           .TuxModal-buttons {
