@@ -5,8 +5,8 @@ import PrettyError from 'pretty-error'
 import React from 'react'
 import assets from 'asset-manifest'
 import Html from './Html'
-import tux from './tux'
-import { serve } from 'tux/lib/tux'
+import chain from './app'
+import { renderServer } from 'react-chain/lib/render'
 
 const app = express()
 
@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'static'), { index: false }))
 /**
  * Server-side rendering middleware
  */
-app.get('*', serve(tux, { assets, Document: Html }))
+app.get('*', renderServer(chain, { assets, Document: Html }))
 
 /**
  * Error handling
