@@ -1,11 +1,7 @@
 export function extractLocale(model: any, locale: string) {
   for (const fieldName of Object.keys(model.fields)) {
     const fieldValue = model.fields[fieldName][locale]
-    if (fieldValue) {
-      model.fields[fieldName] = fieldValue
-    } else {
-      model.fields[fieldName] = undefined
-    }
+    model.fields[fieldName] = fieldValue
   }
   return model
 }
