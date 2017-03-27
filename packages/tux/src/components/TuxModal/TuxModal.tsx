@@ -110,7 +110,7 @@ class TuxModal extends React.Component<any, State> {
   render() {
     const { fullModel, meta, editorSchema } = this.state
     return (
-      <div className="TuxModal" onScroll={(e) => console.log(e)}>
+      <div className="TuxModal">
         {fullModel ? (
           <form onSubmit={this.onSubmit}>
             <div className="TuxModal-topBar">
