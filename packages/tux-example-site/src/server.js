@@ -6,7 +6,7 @@ import React from 'react'
 import assets from 'asset-manifest'
 import Html from './Html'
 import chain from './app'
-import { renderServer } from 'react-chain/lib/render'
+import { renderServer } from 'react-chain'
 
 const app = express()
 

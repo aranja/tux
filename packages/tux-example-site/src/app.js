@@ -5,7 +5,7 @@ import tux from './middleware/tux'
 import hot from './middleware/hot'
 import history from 'react-chain-history'
 import helmet from 'react-chain-helmet'
-import { createReactChain } from 'react-chain'
+import createReactChain from 'react-chain'
 
 import './reset.css'
 import './index.css'
