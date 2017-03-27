@@ -119,11 +119,17 @@ export class ContentfulAdapter {
       return null
     }
 
-    const newModel = { fields: {}, sys: { contentType: { sys: { id: type } } } }
-    for (const field of meta.editorSchema) {
-      const fieldId = field.field.split('.')[1]
-      newModel.fields[fieldId] = null
+    const newModel = {
+      fields: {},
+      sys: {
+        contentType: {
+          sys: {
+            id: type
+          }
+        }
+      }
     }
+
     return newModel
   }
 
