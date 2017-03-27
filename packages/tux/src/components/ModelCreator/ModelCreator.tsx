@@ -14,6 +14,15 @@ class ModelCreator extends React.Component<ModelCreatorProps, any> {
     tux: React.PropTypes.object,
   }
 
+  shouldBeVisible() {
+    const { tux } = this.context
+    if (!tux) {
+      return false
+    }
+
+    return tux.adapter.currentUser() && tux.isEditing
+  }
+
   createModel = async() => {
     const { model } = this.props
 
@@ -23,16 +32,19 @@ class ModelCreator extends React.Component<ModelCreatorProps, any> {
   }
 
   render() {
-    return (
-      <div>
-        <button onClick={this.createModel}>+</button>
-        <style jsx>{`
-          .ModelCreator-todo-styleMePlz {
+    const { model, children } = this.props
+    const isVisible = this.shouldBeVisible()
 
-          }
-        `}</style>
-      </div>
-    )
+    console.log(children)
+
+    if (isVisible) {
+      return (
+        <div>
+          <button onClick={this.createModel}>Create new {model}</button>
+        </div>
+      )
+    }
+    return null
   }
 }
 

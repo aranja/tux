@@ -1,5 +1,5 @@
 import React from 'react'
-import { Editable } from 'tux'
+import { Editable, ModelCreator } from 'tux'
 import Helmet from 'react-helmet'
 import { H1, H2 } from '../components/typography'
 import ProductBanner from '../components/ProductBanner'
@@ -32,6 +32,7 @@ const Home = ({ pages, sellPoints, testimonial, carousel }) => {
       <Section>
         <H1><Editable model={page} field="fields.content.tagline" /></H1>
         <SellPoints sellPoints={sellPoints.items} />
+        <ModelCreator model="sellPoint" />
       </Section>
       <Section>
         <Carousel carouselItems={carousel.items}/>

@@ -1,8 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import ModelCreator from '../ModelCreator'
-
 export interface EditableModalProps {
   model: any,
   children?: any,
@@ -35,11 +33,10 @@ class EditableModal extends React.Component<EditableModalProps, any> {
       isEditing && 'is-editing',
     )
 
-
     return (
       <div className={classes} onClick={() => {isEditing && this.onEdit()}}>
         {children}
-        {isEditing && <ModelCreator model={model} />}
+
         <style jsx>{`
           .EditableModal.is-editing:hover {
             cursor: pointer;
