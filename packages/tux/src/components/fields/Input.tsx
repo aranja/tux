@@ -16,14 +16,9 @@ export interface State {
 }
 
 class Input extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
 
-    const { value } = props
-
-    this.state = {
-      hasFocus: false
-    }
+  state = {
+    hasFocus: false
   }
 
   handleFocus = () => {
