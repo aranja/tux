@@ -32,7 +32,20 @@ const Home = ({ pages, sellPoints, testimonial, carousel }) => {
       <Section>
         <H1><Editable model={page} field="fields.content.tagline" /></H1>
         <SellPoints sellPoints={sellPoints.items} />
-        <ModelCreator model="sellPoint" />
+        <ModelCreator model="sellPoint">
+          {(onClick) => (
+            <div style={{
+              margin: '20px',
+              border: '2px dashed #000',
+              textAlign: 'center',
+              padding: '20px',
+              color: '#444',
+            }}>
+              <h2>New Sell Point!</h2>
+              <button onClick={onClick}>Click here to create</button>
+            </div>
+          )}
+        </ModelCreator>
       </Section>
       <Section>
         <Carousel carouselItems={carousel.items}/>

@@ -35,9 +35,10 @@ class ModelCreator extends React.Component<ModelCreatorProps, any> {
     const { model, children } = this.props
     const isVisible = this.shouldBeVisible()
 
-    console.log(children)
-
     if (isVisible) {
+      if (children instanceof Function) {
+        return children(this.createModel)
+      }
       return (
         <div>
           <button onClick={this.createModel}>Create new {model}</button>
