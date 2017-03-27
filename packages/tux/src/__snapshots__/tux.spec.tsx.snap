@@ -1,7 +1,0 @@
-exports[`startClient should render a React component to the appRoot 1`] = `"<div data-reactroot=\"\">React Element</div>"`;
-
-exports[`tux.use should throw when createElement is not a function 1`] = `"[tux.use] createElement should be a function."`;
-
-exports[`tux.use should throw when wrapClientRender is not a function 1`] = `"[tux.use] wrapClientRender should be a function."`;
-
-exports[`tux.use should throw when wrapServerRender is not a function 1`] = `"[tux.use] wrapServerRender should be a function."`;
