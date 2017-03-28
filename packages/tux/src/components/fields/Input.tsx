@@ -46,7 +46,7 @@ class Input extends Component<Props, State> {
           className="Input-field"
           id={id}
           onChange={(event) => onChange(event.target.value)}
-          value={value ? value : DEFAULT_VALUE}
+          value={value || DEFAULT_VALUE}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />
