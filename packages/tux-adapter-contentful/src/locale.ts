@@ -12,13 +12,11 @@ export function injectLocale(model: any, locale: string) {
     const fieldValueIsDefined = fieldValue !== undefined
     const fieldValueIsObject = fieldValue instanceof Object
 
-    let injectedValue = undefined
-    if (fieldValueIsDefined) {
-      if (fieldValueIsObject) {
-        injectedValue = Object.assign(fieldValue)
-      } else {
-        injectedValue = fieldValue
-      }
+    let injectedValue
+    if (fieldValueIsObject) {
+      injectedValue = Object.assign(fieldValue)
+    } else {
+      injectedValue = fieldValue
     }
 
     model.fields[fieldName] = {

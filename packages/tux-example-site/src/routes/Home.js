@@ -35,11 +35,11 @@ const Home = ({ pages, sellPoints, testimonial, carousel }) => {
         <ModelCreator model="sellPoint">
           {(onClick) => (
             <div style={{
-              margin: '20px',
               border: '2px dashed #000',
-              textAlign: 'center',
-              padding: '20px',
               color: '#444',
+              margin: '20px',
+              padding: '20px',
+              textAlign: 'center',
             }}>
               <h2>New Sell Point!</h2>
               <button onClick={onClick}>Click here to create</button>
