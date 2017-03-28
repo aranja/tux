@@ -68,9 +68,8 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     })
 
     const asset = await this.context.tux.adapter.createAssetFromFile(files[0], 'Some title')
-    const linkableAsset = this.context.tux.adapter.formatAssetForLinking(asset)
 
-    onChange(linkableAsset)
+    onChange(asset)
 
     this.setState({
       isLoadingImage: false,

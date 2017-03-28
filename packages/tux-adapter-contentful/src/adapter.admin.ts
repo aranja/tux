@@ -16,7 +16,23 @@ export interface Config {
   redirectUri: string
 }
 
-export class ContentfulAdapter extends BaseAdapter {
+export interface AdapterInterface {
+  create(model: any, type: string): void
+  createAssetFromFile(file: File, title: string): Object | null
+  createAssetFromUrl(url: string, fileName: string, title: string): Object | null
+  createEmptyModel(model: any, meta: Meta): any | null
+  currentUser(): any | null
+  getIdOfEntity(entity: any): string | null
+  getMeta(model: string | Object): Meta | null
+  getQueryApi(): QueryApi
+  load(model: any): any
+  loadAsset(model: any): any
+  login(): void
+  logout(): void
+  save(model: any): void
+}
+
+export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
   private clientId: string
   private managementApi: ManagementApi | null
   private redirectUri: string
@@ -36,17 +52,6 @@ export class ContentfulAdapter extends BaseAdapter {
       return this.managementApi
     }
     throw new Error(errorMessages.initializeManagementApi)
-  }
-
-  triggerChange() {
-    this.listeners.forEach(fn => fn())
-  }
-
-  addChangeListener(fn: Function) {
-    this.listeners.push(fn)
-    return () => {
-      this.listeners = this.listeners.filter(listener => listener !== fn)
-    }
   }
 
   private async initPrivateApis() {
@@ -107,10 +112,9 @@ export class ContentfulAdapter extends BaseAdapter {
   async save(model: any) {
     const managementApi = await this.getManagementApi()
     await managementApi.saveEntry(model)
-    this.triggerChange()
   }
 
-  async createAssetFromFile(file: any, title: string) {
+  async createAssetFromFile(file: File, title: string) {
     const managementApi = await this.getManagementApi()
     const upload = await managementApi.createUpload(file)
     if (upload.sys) {
@@ -131,7 +135,8 @@ export class ContentfulAdapter extends BaseAdapter {
         }
       }
 
-      return await this._createAsset(assetBody, 'upload')
+      const asset = await this._createAsset(assetBody, 'upload')
+      return this._formatAssetForLinking(asset)
     }
     return null
   }
@@ -139,7 +144,6 @@ export class ContentfulAdapter extends BaseAdapter {
   async create(model: any, type: string) {
     const managementApi = await this.getManagementApi()
     await managementApi.createModel(model, type)
-    this.triggerChange()
   }
 
   async createEmptyModel(model: any, meta: Meta) {
@@ -172,7 +176,7 @@ export class ContentfulAdapter extends BaseAdapter {
     }
   }
 
-  formatAssetForLinking(asset: any) {
+  _formatAssetForLinking(asset: any) {
     return {
       sys: {
         id: asset.sys.id,
