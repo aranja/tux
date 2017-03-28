@@ -136,6 +136,42 @@ export class ContentfulAdapter extends BaseAdapter {
     return null
   }
 
+  async create(model: any, type: string) {
+    const managementApi = await this.getManagementApi()
+    await managementApi.createModel(model, type)
+    this.triggerChange()
+  }
+
+  async createEmptyModel(model: any, meta: Meta) {
+    const type = this._getModelType(model)
+    if (!meta) {
+      return null
+    }
+
+    const newModel = {
+      fields: {},
+      sys: {
+        contentType: {
+          sys: {
+            id: type
+          }
+        }
+      }
+    }
+
+    return newModel
+  }
+
+  async createEmptyAsset() {
+    return {
+      sys: {
+        linkType: 'Asset',
+        type: 'Link',
+        id: null,
+      }
+    }
+  }
+
   formatAssetForLinking(asset: any) {
     return {
       sys: {

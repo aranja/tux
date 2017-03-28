@@ -40,10 +40,10 @@ class Editable extends React.Component<EditableProps, any> {
 
     return (
       <EditableModal
-      className={className}
-      model={model}
-      onChange={onChange}
-      isLoggedIn={isLoggedIn}
+        className={className}
+        model={model}
+        onChange={onChange}
+        isLoggedIn={isLoggedIn}
       >
         {children}
       </EditableModal>
