@@ -50,7 +50,7 @@ export class ContentfulAdapter extends BaseAdapter {
   }
 
   private async initPrivateApis() {
-    // There is a total of three apis:
+    // There is a total of two apis:
     // Content Delivery API - Access Token passed publicly to adapter.
     // Content Management API - Access Token returned from OAuth2 flow and saved in localStorage.
     // localStorage.

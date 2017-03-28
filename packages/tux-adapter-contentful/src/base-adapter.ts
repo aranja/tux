@@ -2,10 +2,6 @@ import QueryApi from './query-api'
 import ManagementApi from './management-api'
 import generateEditorSchema from './editors'
 
-const errorMessages = {
-  initializeManagementApi: 'Could not initialize management api.',
-}
-
 export interface Config {
   space: string
   deliveryToken: string
