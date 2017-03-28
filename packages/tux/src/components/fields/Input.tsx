@@ -3,6 +3,8 @@ import classNames from 'classnames'
 import { Theme, input } from '../../theme'
 import { decelerationCurve, sharpCurve } from '../../utils/curves'
 
+const DEFAULT_VALUE = ''
+
 export interface Props {
   id: string
   value: string
@@ -10,7 +12,7 @@ export interface Props {
 }
 
 export interface State {
-  hasFocus: boolean
+  hasFocus: boolean,
 }
 
 class Input extends Component<Props, State> {
@@ -44,7 +46,7 @@ class Input extends Component<Props, State> {
           className="Input-field"
           id={id}
           onChange={(event) => onChange(event.target.value)}
-          value={value}
+          value={value || DEFAULT_VALUE}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />

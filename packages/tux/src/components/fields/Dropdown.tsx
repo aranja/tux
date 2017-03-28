@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Theme, input, button } from '../../theme'
 
+const DEFAULT_VALUE = ''
+
 interface Dropdown {
   id: string
   value: string
@@ -21,7 +23,7 @@ class Dropdown extends Component<any, State> {
     const { value } = this.props
 
     this.setState({
-      selectedValue: value
+      selectedValue: value ? value : DEFAULT_VALUE
     })
   }
 
@@ -36,7 +38,7 @@ class Dropdown extends Component<any, State> {
   }
 
   render() {
-    const { id, value, dropdownValues, onChange } = this.props
+    const { id, dropdownValues, onChange } = this.props
     const { selectedValue } = this.state
 
     return (

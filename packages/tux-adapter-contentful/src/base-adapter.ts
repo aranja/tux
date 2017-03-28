@@ -1,6 +1,4 @@
 import QueryApi from './query-api'
-import ManagementApi from './management-api'
-import generateEditorSchema from './editors'
 
 export interface Config {
   space: string

@@ -30,7 +30,13 @@ class ImageField extends React.Component<ImageFieldProps, any> {
 
   async componentDidMount() {
     const { value } = this.props
-    const fullModel = await this.context.tux.adapter.loadAsset(value)
+
+    let fullModel = null
+    if (value instanceof Object) {
+      fullModel = await this.context.tux.adapter.loadAsset(value)
+    } else {
+      fullModel = this.context.tux.adapter.createEmptyAsset(value)
+    }
 
     this.setState({
       fullModel
@@ -111,11 +117,12 @@ class ImageField extends React.Component<ImageFieldProps, any> {
               }
               .ImageField-preview {
                 background: white;
-                border: 1px solid ${input.border};
                 border-radius: 3px;
+                border: 1px solid ${input.border};
                 display: inline-block;
-                padding: 6px;
                 max-height: 140px;
+                overflow: hidden;
+                padding: 6px;
               }
               .ImageField-preview > img {
                 height: 100%;

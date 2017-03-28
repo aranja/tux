@@ -7,6 +7,7 @@ import { tuxDatePickerStyles } from './DatePicker.styles'
 import { fade } from '../../utils/color'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
+const DEFAULT_VALUE = moment(new Date()).format(DATE_FORMAT)
 
 export interface State {
   selectedDay: Date | null
@@ -22,20 +23,21 @@ class DatePicker extends Component<any, State> {
   }
   clickedInside = false
 
-  componentDidMount() {
-    this.setState({
-      selectedDay: moment(this.props.value).toDate()
-    })
+  constructor(props: any) {
+    super(props)
+
+    const { value } = this.props
+    const dateValue = value ? value : DEFAULT_VALUE
+
+    this.state = {
+      selectedDay: moment(dateValue).toDate(),
+      showOverlay: false,
+      value: dateValue,
+    }
   }
 
   componentWillUnmount() {
     clearTimeout(this.clickTimeout)
-  }
-
-  state: State = {
-    selectedDay: null,
-    showOverlay: false,
-    value: moment(this.props.value).format(DATE_FORMAT),
   }
 
   handleContainerMouseDown = () => {

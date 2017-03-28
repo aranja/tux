@@ -3,6 +3,7 @@ const stub = () => {}
 
 export { default as TuxProvider } from './components/TuxProvider'
 export { default as Editable } from './components/Editable'
+export { default as ModelCreator } from './components/ModelCreator'
 
 export const BooleanField = adminOnly('BooleanField')
 export const DatePicker = adminOnly('DatePicker')

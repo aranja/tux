@@ -15,7 +15,13 @@ export interface State {
   editorSchema: Array<Field>
 }
 
-class TuxModal extends React.Component<any, State> {
+export interface TuxModalProps {
+  model: any,
+  onClose?: Function,
+  isNew?: any,
+}
+
+class TuxModal extends React.Component<TuxModalProps, State> {
   static contextTypes = {
     tux: React.PropTypes.object,
   }
@@ -27,15 +33,16 @@ class TuxModal extends React.Component<any, State> {
   }
 
   async componentDidMount() {
-    const { model } = this.props
+    const { model, isNew } = this.props
 
-    const [
-      fullModel,
-      meta,
-    ] = await Promise.all([
-      this.context.tux.adapter.load(model),
-      this.context.tux.adapter.getMeta(model),
-    ])
+    const meta = await this.context.tux.adapter.getMeta(model)
+    let fullModel = null
+
+    if (isNew) {
+      fullModel = await this.context.tux.adapter.createEmptyModel(model, meta)
+    } else {
+      fullModel = await this.context.tux.adapter.load(model)
+    }
 
     this.setState({
       fullModel,
@@ -51,15 +58,26 @@ class TuxModal extends React.Component<any, State> {
   }
 
   onCancel = () => {
-    this.props.onClose()
+    const { onClose } = this.props
+    if (onClose) {
+      onClose()
+    }
   }
 
   onSubmit = async(event: React.FormEvent<any>) => {
     event.preventDefault()
 
-    const { fullModel } = this.state
-    await this.context.tux.adapter.save(fullModel)
-    this.props.onClose(true)
+    const { isNew, onClose } = this.props
+    const { fullModel, meta } = this.state
+    if (isNew) {
+      await this.context.tux.adapter.create(fullModel, meta.type)
+    } else {
+      await this.context.tux.adapter.save(fullModel)
+    }
+
+    if (onClose) {
+      onClose(true)
+    }
   }
 
   renderField = (field: Field) => {
@@ -100,23 +118,26 @@ class TuxModal extends React.Component<any, State> {
 
   render() {
     const { fullModel, meta, editorSchema } = this.state
+    const { isNew } = this.props
+    const modalHeading = isNew ? 'Creating' : 'Editing'
+    const modalAction = isNew ? 'Create' : 'Save'
     return (
       <div className="TuxModal">
         {fullModel ? (
           <form onSubmit={this.onSubmit}>
             <div className="TuxModal-topBar">
               <h1 className="TuxModal-title">
-                Editing <strong className="TuxModal-modelName">{meta.name}</strong>
+                {modalHeading} <strong className="TuxModal-modelName">{meta.name}</strong>
               </h1>
               <div className="TuxModal-buttons">
                 <Button onClick={this.onCancel}>Cancel</Button>
-                <Button type="submit" themeColor="green" raised>Update</Button>
+                <Button type="submit" themeColor="green" raised>{modalAction}</Button>
               </div>
             </div>
             <div className="TuxModal-content">
               {editorSchema.map(this.renderField)}
               <div className="TuxModal-meta">
-              { fullModel.sys.updatedAt && (
+              { fullModel.sys && fullModel.sys.updatedAt && (
                 <p className="TuxModal-metaLastUpdated">
                 Last updated {moment(new Date(fullModel.sys.updatedAt)).fromNow()}
                 </p>
