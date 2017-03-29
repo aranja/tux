@@ -20,17 +20,6 @@ export default class BaseAdapter {
     return null
   }
 
-  triggerChange() {
-    this.listeners.forEach(fn => fn())
-  }
-
-  addChangeListener(fn: Function) {
-    this.listeners.push(fn)
-    return () => {
-      this.listeners = this.listeners.filter(listener => listener !== fn)
-    }
-  }
-
   getQueryApi() {
     return this.deliveryApi
   }

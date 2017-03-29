@@ -17,7 +17,7 @@ export interface Config {
 }
 
 export interface AdapterInterface {
-  create(model: any, type: string): void
+  create(model: any): Object | null
   createAsset(): { sys: Object }
   createAssetFromFile(file: File, title: string): Object | null
   createAssetFromUrl(url: string, fileName: string, title: string): Object | null
