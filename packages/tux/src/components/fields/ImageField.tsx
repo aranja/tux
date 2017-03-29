@@ -35,7 +35,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     if (value instanceof Object) {
       fullModel = await this.context.tux.adapter.loadAsset(value)
     } else {
-      fullModel = this.context.tux.adapter.createEmptyAsset(value)
+      fullModel = this.context.tux.adapter.createAsset(value)
     }
 
     this.setState({

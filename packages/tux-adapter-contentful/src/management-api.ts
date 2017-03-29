@@ -64,7 +64,8 @@ class ManagementApi {
     return this._extractLocale(entity)
   }
 
-  async createModel(model: any, type: string) {
+  async createModel(model: any) {
+    const type = model.sys.contentType.sys.id
     const url = `/spaces/${this.space}/entries/`
     const modelWithLocale = await this._injectLocale(model)
     const contentType = 'application/vnd.contentful.management.v1+json'
@@ -104,7 +105,7 @@ class ManagementApi {
     return this.put(url, null, version)
   }
 
-  createUpload(file: File) {
+  createUpload(file: File): Promise<any> {
     const url = `https://upload.contentful.com/spaces/${this.space}/uploads`
 
     return new Promise((resolve, reject) => {

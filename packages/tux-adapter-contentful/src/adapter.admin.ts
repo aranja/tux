@@ -18,9 +18,9 @@ export interface Config {
 
 export interface AdapterInterface {
   create(model: any, type: string): void
+  createAsset(): { fields: Object, sys: Object }
   createAssetFromFile(file: File, title: string): Object | null
   createAssetFromUrl(url: string, fileName: string, title: string): Object | null
-  createEmptyModel(model: any, meta: Meta): any | null
   currentUser(): any | null
   getIdOfEntity(entity: any): string | null
   getMeta(model: string | Object): Meta | null
@@ -111,62 +111,60 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
 
   async save(model: any) {
     const managementApi = await this.getManagementApi()
-    await managementApi.saveEntry(model)
+    if (model.sys.id) {
+      await managementApi.saveEntry(model)
+    } else {
+      await managementApi.createModel(model)
+    }
   }
 
   async createAssetFromFile(file: File, title: string) {
     const managementApi = await this.getManagementApi()
     const upload = await managementApi.createUpload(file)
-    if (upload.sys) {
-      const assetBody = {
-        fields: {
-          title: title,
-          file: {
-            contentType: file.type,
-            fileName: file.name,
-            uploadFrom: {
-              sys: {
-                type: 'Link',
-                linkType: 'Upload',
-                id: upload.sys.id,
-              },
-            }
+
+    if (!upload.sys) {
+      return null
+    }
+
+    const assetBody = {
+      fields: {
+        title: title,
+        file: {
+          contentType: file.type,
+          fileName: file.name,
+          uploadFrom: {
+            sys: {
+              type: 'Link',
+              linkType: 'Upload',
+              id: upload.sys.id,
+            },
           }
         }
       }
-
-      const asset = await this._createAsset(assetBody, 'upload')
-      return this._formatAssetForLinking(asset)
     }
-    return null
+
+    const asset = await this._createAsset(assetBody, 'upload')
+    return this._formatAssetForLinking(asset)
   }
 
-  async create(model: any, type: string) {
-    const managementApi = await this.getManagementApi()
-    await managementApi.createModel(model, type)
-  }
-
-  async createEmptyModel(model: any, meta: Meta) {
-    const type = this._getModelType(model)
+  create(meta: Meta) {
     if (!meta) {
       return null
     }
 
-    const newModel = {
+    return {
       fields: {},
       sys: {
         contentType: {
           sys: {
-            id: type
+            id: meta.type
           }
         }
       }
     }
-
-    return newModel
   }
 
-  async createEmptyAsset() {
+  async createAsset() {
     return {
       sys: {
         linkType: 'Asset',
