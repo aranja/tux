@@ -22,7 +22,6 @@ export interface AdapterInterface {
   createAssetFromFile(file: File, title: string): Object | null
   createAssetFromUrl(url: string, fileName: string, title: string): Object | null
   currentUser(): any | null
-  getIdOfEntity(entity: any): string | null
   getMeta(model: string | Object): Meta | null
   getQueryApi(): QueryApi
   load(model: any): any
@@ -182,13 +181,6 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
         type: 'Link',
       }
     }
-  }
-
-  getIdOfEntity(entity: any) {
-    if (!entity.sys) {
-      return null
-    }
-    return entity.sys.id
   }
 
   async createAssetFromUrl(url: string, fileName: string, title: string) {

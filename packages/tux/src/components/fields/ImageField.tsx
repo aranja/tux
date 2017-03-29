@@ -48,10 +48,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
       return
     }
 
-    const nextValueId = this.context.tux.adapter.getIdOfEntity(props.value)
-    const currentValueId = this.context.tux.adapter.getIdOfEntity(this.props.value)
-
-    if ((nextValueId !== currentValueId) && nextValueId !== null) {
+    if (props.value !== this.props.value) {
       const fullModel = await this.context.tux.adapter.loadAsset(props.value)
 
       this.setState({
