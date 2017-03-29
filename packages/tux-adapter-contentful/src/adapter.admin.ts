@@ -18,7 +18,7 @@ export interface Config {
 
 export interface AdapterInterface {
   create(model: any, type: string): void
-  createAsset(): { fields: Object, sys: Object }
+  createAsset(): { sys: Object }
   createAssetFromFile(file: File, title: string): Object | null
   createAssetFromUrl(url: string, fileName: string, title: string): Object | null
   currentUser(): any | null
@@ -163,7 +163,7 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
     }
   }
 
-  async createAsset() {
+  createAsset(): { sys: Object } {
     return {
       sys: {
         linkType: 'Asset',
