@@ -12,3 +12,4 @@ export { default as TagEditor } from './components/fields/TagEditor'
 export { default as Input } from './components/fields/Input'
 
 export { registerEditable, getEditorSchema, Field, Meta } from './services/editor'
+export { default as AdapterInterface } from './interfaces/adapter'

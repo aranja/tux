@@ -3,7 +3,7 @@ import QueryApi from './query-api'
 import ManagementApi from './management-api'
 import generateEditorSchema from './editors'
 
-import { Field, Meta } from 'tux'
+import { Field, Meta, AdapterInterface } from 'tux'
 
 const errorMessages = {
   initializeManagementApi: 'Could not initialize management api.',
@@ -16,20 +16,7 @@ export interface Config {
   redirectUri: string
 }
 
-export interface AdapterInterface {
-  create(model: any): Object | null
-  createAsset(): { sys: Object }
-  createAssetFromFile(file: File, title: string): Object | null
-  createAssetFromUrl(url: string, fileName: string, title: string): Object | null
-  currentUser(): any | null
-  getMeta(model: string | Object): Meta | null
-  getQueryApi(): QueryApi
-  load(model: any): any
-  loadAsset(model: any): any
-  login(): void
-  logout(): void
-  save(model: any): void
-}
+console.log('Adapter from tux')
 
 export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
   private clientId: string
