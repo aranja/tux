@@ -51,9 +51,9 @@ class TuxModal extends React.Component<TuxModalProps, State> {
     })
   }
 
-  onChange(value: any, type: string) {
+  onChange(value: any, field: string) {
     const { fullModel } = this.state
-    set(fullModel, type, value)
+    set(fullModel, field, value)
     this.setState({ fullModel })
   }
 
