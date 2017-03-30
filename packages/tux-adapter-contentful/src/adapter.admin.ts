@@ -16,8 +16,6 @@ export interface Config {
   redirectUri: string
 }
 
-console.log('Adapter from tux')
-
 export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
   private clientId: string
   private managementApi: ManagementApi | null
@@ -81,8 +79,7 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
       }
     }
 
-    const asset = await this._createAsset(assetBody, 'upload')
-    return this._formatAssetForLinking(asset)
+    return await this._createAsset(assetBody, 'upload')
   }
 
   async createAssetFromUrl(url: string, fileName: string, title: string) {
@@ -159,6 +156,7 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
 
   async save(model: any) {
     const managementApi = await this._getManagementApi()
+
     if (model.sys.id) {
       await managementApi.saveEntry(model)
     } else {
@@ -169,16 +167,6 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
   private async _createAsset(body: any, bodyType: string) {
     const managementApi = await this._getManagementApi()
     return managementApi.createAsset(body)
-  }
-
-  private _formatAssetForLinking(asset: any) {
-    return {
-      sys: {
-        id: asset.sys.id,
-        linkType: 'Asset',
-        type: 'Link',
-      }
-    }
   }
 
   private async _getManagementApi() {

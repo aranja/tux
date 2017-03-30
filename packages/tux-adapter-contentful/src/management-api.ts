@@ -1,5 +1,6 @@
 import axios from 'axios'
-import {AxiosInstance} from 'axios'
+import { AxiosInstance } from 'axios'
+import cloneDeep from 'lodash/cloneDeep'
 
 import { Meta } from 'tux'
 import { extractLocale, injectLocale } from './locale'
@@ -61,13 +62,13 @@ class ManagementApi {
 
   async _getEntity(id: string, entityPath: string) {
     const entity = await this.get(`/spaces/${this.space}/${entityPath}/${id}`)
-    return this._extractLocale(entity)
+    return this._formatForTux(entity)
   }
 
   async createModel(model: any) {
     const type = model.sys.contentType.sys.id
     const url = `/spaces/${this.space}/entries/`
-    const modelWithLocale = await this._injectLocale(model)
+    const modelWithLocale = await this._formatForApi(model)
     const contentType = 'application/vnd.contentful.management.v1+json'
     return this.post(url, { fields: modelWithLocale.fields }, contentType, type)
   }
@@ -86,7 +87,7 @@ class ManagementApi {
   }
 
   async _save(entity: any, entityPath: string) {
-    const entityWithLocale = await this._injectLocale(entity)
+    const entityWithLocale = await this._formatForApi(entity)
     const { fields, sys: { id, version } } = entityWithLocale
     const url = `/spaces/${this.space}/${entityPath}/${id}`
     const newEntity = await this.put(url, { fields }, version)
@@ -131,7 +132,7 @@ class ManagementApi {
 
   async createAsset(body: any) {
     const url = `/spaces/${this.space}/assets`
-    const bodyWithLocale = await this._injectLocale(body)
+    const bodyWithLocale = await this._formatForApi(body)
     const asset = await this.post(url, bodyWithLocale, 'application/json')
     await this.processAsset(asset.sys.id, asset.sys.version)
     asset.sys.version += 1
@@ -189,18 +190,43 @@ class ManagementApi {
     return entry
   }
 
-  async _extractLocale(entity: any) {
+  async _formatForTux(entity: any) {
     if (!this.currentLocale) {
       await this.getDefaultLocaleForSpace(this.space)
     }
-    return extractLocale(entity, this.currentLocale)
+    const clone = cloneDeep(entity)
+    const withoutLocale = extractLocale(clone, this.currentLocale)
+    return withoutLocale
   }
 
-  async _injectLocale(entity: any) {
+  async _formatForApi(entity: any) {
     if (!this.currentLocale) {
       await this.getDefaultLocaleForSpace(this.space)
     }
-    return injectLocale(entity, this.currentLocale)
+    const clone = cloneDeep(entity)
+    const withFormattedAssets = this._formatAssetsIfFound(clone)
+    const withFormattedAssetsAndLocale = injectLocale(clone, this.currentLocale)
+    return withFormattedAssetsAndLocale
+  }
+
+  private _formatAssetsIfFound(model: any) {
+    for (const fieldName of Object.keys(model.fields)) {
+      const field = model.fields[fieldName]
+      if (field.sys) {
+        model.fields[fieldName] = this._formatAssetForLinking(field)
+      }
+    }
+    return model
+  }
+
+  private _formatAssetForLinking(asset: any) {
+    return {
+      sys: {
+        id: asset.sys.id,
+        linkType: 'Asset',
+        type: 'Link',
+      }
+    }
   }
 }
 

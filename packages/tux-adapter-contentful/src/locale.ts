@@ -1,23 +1,19 @@
-import cloneDeep from 'lodash/cloneDeep'
-
 export function extractLocale(model: any, locale: string) {
-  const modelCopy = cloneDeep(model)
-  for (const fieldName of Object.keys(modelCopy.fields)) {
-    const fieldValue = modelCopy.fields[fieldName][locale]
-    modelCopy.fields[fieldName] = fieldValue
+  for (const fieldName of Object.keys(model.fields)) {
+    const fieldValue = model.fields[fieldName][locale]
+    model.fields[fieldName] = fieldValue
   }
-  return modelCopy
+  return model
 }
 
 export function injectLocale(model: any, locale: string) {
-  const modelCopy = cloneDeep(model)
-  for (const fieldName of Object.keys(modelCopy.fields)) {
-    const fieldValue = modelCopy.fields[fieldName]
+  for (const fieldName of Object.keys(model.fields)) {
+    const fieldValue = model.fields[fieldName]
 
-    modelCopy.fields[fieldName] = {
+    model.fields[fieldName] = {
       [locale]: fieldValue
     }
   }
 
-  return modelCopy
+  return model
 }
