@@ -1,11 +1,11 @@
 import createContentfulAdapter from 'tux-adapter-contentful'
 import routes from './routes'
-import history from './middleware/history'
 import router from './middleware/router'
 import tux from './middleware/tux'
 import hot from './middleware/hot'
-import helmet from './middleware/helmet'
-import createTux from 'tux/lib/tux'
+import history from 'react-chain-history'
+import helmet from 'react-chain-helmet'
+import createReactChain from 'react-chain'
 
 import './reset.css'
 import './index.css'
@@ -24,9 +24,9 @@ const adapter = createContentfulAdapter({
   redirectUri: publicUrl,
 })
 
-export default createTux()
-  .use(history())
-  .use(hot(refresh => {module.hot.accept('./routes', refresh)}))
-  .use(tux({ adapter }))
-  .use(helmet())
-  .use(router(routes))
+export default createReactChain()
+  .chain(history())
+  .chain(hot(refresh => {module.hot.accept('./routes', refresh)}))
+  .chain(tux({ adapter }))
+  .chain(helmet())
+  .chain(router(routes))
