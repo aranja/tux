@@ -12,7 +12,6 @@ export default class BaseAdapter {
   constructor({space, deliveryToken}: Config) {
     this.space = space
     this.deliveryApi = new QueryApi(space, deliveryToken, 'cdn')
-    this.listeners = []
   }
 
   async currentUser() {
