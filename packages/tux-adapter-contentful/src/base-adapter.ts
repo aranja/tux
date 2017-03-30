@@ -6,9 +6,8 @@ export interface Config {
 }
 
 export default class BaseAdapter {
-  private space: string
-  private deliveryApi: QueryApi
-  private listeners: Array<Function>
+  deliveryApi: QueryApi
+  space: string
 
   constructor({space, deliveryToken}: Config) {
     this.space = space
