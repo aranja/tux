@@ -2,86 +2,36 @@ import cloneDeep from 'lodash/cloneDeep'
 
 export function extractLocale(model: any, locale: string) {
   const clone = cloneDeep(model)
-
-  for (const fieldName of Object.keys(model.fields)) {
-    _extractAllLocales(clone, fieldName, locale)
-
-    const fieldValue = model.fields[fieldName][locale]
-    clone.fields[fieldName] = fieldValue
+  const result = {
+    fields: {},
+    sys: { locale, ...clone.sys },
+    __fullModel: null,
   }
 
-  _addLocaleToModel(clone, locale)
+  for (const fieldName of Object.keys(model.fields)) {
+    const fieldValue = model.fields[fieldName][locale]
+    result.fields[fieldName] = fieldValue
+  }
 
-  return clone
+  result.__fullModel = clone
+
+  return result
 }
 
 export function injectLocale(model: any, locale: string) {
-  const clone = cloneDeep(model)
+  if (!model.__fullModel) {
+    throw new Error('injectLocale: __fullModel property is required on model')
+  }
+  const result = model.__fullModel
 
   const fieldNames = Object.keys(model.fields)
   for (const fieldName of fieldNames) {
     const fieldValue = model.fields[fieldName]
-
-    clone.fields[fieldName] = {
-      [locale]: fieldValue
+    if (!result.fields[fieldName]) {
+      result.fields[fieldName] = {}
     }
-
-    _injectAllLocales(clone, fieldName, locale)
+    result.fields[fieldName][locale] = fieldValue
   }
 
-  _cleanModel(clone)
-
-  return clone
-}
-
-function _extractAllLocales(model: any, fieldName: string, locale: string) {
-  const existingLocales = Object.keys(model.fields[fieldName])
-  for (const currentLocale of existingLocales) {
-    const fieldValue = model.fields[fieldName][currentLocale]
-
-    if (!model['__fullModel']) {
-      model['__fullModel'] = {
-        fields: {}
-      }
-    }
-
-    if (!model['__fullModel'].fields[fieldName]) {
-      model['__fullModel'].fields[fieldName] = {}
-    }
-
-    model['__fullModel'].fields[fieldName][currentLocale] = fieldValue
-  }
-}
-
-function _injectAllLocales(model: any, fieldName: string, locale: string) {
-  if (!model['__fullModel']) {
-    return
-  }
-
-  const existingLocales = Object.keys(model['__fullModel'].fields[fieldName])
-  for (const currentLocale of existingLocales) {
-    if (currentLocale === locale) {
-      continue
-    }
-
-    const fieldValue = model['__fullModel'].fields[fieldName][currentLocale]
-    model.fields[fieldName][currentLocale] = fieldValue
-  }
-}
-
-function _addLocaleToModel(model: any, locale: string) {
-  if (!model.sys) {
-    model.sys = {}
-  }
-  model.sys.locale = locale
-}
-
-function _cleanModel(model: any) {
-  if (model.sys) {
-    delete model.sys
-  }
-
-  if (model['__fullModel']) {
-    delete model['__fullModel']
-  }
+  return result
 }

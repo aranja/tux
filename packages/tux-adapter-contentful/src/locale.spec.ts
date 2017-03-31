@@ -7,6 +7,9 @@ describe('inject locale', () => {
       fields: {
         name: 'derp',
         date: '1337'
+      },
+      __fullModel: {
+        fields: {}
       }
     }
 
@@ -31,6 +34,9 @@ describe('inject locale', () => {
       fields: {
         name: undefined,
         date: undefined
+      },
+      __fullModel: {
+        fields: {}
       }
     }
 

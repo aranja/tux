@@ -40,6 +40,9 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
             id: meta.type
           }
         }
+      },
+      __fullModel: {
+        fields: {}
       }
     }
   }
@@ -76,6 +79,9 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
             },
           }
         }
+      },
+      __fullModel: {
+        fields: {}
       }
     }
 
@@ -91,6 +97,9 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
           fileName,
           upload: url,
         }
+      },
+      __fullModel: {
+        fields: {}
       }
     }
 
