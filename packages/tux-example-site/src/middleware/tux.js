@@ -1,18 +1,13 @@
 import React from 'react'
 import { TuxProvider } from 'tux'
 
-export const $$api = Symbol('api')
+const tux = ({ adapter }) => session => {
+  session.api = adapter.getQueryApi()
 
-const tux = (options) => {
-  const { adapter } = options
-
-  return async (renderChildren, context) => {
-    const { refresh } = context
-    context[$$api] = context.api = adapter.getQueryApi()
-
-    const children = await renderChildren()
+  return async next => {
+    const children = await next()
     return (
-      <TuxProvider adapter={adapter} onChange={refresh}>
+      <TuxProvider adapter={adapter} onChange={session.refresh}>
         {children}
       </TuxProvider>
     )
