@@ -1,4 +1,4 @@
-import { Meta } from '../services/editor'
+import { Meta } from './Meta'
 
 interface AdapterInterface {
   create(model: any): Object | null

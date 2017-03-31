@@ -1,17 +1,7 @@
 const schema = new Map()
 
-export interface Field {
-  field: string,
-  label: string,
-  component: React.ReactElement<any>,
-  props?: Object
-}
-
-export interface Meta {
-  type: string,
-  editorSchema?: Array<Field>,
-  name?: string,
-}
+import Field from '../interfaces/field'
+import Meta from '../interfaces/meta'
 
 export function registerEditable(
   type: string,
