@@ -68,7 +68,7 @@ describe('extract locale', () => {
     }
 
     const extracted = extractLocale(source, locale)
-    expect(extracted).toEqual(expected)
+    expect(extracted.fields).toEqual(expected.fields)
   })
 
   it('should handle extracting undefined values', () => {
@@ -88,7 +88,7 @@ describe('extract locale', () => {
     }
 
     const extracted = extractLocale(source, locale)
-    expect(extracted).toEqual(expected)
+    expect(extracted.fields).toEqual(expected.fields)
   })
 
   it('should handle extracing different values', () => {
@@ -116,6 +116,38 @@ describe('extract locale', () => {
           month: 3,
           day: 14,
         },
+      }
+    }
+
+    const extracted = extractLocale(source, locale)
+    expect(extracted.fields).toEqual(expected.fields)
+  })
+
+  it('should handle multiple locales', () => {
+    const locale = 'en-US'
+    const source = {
+      fields: {
+        name: {
+          'en-US': 'hello',
+          'en-GB': 'tis a nice day'
+        }
+      }
+    }
+
+    const expected = {
+      fields: {
+        name: 'hello'
+      },
+      sys: {
+        locale,
+      },
+      '__fullModel': {
+        fields: {
+          name: {
+            [locale]: 'hello',
+            'en-GB': 'tis a nice day',
+          }
+        }
       }
     }
 
