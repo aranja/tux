@@ -59,13 +59,25 @@ export function injectLocale(model: any, locale: string) {
     }
   }
 
-  if (clone.sys) {
-    delete clone.sys
-  }
-
-  if (clone['__fullModel']) {
-    delete clone['__fullModel']
-  }
+  _cleanModel(clone)
 
   return clone
+}
+
+function _extractAllLocales() {
+
+}
+
+function _injectAllLocales() {
+
+}
+
+function _cleanModel(model: any) {
+  if (model.sys) {
+    delete model.sys
+  }
+
+  if (model['__fullModel']) {
+    delete model['__fullModel']
+  }
 }
