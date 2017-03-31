@@ -10,9 +10,7 @@ export function extractLocale(model: any, locale: string) {
     clone.fields[fieldName] = fieldValue
   }
 
-  clone.sys = {
-    locale,
-  }
+  _addLocaleToModel(clone, locale)
 
   return clone
 }
@@ -69,6 +67,13 @@ function _injectAllLocales(model: any, fieldName: string, locale: string) {
     const fieldValue = model['__fullModel'].fields[fieldName][currentLocale]
     model.fields[fieldName][currentLocale] = fieldValue
   }
+}
+
+function _addLocaleToModel(model: any, locale: string) {
+  if (!model.sys) {
+    model.sys = {}
+  }
+  model.sys.locale = locale
 }
 
 function _cleanModel(model: any) {
