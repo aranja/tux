@@ -70,7 +70,9 @@ class ManagementApi {
     const url = `/spaces/${this.space}/entries/`
     const modelWithLocale = await this._formatForApi(model)
     const contentType = 'application/vnd.contentful.management.v1+json'
-    return this.post(url, { fields: modelWithLocale.fields }, contentType, type)
+    const newModel = await this.post(url, { fields: modelWithLocale.fields }, contentType, type)
+    await this._publish(newModel, 'entries')
+    return newModel
   }
 
   saveEntry(entry: any) {
