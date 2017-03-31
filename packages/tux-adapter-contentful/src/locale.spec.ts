@@ -48,6 +48,38 @@ describe('inject locale', () => {
     const injected = injectLocale(source, locale)
     expect(injected).toEqual(expected)
   })
+
+  it('should handle injecting multiple locales', () => {
+    const locale = 'en-US'
+    const source = {
+      fields: {
+        name: 'hello'
+      },
+      sys: {
+        locale,
+      },
+      '__fullModel': {
+        fields: {
+          name: {
+            [locale]: 'hello',
+            'en-GB': 'tis a nice day',
+          }
+        }
+      }
+    }
+
+    const expected = {
+      fields: {
+        name: {
+          'en-US': 'hello',
+          'en-GB': 'tis a nice day'
+        }
+      }
+    }
+
+    const injected = injectLocale(source, locale)
+    expect(injected).toEqual(expected)
+  })
 })
 
 describe('extract locale', () => {
