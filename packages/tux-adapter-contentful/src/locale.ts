@@ -4,26 +4,10 @@ export function extractLocale(model: any, locale: string) {
   const clone = cloneDeep(model)
 
   for (const fieldName of Object.keys(model.fields)) {
-    const existingLocales = Object.keys(model.fields[fieldName])
-    for (const currentLocale of existingLocales) {
-      const fieldValue = model.fields[fieldName][currentLocale]
+    _extractAllLocales(clone, fieldName, locale)
 
-      if (currentLocale === locale) {
-        clone.fields[fieldName] = fieldValue
-      }
-
-      if (!clone['__fullModel']) {
-        clone['__fullModel'] = {
-          fields: {}
-        }
-      }
-
-      if (!clone['__fullModel'].fields[fieldName]) {
-        clone['__fullModel'].fields[fieldName] = {}
-      }
-
-      clone['__fullModel'].fields[fieldName][currentLocale] = fieldValue
-    }
+    const fieldValue = model.fields[fieldName][locale]
+    clone.fields[fieldName] = fieldValue
   }
 
   clone.sys = {
@@ -52,8 +36,23 @@ export function injectLocale(model: any, locale: string) {
   return clone
 }
 
-function _extractAllLocales() {
+function _extractAllLocales(model: any, fieldName: string, locale: string) {
+  const existingLocales = Object.keys(model.fields[fieldName])
+  for (const currentLocale of existingLocales) {
+    const fieldValue = model.fields[fieldName][currentLocale]
 
+    if (!model['__fullModel']) {
+      model['__fullModel'] = {
+        fields: {}
+      }
+    }
+
+    if (!model['__fullModel'].fields[fieldName]) {
+      model['__fullModel'].fields[fieldName] = {}
+    }
+
+    model['__fullModel'].fields[fieldName][currentLocale] = fieldValue
+  }
 }
 
 function _injectAllLocales(model: any, fieldName: string, locale: string) {
