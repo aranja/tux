@@ -35,7 +35,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     if (value instanceof Object) {
       fullModel = await this.context.tux.adapter.loadAsset(value)
     } else {
-      fullModel = this.context.tux.adapter.createEmptyAsset(value)
+      fullModel = this.context.tux.adapter.createAsset(value)
     }
 
     this.setState({
@@ -48,10 +48,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
       return
     }
 
-    const nextValueId = this.context.tux.adapter.getIdOfEntity(props.value)
-    const currentValueId = this.context.tux.adapter.getIdOfEntity(this.props.value)
-
-    if ((nextValueId !== currentValueId) && nextValueId !== null) {
+    if (props.value !== this.props.value) {
       const fullModel = await this.context.tux.adapter.loadAsset(props.value)
 
       this.setState({
@@ -68,9 +65,8 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     })
 
     const asset = await this.context.tux.adapter.createAssetFromFile(files[0], 'Some title')
-    const linkableAsset = this.context.tux.adapter.formatAssetForLinking(asset)
 
-    onChange(linkableAsset)
+    onChange(asset)
 
     this.setState({
       isLoadingImage: false,

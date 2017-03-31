@@ -39,7 +39,7 @@ class TuxModal extends React.Component<TuxModalProps, State> {
     let fullModel = null
 
     if (isNew) {
-      fullModel = await this.context.tux.adapter.createEmptyModel(model, meta)
+      fullModel = await this.context.tux.adapter.create(meta)
     } else {
       fullModel = await this.context.tux.adapter.load(model)
     }
@@ -51,9 +51,9 @@ class TuxModal extends React.Component<TuxModalProps, State> {
     })
   }
 
-  onChange(value: any, type: string) {
+  onChange(value: any, field: string) {
     const { fullModel } = this.state
-    set(fullModel, type, value)
+    set(fullModel, field, value)
     this.setState({ fullModel })
   }
 
@@ -69,11 +69,8 @@ class TuxModal extends React.Component<TuxModalProps, State> {
 
     const { isNew, onClose } = this.props
     const { fullModel, meta } = this.state
-    if (isNew) {
-      await this.context.tux.adapter.create(fullModel, meta.type)
-    } else {
-      await this.context.tux.adapter.save(fullModel)
-    }
+
+    await this.context.tux.adapter.save(fullModel)
 
     if (onClose) {
       onClose(true)
