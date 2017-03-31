@@ -44,19 +44,7 @@ export function injectLocale(model: any, locale: string) {
       [locale]: fieldValue
     }
 
-    if (!clone['__fullModel']) {
-      continue
-    }
-
-    const existingLocales = Object.keys(clone['__fullModel'].fields[fieldName])
-    for (const currentLocale of existingLocales) {
-      if (currentLocale === locale) {
-        continue
-      }
-
-      const fieldValue = clone['__fullModel'].fields[fieldName][currentLocale]
-      clone.fields[fieldName][currentLocale] = fieldValue
-    }
+    _injectAllLocales(clone, fieldName, locale)
   }
 
   _cleanModel(clone)
@@ -68,8 +56,20 @@ function _extractAllLocales() {
 
 }
 
-function _injectAllLocales() {
+function _injectAllLocales(model: any, fieldName: string, locale: string) {
+  if (!model['__fullModel']) {
+    return
+  }
 
+  const existingLocales = Object.keys(model['__fullModel'].fields[fieldName])
+  for (const currentLocale of existingLocales) {
+    if (currentLocale === locale) {
+      continue
+    }
+
+    const fieldValue = model['__fullModel'].fields[fieldName][currentLocale]
+    model.fields[fieldName][currentLocale] = fieldValue
+  }
 }
 
 function _cleanModel(model: any) {
