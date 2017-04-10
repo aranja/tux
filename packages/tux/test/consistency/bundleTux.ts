@@ -41,13 +41,14 @@ export default function bundleTux(target) {
 
   // Depending on the commonjs build, to avoid complicated typescript or babel config.
   const neutrino = new Neutrino({
-    output,
+    build: output,
     source: 'lib',
   })
   neutrino.use(tuxPreset, target)
 
   // Build and load!
   return neutrino
-    .build()
+    .run('build')
+    .promise()
     .then(() => require(`${output}/${target}`))
 }
