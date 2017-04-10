@@ -1,5 +1,12 @@
 #!/usr/bin/env node
 
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them. In the future, promise rejections that are not handled will
+// terminate the Node.js process with a non-zero exit code.
+process.on('unhandledRejection', err => {
+  throw err;
+});
+
 const yargs = require('yargs')
 const compiler = require('../lib/compiler')
 
@@ -9,7 +16,7 @@ const args = yargs
   .command('build', 'Build project for production')
   .command('start', 'Build and serve a project in development mode')
   .command('serve [path]', 'Serve a build')
-  .demandCommand(1, 'You must specify a command for Tux to run.\nUSAGE:  tux-scripts <command>')
+  .demandCommand(1, 'Please specify a command.\nUSAGE:  $0 <command>')
   .recommendCommands()
   .strict()
   .version()

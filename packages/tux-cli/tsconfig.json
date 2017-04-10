@@ -1,0 +1,26 @@
+{
+  "extends": "../../shared/tsconfig.base.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "jsx": "preserve",
+    "lib": ["dom", "es2015"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "target": "es6"
+  },
+  "compileOnSave": false,
+  "include": [
+    "./src",
+    "../../shared/types"
+  ],
+  "exclude": [
+    "./**/*.spec.ts",
+    "./**/*.spec.tsx"
+  ]
+}

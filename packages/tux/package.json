@@ -12,8 +12,10 @@
   "peerDependencies": {
     "react": "^15.0.0"
   },
-  "keywords": [],
-  "author": "",
+  "files": [
+    "es",
+    "lib"
+  ],
   "license": "ISC",
   "dependencies": {
     "babel-runtime": "^6.23.0",
