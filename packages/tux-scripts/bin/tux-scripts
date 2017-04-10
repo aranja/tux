@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+const yargs = require('yargs')
+const compiler = require('../lib/compiler')
+
+const args = yargs
+  .option('ssr', { describe: 'Include server-side-rendering', type: 'boolean' })
+  .option('port', { describe: 'Server port', type: 'number', defaultDescription: '3000' })
+  .command('build', 'Build project for production')
+  .command('start', 'Build and serve a project in development mode')
+  .command('serve [path]', 'Serve a build')
+  .demandCommand(1, 'You must specify a command for Tux to run.\nUSAGE:  tux-scripts <command>')
+  .recommendCommands()
+  .strict()
+  .version()
+  .help()
+  .argv
+
+const command = require(`../lib/commands/${args._.shift()}`).default
+command(args, ...args._)
+  .catch(err => {
+    if (err) {
+      console.error(err.stack || err)
+      err.details && console.error(err.details)
+    }
+
+    process.exit(1)
+  })

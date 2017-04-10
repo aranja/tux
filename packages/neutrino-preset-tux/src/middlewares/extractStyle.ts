@@ -1,4 +1,4 @@
-import Neutrino from 'neutrino'
+import { Neutrino } from 'neutrino'
 import { Rule } from 'webpack-chain'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 

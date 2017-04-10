@@ -98,9 +98,18 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
   }
 
   async currentUser() {
-    const managementApi = await this._getManagementApi()
+    let managementApi
     try {
-      let [
+      managementApi = await this._getManagementApi()
+    } catch (error) {
+      if (error.message === errorMessages.initializeManagementApi) {
+        return null
+      }
+      throw error
+    }
+
+    try {
+      const [
         user,
         space,
       ] = await Promise.all([
@@ -203,7 +212,10 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
     // Get auth token after login
     if (location.hash.indexOf('#access_token=') === 0) {
       const startOffset = '#access_token='.length
-      let accessToken = location.hash.substr(startOffset, location.hash.indexOf('&') - startOffset)
+      const accessToken = location.hash.substr(
+        startOffset,
+        location.hash.indexOf('&') - startOffset
+      )
       localStorage.setItem('contentfulManagementToken', accessToken)
       location.hash = ''
     }

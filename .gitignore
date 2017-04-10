@@ -1,5 +1,5 @@
 # Misc/Debug files
-npm-debug.log
+npm-debug.log*
 lerna-debug.log
 
 # production

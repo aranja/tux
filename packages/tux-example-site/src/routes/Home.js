@@ -34,16 +34,19 @@ const Home = ({ pages, sellPoints, testimonial, carousel }) => {
         <SellPoints sellPoints={sellPoints.items} />
         <ModelCreator model="sellPoint">
           {(onClick) => (
-            <div style={{
+            <button style={{
+              backgroundColor: '#fff',
               border: '2px dashed #000',
               color: '#444',
+              cursor: 'pointer',
+              fontSize: '16px',
               margin: '20px',
               padding: '20px',
               textAlign: 'center',
-            }}>
-              <h2>New Sell Point!</h2>
-              <button onClick={onClick}>Click here to create</button>
-            </div>
+              width: '100%'
+            }} onClick={onClick}>
+              New Sell Point!
+            </button>
           )}
         </ModelCreator>
       </Section>
@@ -58,7 +61,7 @@ const Home = ({ pages, sellPoints, testimonial, carousel }) => {
         <H2><Editable model={page} field="fields.content.twitterFeedSubtitle" /></H2>
         <TwitterFeed />
         <SocialPlug>
-          Are you using Tux? <strong>Let us know on Twitter</strong>
+          Are you using too much? <strong>Let us know on Twitter</strong>
         </SocialPlug>
       </Section>
       <Section>

@@ -44,7 +44,7 @@ class EditableInline extends React.Component<EditableInlineProps, EditableInline
     const { model, field } = this.props
     const { editorState } = this.state
 
-    let fullModel = await this.context.tux.adapter.load(model)
+    const fullModel = await this.context.tux.adapter.load(model)
     const editorStateObj = JSON.parse(editorStateToJSON(editorState))
     set(fullModel, field, editorStateObj)
 

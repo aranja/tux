@@ -4,22 +4,34 @@
   "description": "Neutrino preset for building tux websites",
   "main": "index.js",
   "scripts": {
-    "prepublish": "NODE_ENV=production ../../tasks/build-package.js",
-    "watch": "../../tasks/build-package.js --watch"
+    "prepublish": "NODE_ENV=production TARGET=commonjs ../../tasks/build-package.js",
+    "watch": "TARGET=commonjs ../../tasks/build-package.js --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-plugin-dynamic-import-node": "1.0.1",
+    "babel-polyfill": "6.23.0",
     "extract-text-webpack-plugin": "2.1.0",
     "jsx-html-webpack-plugin": "0.1.0",
-    "neutrino-middleware-env": "5.0.0-beta.1",
-    "neutrino-preset-react": "5.0.0-beta.1",
-    "neutrino-preset-web": "5.0.0-beta.1",
+    "neutrino-middleware-banner": "5.0.1",
+    "neutrino-middleware-chunk": "5.0.1",
+    "neutrino-middleware-clean": "5.0.1",
+    "neutrino-middleware-compile-loader": "5.0.1",
+    "neutrino-middleware-copy": "5.0.1",
+    "neutrino-middleware-font-loader": "5.0.1",
+    "neutrino-middleware-hot": "5.0.1",
+    "neutrino-middleware-html-loader": "5.0.1",
+    "neutrino-middleware-image-loader": "5.0.1",
+    "neutrino-middleware-loader-merge": "5.0.1",
+    "neutrino-middleware-minify": "5.0.1",
+    "neutrino-middleware-named-modules": "5.0.1",
+    "neutrino-middleware-style-loader": "5.0.1",
     "webpack": "^2.2.1",
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-node-externals": "^1.5.4"
   },
   "peerDependencies": {
-    "neutrino": "^4.0.0"
+    "neutrino": "^5.0.1"
   }
 }
