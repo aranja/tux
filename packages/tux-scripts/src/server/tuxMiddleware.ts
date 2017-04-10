@@ -20,7 +20,7 @@ const tuxMiddleware = (options: Options): express.RequestHandler => {
     Document = require(documentPath)
   }
 
-  return async (req: any, res: any, next: Function) => {
+  return async (req, res, next) => {
     const session = app.createSession()
 
     session.req = req
@@ -28,7 +28,11 @@ const tuxMiddleware = (options: Options): express.RequestHandler => {
 
     try {
       const body = await app.renderServer(session, ReactDOMServer.renderToString)
-      const html = createElement(Document, { ...session, assets }, body)
+      const html = createElement(Document, {
+        ...session,
+        css: assets.css,
+        js: assets.js,
+      }, body)
       res.status(session.status || 200)
       res.send('<!doctype html>' + ReactDOMServer.renderToStaticMarkup(html))
     } catch (error) {
