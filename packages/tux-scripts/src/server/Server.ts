@@ -1,6 +1,6 @@
 import express from 'express'
 import { join } from 'path'
-import tuxMiddleware from './TuxMiddleware'
+import tuxMiddleware from './tuxMiddleware'
 
 export interface ServerOptions {
   buildPath: string,
