@@ -5,34 +5,42 @@ import PrettyError from 'pretty-error'
 import React from 'react'
 import assets from 'asset-manifest'
 import Html from './Html'
-import chain from './app'
-import { renderServer } from 'react-chain'
+import app from './app'
+import ReactDOMServer from 'react-dom/server'
 
-const app = express()
+const server = express()
+const pe = new PrettyError()
 
-app.use(express.static(path.join(__dirname, 'static'), { index: false }))
+server.use(express.static(path.join(__dirname, 'static'), { index: false }))
 
 /**
  * Server-side rendering middleware
  */
-app.get('*', renderServer(chain, { assets, Document: Html }))
+server.use('*', async function (req, res, next) {
+  const session = app.createSession()
 
-/**
- * Error handling
- */
-const pe = new PrettyError()
-pe.skipNodeFiles()
-pe.skipPackage('express')
+  session.req = req
+  session.res = res
 
-app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
-  console.log(pe.render(err)) // eslint-disable-line no-console
+  try {
+    const body = await app.renderServer(session, ReactDOMServer.renderToString)
+    res.status(session.status || 200)
+    res.send('<!doctype html>' + ReactDOMServer.renderToStaticMarkup(
+      <Html {...session} assets={assets}>{body}</Html>
+    ))
+  } catch (error) {
+    pe.skipNodeFiles()
+    pe.skipPackage('express')
+    console.log(pe.render(error)) // eslint-disable-line no-console
+    next(error)
+  }
 })
 
 /**
  * Launch the server
  */
 export const port = process.env.PORT || 3000
-app.listen(port, () => {
+server.listen(port, () => {
   /* eslint-disable no-console */
   console.log(`The server is running at http://localhost:${port}/`)
   /* eslint-enable no-console */
