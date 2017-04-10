@@ -1,24 +1,14 @@
-import Neutrino from 'neutrino'
+import { Neutrino } from 'neutrino'
 import env from 'neutrino-middleware-env'
-import react from 'neutrino-preset-react'
-import { MODULES } from './paths'
+import { DefinePlugin } from 'webpack'
 
-export default (neutrino: Neutrino) => {
-  const { config } = neutrino
-
-  // Extend react preset.
-  neutrino.use(react)
-
+export default (neutrino: Neutrino, target: string) => {
   // Add environment variables to bundle.
   if (!process.env.hasOwnProperty('ADMIN')) {
     process.env.ADMIN = process.env.NODE_ENV !== 'production' ? 'true' : ''
   }
-  process.env.SERVER = process.env.SERVER || ''
-  neutrino.use(env, ['ADMIN', 'SERVER', ...getTuxEnv()])
-
-  // Resolve dependencies here.
-  config.resolve.modules.add(MODULES).prepend('node_modules')
-  config.resolveLoader.modules.add(MODULES)
+  neutrino.use(env, ['ADMIN', ...getTuxEnv()])
+  neutrino.use(targetEnv, target)
 
   // Prioritize `source.admin.js` over `source.js` in admin builds.
   if (process.env.ADMIN) {
@@ -39,4 +29,12 @@ function adminExtension(neutrino: Neutrino) {
   }
   extensions.splice(index, 0, '.admin.js')
   config.resolve.extensions.clear().merge(extensions)
+}
+
+function targetEnv({ config }: Neutrino, target: string) {
+  config.plugin('target-env')
+    .use(DefinePlugin, [{
+      [`process.env.SERVER`]: target === 'server' ? '"true"' : '""',
+      [`process.env.BROWSER`]: target === 'browser' ? '"true"' : '""',
+    }])
 }

@@ -61,7 +61,7 @@ const Home = ({ pages, sellPoints, testimonial, carousel }) => {
         <H2><Editable model={page} field="fields.content.twitterFeedSubtitle" /></H2>
         <TwitterFeed />
         <SocialPlug>
-          Are you using Tux? <strong>Let us know on Twitter</strong>
+          Are you using too much? <strong>Let us know on Twitter</strong>
         </SocialPlug>
       </Section>
       <Section>
