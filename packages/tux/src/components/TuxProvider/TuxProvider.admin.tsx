@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ModalContainer, { openModal } from '../TuxModalContainer'
-import TuxSidebar from '../TuxSidebar'
+import TuxFab from '../TuxFab'
 import TuxModal from '../TuxModal'
 import AlertBar from '../AlertBar'
 
@@ -38,6 +38,7 @@ class TuxProvider extends Component<TuxProviderProps, any> {
   }
 
   getChildContext() {
+
     return {
       tux: {
         isEditing: this.state.isEditing,
@@ -92,7 +93,7 @@ class TuxProvider extends Component<TuxProviderProps, any> {
       isEditing && (
         <AlertBar key="alert" />
       ),
-      <TuxSidebar key="sidebar"
+      <TuxFab key="sidebar"
         isEditing={isEditing}
         sidebarIsActive={sidebarIsActive}
         overlayIsActive={overlayIsActive}

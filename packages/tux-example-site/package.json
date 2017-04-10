@@ -9,22 +9,27 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "history": "^4.5.1",
-    "neutrino": "5.0.0-beta.1",
+    "neutrino": "5.0.1",
     "neutrino-preset-tux": "0.1.0",
     "pretty-error": "^2.0.2",
+    "react-chain": "^0.2.2",
+    "react-chain-helmet": "^0.2.2",
+    "react-chain-history": "^0.2.2",
+    "react-document": "^0.5.0",
     "react-helmet": "^4.0.0",
+    "source-map-support": "^0.4.14",
     "tux": "^0.1.0",
+    "tux-scripts": "^0.1.0",
     "tux-adapter-contentful": "^0.1.0",
     "universal-router": "^2.0.0",
     "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
-    "start": "npm run start:client",
-    "build": "npm run build:client",
-    "start-server": "npm-run-all --parallel build:client build:server && node build/server",
-    "build-server": "npm-run-all --parallel build:client build:server",
-    "start:client": "PORT=3000 HTTPS=true neutrino start --presets neutrino-preset-tux",
-    "build:client": "neutrino build --presets neutrino-preset-tux",
-    "build:server": "neutrino build --presets neutrino-preset-tux/server"
+    "start": "PORT=3000 HTTPS=true tux-scripts start",
+    "build": "tux-scripts build",
+    "serve": "tux-scripts serve"
+  },
+  "tux": {
+    "document": "src/Html.js"
   }
 }

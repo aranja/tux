@@ -24,6 +24,7 @@ class EditModal extends React.Component<EditModalProps, any> {
         <style jsx>{`
           .EditModal.is-editing:hover {
             cursor: pointer;
+            position: relative;
             outline: 1px dashed rgba(128, 128, 128, 0.7);
             outline-offset: 10px;
           }

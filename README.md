@@ -1,6 +1,6 @@
-# TUX 
+# TUX
 
-[![CircleCI](https://circleci.com/gh/aranja/tux-next.svg?style=svg&circle-token=2d451777f7f436fcbc804480908ddd288253d334)](https://circleci.com/gh/aranja/tux-next)
+[![CircleCI](https://circleci.com/gh/aranja/tux.svg?style=svg&circle-token=2d451777f7f436fcbc804480908ddd288253d334)](https://circleci.com/gh/aranja/tux)
 
 ## Development
 
@@ -30,7 +30,7 @@ npm run lint
 ### Other
 
 You can access lerna directly with:
-```bash 
+```bash
 npm run lerna
 ```
 

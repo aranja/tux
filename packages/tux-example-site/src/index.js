@@ -1,6 +1,5 @@
-import 'babel-polyfill'
 import React from 'react'
-import tux from './tux'
-import { startClient } from 'tux/lib/tux'
+import app from './app'
+import { renderClient } from 'react-chain'
 
-startClient(tux, document.getElementById('root'))
+renderClient(app, document.getElementById('app'))

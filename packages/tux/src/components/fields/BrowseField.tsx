@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { tuxButtonStyles } from '../../styles'
+import { button } from '../../theme'
+import { lighten } from '../../utils/color'
 
 class BrowseField extends Component<any, any> {
   constructor(props: any) {
@@ -37,17 +38,17 @@ class BrowseField extends Component<any, any> {
         <style jsx>{`
           .BrowseField-fileInput {
             clip: rect(0, 0, 0, 0);
-            position: absolute !important;
+            position: absolute;
             height: 0;
             width: 0;
             overflow: hidden;
           }
 
           .BrowseField-button {
-            background: ${tuxButtonStyles.backgroundColor};
+            background: ${button.background};
             border-radius: 2px;
-            border: 1px solid ${tuxButtonStyles.borderColor};
-            color: ${tuxButtonStyles.textColor};
+            border: 1px solid ${button.border};
+            color: ${button.text};
             cursor: pointer;
             display: inline-block;
             font-size: 14px;
@@ -62,16 +63,14 @@ class BrowseField extends Component<any, any> {
             width: 100%;
           }
 
+          .BrowseField-button:hover {
+            background: ${lighten(button.background, 0.2)}
+          }
+
           .BrowseField-button::before {
             content: "\\f068";
             font-family: "mfg_labs_iconsetregular";
             padding-right: 10px;
-          }
-
-          .BrowseField-button:hover {
-            background: ${tuxButtonStyles.greenTheme.backgroundColor};
-            border: 1px solid ${tuxButtonStyles.greenTheme.borderColor};
-            color: ${tuxButtonStyles.greenTheme.textColor};
           }
         `}</style>
       </div>

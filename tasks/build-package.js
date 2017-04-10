@@ -22,7 +22,7 @@ if (!fs.existsSync(tsconfig)) {
 }
 
 // Configure gulp.
-const gulpArgs = ['--gulpfile', gulpfile, '--cwd', pkg]
+const gulpArgs = ['--gulpfile', gulpfile, '--color', '--cwd', pkg]
 if (argv.watch) {
   gulpArgs.push('watch')
 }

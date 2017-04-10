@@ -7,7 +7,7 @@
  */
 export function get(obj: any, key: string | string[]): any {
   if (key.length === 0 || !obj) {
-    return obj ? obj : null
+    return obj !== undefined ? obj : null
   }
 
   const parts = _splitKey(key)

@@ -1,11 +1,12 @@
 'use strict'
 const gulp = require('gulp')
+const gutil = require('gulp-util')
 const ts = require('gulp-typescript')
 const sourcemaps = require('gulp-sourcemaps')
 const clone = require('gulp-clone')
 const runSequence = require('run-sequence')
 const del = require('del')
-const babel = require('gulp-babel')
+const gulpBabel = require('gulp-babel')
 const merge = require('merge2')
 
 // Load configuration from tsconfig.json. Additionally, this instance
@@ -14,25 +15,34 @@ const tsProject = ts.createProject('tsconfig.json')
 
 // Configures babel to build es6 code with styled-jsx to es5. Either
 // with or without es2015 module syntax.
-const babelConfig = es2015 => ({
-  plugins: [
-    'styled-jsx/babel',
-    ['transform-runtime', {
-      helpers: false,
-      polyfill: false,
-      regenerator: true,
-    }],
-  ],
-  presets: [
-    'react',
-    ['es2015', { 'modules': es2015 ? false : 'commonjs' }],
-  ],
-  env: {
-    development: {
-      plugins: [require.resolve('react-hot-loader/babel')]
+const babel = target =>
+  gulpBabel({
+    plugins: [
+      'styled-jsx/babel',
+      ['transform-runtime', {
+        helpers: false,
+        polyfill: false,
+        regenerator: true,
+      }],
+    ],
+    presets: [
+      'react',
+      ['es2015', { 'modules': target === 'es2015' ? false : 'commonjs' }],
+    ],
+    env: {
+      development: {
+        plugins: [require.resolve('react-hot-loader/babel')]
+      }
     }
-  }
-})
+  })
+  .on('error', function(error) {
+    // only log babel errors once.
+    if (target === 'es2015') {
+      console.log(error.stack || error.message)
+    }
+    // Don't crash the watch process.
+    this.end()
+  })
 
 gulp.task('clean', () => {
   return del(['lib', 'es'])
@@ -43,22 +53,32 @@ gulp.task('build:js', () => {
     .pipe(sourcemaps.init())
     .pipe(tsProject())
 
-  return merge([
-    // CommonJS
-    tsResult.dts
-      .pipe(gulp.dest('lib')),
-    tsResult.js
-      .pipe(clone())
-      .pipe(babel(babelConfig(false)))
-      .pipe(gulp.dest('lib')),
+  const streams = []
 
-    // ES2015 Modules
-    tsResult.dts
-      .pipe(gulp.dest('es')),
-    tsResult.js
-      .pipe(babel(babelConfig(true)))
-      .pipe(gulp.dest('es')),
-  ])
+  // CommonJS Modules
+  if (process.env.TARGET !== 'es2015') {
+    streams.push(
+      tsResult.dts
+        .pipe(gulp.dest('lib')),
+      tsResult.js
+        .pipe(clone())
+        .pipe(babel('commonjs'))
+        .pipe(gulp.dest('lib'))
+    )
+  }
+
+  // ES2015 Modules
+  if (process.env.TARGET !== 'commonjs') {
+    streams.push(
+      tsResult.dts
+        .pipe(gulp.dest('es')),
+      tsResult.js
+        .pipe(babel('es2015'))
+        .pipe(gulp.dest('es'))
+    )
+  }
+
+  return merge(streams)
 })
 
 /**

@@ -1,9 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { get } from '../../utils/accessors'
-
-import { tuxInputStyles } from '../../styles'
-import TextField from './TextField'
+import { input } from '../../theme'
 import BrowseField from './BrowseField'
 
 export interface ImageFieldProps {
@@ -32,7 +30,13 @@ class ImageField extends React.Component<ImageFieldProps, any> {
 
   async componentDidMount() {
     const { value } = this.props
-    const fullModel = await this.context.tux.adapter.loadAsset(value)
+
+    let fullModel = null
+    if (value instanceof Object) {
+      fullModel = await this.context.tux.adapter.loadAsset(value)
+    } else {
+      fullModel = this.context.tux.adapter.createAsset(value)
+    }
 
     this.setState({
       fullModel
@@ -44,10 +48,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
       return
     }
 
-    const nextValueId = this.context.tux.adapter.getIdOfEntity(props.value)
-    const currentValueId = this.context.tux.adapter.getIdOfEntity(this.props.value)
-
-    if ((nextValueId !== currentValueId) && nextValueId !== null) {
+    if (props.value !== this.props.value) {
       const fullModel = await this.context.tux.adapter.loadAsset(props.value)
 
       this.setState({
@@ -64,9 +65,8 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     })
 
     const asset = await this.context.tux.adapter.createAssetFromFile(files[0], 'Some title')
-    const linkableAsset = this.context.tux.adapter.formatAssetForLinking(asset)
 
-    onChange(linkableAsset)
+    onChange(asset)
 
     this.setState({
       isLoadingImage: false,
@@ -110,14 +110,18 @@ class ImageField extends React.Component<ImageFieldProps, any> {
               .ImageField {
                 display: inline-flex;
                 flex-direction: column;
-                margin-bottom: 20px;
               }
               .ImageField-preview {
                 background: white;
-                border: 1px solid ${tuxInputStyles.borderColor};
                 border-radius: 3px;
+                border: 1px solid ${input.border};
                 display: inline-block;
+                max-height: 140px;
+                overflow: hidden;
                 padding: 6px;
+              }
+              .ImageField-preview > img {
+                height: 100%;
               }
             `}</style>
           </div>

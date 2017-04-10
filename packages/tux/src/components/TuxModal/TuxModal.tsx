@@ -1,9 +1,10 @@
 import React from 'react'
 
-import { tuxColors, tuxInputStyles, tuxButtonStyles } from '../../styles'
+import { Theme, input, button } from '../../theme'
 import { fade } from '../../utils/color'
 import moment from 'moment'
 import TuxSpinner from '../Spinner/Spinner'
+import Button from '../Button'
 
 import { get, set } from '../../utils/accessors'
 import { getEditorSchema, Field } from '../../services/editor'
@@ -14,7 +15,13 @@ export interface State {
   editorSchema: Array<Field>
 }
 
-class TuxModal extends React.Component<any, State> {
+export interface TuxModalProps {
+  model: any,
+  onClose?: Function,
+  isNew?: any,
+}
+
+class TuxModal extends React.Component<TuxModalProps, State> {
   static contextTypes = {
     tux: React.PropTypes.object,
   }
@@ -26,15 +33,16 @@ class TuxModal extends React.Component<any, State> {
   }
 
   async componentDidMount() {
-    const { model } = this.props
+    const { model, isNew } = this.props
 
-    const [
-      fullModel,
-      meta,
-    ] = await Promise.all([
-      this.context.tux.adapter.load(model),
-      this.context.tux.adapter.getMeta(model),
-    ])
+    const meta = await this.context.tux.adapter.getMeta(model)
+    let fullModel = null
+
+    if (isNew) {
+      fullModel = await this.context.tux.adapter.create(meta)
+    } else {
+      fullModel = await this.context.tux.adapter.load(model)
+    }
 
     this.setState({
       fullModel,
@@ -43,22 +51,30 @@ class TuxModal extends React.Component<any, State> {
     })
   }
 
-  onChange(value: any, type: string) {
+  onChange(value: any, field: string) {
     const { fullModel } = this.state
-    set(fullModel, type, value)
+    set(fullModel, field, value)
     this.setState({ fullModel })
   }
 
   onCancel = () => {
-    this.props.onClose()
+    const { onClose } = this.props
+    if (onClose) {
+      onClose()
+    }
   }
 
   onSubmit = async(event: React.FormEvent<any>) => {
     event.preventDefault()
 
-    const { fullModel } = this.state
+    const { isNew, onClose } = this.props
+    const { fullModel, meta } = this.state
+
     await this.context.tux.adapter.save(fullModel)
-    this.props.onClose(true)
+
+    if (onClose) {
+      onClose(true)
+    }
   }
 
   renderField = (field: Field) => {
@@ -68,8 +84,8 @@ class TuxModal extends React.Component<any, State> {
     const value = get(fullModel, field.field)
 
     return InputComponent && (
-      <div key={field.field}>
-        <label className="TuxModal-inputLabel">
+      <div className="InputComponent" key={field.field}>
+        <label className="InputComponent-label ">
           {field.label}
         </label>
         <InputComponent
@@ -79,13 +95,17 @@ class TuxModal extends React.Component<any, State> {
           {...field.props}
         />
         <style jsx>{`
-          .TuxModal-inputLabel {
-            color: ${tuxInputStyles.labelTextColor};
+          .InputComponent {
+            margin: 16px 0;
+          }
+          .InputComponent-label {
+            color: ${input.labelText};
             display: block;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 300;
             line-height: 24px;
-            padding: 5px 0;
+            padding: 0;
+            padding-bottom: 5px;
             text-transform: capitalize;
           }
         `}</style>
@@ -95,30 +115,26 @@ class TuxModal extends React.Component<any, State> {
 
   render() {
     const { fullModel, meta, editorSchema } = this.state
+    const { isNew } = this.props
+    const modalHeading = isNew ? 'Creating' : 'Editing'
+    const modalAction = isNew ? 'Create' : 'Save'
     return (
       <div className="TuxModal">
         {fullModel ? (
           <form onSubmit={this.onSubmit}>
             <div className="TuxModal-topBar">
               <h1 className="TuxModal-title">
-                Editing <strong className="TuxModal-modelName">{meta.name}</strong>
+                {modalHeading} <strong className="TuxModal-modelName">{meta.name}</strong>
               </h1>
               <div className="TuxModal-buttons">
-                <button
-                  className="TuxModal-button"
-                  label="Cancel"
-                  type="button"
-                  onClick={this.onCancel}>Cancel</button>
-                <button
-                  className="TuxModal-button TuxModal-button--green"
-                  type="submit"
-                  label="Save">Update</button>
+                <Button onClick={this.onCancel}>Cancel</Button>
+                <Button type="submit" themeColor="green" raised>{modalAction}</Button>
               </div>
             </div>
             <div className="TuxModal-content">
               {editorSchema.map(this.renderField)}
               <div className="TuxModal-meta">
-              { fullModel.sys.updatedAt && (
+              { fullModel.sys && fullModel.sys.updatedAt && (
                 <p className="TuxModal-metaLastUpdated">
                 Last updated {moment(new Date(fullModel.sys.updatedAt)).fromNow()}
                 </p>
@@ -131,11 +147,11 @@ class TuxModal extends React.Component<any, State> {
         )}
         <style jsx>{`
           .TuxModal {
-            background: ${tuxColors.colorSnow};
+            background: #FFF;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             margin: 0;
             margin-left: auto;
-            max-width: 800px;
+            max-width: 650px;
             height: 100vh;
             overflow: auto;
             padding: 0;
@@ -144,15 +160,20 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-topBar {
-            background: ${tuxColors.colorWhite};
+            background: #f2f3f6;
             border-bottom: 1px solid rgba(203, 203, 203, 0.53);
             display: flex;
             justify-content: space-between;
             padding: 30px;
           }
 
+          .TuxModal-buttons {
+            display: flex;
+            justify-content: flex-end;
+          }
+
           .TuxModal-content {
-            padding: 30px;
+            padding: 20px 30px;
           }
 
           .TuxModal-meta {
@@ -162,12 +183,12 @@ class TuxModal extends React.Component<any, State> {
           }
 
           .TuxModal-metaLastUpdated {
-            color: ${fade(tuxColors.textGray, 0.5)};
+            color: ${fade(Theme.textGray, 0.5)};
             font-weight: 300;
           }
 
           .TuxModal-title {
-            color: ${tuxColors.textDark};
+            color: ${Theme.textDark};
             font-size: 25px;
             font-weight: 300;
             margin: 0;
@@ -176,38 +197,6 @@ class TuxModal extends React.Component<any, State> {
           .TuxModal-modelName {
             font-weight: 400;
             text-transform: capitalize;
-          }
-
-          .TuxModal-buttons {
-            display: flex;
-            justify-content: flex-end;
-          }
-
-          .TuxModal-button {
-            background: ${tuxButtonStyles.backgroundColor};
-            border-radius: 2px;
-            border: 1px solid ${tuxButtonStyles.borderColor};
-            color: ${tuxButtonStyles.textColor};
-            cursor: pointer;
-            display: inline-block;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.3;
-            margin: 0;
-            padding: 10px 24px;
-            text-align: center;
-            transition: background 0.25s, color 0.25s, border-color 0.25s;
-            vertical-align: baseline;
-          }
-
-          .TuxModal-button + .TuxModal-button {
-            margin-left: 16px;
-          }
-
-          .TuxModal-button.TuxModal-button--green {
-            color: ${tuxButtonStyles.greenTheme.textColor};
-            background: ${tuxButtonStyles.greenTheme.backgroundColor};
-            border-color: ${tuxButtonStyles.greenTheme.borderColor};
           }
         `}</style>
       </div>

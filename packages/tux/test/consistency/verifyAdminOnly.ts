@@ -2,7 +2,7 @@ export default {
   label: 'verify safe vs admin only functions',
   handler: (prodTux) => {
     const adminOnly = [
-      'TextField',
+      'Input',
       'BooleanField',
       'DatePicker',
       'Dropdown',

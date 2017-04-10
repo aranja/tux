@@ -8,10 +8,12 @@ export function extractLocale(model: any, locale: string) {
 
 export function injectLocale(model: any, locale: string) {
   for (const fieldName of Object.keys(model.fields)) {
-    const fieldValue = Object.assign(model.fields[fieldName])
+    const fieldValue = model.fields[fieldName]
+
     model.fields[fieldName] = {
       [locale]: fieldValue
     }
   }
+
   return model
 }

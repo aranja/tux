@@ -1,5 +1,5 @@
 import React from 'react'
-import { Editable, EditInline } from 'tux'
+import { Editable, EditInline, ModelCreator } from 'tux'
 import Helmet from 'react-helmet'
 import { H1, H2 } from '../components/typography'
 import ProductBanner from '../components/ProductBanner'
@@ -26,6 +26,23 @@ const Home = ({ content, sellPoints, testimonial, carousel }) => (
       <Section>
         <H1><EditInline placeholder="Sell points: Heading" field="fields.content.tagline" /></H1>
         <SellPoints sellPoints={sellPoints.items} />
+        <ModelCreator model="sellPoint">
+          {(onClick) => (
+            <button style={{
+              backgroundColor: '#fff',
+              border: '2px dashed #000',
+              color: '#444',
+              cursor: 'pointer',
+              fontSize: '16px',
+              margin: '20px',
+              padding: '20px',
+              textAlign: 'center',
+              width: '100%'
+            }} onClick={onClick}>
+              New Sell Point!
+            </button>
+          )}
+        </ModelCreator>
       </Section>
       <Section>
         <Carousel carouselItems={carousel.items}/>
@@ -38,7 +55,7 @@ const Home = ({ content, sellPoints, testimonial, carousel }) => (
         <H2><EditInline placeholder="Twitter: Subtitle" field="fields.content.twitterFeedSubtitle" /></H2>
         <TwitterFeed />
         <SocialPlug>
-          Are you using Tux? <strong>Let us know on Twitter</strong>
+          Are you using too much? <strong>Let us know on Twitter</strong>
         </SocialPlug>
       </Section>
       <Section>
