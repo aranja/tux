@@ -1,7 +1,7 @@
 import React from 'react'
 import DraftRenderer from './DraftRenderer'
 import { createEditable } from '../Editable/Editable'
-import { EditableProps } from '../Editable'
+import { EditableProps } from '../../interfaces'
 import { editorStateFromRaw } from 'megadraft'
 import { get } from '../../utils/accessors'
 

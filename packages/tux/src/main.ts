@@ -18,6 +18,4 @@ export const Input = adminOnly('Input')
 
 export const registerEditable = stub
 export const getEditorSchema = adminOnly('getEditorSchema')
-export { default as Field } from './interfaces/field'
-export { default as Meta } from './interfaces/meta'
-export { default as AdapterInterface } from './interfaces/adapter'
+export * from './interfaces'

@@ -38,10 +38,9 @@ class TuxProvider extends Component<TuxProviderProps, any> {
   }
 
   getChildContext() {
-
     return {
       tux: {
-        isEditing: this.state.isEditing,
+        isEditing: this.state.isLoggedIn && this.state.isEditing,
         editModel: this.editModel,
         adapter: this.props.adapter,
       },
@@ -68,6 +67,8 @@ class TuxProvider extends Component<TuxProviderProps, any> {
     if (changed) {
       this.props.onChange()
     }
+
+    return changed
   }
 
   onClickEdit = () => {

@@ -2,7 +2,6 @@ import axios from 'axios'
 import { AxiosInstance } from 'axios'
 import cloneDeep from 'lodash/cloneDeep'
 
-import { Meta } from 'tux'
 import { extractLocale, injectLocale } from './locale'
 
 class ManagementApi {

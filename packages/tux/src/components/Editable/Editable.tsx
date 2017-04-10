@@ -1,6 +1,9 @@
-import React from 'react'
-import { ComponentClass, StatelessComponent } from 'react'
-import { EditableProps } from './index'
+import React, { ComponentClass, StatelessComponent } from 'react'
+import { EditableProps } from '../../interfaces'
+
+export interface State {
+  readOnly: boolean,
+}
 
 export function createEditable<OriginalProps>() {
   return function editable(
@@ -11,30 +14,28 @@ export function createEditable<OriginalProps>() {
     class Editable extends React.Component<OriginalProps & EditableProps, State> {
       static contextTypes = {
         tux: React.PropTypes.object,
-        model: React.PropTypes.object,
-        readOnly: React.PropTypes.bool,
+        tuxModel: React.PropTypes.object,
       }
 
       static childContextTypes = {
-        model: React.PropTypes.object,
-        readOnly: React.PropTypes.bool,
+        tuxModel: React.PropTypes.object,
       }
 
       getChildContext() {
         return {
-          model: this.props.model,
-          readOnly: true,
+          tuxModel: this.props.model || this.context.tuxModel,
         }
       }
 
       render() {
         const { model } = this.props
+        const { tux, tuxModel } = this.context
         return (
           <Editor
             {...this.props}
-            model={model || this.context.model || {}}
-            isEditing={false}
-            readOnly={true}
+            model={model || tuxModel || {}}
+            isEditing={tux.isEditing}
+            tux={tux}
           />
         )
       }

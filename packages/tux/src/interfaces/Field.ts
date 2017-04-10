@@ -1,4 +1,4 @@
-export interface Field {
+interface Field {
   field: string,
   label: string,
   component: React.ReactElement<any>,

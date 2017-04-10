@@ -1,7 +1,7 @@
 import React from 'react'
 import DraftRenderer from './DraftRenderer'
 import { createEditable } from '../Editable/Editable'
-import { EditableProps } from '../Editable'
+import { EditableProps } from '../../interfaces'
 import { editorStateFromRaw, editorStateToJSON, EditorState } from 'megadraft'
 import { get, set } from '../../utils/accessors'
 
@@ -24,14 +24,14 @@ class EditInline extends React.Component<Props, State> {
   private timer: number
 
   private save = async () => {
-    const { onLoad, onSave, model, field } = this.props
+    const { tux, model, field } = this.props
     const { editorState } = this.state
 
-    const fullModel = await onLoad(model)
+    const fullModel = await tux.adapter.load(model)
     const editorStateObj = JSON.parse(editorStateToJSON(editorState))
     set(fullModel, field, editorStateObj)
 
-    onSave(fullModel)
+    await tux.adapter.save(fullModel)
   }
 
   onEditorChange = async (editorState: EditorState) => {

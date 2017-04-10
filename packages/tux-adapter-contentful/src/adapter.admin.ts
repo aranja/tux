@@ -3,7 +3,7 @@ import QueryApi from './query-api'
 import ManagementApi from './management-api'
 import generateEditorSchema from './editors'
 
-import { Field, Meta, AdapterInterface } from 'tux'
+import { Field, ModelMeta, Adapter } from 'tux'
 
 const errorMessages = {
   initializeManagementApi: 'Could not initialize management api.',
@@ -16,7 +16,7 @@ export interface Config {
   redirectUri: string
 }
 
-export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
+export class ContentfulAdapter extends BaseAdapter implements Adapter {
   private clientId: string
   private managementApi: ManagementApi | null
   private redirectUri: string
@@ -27,7 +27,7 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
     this.managementApi = null
   }
 
-  create(meta: Meta) {
+  create(meta: ModelMeta) {
     if (!meta) {
       return null
     }

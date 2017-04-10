@@ -7,7 +7,8 @@ import TuxSpinner from '../Spinner/Spinner'
 import Button from '../Button'
 
 import { get, set } from '../../utils/accessors'
-import { getEditorSchema, Field } from '../../services/editor'
+import { Field } from '../../interfaces'
+import { getEditorSchema } from '../../services/editor'
 
 export interface State {
   fullModel: any | null

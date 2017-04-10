@@ -1,12 +1,12 @@
-import { Meta } from './Meta'
+import ModelMeta from './ModelMeta'
 
-interface AdapterInterface {
+interface Adapter {
   create(model: any): Object | null
   createAsset(): { sys: Object }
   createAssetFromFile(file: File, title: string): Object | null
   createAssetFromUrl(url: string, fileName: string, title: string): Object | null
   currentUser(): any | null
-  getMeta(model: string | Object): Meta | null
+  getMeta(model: string | Object): ModelMeta | null
   getQueryApi(): any
   load(model: any): any
   loadAsset(model: any): any
@@ -15,4 +15,4 @@ interface AdapterInterface {
   save(model: any): void
 }
 
-export default AdapterInterface
+export default Adapter

@@ -4,6 +4,7 @@ import { MegadraftEditor } from 'megadraft'
 export interface Props {
   editorState: any,
   children: any,
+  onChange?: (editorState: any) => void
   readOnly: boolean,
   placeholder?: string,
 }

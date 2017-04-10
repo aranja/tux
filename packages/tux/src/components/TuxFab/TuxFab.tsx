@@ -76,20 +76,21 @@ class TuxFab extends React.Component<any, State> {
         <a
           className="TuxFab-item TuxFab-mainItem"
           onClick={onClickEdit}
-          onMouseOver={this.handleMouseOver}>
-            <i className="icon icon-plus"></i>
+          onMouseOver={this.handleMouseOver}
+        >
+          <i className="icon icon-plus" />
         </a>
         <a className="TuxFab-item" href="/" data-tooltip="Documentation">
-        <i className="icon icon-white_question"></i>
+          <i className="icon icon-white_question" />
         </a>
         <a className="TuxFab-item" href="/" data-tooltip="Tux on Github">
-        <i className="icon icon-git"></i>
+          <i className="icon icon-git" />
         </a>
         <a
           onClick={this.handleLogin}
           data-tooltip="Log out"
           className="TuxFab-item TuxFab-signInOut">
-          <i className="icon icon-user"></i>
+          <i className="icon icon-user" />
         </a>
 
         <style jsx>{`
