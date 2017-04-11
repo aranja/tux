@@ -41,7 +41,7 @@ You can access lerna directly with:
 npm run lerna
 ```
 
-To bootstreap manually, run:
+To bootstrap manually, run:
 ```bash
 npm run bootstrap
 ```
