@@ -6,8 +6,13 @@
 
 ```bash
 npm install -g tux-cli
+
 tux new my-app
+cd my-app/
+npm start
 ```
+
+Then open [http://localhost:5000/](http://localhost:5000/) to see your app.
 
 ## Development
 
