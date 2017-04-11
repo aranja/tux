@@ -12,10 +12,10 @@ export interface State {
   isVisible: boolean
   isHovered: boolean
 }
-const FabColor = '#3a82df';
-const FabActiveColor = '#f11b9e';
-const FabAnimationDelay = 0.05;
-const FabEase = '0,.62,.45,1.13';
+const FabColor = '#3a82df'
+const FabActiveColor = '#f11b9e'
+const FabAnimationDelay = 0.05
+const FabEase = '0,.62,.45,1.13'
 
 class TuxFab extends React.Component<any, State> {
   static contextTypes = {

@@ -17,7 +17,7 @@ import namedModules from 'neutrino-middleware-named-modules'
 import { join } from 'path'
 import { path, pathOr } from 'ramda'
 
-const MODULES = join(__dirname, 'node_modules')
+const MODULES = join(__dirname, '..', '..', 'node_modules')
 
 function devServer({ config }: Neutrino, options: any) {
   config.devServer

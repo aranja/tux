@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AxiosInstance } from 'axios';
+import { AxiosInstance } from 'axios'
 
 // TODO: Fill in
 export interface ContentfulJsonItem {
