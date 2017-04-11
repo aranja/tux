@@ -17,7 +17,7 @@
     "react-chain-helmet": "^0.3.0",
     "react-chain-history": "^0.3.0",
     "react-document": "^0.5.0",
-    "react-helmet": "^4.0.0",
+    "react-helmet": "^5.0.1",
     "source-map-support": "^0.4.14",
     "tux": "^0.1.0",
     "tux-scripts": "^0.1.0",

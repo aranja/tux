@@ -1,5 +1,5 @@
 import React from 'react'
-import Document, { Html, Head, Body, Main, Footer } from 'react-document'
+import Document, { Html, Head, Body, App, Footer } from 'react-document'
 
 /**
  * This component is a template for the HTML file. You can add webfonts, meta tags,
@@ -20,7 +20,9 @@ import Document, { Html, Head, Body, Main, Footer } from 'react-document'
 
 export default class extends Document {
   render() {
-    const { helmet } = this.props
+    // TODO: Remove when headProps is gone.
+    let helmet = this.props.helmet ||
+      this.props.headProps && this.props.headProps.helmet
     return (
       <Html>
         <Head>
@@ -32,7 +34,7 @@ export default class extends Document {
           <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,400i" rel="stylesheet" />
         </Head>
         <Body>
-          <Main />
+          <App />
           <Footer />
         </Body>
       </Html>

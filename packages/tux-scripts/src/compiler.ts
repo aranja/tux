@@ -45,11 +45,13 @@ async function getOptions(options: Options) {
       devServer: {
         host,
         port,
-      }
+      },
     },
     tux: {
       admin,
-      document
-    }
+    },
+    html: {
+      document,
+    },
   }
 }

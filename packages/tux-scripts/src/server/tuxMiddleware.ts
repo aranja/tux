@@ -15,9 +15,12 @@ const tuxMiddleware = (options: Options): express.RequestHandler => {
   const assets = require(join(options.buildPath, 'static/assets.json'))
 
   const documentPath = join(options.buildPath, 'ssr/document.js')
-  let Document = DefaultDocument
+  let Document: any = DefaultDocument
   if (fs.existsSync(documentPath)) {
     Document = require(documentPath)
+    if (Document.__esModule) {
+      Document = Document.default
+    }
   }
 
   return async (req, res, next) => {
