@@ -1,4 +1,4 @@
-  import React from 'react'
+import React from 'react'
 import { Editable, EditInline, ModelCreator } from 'tux'
 import Helmet from 'react-helmet'
 import { H1, H2 } from '../components/typography'

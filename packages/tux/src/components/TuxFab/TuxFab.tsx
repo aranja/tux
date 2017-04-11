@@ -30,7 +30,6 @@ class TuxFab extends React.Component<any, State> {
   }
 
   async componentDidMount() {
-    console.log('rerender')
     const user = await this.context.tux.adapter.currentUser()
 
     if (user) {
