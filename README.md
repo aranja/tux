@@ -2,6 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/aranja/tux.svg?style=svg&circle-token=2d451777f7f436fcbc804480908ddd288253d334)](https://circleci.com/gh/aranja/tux)
 
+> **Note:** tux is in active development and the API is subject to change drastically before it hits version `1.0.0`.
+
 ## Get started
 
 ```bash
