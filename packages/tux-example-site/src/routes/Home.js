@@ -1,4 +1,4 @@
-import React from 'react'
+  import React from 'react'
 import { Editable, EditInline, ModelCreator } from 'tux'
 import Helmet from 'react-helmet'
 import { H1, H2 } from '../components/typography'
@@ -30,7 +30,7 @@ const Home = ({ content, sellPoints, testimonial, carousel }) => (
           {(onClick) => (
             <button style={{
               backgroundColor: '#fff',
-              border: '2px dashed #000',
+              border: '2px dashed #999',
               boxSizing: 'border-box',
               color: '#444',
               cursor: 'pointer',
