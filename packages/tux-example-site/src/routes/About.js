@@ -1,5 +1,5 @@
 import React from 'react'
-import { Editable } from 'tux'
+import { Editable, EditInline } from 'tux'
 import Helmet from 'react-helmet'
 import { H1, H2 } from '../components/typography'
 import Pricetable from '../components/Pricetable'
@@ -12,19 +12,14 @@ import SocialPlug from '../components/SocialPlug'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
-const About = ({ pages, sellPoints, gallery, testimonial, pricetable, articles }) => {
-  const page = pages.items[0]
-
-  return (
-    <div className="p-About">
+const About = ({ content, gallery, pricetable, articles }) =>  (
+  <div className="p-About">
+    <Editable model={content}>
       <Helmet
         title="About - Tux Demo Site"
       />
       <Menu />
-      <ProductBanner image={ProductBannerImage}>
-        <div className="ProductBanner-heading"><Editable model={page} field="fields.content.title2" /></div>
-        <div className="ProductBanner-text"><Editable model={page} field="fields.content.subtitle2" /></div>
-      </ProductBanner>
+      <ProductBanner image={ProductBannerImage} />
       <Section>
         <H1>Who is using Tux</H1>
         <Gallery galleryItems={gallery.items} />
@@ -37,12 +32,12 @@ const About = ({ pages, sellPoints, gallery, testimonial, pricetable, articles }
         <Articles articles={articles} />
       </Section>
       <Section>
-        <H1><Editable model={page} field="fields.content.pricetableTitle" /></H1>
-        <H2><Editable model={page} field="fields.content.pricetableSubtitle" /></H2>
+        <H1><EditInline field="fields.content.pricetableTitle" /></H1>
+        <H2><EditInline field="fields.content.pricetableSubtitle" /></H2>
         <Pricetable pricetableItems={pricetable.items} />
       </Section>
-    </div>
-  )
-}
+    </Editable>
+  </div>
+)
 
 export default About

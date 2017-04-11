@@ -1,9 +1,9 @@
 import Field from './field'
 
-export interface Meta {
+interface ModelMeta {
   type: string,
   editorSchema?: Array<Field>,
   name?: string,
 }
 
-export default Meta
+export default ModelMeta

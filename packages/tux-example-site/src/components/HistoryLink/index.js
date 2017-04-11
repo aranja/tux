@@ -26,8 +26,8 @@ class HistoryLink extends React.Component {
 
   props : Props
 
-  constructor(props) {
-    super(props)
+  constructor(props, context) {
+    super(props, context)
     this.handleClick = this.handleClick.bind(this)
   }
 
@@ -95,7 +95,7 @@ class HistoryLink extends React.Component {
   }
 }
 HistoryLink.contextTypes = {
-  history: React.PropTypes.object,
+  history: React.PropTypes.object.isRequired,
 }
 
 HistoryLink.defaultProps = {

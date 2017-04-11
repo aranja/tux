@@ -2,12 +2,12 @@ import React from 'react'
 import classNames from 'classnames'
 import { get } from '../../utils/accessors'
 import { input } from '../../theme'
+import Spinner from '../Spinner'
 import BrowseField from './BrowseField'
 
 export interface ImageFieldProps {
   field: string | Array<string>,
   id: string,
-  imageUrl: string,
   name: string,
   onChange: Function,
   value: any,
@@ -23,8 +23,8 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     super(props)
 
     this.state = {
-      imageUrl: '',
       fullModel: null,
+      isLoadingImage: false,
     }
   }
 
@@ -52,7 +52,8 @@ class ImageField extends React.Component<ImageFieldProps, any> {
       const fullModel = await this.context.tux.adapter.loadAsset(props.value)
 
       this.setState({
-        fullModel
+        fullModel,
+        isLoadingImage: false,
       })
     }
   }
@@ -67,21 +68,11 @@ class ImageField extends React.Component<ImageFieldProps, any> {
     const asset = await this.context.tux.adapter.createAssetFromFile(files[0], 'Some title')
 
     onChange(asset)
-
-    this.setState({
-      isLoadingImage: false,
-    })
-  }
-
-  onUrlChange = async(event: React.ChangeEvent<any>) => {
-    this.setState({
-      imageUrl: event.target.value
-    })
   }
 
   render() {
     const { value, id, onChange } = this.props
-    const { imageUrl, fullModel, isLoadingImage } = this.state
+    const { fullModel, isLoadingImage } = this.state
 
     if (fullModel) {
       const title = get(fullModel, 'fields.title')
@@ -89,23 +80,26 @@ class ImageField extends React.Component<ImageFieldProps, any> {
 
       return (
           <div className="ImageField">
-            <div className="ImageField-preview">
-              <img
-              className="ImageField-previewImage"
-              alt={title}
-              width="128"
-              height="auto"
-              src={`${url}?w=128`}
-              />
-            </div>
+            {isLoadingImage ? (
+              <div className="ImageField-preview">
+                <Spinner />
+              </div>
+            ) : url ? (
+              <div className="ImageField-preview">
+                <img
+                className="ImageField-previewImage"
+                alt={title}
+                width="128"
+                height="auto"
+                src={`${url}?w=128`}
+                />
+              </div>
+            ) : null}
             <BrowseField
               id={id}
               onChange={this.onFileChange}
               value=""
             />
-            {isLoadingImage ? (
-              <p>Loading image ... </p>
-            ) : null}
             <style jsx>{`
               .ImageField {
                 display: inline-flex;
@@ -116,12 +110,15 @@ class ImageField extends React.Component<ImageFieldProps, any> {
                 border-radius: 3px;
                 border: 1px solid ${input.border};
                 display: inline-block;
-                max-height: 140px;
+                height: 140px;
                 overflow: hidden;
                 padding: 6px;
+                position: relative;
+                width: 140px;
               }
               .ImageField-preview > img {
                 height: 100%;
+                object-fit: contain;
               }
             `}</style>
           </div>

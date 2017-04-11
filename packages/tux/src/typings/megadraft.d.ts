@@ -4,4 +4,5 @@ declare module 'megadraft' {
   export const editorStateFromRaw: any
   export const editorStateToJSON: any
   export type EditorState = any
+  export const DraftJS: any
 }

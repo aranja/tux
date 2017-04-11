@@ -27,10 +27,12 @@
   "dependencies": {
     "babel-runtime": "^6.23.0",
     "classnames": "^2.2.5",
+    "deep-eql": "^2.0.1",
     "megadraft": "^0.4.15",
     "moment": "^2.17.1",
     "react-addons-css-transition-group": "^15.4.2",
     "react-day-picker": "^5.1.1",
+    "string-humanize": "^1.0.0",
     "styled-jsx": "^0.5.4"
   },
   "devDependencies": {

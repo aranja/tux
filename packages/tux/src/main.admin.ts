@@ -1,5 +1,7 @@
 export { default as TuxProvider } from './components/TuxProvider'
 export { default as Editable } from './components/Editable'
+export { default as EditInline } from './components/EditInline'
+export { default as EditModal } from './components/EditModal'
 export { default as ModelCreator } from './components/ModelCreator'
 
 export { default as BooleanField } from './components/fields/Boolean'
@@ -12,6 +14,4 @@ export { default as TagEditor } from './components/fields/TagEditor'
 export { default as Input } from './components/fields/Input'
 
 export { registerEditable, getEditorSchema } from './services/editor'
-export { default as Field } from './interfaces/field'
-export { default as Meta } from './interfaces/meta'
-export { default as AdapterInterface } from './interfaces/adapter'
+export * from './interfaces'
