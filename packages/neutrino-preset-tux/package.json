@@ -8,7 +8,7 @@
     "watch": "TARGET=commonjs ../../tasks/build-package.js --watch"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "babel-plugin-dynamic-import-node": "1.0.1",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",

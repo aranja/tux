@@ -18,7 +18,7 @@
   ],
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "fs-promise": "^2.0.2",
     "neutrino": "5.0.1",

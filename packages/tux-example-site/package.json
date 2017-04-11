@@ -2,6 +2,7 @@
   "name": "tux-example-site",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "devDependencies": {
     "npm-run-all": "^4.0.2",
     "redbox-react": "^1.3.4"
