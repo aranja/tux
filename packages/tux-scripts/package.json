@@ -1,6 +1,6 @@
 {
   "name": "tux-scripts",
-  "version": "0.1.0-alpha",
+  "version": "0.1.0-alpha.1",
   "description": "",
   "main": "lib/index.js",
   "bin": {
