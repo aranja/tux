@@ -19,6 +19,6 @@ export default createEditable<Props>()(({ children, model, field }: Props) => {
       />
     )
   } else {
-    return children
+    return children || null
   }
 })

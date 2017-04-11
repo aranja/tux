@@ -6,6 +6,7 @@ import { CliOptions } from '../options'
 export default async (options: CliOptions, buildPath: string) => {
   const {
     ssr = false,
+    admin = true,
     port,
     host,
   } = options
@@ -14,7 +15,7 @@ export default async (options: CliOptions, buildPath: string) => {
   const spinner = ora('Building project').start()
   let compilers
   try {
-    compilers = await run('start', { ssr, port, host }) as Compiler[]
+    compilers = await run('start', { ssr, admin, port, host }) as Compiler[]
   } catch (err) {
     spinner.fail('Building project failed')
     throw err

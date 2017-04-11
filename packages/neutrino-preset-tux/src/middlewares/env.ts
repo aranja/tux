@@ -4,7 +4,9 @@ import { DefinePlugin } from 'webpack'
 
 export default (neutrino: Neutrino, target: string) => {
   // Add environment variables to bundle.
-  if (!process.env.hasOwnProperty('ADMIN')) {
+  if (neutrino.options.tux.admin != null) {
+    process.env.ADMIN = neutrino.options.tux.admin ? 'true' : ''
+  } else if (!process.env.hasOwnProperty('ADMIN')) {
     process.env.ADMIN = process.env.NODE_ENV !== 'production' ? 'true' : ''
   }
   neutrino.use(env, ['ADMIN', ...getTuxEnv()])

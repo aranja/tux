@@ -21,7 +21,7 @@ export default [
         api.getEntries({ content_type: 'carousel' }),
       ])
 
-      const content = pages.items[0] || {}
+      const content = pages.items.find(page => page.sys.id === '3yu5uaHcisCiKgKU84oWei')
 
       return (
         <Home
@@ -53,7 +53,7 @@ export default [
         api.getEntries({ content_type: 'article', order: '-sys.createdAt' }),
       ])
 
-      const content = pages.items[1] || {}
+      const content = pages.items.find(page => page.sys.id === '1EKFlARWuoSCkiI6gamwc4')
 
       return (
         <About

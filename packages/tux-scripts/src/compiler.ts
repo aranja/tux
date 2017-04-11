@@ -32,6 +32,7 @@ function runNeutrino(command: Command, middleware: Middleware, options: any) {
 }
 
 async function getOptions(options: Options) {
+  const { host, port, admin } = options
   const cwd = process.cwd()
   const pkg = optional(join(cwd, 'package.json')) || {}
   let document = pathOr(null, ['tux', 'document'], pkg)
@@ -42,11 +43,12 @@ async function getOptions(options: Options) {
   return {
     config: {
       devServer: {
-        host: options.host,
-        port: options.port,
+        host,
+        port,
       }
     },
     tux: {
+      admin,
       document
     }
   }
