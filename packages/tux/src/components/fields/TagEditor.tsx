@@ -169,7 +169,6 @@ class TagEditor extends Component<TagEditorProps, any> {
               width: 1.5em;
               height: 1.5em;
               background: ${darken(Theme.gray, 0.22)};
-              font-family: 'mfg_labs_iconsetregular';
               font-style: normal;
               speak: none;
               font-weight: normal;

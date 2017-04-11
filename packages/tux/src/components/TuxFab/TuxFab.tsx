@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { lighten, fade } from '../../utils/color'
 import { Theme } from '../../theme'
+import { FaMagic, FaSignOut, FaLifeBouy, FaCheck } from 'react-icons/lib/fa'
 
 export interface State {
   user: null | {
@@ -74,6 +75,7 @@ class TuxFab extends React.Component<any, State> {
       'has-overlay': overlayIsActive,
       'is-hovered': isHovered,
     })
+    const IconToShow = isEditing ? FaCheck : FaMagic
 
     return (
       <div className={classes} onMouseLeave={this.handleMouseLeave}>
@@ -82,15 +84,22 @@ class TuxFab extends React.Component<any, State> {
           onClick={onClickEdit}
           onMouseOver={this.handleMouseOver}
         >
-          <i className="icon icon-plus" />
+          <IconToShow />
         </a>
         <a
           onClick={this.handleLogin}
           data-tooltip={user ? 'Log out' : 'Log in'}
           className="TuxFab-item TuxFab-signInOut">
-          <i className="icon icon-user" />
+          <FaSignOut />
         </a>
-
+        <a
+          href="//github.com/aranja/tux"
+          target="_blank"
+          rel="noopener"
+          data-tooltip="Help"
+          className="TuxFab-item">
+          <FaLifeBouy />
+        </a>
         <style jsx>{`
           .TuxFab {
             align-items: center;
@@ -145,6 +154,7 @@ class TuxFab extends React.Component<any, State> {
           .TuxFab-mainItem {
             background-color: ${FabColor};
             color: white;
+            font-size: 24px;
             height: 65px;
             order: 1;
             pointer-events: auto;
@@ -152,21 +162,12 @@ class TuxFab extends React.Component<any, State> {
             transition: transform 0.25s cubic-bezier(${FabEase}), background-color 0.15s;
             width: 65px;
           }
-          .TuxFab-mainItem .icon {
-            font-size: 23px;
-            transform: scale(0.87);
-          }
           .TuxFab:hover .TuxFab-mainItem {
             transform: scale(1);
             background-color: ${lighten(FabColor, 0.1)};
           }
           .TuxFab.is-active .TuxFab-mainItem {
             background: ${FabActiveColor};
-            transform: rotateZ(135deg);
-          }
-          .TuxFab.is-active .TuxFab-mainItem .icon {
-            transform: scale(1);
-            transition: transform 0.25s cubic-bezier(${FabEase});
           }
           .TuxFab-item:not(.TuxFab-mainItem) {
             opacity: 0;

@@ -160,7 +160,6 @@ class DatePicker extends Component<any, State> {
           bottom: 0;
           content: "\\F4C5";
           color: ${button.text};
-          font-family: "mfg_labs_iconsetregular";
           font-size: 16px;
           height: 16px;
           line-height: 1;

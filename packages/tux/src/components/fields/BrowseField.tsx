@@ -69,7 +69,6 @@ class BrowseField extends Component<any, any> {
 
           .BrowseField-button::before {
             content: "\\f068";
-            font-family: "mfg_labs_iconsetregular";
             padding-right: 10px;
           }
         `}</style>
