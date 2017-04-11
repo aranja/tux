@@ -30,12 +30,12 @@ const Home = ({ content, sellPoints, testimonial, carousel }) => (
           {(onClick) => (
             <button style={{
               backgroundColor: '#fff',
-              border: '2px dashed #999',
+              border: '1px dashed rgb(68, 68, 68)',
               boxSizing: 'border-box',
               color: '#444',
               cursor: 'pointer',
               fontSize: '16px',
-              margin: '20px 0',
+              margin: '20px 7px',
               padding: '20px',
               textAlign: 'center',
               width: '100%'
