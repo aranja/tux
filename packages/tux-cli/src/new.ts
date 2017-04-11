@@ -34,7 +34,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //   /!\ DO NOT MODIFY THIS FILE /!\
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+// tslint:disable:no-console
 import yargs, { Argv } from 'yargs'
 import validateProjectName from 'validate-npm-package-name'
 import chalk from 'chalk'
@@ -53,53 +53,53 @@ const argv = (yargs as Argv)
   .help('help')
   .argv
 
-const projectDir = argv._[1];
-const root = path.resolve(projectDir);
-const appName = path.basename(root);
+const projectDir = argv._[1]
+const root = path.resolve(projectDir)
+const appName = path.basename(root)
 createApp(
   argv.verbose,
   argv.version,
-).catch(onError);
+).catch(onError)
 
 async function createApp(verbose: boolean, version: string) {
-  checkAppName(appName);
-  await fs.ensureDir(root);
-  const isSafe = await isSafeToCreateProjectIn(root);
+  checkAppName(appName)
+  await fs.ensureDir(root)
+  const isSafe = await isSafeToCreateProjectIn(root)
   if (!isSafe) {
     console.log(
       `The directory ${chalk.green(appName)} contains files that could conflict.`
-    );
-    console.log('Try using a new directory name.');
-    process.exit(1);
+    )
+    console.log('Try using a new directory name.')
+    process.exit(1)
   }
 
-  console.log(`Creating a new React app in ${chalk.green(root)}.`);
-  console.log();
+  console.log(`Creating a new React app in ${chalk.green(root)}.`)
+  console.log()
 
   const packageJson = {
     name: appName,
     version: '0.1.0',
     private: true,
-  };
+  }
   await fs.writeFile(
     path.join(root, 'package.json'),
     JSON.stringify(packageJson, null, 2)
-  );
-  process.chdir(root);
+  )
+  process.chdir(root)
 
-  await run(appName, version, verbose);
+  await run(appName, version, verbose)
 }
 
 async function onError(reason: Error) {
-  console.log();
-  console.log('Aborting installation.');
+  console.log()
+  console.log('Aborting installation.')
   if (reason.command) {
-    console.log(`  ${chalk.cyan(reason.command)} has failed.`);
+    console.log(`  ${chalk.cyan(reason.command)} has failed.`)
   } else {
-    console.log(chalk.red('Unexpected error. Please report it as a bug:'));
-    console.log(reason);
+    console.log(chalk.red('Unexpected error. Please report it as a bug:'))
+    console.log(reason)
   }
-  console.log();
+  console.log()
 
   // On 'exit' we will delete these files from target directory.
   const knownGeneratedFiles = [
@@ -108,145 +108,145 @@ async function onError(reason: Error) {
     'yarn-error.log',
     'yarn-debug.log',
     'node_modules',
-  ];
-  const currentFiles = await fs.readdir(path.join(root));
-  for (let file of currentFiles) {
-    for (let fileToMatch of knownGeneratedFiles) {
+  ]
+  const currentFiles = await fs.readdir(path.join(root))
+  for (const file of currentFiles) {
+    for (const fileToMatch of knownGeneratedFiles) {
       // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
       // and the rest of knownGeneratedFiles.
       if (
         (fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) ||
         file === fileToMatch
       ) {
-        console.log(`Deleting generated file... ${chalk.cyan(file)}`);
-        await fs.remove(path.join(root, file));
+        console.log(`Deleting generated file... ${chalk.cyan(file)}`)
+        await fs.remove(path.join(root, file))
       }
     }
   }
-  const remainingFiles = await fs.readdir(path.join(root));
+  const remainingFiles = await fs.readdir(path.join(root))
   if (!remainingFiles.length) {
     // Delete target folder if empty
     console.log(
       `Deleting ${chalk.cyan(`${appName} /`)} from ${chalk.cyan(path.resolve(root, '..'))}`
-    );
-    process.chdir(path.resolve(root, '..'));
-    await fs.remove(path.join(root));
+    )
+    process.chdir(path.resolve(root, '..'))
+    await fs.remove(path.join(root))
   }
-  console.log('Done.');
-  process.exit(1);
+  console.log('Done.')
+  process.exit(1)
 }
 
 function shouldUseYarn() {
   try {
-    execSync('yarnpkg --version', { stdio: 'ignore' });
-    return true;
+    execSync('yarnpkg --version', { stdio: 'ignore' })
+    return true
   } catch (e) {
-    return false;
+    return false
   }
 }
 
 function install(useYarn: boolean, dependencies: string[], verbose: boolean, isOnline: boolean) {
   return new Promise((resolve, reject) => {
-    let command: string;
-    let args: string[];
+    let command: string
+    let args: string[]
     if (useYarn) {
-      command = 'yarnpkg';
-      args = ['add', '--exact'];
+      command = 'yarnpkg'
+      args = ['add', '--exact']
       if (!isOnline) {
-        args.push('--offline');
+        args.push('--offline')
       }
-      [].push.apply(args, dependencies);
+      [].push.apply(args, dependencies)
 
       if (!isOnline) {
-        console.log(chalk.yellow('You appear to be offline.'));
-        console.log(chalk.yellow('Falling back to the local Yarn cache.'));
-        console.log();
+        console.log(chalk.yellow('You appear to be offline.'))
+        console.log(chalk.yellow('Falling back to the local Yarn cache.'))
+        console.log()
       }
     } else {
-      checkNpmVersion();
-      command = 'npm';
-      args = ['install', '--save', '--save-exact'].concat(dependencies);
+      checkNpmVersion()
+      command = 'npm'
+      args = ['install', '--save', '--save-exact'].concat(dependencies)
     }
 
     if (verbose) {
-      args.push('--verbose');
+      args.push('--verbose')
     }
 
-    const child = spawn(command, args, { stdio: 'inherit' });
+    const child = spawn(command, args, { stdio: 'inherit' })
     child.on('close', (code: number) => {
       if (code !== 0) {
         reject({
           command: `${command} ${args.join(' ')}`,
-        });
-        return;
+        })
+        return
       }
-      resolve();
-    });
-  });
+      resolve()
+    })
+  })
 }
 
 async function run(appName: string, version: string, verbose: boolean) {
   const allDependencies = [
     appendVersion('tux-scripts', version),
-  ];
+  ]
 
-  console.log('Installing packages. This might take a couple minutes.');
+  console.log('Installing packages. This might take a couple minutes.')
 
-  const useYarn = shouldUseYarn();
+  const useYarn = shouldUseYarn()
 
   const isOnline = await checkIfOnline(useYarn)
 
   console.log(
-    `Installing ${chalk.cyan('react')}, ${chalk.cyan('react-dom')}, ${chalk.cyan('tux')} and ${chalk.cyan('tux-scripts')}...`
-  );
-  console.log();
+    `Installing ${chalk.cyan('tux-scripts')}...`
+  )
+  console.log()
 
   await install(useYarn, allDependencies, verbose, isOnline)
 
-  checkNodeVersion();
+  checkNodeVersion()
 
   // Since react-scripts has been installed with --save
   // we need to move it into devDependencies and rewrite package.json
   // also ensure react dependencies have caret version range
-  await fixDependencies();
+  await fixDependencies()
 
   const scriptsPath = path.resolve(
     process.cwd(),
     'node_modules',
     'tux-scripts',
     'new'
-  );
-  const init = require(scriptsPath);
-  await init(root, appName, verbose);
+  )
+  const init = require(scriptsPath)
+  await init(root, appName, verbose)
 }
 
 function appendVersion(packageToInstall: string, version: string) {
-  const validSemver = semver.valid(version);
+  const validSemver = semver.valid(version)
   if (validSemver) {
-    packageToInstall += `@${validSemver}`;
+    packageToInstall += `@${validSemver}`
   }
-  return packageToInstall;
+  return packageToInstall
 }
 
 function checkNpmVersion() {
-  let isNpm2 = false;
+  let isNpm2 = false
   try {
-    const npmVersion = execSync('npm --version').toString();
-    isNpm2 = semver.lt(npmVersion, '3.0.0');
+    const npmVersion = execSync('npm --version').toString()
+    isNpm2 = semver.lt(npmVersion, '3.0.0')
   } catch (err) {
-    return;
+    return
   }
   if (!isNpm2) {
-    return;
+    return
   }
-  console.log(chalk.yellow('It looks like you are using npm 2.'));
+  console.log(chalk.yellow('It looks like you are using npm 2.'))
   console.log(
     chalk.yellow(
       'We suggest using npm 3 or Yarn for faster install times ' +
       'and less disk space usage.'
     )
-  );
-  console.log();
+  )
+  console.log()
 }
 
 function checkNodeVersion() {
@@ -255,10 +255,10 @@ function checkNodeVersion() {
     'node_modules',
     'tux-scripts',
     'package.json'
-  );
-  const packageJson = require(packageJsonPath);
+  )
+  const packageJson = require(packageJsonPath)
   if (!packageJson.engines || !packageJson.engines.node) {
-    return;
+    return
   }
 
   if (!semver.satisfies(process.version, packageJson.engines.node)) {
@@ -270,79 +270,82 @@ function checkNodeVersion() {
       ),
       process.version,
       packageJson.engines.node
-    );
-    process.exit(1);
+    )
+    process.exit(1)
   }
 }
 
 function checkAppName(appName: string) {
-  const validationResult = validateProjectName(appName);
+  const validationResult = validateProjectName(appName)
   if (!validationResult.validForNewPackages) {
     console.error(
-      `Could not create a project called ${chalk.red(`"${appName}"`)} because of npm naming restrictions:`
-    );
-    printValidationResults(validationResult.errors);
-    printValidationResults(validationResult.warnings);
-    process.exit(1);
+      `Could not create a project called ${chalk.red(`"${appName}"`)}` +
+      `because of npm naming restrictions:`
+    )
+    printValidationResults(validationResult.errors)
+    printValidationResults(validationResult.warnings)
+    process.exit(1)
   }
 
-  const dependencies = ['react', 'react-dom', 'tux'];
-  const devDependencies = ['tux-scripts'];
-  const allDependencies = dependencies.concat(devDependencies).sort();
+  const dependencies = ['react', 'react-dom', 'tux']
+  const devDependencies = ['tux-scripts']
+  const allDependencies = dependencies.concat(devDependencies).sort()
   if (allDependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
-        `We cannot create a project called ${chalk.green(appName)} because a dependency with the same name exists.\n` +
+        `We cannot create a project called ${chalk.green(appName)} because a dependency ` +
+        `with the same name exists.\n` +
         `Due to the way npm works, the following names are not allowed:\n\n`
       ) +
       chalk.cyan(allDependencies.map(depName => `  ${depName}`).join('\n')) +
       chalk.red('\n\nPlease choose a different project name.')
-    );
-    process.exit(1);
+    )
+    process.exit(1)
   }
 }
 
 function makeCaretRange(dependencies: {[key: string]: string}, name: string) {
-  const version = dependencies[name];
+  const version = dependencies[name]
 
   if (typeof version === 'undefined') {
-    console.error(chalk.red(`Missing ${name} dependency in package.json`));
-    process.exit(1);
+    console.error(chalk.red(`Missing ${name} dependency in package.json`))
+    process.exit(1)
   }
 
-  let patchedVersion = `^${version}`;
+  let patchedVersion = `^${version}`
 
   if (!semver.validRange(patchedVersion)) {
     console.error(
-      `Unable to patch ${name} dependency version because version ${chalk.red(version)} will become invalid ${chalk.red(patchedVersion)}`
-    );
-    patchedVersion = version;
+      `Unable to patch ${name} dependency version because version ${chalk.red(version)} will ` +
+      `become invalid ${chalk.red(patchedVersion)}`
+    )
+    patchedVersion = version
   }
 
-  dependencies[name] = patchedVersion;
+  dependencies[name] = patchedVersion
 }
 
 async function fixDependencies() {
-  const packagePath = path.join(process.cwd(), 'package.json');
-  const packageJson = require(packagePath);
+  const packagePath = path.join(process.cwd(), 'package.json')
+  const packageJson = require(packagePath)
 
   if (typeof packageJson.dependencies === 'undefined') {
-    console.error(chalk.red('Missing dependencies in package.json'));
-    process.exit(1);
+    console.error(chalk.red('Missing dependencies in package.json'))
+    process.exit(1)
   }
 
-  const packageVersion = packageJson.dependencies['tux-scripts'];
+  const packageVersion = packageJson.dependencies['tux-scripts']
 
   if (typeof packageVersion === 'undefined') {
-    console.error(chalk.red(`Unable to find tux-scripts in package.json`));
-    process.exit(1);
+    console.error(chalk.red(`Unable to find tux-scripts in package.json`))
+    process.exit(1)
   }
 
-  packageJson.devDependencies = packageJson.devDependencies || {};
-  packageJson.devDependencies['tux-scripts'] = packageVersion;
-  delete packageJson.dependencies['tux-scripts'];
+  packageJson.devDependencies = packageJson.devDependencies || {}
+  packageJson.devDependencies['tux-scripts'] = packageVersion
+  delete packageJson.dependencies['tux-scripts']
 
-  await fs.writeFile(packagePath, JSON.stringify(packageJson, null, 2));
+  await fs.writeFile(packagePath, JSON.stringify(packageJson, null, 2))
 }
 
 // If project only contains files generated by GH, it’s safe.
@@ -361,29 +364,29 @@ async function isSafeToCreateProjectIn(root: string) {
     '.hg',
     '.hgignore',
     '.hgcheck',
-  ];
+  ]
   const files = await fs.readdir(root)
-  return files.every(file => validFiles.indexOf(file) >= 0);
+  return files.every(file => validFiles.indexOf(file) >= 0)
 }
 
 function checkIfOnline(useYarn: boolean) {
   if (!useYarn) {
     // Don't ping the Yarn registry.
     // We'll just assume the best case.
-    return Promise.resolve(true);
+    return Promise.resolve(true)
   }
 
   return new Promise(resolve => {
     dns.lookup('registry.yarnpkg.com', err => {
-      resolve(err === null);
-    });
-  });
+      resolve(err === null)
+    })
+  })
 }
 
 function printValidationResults(results: string[]) {
   if (typeof results !== 'undefined') {
     results.forEach(error => {
-      console.error(chalk.red(`  *  ${error}`));
-    });
+      console.error(chalk.red(`  *  ${error}`))
+    })
   }
 }

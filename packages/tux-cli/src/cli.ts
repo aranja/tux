@@ -14,9 +14,11 @@ async function run() {
   }
 
   if (insideTuxProject) {
+    // tslint:disable-next-line:no-console
     console.log(`Inside ${chalk.cyan('tux')} project.`)
     require(scriptsPath)
   } else {
+    // tslint:disable-next-line:no-console
     console.log(`Not inside ${chalk.cyan('tux')} project.`)
     require('./new')
   }
