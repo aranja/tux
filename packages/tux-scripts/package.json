@@ -21,6 +21,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "cross-spawn": "^5.1.0",
     "fs-promise": "^2.0.2",
     "neutrino": "5.0.1",
     "neutrino-preset-tux": "^0.1.0-alpha",

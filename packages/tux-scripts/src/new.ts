@@ -20,7 +20,7 @@ function install(useYarn: boolean, dependencies: string[], verbose: boolean) {
     if (useYarn) {
       command = 'yarnpkg'
       args = ['add', '--exact']
-      [].push.apply(args, dependencies)
+      Array.prototype.push.apply(args, dependencies)
     } else {
       command = 'npm'
       args = ['install', '--save', '--save-exact'].concat(dependencies)
