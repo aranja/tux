@@ -7,12 +7,14 @@ import './styles.css'
 class Carousel extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
       currentIndex: 0,
     }
-    this.onDotClick = currentIndex => () => {
-      this.setState({ currentIndex })
-    }
+  }
+
+  onDotClick(currentIndex) {
+    this.setState({ currentIndex })
   }
 
   render() {
@@ -41,9 +43,12 @@ class Carousel extends React.Component {
         <div className="Carousel-indicator" style={{width: `${carouselItems && carouselItems.length*1.5}rem`}}>
           {(carouselItems && carouselItems.map((item, index) => {
             const isActive = index === this.state.currentIndex
-
             return (
-              <div key={index} className={classNames('Carousel-indicatorDot', isActive && 'is-active')} onClick={this.onDotClick(index)}></div>
+              <div
+                key={index}
+                className={classNames('Carousel-indicatorDot', isActive && 'is-active')}
+                onClick={() => this.onDotClick(index)}
+              />
             )
           }))}
         </div>

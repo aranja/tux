@@ -153,8 +153,7 @@ class TuxModal extends React.Component<TuxModalProps, State> {
             margin: 0;
             margin-left: auto;
             max-width: 650px;
-            height: 100vh;
-            overflow: auto;
+            min-height: 100vh;
             padding: 0;
             position: relative;
             width: 60%;

@@ -19,7 +19,8 @@ const publicUrl = process.env.PUBLIC_URL ? process.env.PUBLIC_URL :
 
 const adapter = createContentfulAdapter({
   space: 'n2difvpz16fj',
-  deliveryToken: 'cb34b8fc758364cdbe2b9f73f640ac6ce55311176f9699cf06a0c44325a27208',
+  accessToken: '61344f3579f7f80450ffc4bc7111624e1035c9588e9680c02519bce08bbbc3ca',
+  host: 'preview.contentful.com',
   clientId: '7074da10fd8b52237feeccead1462c5c898eaf58a69dc2df08c65b1b306553b6',
   redirectUri: publicUrl,
 })

@@ -9,7 +9,7 @@ const SellPoints = ({ sellPoints }) => (
       <div key={index} className="SellPoint">
         <EditModal model={point}>
           {point.fields.icon.asset && (
-            <img className="SellPoint-icon" src={`${point.fields.icon.asset.file.url}?w=256`} alt={point.fields.icon.title}/>
+            <img className="SellPoint-icon" src={`${point.fields.icon && point.fields.icon.asset.file.url}?w=256`} alt={point.fields.icon.title}/>
           )}
           <h1 className="SellPoint-title">{point.fields.title}</h1>
           <p className="SellPoint-copy">{point.fields.text}</p>

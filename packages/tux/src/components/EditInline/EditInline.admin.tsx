@@ -1,11 +1,14 @@
 import React from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 import DraftRenderer from './DraftRenderer'
 import { createEditable } from '../Editable/Editable'
+import deepEqual from 'deep-eql'
+import humanize from 'string-humanize'
 import { EditableProps } from '../../interfaces'
-import { editorStateFromRaw, editorStateToJSON, EditorState } from 'megadraft'
+import { DraftJS, editorStateFromRaw, EditorState } from 'megadraft'
 import { get, set } from '../../utils/accessors'
 
-export type Props = EditableProps & {
+interface Props extends EditableProps {
   onSave: (model: any) => Promise<any>,
   onLoad: (model: any) => void,
   placeholder: string,
@@ -16,9 +19,32 @@ export interface State {
   editorState: any,
 }
 
+function wrapChildren(children: any) {
+  if (typeof children === 'string') {
+    return <span>{children}</span>
+  } else if (Array.isArray(children) && children.length > 1) {
+    return <div>{children}</div>
+  } else {
+    return children
+  }
+}
+
 class EditInline extends React.Component<Props, State> {
-  state: State = {
-    editorState: editorStateFromRaw(get(this.props.model, this.props.field)),
+  constructor(props: Props, context: any) {
+    super(props, context)
+
+    const value = get(props.model, props.field)
+    let editorState
+    if (!value && props.children) {
+      const html = renderToStaticMarkup(wrapChildren(props.children))
+      const content = DraftJS.ContentState.createFromBlockArray(DraftJS.convertFromHTML(html))
+      editorState = DraftJS.EditorState.createWithContent(content)
+    } else {
+      editorState = editorStateFromRaw(value)
+    }
+    this.state = {
+      editorState,
+    }
   }
 
   private timer: number
@@ -26,11 +52,17 @@ class EditInline extends React.Component<Props, State> {
   private save = async () => {
     const { tux, model, field } = this.props
     const { editorState } = this.state
+    const oldValue = get(model, field)
+    const newValue = DraftJS.convertToRaw(editorState.getCurrentContent())
 
+    // TODO: Properly update props model after saving.
+    if (deepEqual(oldValue, newValue)) {
+      return
+    }
+
+    // TODO: Cache full model somehow.
     const fullModel = await tux.adapter.load(model)
-    const editorStateObj = JSON.parse(editorStateToJSON(editorState))
-    set(fullModel, field, editorStateObj)
-
+    set(fullModel, field, newValue)
     await tux.adapter.save(fullModel)
   }
 
@@ -42,15 +74,28 @@ class EditInline extends React.Component<Props, State> {
     this.timer = window.setTimeout(this.save, 2000)
   }
 
+  defaultPlaceholder() {
+    let { field } = this.props
+    if (typeof field === 'string') {
+      field = field.split('.')
+    }
+    return humanize(field[field.length - 1])
+  }
+
   render() {
+    const { isEditing, placeholder } = this.props
+    const { editorState } = this.state
+    if (!isEditing && !editorState.getCurrentContent().hasText()) {
+      return null
+    }
+
     return (
-      <div className={`EditInline${this.props.isEditing ? ' is-editing' : ''}`}>
+      <div className={`EditInline${isEditing ? ' is-editing' : ''}`}>
         <DraftRenderer
-          editorState={this.state.editorState}
+          editorState={editorState}
           onChange={this.onEditorChange}
-          readOnly={this.context.readOnly}
-          children={this.props.children}
-          placeholder={this.props.placeholder}
+          readOnly={!isEditing}
+          placeholder={placeholder || this.defaultPlaceholder()}
         />
         <style jsx>{`
           .EditInline.is-editing:hover {

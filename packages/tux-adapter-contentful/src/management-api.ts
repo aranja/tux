@@ -91,18 +91,19 @@ class ManagementApi {
     const url = `/spaces/${this.space}/${entityPath}/${id}`
     const newEntity = await this.put(url, { fields }, version)
 
-    if (this.deliveryApi) {
-      this.deliveryApi.override(this.formatForDelivery(newEntity))
-    }
-
     await this._publish(newEntity, entityPath)
     return newEntity
   }
 
-  _publish(entity: any, entityPath: string) {
+  async _publish(entity: any, entityPath: string) {
     const { id, version } = entity.sys
     const url = `/spaces/${this.space}/${entityPath}/${id}/published`
-    return this.put(url, null, version)
+    const savedEntity = await this.put(url, null, version)
+
+    if (this.deliveryApi) {
+      this.deliveryApi.override(this.formatForDelivery(savedEntity))
+    }
+    return savedEntity
   }
 
   createUpload(file: File): Promise<any> {

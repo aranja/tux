@@ -74,6 +74,6 @@ export default function toggleScroll(
   scrollElement.classList.toggle(className)
 }
 
-if (process.env.BROWSER !== false) {
-  // calculateScrollbarWidth()
+if (process.env.BROWSER) {
+  calculateScrollbarWidth()
 }

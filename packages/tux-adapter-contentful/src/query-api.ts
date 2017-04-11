@@ -31,10 +31,10 @@ class QueryApi {
   }
   private client: AxiosInstance
 
-  constructor(space: string, accessToken: string, subDomain: string) {
+  constructor(space: string, accessToken: string, host: string) {
     this.overrides = {}
     this.client = axios.create({
-      baseURL: `https://${subDomain}.contentful.com/spaces/${space}`,
+      baseURL: `https://${host}/spaces/${space}`,
       headers: {
         'authorization': `Bearer ${accessToken}`,
       },
@@ -92,7 +92,8 @@ class QueryApi {
     if (isLeaf) {
       if (item.sys && item.sys.type === 'Link') {
         const linkType = item.sys.linkType.toLowerCase()
-        item[linkType] = linkMap[item.sys.id]
+        item[linkType] = linkMap[item.sys.id] ||
+          (this.overrides[item.sys.id] && this.overrides[item.sys.id].fields)
       }
       return
     } else if (isArray) {

@@ -58,7 +58,11 @@ class TuxFab extends React.Component<any, State> {
   }
 
   handleLogin = () => {
-    this.context.tux.adapter.login()
+    if (this.state.user) {
+      this.context.tux.adapter.logout()
+    } else {
+      this.context.tux.adapter.login()
+    }
   }
 
   render() {
@@ -80,15 +84,9 @@ class TuxFab extends React.Component<any, State> {
         >
           <i className="icon icon-plus" />
         </a>
-        <a className="TuxFab-item" href="/" data-tooltip="Documentation">
-          <i className="icon icon-white_question" />
-        </a>
-        <a className="TuxFab-item" href="/" data-tooltip="Tux on Github">
-          <i className="icon icon-git" />
-        </a>
         <a
           onClick={this.handleLogin}
-          data-tooltip="Log out"
+          data-tooltip={user ? 'Log out' : 'Log in'}
           className="TuxFab-item TuxFab-signInOut">
           <i className="icon icon-user" />
         </a>

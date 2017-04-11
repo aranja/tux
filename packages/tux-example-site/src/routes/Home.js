@@ -31,10 +31,11 @@ const Home = ({ content, sellPoints, testimonial, carousel }) => (
             <button style={{
               backgroundColor: '#fff',
               border: '2px dashed #000',
+              boxSizing: 'border-box',
               color: '#444',
               cursor: 'pointer',
               fontSize: '16px',
-              margin: '20px',
+              margin: '20px 0',
               padding: '20px',
               textAlign: 'center',
               width: '100%'

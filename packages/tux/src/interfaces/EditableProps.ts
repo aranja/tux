@@ -4,7 +4,7 @@ interface EditableProps {
   children?: any,
   model: any,
   tux: TuxContext,
-  isEditing?: boolean,
+  isEditing: boolean,
 }
 
 export default EditableProps

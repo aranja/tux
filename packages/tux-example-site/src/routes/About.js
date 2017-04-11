@@ -32,8 +32,8 @@ const About = ({ content, gallery, pricetable, articles }) =>  (
         <Articles articles={articles} />
       </Section>
       <Section>
-        <H1><EditInline placeholder="PriceTable: Heading" field="fields.content.pricetableTitle" /></H1>
-        <H2><EditInline placeholder="PriceTable: Subtitle" field="fields.content.pricetableSubtitle" /></H2>
+        <H1><EditInline field="fields.content.pricetableTitle" /></H1>
+        <H2><EditInline field="fields.content.pricetableSubtitle" /></H2>
         <Pricetable pricetableItems={pricetable.items} />
       </Section>
     </Editable>
