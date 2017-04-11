@@ -17,10 +17,8 @@ export default (neutrino: Neutrino) => {
     }
   })
 
-  config.resolve.modules.add(MODULES)
   config.resolve.extensions.add('.jsx')
   config.resolve.alias.set('react-native', 'react-native-web')
-  config.resolveLoader.modules.add(MODULES)
   config.externals({
     'react/addons': true,
     'react/lib/ExecutionEnvironment': true,

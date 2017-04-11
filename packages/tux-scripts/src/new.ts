@@ -12,6 +12,36 @@ import path from 'path'
 import spawn from 'cross-spawn'
 import chalk from 'chalk'
 
+function install(useYarn: boolean, dependencies: string[], verbose: boolean) {
+  return new Promise((resolve, reject) => {
+    let command: string;
+    let args: string[];
+    if (useYarn) {
+      command = 'yarnpkg';
+      args = ['add', '--exact'];
+      [].push.apply(args, dependencies);
+    } else {
+      command = 'npm';
+      args = ['install', '--save', '--save-exact'].concat(dependencies);
+    }
+
+    if (verbose) {
+      args.push('--verbose');
+    }
+
+    const child = spawn(command, args, { stdio: 'inherit' });
+    child.on('close', (code: number) => {
+      if (code !== 0) {
+        reject({
+          command: `${command} ${args.join(' ')}`,
+        });
+        return;
+      }
+      resolve();
+    });
+  });
+}
+
 const init = async (
   appPath: string,
   appName: string,
@@ -33,10 +63,9 @@ const init = async (
 
   // Setup the script rules
   appPackage.scripts = {
-    start: 'react-scripts start',
-    build: 'react-scripts build',
-    test: 'react-scripts test --env=jsdom',
-    eject: 'react-scripts eject',
+    start: 'tux-scripts start',
+    build: 'tux-scripts build',
+    serve: 'tux-scripts serve',
   };
 
   await fs.writeFile(
@@ -53,7 +82,7 @@ const init = async (
   }
 
   // Copy the files for the user
-  const templatePath = path.join(ownPath, 'template');
+  const templatePath = path.join(ownPath, 'template', 'new');
   if (await fs.exists(templatePath)) {
     await fs.copy(templatePath, appPath);
   } else {
@@ -63,36 +92,10 @@ const init = async (
     return;
   }
 
-  // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
-  // See: https://github.com/npm/npm/issues/1862
-  try {
-    fs.move(
-      path.join(appPath, 'gitignore'),
-      path.join(appPath, '.gitignore'),
-      []
-    )
-  } catch (err) {
-    // Append if there's already a `.gitignore` file there
-    if (err.code === 'EEXIST') {
-      const data = await fs.readFile(path.join(appPath, 'gitignore'));
-      await fs.appendFile(path.join(appPath, '.gitignore'), data);
-      await fs.unlink(path.join(appPath, 'gitignore'));
-    } else {
-      throw err;
-    }
-  }
-
-  let command;
-  let args;
-
-  if (useYarn) {
-    command = 'yarnpkg';
-    args = ['add'];
-  } else {
-    command = 'npm';
-    args = ['install', '--save', verbose && '--verbose'].filter(e => e);
-  }
-  args.push('react', 'react-dom');
+  let dependencies = [
+    'tux',
+    'tux-adapter-contentful',
+  ];
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
@@ -101,13 +104,16 @@ const init = async (
   );
   if (await fs.exists(templateDependenciesPath)) {
     const templateDependencies = require(templateDependenciesPath).dependencies;
-    args = args.concat(
+    dependencies = dependencies.concat(
       Object.keys(templateDependencies).map(key => {
         return `${key}@${templateDependencies[key]}`;
       })
     );
     await fs.unlink(templateDependenciesPath);
   }
+  console.log(`Installing dependencies...`);
+  console.log(dependencies.join(', '));
+  await install(useYarn, dependencies, verbose);
 
   // Display the most elegant way to cd.
   // This needs to handle an undefined originalDirectory for
@@ -134,17 +140,11 @@ const init = async (
   );
   console.log('    Bundles the app into static files for production.');
   console.log();
-  console.log(chalk.cyan(`  ${displayedCommand} test`));
-  console.log('    Starts the test runner.');
-  console.log();
   console.log(
-    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}eject`)
+    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}serve`)
   );
   console.log(
-    '    Removes this tool and copies build dependencies, configuration files'
-  );
-  console.log(
-    '    and scripts into the app directory. If you do this, you can’t go back!'
+    '    Starts a server for the built output.'
   );
   console.log();
   console.log('We suggest that you begin by typing:');

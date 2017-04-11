@@ -20,6 +20,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fs-promise": "^2.0.2",
     "neutrino": "5.0.1",
     "neutrino-preset-tux": "0.1.0",
     "optional": "^0.1.3",

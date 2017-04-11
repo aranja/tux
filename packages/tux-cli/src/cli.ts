@@ -5,8 +5,13 @@ import { join } from 'path'
 
 async function run() {
   const rootPath = await pkgDir()
-  const scriptsPath = join(rootPath, 'node_modules', '.bin', 'tux-scripts')
-  const insideTuxProject = await fs.exists(scriptsPath)
+  const isInPackage = rootPath !== null
+  let insideTuxProject = false
+
+  if (isInPackage) {
+    const scriptsPath = join(rootPath, 'node_modules', '.bin', 'tux-scripts')
+    insideTuxProject = await fs.exists(scriptsPath)
+  }
 
   if (insideTuxProject) {
     console.log(`Inside ${chalk.cyan('tux')} project.`)
@@ -16,3 +21,5 @@ async function run() {
     require('./new')
   }
 }
+
+run()

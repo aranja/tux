@@ -47,18 +47,18 @@ import dns from 'dns'
 
 const argv = (yargs as Argv)
   .option('verbose', { describe: 'Print additional logs' })
-  .option('tuxVersion', { describe: 'Use a non-standard version of tux' })
-  .command('new <project-directory>', 'Create a new tux project')
+  .option('version', { describe: 'Use a non-standard version of tux' })
+  .command('new', 'Create a new tux project')
   .demandCommand(1, 'Please specify a command.\nUSAGE:  $0 <command>')
   .help('help')
   .argv
 
-const projectDir = argv._[0];
+const projectDir = argv._[1];
 const root = path.resolve(projectDir);
 const appName = path.basename(root);
 createApp(
   argv.verbose,
-  argv.tuxVersion
+  argv.version,
 ).catch(onError);
 
 async function createApp(verbose: boolean, version: string) {
@@ -67,7 +67,7 @@ async function createApp(verbose: boolean, version: string) {
   const isSafe = await isSafeToCreateProjectIn(root);
   if (!isSafe) {
     console.log(
-      `The directory ${chalk.green(name)} contains files that could conflict.`
+      `The directory ${chalk.green(appName)} contains files that could conflict.`
     );
     console.log('Try using a new directory name.');
     process.exit(1);
@@ -187,9 +187,6 @@ function install(useYarn: boolean, dependencies: string[], verbose: boolean, isO
 
 async function run(appName: string, version: string, verbose: boolean) {
   const allDependencies = [
-    'react',
-    'react-dom',
-    appendVersion('tux', version),
     appendVersion('tux-scripts', version),
   ];
 
@@ -217,10 +214,10 @@ async function run(appName: string, version: string, verbose: boolean) {
     process.cwd(),
     'node_modules',
     'tux-scripts',
-    'init'
+    'new'
   );
   const init = require(scriptsPath);
-  await init(appName, verbose);
+  await init(root, appName, verbose);
 }
 
 function appendVersion(packageToInstall: string, version: string) {
@@ -344,10 +341,6 @@ async function fixDependencies() {
   packageJson.devDependencies = packageJson.devDependencies || {};
   packageJson.devDependencies['tux-scripts'] = packageVersion;
   delete packageJson.dependencies['tux-scripts'];
-
-  makeCaretRange(packageJson.dependencies, 'tux');
-  makeCaretRange(packageJson.dependencies, 'react');
-  makeCaretRange(packageJson.dependencies, 'react-dom');
 
   await fs.writeFile(packagePath, JSON.stringify(packageJson, null, 2));
 }

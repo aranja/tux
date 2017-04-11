@@ -9,7 +9,7 @@ import nodeExternals from 'webpack-node-externals'
 import { join } from 'path'
 import { path } from 'ramda'
 
-const MODULES = join(__dirname, 'node_modules')
+const MODULES = join(__dirname, '..', '..', 'node_modules')
 
 export default (neutrino: Neutrino) => {
   const { config } = neutrino
