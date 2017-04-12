@@ -1,8 +1,14 @@
 # TUX
 
-[![CircleCI](https://circleci.com/gh/aranja/tux.svg?style=svg&circle-token=2d451777f7f436fcbc804480908ddd288253d334)](https://circleci.com/gh/aranja/tux)
+Create content-driven websites with React.
 
-> **Note:** tux is in active development and the API is subject to change drastically before it hits version `1.0.0`.
+Tux allows you to focus on building the website by taking care of Webpack, SSR and performance.
+
+If your website is fetching content from an api-driven CMS like Contentful, Tux has an integrated admin where the content can be edited inline.
+
+> **Note:** Tux is in active development and the API is subject to change drastically before it hits version `1.0.0`.
+
+[![CircleCI branch](https://img.shields.io/circleci/project/github/aranja/tux/master.svg)](https://circleci.com/gh/aranja/tux) [![npm](https://img.shields.io/npm/v/tux.svg)](https://www.npmjs.com/package/tux) [![Slack channel](https://img.shields.io/badge/slack-%23tux%20%40%20jsis-61dafb.svg)](http://jsis-slackin.herokuapp.com/)
 
 ## Get started
 
@@ -16,39 +22,30 @@ npm start
 
 Then open [http://localhost:5000/](http://localhost:5000/) to see your app.
 
+## Documentation
+
+First read the [introduction](/docs/introduction.md). Then take a look at [the example site](/packages/tux-example-site/).
+
 ## Development
 
 ```bash
 # Install shared dependencies
 npm install
 
-# Build packages and watch for changes
+# Build packages for development and watch for changes
 npm run watch
 
-# Run example site
+# Run example site.
+# Note that currently, the admin is 
 cd packages/tux-example-site && npm start
-```
 
-### QA
-
-Testing:
-```bash
+# Run tests
 npm test
-```
 
-Lint:
-```bash
+# Lint
 npm run lint
 ```
 
-### Other
+## License
 
-You can access lerna directly with:
-```bash
-npm run lerna
-```
-
-To bootstrap manually, run:
-```bash
-npm run bootstrap
-```
+MIT
