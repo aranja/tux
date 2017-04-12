@@ -6,7 +6,7 @@ There are three parts to creating a great content-driven website with React and 
 * [Rendering](#rendering)
 * [Fetching data](#fetching-data)
 
-## Build setup {#build-setup}
+## Build setup
 
 Tux uses [Webpack](https://webpack.js.org/) to bundle your website for the browser as well as server rendering. Configuration is done with [Neutrino](https://neutrino.js.org/). 
 
