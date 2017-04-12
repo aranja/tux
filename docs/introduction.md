@@ -4,7 +4,7 @@
 
 Tux is a open source framework that allows us, as developers, to hand over **ReactJS-powered**, **server rendered**, web applications to our customers while still giving them the freedom over their content as if they were using a familiar content management system (CMS) like Wordpress or Contentful.
 
-Tux does this via _Adapters_ and out-of-the-box Tux offers adapters for Contentful and {{CMS}}.
+Tux does this via content _Adapters_. Out-of-the-box Tux offers an adapter for [Contentful](https://www.contentful.com/).
 
 See it in action by checking out our [demo video]({{video_url}}) or by installing Tux and playing around with the demo page.
 
