@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { get } from '../../utils/accessors'
 import { input } from '../../theme'
@@ -16,7 +17,7 @@ export interface ImageFieldProps {
 
 class ImageField extends React.Component<ImageFieldProps, any> {
   static contextTypes = {
-    tux: React.PropTypes.object,
+    tux: PropTypes.object,
   }
 
   constructor(props: ImageFieldProps) {

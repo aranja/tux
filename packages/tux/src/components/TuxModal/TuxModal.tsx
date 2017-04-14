@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { Theme, input, button } from '../../theme'
 import { fade } from '../../utils/color'
@@ -24,7 +25,7 @@ export interface TuxModalProps {
 
 class TuxModal extends React.Component<TuxModalProps, State> {
   static contextTypes = {
-    tux: React.PropTypes.object,
+    tux: PropTypes.object,
   }
 
   state: State = {

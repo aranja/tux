@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import ModalContainer, { openModal } from '../TuxModalContainer'
 import TuxFab from '../TuxFab'
 import TuxModal from '../TuxModal'
@@ -13,10 +14,10 @@ export interface TuxProviderProps {
 
 class TuxProvider extends Component<TuxProviderProps, any> {
   static childContextTypes = {
-    tux: React.PropTypes.shape({
-      isEditing: React.PropTypes.bool.isRequired,
-      editModel: React.PropTypes.func.isRequired,
-      adapter: React.PropTypes.object.isRequired,
+    tux: PropTypes.shape({
+      isEditing: PropTypes.bool.isRequired,
+      editModel: PropTypes.func.isRequired,
+      adapter: PropTypes.object.isRequired,
     }),
   }
 

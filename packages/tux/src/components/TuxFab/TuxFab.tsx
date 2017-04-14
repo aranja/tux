@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { lighten, fade } from '../../utils/color'
 import { Theme } from '../../theme'
@@ -20,7 +21,7 @@ const FabEase = '0,.62,.45,1.13'
 
 class TuxFab extends React.Component<any, State> {
   static contextTypes = {
-    tux: React.PropTypes.object,
+    tux: PropTypes.object,
   }
 
   state: State = {
