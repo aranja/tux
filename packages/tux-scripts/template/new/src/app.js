@@ -14,7 +14,7 @@ const publicUrl = process.env.PUBLIC_URL ? process.env.PUBLIC_URL :
 // Get your Contentful tokens from https://app.contentful.com/account/profile/developers/applications
 const adapter = createContentfulAdapter({
   space: 'CHANGE_ME',
-  deliveryToken: 'CHANGE_ME',
+  accessToken: 'CHANGE_ME',
   clientId: 'CHANGE_ME',
   redirectUri: publicUrl,
 })
