@@ -1,4 +1,5 @@
 import React, { ComponentClass, StatelessComponent } from 'react'
+import PropTypes from 'prop-types'
 import { EditableProps } from '../../interfaces'
 
 export interface State {
@@ -13,12 +14,12 @@ export function createEditable<OriginalProps>() {
   ): ComponentClass<EditableProps> {
     class Editable extends React.Component<OriginalProps & EditableProps, State> {
       static contextTypes = {
-        tux: React.PropTypes.object,
-        tuxModel: React.PropTypes.object,
+        tux: PropTypes.object,
+        tuxModel: PropTypes.object,
       }
 
       static childContextTypes = {
-        tuxModel: React.PropTypes.object,
+        tuxModel: PropTypes.object,
       }
 
       getChildContext() {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import adminOnly from '../../utils/adminOnly'
 
 export interface TuxProviderProps {
@@ -7,10 +8,10 @@ export interface TuxProviderProps {
 
 class TuxProvider extends Component<TuxProviderProps, any> {
   static childContextTypes = {
-    tux: React.PropTypes.shape({
-      isEditing: React.PropTypes.bool.isRequired,
-      editModel: React.PropTypes.func.isRequired,
-      adapter: React.PropTypes.object.isRequired,
+    tux: PropTypes.shape({
+      isEditing: PropTypes.bool.isRequired,
+      editModel: PropTypes.func.isRequired,
+      adapter: PropTypes.object.isRequired,
     }),
   }
 
