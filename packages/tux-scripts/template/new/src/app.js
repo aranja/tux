@@ -11,11 +11,11 @@ const publicUrl = process.env.PUBLIC_URL ? process.env.PUBLIC_URL :
   process.env.SERVER ? 'https://localhost:3000' :
     `${location.protocol}//${location.host}/`
 
-// Get your Contentful tokens from https://app.contentful.com/account/profile/developers/applications
+// Get your Contentful clientId (application Uid) from https://app.contentful.com/account/profile/developers/applications
 const adapter = createContentfulAdapter({
-  space: 'CHANGE_ME',
-  accessToken: 'CHANGE_ME',
-  clientId: 'CHANGE_ME',
+  space: process.env.TUX_CONTENTFUL_SPACE_ID,
+  accessToken: process.env.TUX_CONTENTFUL_ACCESS_TOKEN,
+  clientId: process.env.TUX_CONTENTFUL_CLIENT_ID,
   redirectUri: publicUrl,
 })
 
