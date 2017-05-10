@@ -17,7 +17,7 @@
     "test": "../../node_modules/.bin/jest"
   },
   "peerDependencies": {
-    "react": "15.4.2"
+    "react": "^15.4.2"
   },
   "files": [
     "es",
