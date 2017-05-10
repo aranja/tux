@@ -13,6 +13,8 @@
     "neutrino": "5.0.1",
     "neutrino-preset-tux": "^0.1.1",
     "pretty-error": "^2.0.2",
+    "react": "^15.5.2",
+    "react-dom": "^15.5.2",
     "react-chain": "^0.3.0",
     "react-chain-helmet": "^0.3.0",
     "react-chain-history": "^0.3.0",
