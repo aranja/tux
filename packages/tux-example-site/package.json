@@ -30,6 +30,8 @@
   "scripts": {
     "start": "PORT=3000 HTTPS=true tux-scripts start",
     "build": "tux-scripts build",
+    "now-start": "tux-scripts serve",
+    "now-build": "tux-scripts build --admin",
     "serve": "tux-scripts serve"
   },
   "tux": {
