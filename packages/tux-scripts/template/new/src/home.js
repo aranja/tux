@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+import tuxLogo from './tux.svg';
 
 const Home = () => {
   return (
-    <h1>Welcome to tux</h1>
-  )
-}
+    <div className="Tux-get-started">
+      <img src={tuxLogo} />
+      <p>Edit app.js to get started</p>
+    </div>
+  );
+};
 
-export default Home
+export default Home;
