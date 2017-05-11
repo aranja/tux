@@ -24,7 +24,7 @@ export default class extends Document {
     let helmet = this.props.helmet ||
       this.props.headProps && this.props.headProps.helmet
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           {helmet && [
             helmet.title.toComponent(),
