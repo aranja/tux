@@ -67,8 +67,16 @@ class TuxFab extends React.Component<any, State> {
     }
   }
 
+  handleEdit = () => {
+    if (!this.state.user) {
+      this.context.tux.adapter.login()
+    } else {
+      this.props.onClickEdit();
+    }
+  }
+
   render() {
-    const { isEditing, overlayIsActive, onClickEdit } = this.props
+    const { isEditing, overlayIsActive } = this.props
     const { user, isVisible, isHovered } = this.state
     const classes = classNames('TuxFab', {
       'is-active': isEditing,
@@ -82,7 +90,7 @@ class TuxFab extends React.Component<any, State> {
       <div className={classes} onMouseLeave={this.handleMouseLeave}>
         <a
           className="TuxFab-item TuxFab-mainItem"
-          onClick={onClickEdit}
+          onClick={this.handleEdit}
           onMouseOver={this.handleMouseOver}
         >
           <IconToShow />
