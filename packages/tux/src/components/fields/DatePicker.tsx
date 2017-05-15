@@ -4,7 +4,7 @@ import moment from 'moment'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import { Theme, input, button } from '../../theme'
 import { tuxDatePickerStyles } from './DatePicker.styles'
-import { FaCalendar  } from 'react-icons/lib/fa'
+import { FaCalendar } from 'react-icons/lib/fa'
 import { fade } from '../../utils/color'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
@@ -96,14 +96,14 @@ class DatePicker extends Component<any, State> {
           onFocus={this.handleInputFocus}
           onBlur={this.handleInputBlur}>
           <input
-            id="dateInput"
+            id={id}
             type="text"
             ref={(el) => {this.input = el}}
             placeholder="Select a date"
             value={value}
             onChange={(event) => this.onDateChange(event.target.value)}
           />
-          <label className="TuxDayPicker-btn" htmlFor="dateInput"><FaCalendar /></label>
+          <label className="TuxDayPicker-btn" htmlFor={id}><FaCalendar /></label>
           { showOverlay &&
             <div className="TuxDayPicker-overlay">
               <DayPicker

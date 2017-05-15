@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FaImage  } from 'react-icons/lib/fa'
+import { FaImage } from 'react-icons/lib/fa'
 import { button } from '../../theme'
 import { lighten } from '../../utils/color'
 
