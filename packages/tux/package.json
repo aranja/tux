@@ -1,6 +1,6 @@
 {
   "name": "tux",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "React app with CMS integration and SSR.",
   "bugs": {
     "url": "https://github.com/aranja/tux/issues"
@@ -17,7 +17,7 @@
     "test": "../../node_modules/.bin/jest"
   },
   "peerDependencies": {
-    "react": "15.4.2"
+    "react": "^15.4.2"
   },
   "files": [
     "es",

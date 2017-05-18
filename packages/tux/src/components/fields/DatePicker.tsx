@@ -4,6 +4,7 @@ import moment from 'moment'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import { Theme, input, button } from '../../theme'
 import { tuxDatePickerStyles } from './DatePicker.styles'
+import { FaCalendar } from 'react-icons/lib/fa'
 import { fade } from '../../utils/color'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
@@ -95,12 +96,14 @@ class DatePicker extends Component<any, State> {
           onFocus={this.handleInputFocus}
           onBlur={this.handleInputBlur}>
           <input
+            id={id}
             type="text"
             ref={(el) => {this.input = el}}
             placeholder="Select a date"
             value={value}
             onChange={(event) => this.onDateChange(event.target.value)}
           />
+          <label className="TuxDayPicker-btn" htmlFor={id}><FaCalendar /></label>
           { showOverlay &&
             <div className="TuxDayPicker-overlay">
               <DayPicker
@@ -130,13 +133,14 @@ class DatePicker extends Component<any, State> {
         }
 
         .TuxDayPicker {
+          display: flex;
           position: relative;
         }
 
         .TuxDayPicker input {
           appearance: none;
           border: 1px solid ${input.border};
-          border-radius: 3px;
+          border-radius: 3px 0 0 3px;
           color: ${Theme.textDark};
           cursor: pointer;
           font-family: -apple-system, BlinkMacSystemFont, "Source Sans Pro", "sans-serif";
@@ -147,7 +151,6 @@ class DatePicker extends Component<any, State> {
           width: 260px;
         }
 
-
         .TuxDayPicker::before,
         .TuxDayPicker::after {
           content: "";
@@ -156,23 +159,15 @@ class DatePicker extends Component<any, State> {
           pointer-events: none;
         }
 
-        .TuxDayPicker::after {
-          bottom: 0;
-          content: "\\F4C5";
-          color: ${button.text};
-          font-size: 16px;
-          height: 16px;
-          line-height: 1;
-          margin: auto;
-          right: 8px;
-          top: 0;
-        }
-
-        .TuxDayPicker::before {
+        .TuxDayPicker-btn {
+          align-items: center;
           background: ${button.background};
           border-radius: 0 3px 3px 0;
           border: 1px solid ${input.border};
+          border-left: 0;
           bottom: 0;
+          display: flex;
+          justify-content: center;
           right: 0;
           top: 0;
           transition: all 0.25s;

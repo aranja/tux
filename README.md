@@ -1,4 +1,4 @@
-# TUX
+<img height="250" alt="Tux logo" src="https://cloud.githubusercontent.com/assets/8494120/25946962/d72545b2-363c-11e7-9fee-9de03aa06b6a.png">
 
 Create content-driven websites with React.
 
