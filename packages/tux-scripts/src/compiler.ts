@@ -20,21 +20,27 @@ export async function run(command: Command, options: Options) {
   return Promise.all(builders)
 }
 
-function runNeutrino(command: Command, middleware: Middleware, options: any) {
+async function runNeutrino(command: Command, middleware: Middleware, options: any) {
   const neutrino = new Neutrino(options)
+
   neutrino.use(middleware)
 
-  return (
-    neutrino.run(command)
+  if (options.neutrino.use) {
+    await neutrino.requiresAndUses(options.neutrino.use).promise()
+  }
+
+  const result = await neutrino.run(command)
       .promise()
       .catch(err => { throw err[0] })
-  )
+
+  return result
 }
 
 async function getOptions(options: Options) {
   const { host, port, admin } = options
   const cwd = process.cwd()
   const pkg = optional(join(cwd, 'package.json')) || {}
+  const neutrino = pkg.neutrino || {}
   let document = pathOr(null, ['tux', 'document'], pkg)
   if (document) {
     document = resolve(document)
@@ -53,5 +59,6 @@ async function getOptions(options: Options) {
     html: {
       document,
     },
-  }
+    neutrino,
+  };
 }
