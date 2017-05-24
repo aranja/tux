@@ -1,6 +1,6 @@
 {
   "name": "create-tux-app",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "license": "MIT",
   "description": "yarn create tux-app <name>",
   "keywords": [
@@ -16,7 +16,7 @@
     "url": "git+https://github.com/aranja/tux.git"
   },
   "dependencies": {
-    "tux-cli": "^0.1.2",
-    "execa": "^0.6.3"
+    "execa": "^0.6.3",
+    "tux-cli": "^0.1.2"
   }
 }
