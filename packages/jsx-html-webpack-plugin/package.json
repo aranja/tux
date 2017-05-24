@@ -1,6 +1,6 @@
 {
   "name": "jsx-html-webpack-plugin",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Creates html files from jsx components.",
   "repository": "aranja/tux",
   "license": "MIT",
