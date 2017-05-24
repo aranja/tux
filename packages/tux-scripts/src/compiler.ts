@@ -8,27 +8,32 @@ import { Options } from './options'
 
 type Command = 'inspect' | 'build' | 'start'
 
-export async function run(command: Command, options: Options) {
-  const neutrinoOptions = await getOptions(options)
+export async function run(command: Command, args: Options) {
+  const options = await getOptions(args)
   const builders = []
 
-  builders.push(runNeutrino(command, tuxStaticPreset, neutrinoOptions))
-  if (options.ssr) {
-    builders.push(runNeutrino(command, tuxSsrPreset, neutrinoOptions))
+  builders.push(runNeutrino(command, tuxStaticPreset, options))
+  if (args.ssr) {
+    builders.push(runNeutrino(command, tuxSsrPreset, options))
   }
 
   return Promise.all(builders)
 }
 
-function runNeutrino(command: Command, middleware: Middleware, options: any) {
-  const neutrino = new Neutrino(options)
+async function runNeutrino(command: Command, middleware: Middleware, options: any) {
+  const neutrino = new Neutrino(options.neutrinoOptions)
+
   neutrino.use(middleware)
 
-  return (
-    neutrino.run(command)
+  if (options.use) {
+    await neutrino.requiresAndUses(options.use).promise()
+  }
+
+  const result = await neutrino.run(command)
       .promise()
       .catch(err => { throw err[0] })
-  )
+
+  return result
 }
 
 async function getOptions(options: Options) {
@@ -41,17 +46,22 @@ async function getOptions(options: Options) {
   }
 
   return {
-    config: {
-      devServer: {
-        host,
-        port,
+    use: pathOr([], ['neutrino', 'use'], pkg).concat(options.use),
+    neutrinoOptions: {
+      tux: {
+        admin,
       },
-    },
-    tux: {
-      admin,
-    },
-    html: {
-      document,
-    },
+      html: {
+        document,
+      },
+      ...pathOr({}, ['neutrino', 'options'], pkg),
+      config: {
+        devServer: {
+          host,
+          port,
+        },
+        ...pathOr({}, ['neutrino', 'config'], pkg),
+      },
+    }
   }
 }

@@ -6,14 +6,15 @@ import { CliOptions } from '../options'
 export default async (options: CliOptions) => {
   const {
     ssr = true,
-    admin = false,
+    admin = !!process.env.ADMIN,
+    use,
   } = options
-  process.env.NODE_ENV = process.env.NODE_ENV || 'production'
+  process.env.NODE_ENV = options.env || process.env.NODE_ENV || 'production'
 
   const spinner = ora('Building project').start()
   let result
   try {
-    result = await run('build', { ssr, admin }) as Stats[]
+    result = await run('build', { ssr, admin, use }) as Stats[]
   } catch (err) {
     spinner.fail('Building project failed')
     throw err

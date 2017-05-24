@@ -28,6 +28,7 @@ declare module 'neutrino' {
     run(command: 'start'): Future<Compiler>
     run(command: 'inspect'): Future<string>
     run(command: 'build' | 'start' | 'inspect'): Future<Stats | Compiler | string>
+    requiresAndUses(middleware: string[]): Future<any>
   }
 
   export function run(command: string, middleware: any[], options: Options | any): Future<any>

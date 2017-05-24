@@ -25,7 +25,20 @@ On top of this, Tux adds:
 * Environment variables to detect BROWSER, SERVER and ADMIN builds and remove unused code.
 * Automatic creation of HTML pages using a [React Document](https://www.npmjs.com/package/react-document) component.
 
-**Note:** Tux does not currently support additional Neutrino presets or configuration in package.json. Check out [the issue](https://github.com/aranja/tux/issues/104) for information and progress.
+Tux supports additional Neutrino presets in package.json.
+
+```json
+{
+  "neutrino": {
+    "use": [
+      "neutrino-preset-something"
+    ]
+  }
+}
+```
+
+**Note:** Tux does not currently support Neutrino configuration in package.json. Check out [the issue](https://github.com/aranja/tux/issues/104) for information and progress.
+
 
 ## Rendering
 
