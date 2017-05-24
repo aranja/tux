@@ -44,7 +44,7 @@ Your app is ready to be deployed!
 ### `npm start-server`
 
 Builds and runs the app with server-side rendering.<br>
-Open [http://localhost:5000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
 
 If you edit files, you have to restart the command.
 

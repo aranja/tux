@@ -14,7 +14,7 @@ class Server {
 
   constructor(options: Partial<ServerOptions>) {
     this.options = {
-      port: options.port || process.env.PORT || 3000,
+      port: options.port || process.env.PORT || 5000,
       host: options.host || 'localhost',
       buildPath: options.buildPath || join(process.cwd(), 'build'),
     }
