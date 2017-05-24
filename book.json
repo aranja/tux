@@ -1,0 +1,14 @@
+{
+  "title": "Tux",
+  "root": "./docs",
+  "plugins": ["edit-link", "prism", "-highlight", "github", "anchorjs"],
+  "pluginsConfig": {
+    "edit-link": {
+      "base": "https://github.com/aranja/tux/tree/master/docs",
+      "label": "Edit page"
+    },
+    "github": {
+      "url": "https://github.com/aranja/tux/"
+    }
+  }
+}

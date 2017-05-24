@@ -1,20 +1,21 @@
 {
   "name": "jsx-html-webpack-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Creates html files from jsx components.",
-  "repository": "aranja/tux-next",
+  "repository": "aranja/tux",
   "license": "MIT",
   "engines": {
     "node": ">=4"
   },
   "dependencies": {
-    "babel-register": "^6.22.0",
-    "html-minifier": "^3.3.0",
-    "pretty-error": "^2.0.2"
+    "html-webpack-plugin": "^2.28.0",
+    "loader-utils": "^1.1.0",
+    "lodash": "^4.17.4",
+    "react-document": "^0.5.0"
   },
   "peerDependencies": {
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
-    "webpack": "1 || ^2"
+    "react": "15",
+    "react-dom": "15",
+    "webpack": "^2"
   }
 }

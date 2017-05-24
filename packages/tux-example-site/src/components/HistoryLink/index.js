@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import PropTypes from 'prop-types'
 import type { History } from 'utilities/typedefs'
 
 function isLeftClickEvent(event) {
@@ -26,8 +27,8 @@ class HistoryLink extends React.Component {
 
   props : Props
 
-  constructor(props) {
-    super(props)
+  constructor(props, context) {
+    super(props, context)
     this.handleClick = this.handleClick.bind(this)
   }
 
@@ -95,7 +96,7 @@ class HistoryLink extends React.Component {
   }
 }
 HistoryLink.contextTypes = {
-  history: React.PropTypes.object,
+  history: PropTypes.object.isRequired,
 }
 
 HistoryLink.defaultProps = {

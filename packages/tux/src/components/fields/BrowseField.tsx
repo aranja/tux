@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { FaImage } from 'react-icons/lib/fa'
 import { button } from '../../theme'
 import { lighten } from '../../utils/color'
 
@@ -26,6 +27,7 @@ class BrowseField extends Component<any, any> {
           aria-label="Browse for files"
           htmlFor={id}>
             Browse for files
+            <FaImage className="BrowseField-icon" />
         </label>
         <input
           className="BrowseField-fileInput"
@@ -42,6 +44,11 @@ class BrowseField extends Component<any, any> {
             height: 0;
             width: 0;
             overflow: hidden;
+          }
+
+          .BrowseField-icon {
+            margin-bottom: 1px;
+            margin-left: 6px;
           }
 
           .BrowseField-button {
@@ -64,13 +71,7 @@ class BrowseField extends Component<any, any> {
           }
 
           .BrowseField-button:hover {
-            background: ${lighten(button.background, 0.2)}
-          }
-
-          .BrowseField-button::before {
-            content: "\\f068";
-            font-family: "mfg_labs_iconsetregular";
-            padding-right: 10px;
+            background: ${lighten(button.background, 0.2)};
           }
         `}</style>
       </div>

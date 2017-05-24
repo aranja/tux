@@ -1,54 +1,55 @@
-import React from 'react'
-import EditableInline from './EditableInline'
-import EditableModal from './EditableModal'
+import React, { ComponentClass, StatelessComponent } from 'react'
+import PropTypes from 'prop-types'
+import { EditableProps } from '../../interfaces'
 
-export interface EditableProps {
-  model: any,
-  field: string | Array<string>,
-  onChange: Function,
-  children: any,
-  className: string,
-  isLoggedIn: boolean,
+export interface State {
+  readOnly: boolean,
 }
 
-class Editable extends React.Component<EditableProps, any> {
-  static contextTypes = {
-    tux: React.PropTypes.object,
-  }
+export function createEditable<OriginalProps>() {
+  return function editable(
+    Editor:
+      ComponentClass<OriginalProps & EditableProps> |
+      StatelessComponent<OriginalProps & EditableProps>
+  ): ComponentClass<EditableProps> {
+    class Editable extends React.Component<OriginalProps & EditableProps, State> {
+      static contextTypes = {
+        tux: PropTypes.object,
+        tuxModel: PropTypes.object,
+      }
 
-  state = {
-    isLoggedIn: false,
-  }
+      static childContextTypes = {
+        tuxModel: PropTypes.object,
+      }
 
-  async componentDidMount() {
-    const user = await this.context.tux.adapter.currentUser()
+      getChildContext() {
+        return {
+          tuxModel: this.props.model || this.context.tuxModel,
+        }
+      }
 
-    if (user) {
-      this.setState({
-        isLoggedIn: true,
-      })
+      render() {
+        const { model } = this.props
+        const { tux, tuxModel } = this.context
+        return (
+          <Editor
+            {...this.props}
+            model={model || tuxModel || {}}
+            isEditing={tux.isEditing}
+            tux={tux}
+          />
+        )
+      }
     }
-  }
 
-  render() {
-    const { children, field, model, onChange, className } = this.props
-    const { isLoggedIn } = this.state
-    const isEditing = isLoggedIn && this.context.tux && this.context.tux.isEditing
-    if (field) {
-      return <EditableInline model={model} field={field} isLoggedIn={isLoggedIn}/>
-    }
-
-    return (
-      <EditableModal
-        className={className}
-        model={model}
-        onChange={onChange}
-        isLoggedIn={isLoggedIn}
-      >
-        {children}
-      </EditableModal>
-    )
+    return Editable
   }
 }
 
-export default Editable
+const Internal = ({ children }: EditableProps) => (
+  <span>{children}</span>
+)
+
+export default createEditable()(
+  Internal
+)

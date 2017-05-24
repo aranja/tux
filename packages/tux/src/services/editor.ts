@@ -1,7 +1,6 @@
 const schema = new Map()
 
-import Field from '../interfaces/field'
-import Meta from '../interfaces/meta'
+import { ModelMeta, Field } from '../interfaces'
 
 export function registerEditable(
   type: string,
@@ -10,7 +9,7 @@ export function registerEditable(
   schema.set(type, value)
 }
 
-export function getEditorSchema(meta: Meta): Array<Field> {
+export function getEditorSchema(meta: ModelMeta): Array<Field> {
   const adapterSchema = meta.editorSchema
   const userDefinedSchema = schema.get(meta.type)
 
@@ -19,7 +18,7 @@ export function getEditorSchema(meta: Meta): Array<Field> {
   const hasBothSchemas = adapterSchema && userDefinedSchema
 
   if (hasOnlyAdapterSchema) {
-    return adapterSchema
+    return adapterSchema as Field[]
   } else if (hasOnlyUserDefinedSchema) {
     if (userDefinedSchema instanceof Array) {
       return userDefinedSchema
@@ -32,14 +31,14 @@ export function getEditorSchema(meta: Meta): Array<Field> {
       return userDefinedSchema
     } else if (userDefinedSchema instanceof Function) {
       // operate on adapter schema with user provided function
-      return _mergeSchemas(adapterSchema, userDefinedSchema)
+      return _mergeSchemas(adapterSchema as Field[], userDefinedSchema)
     }
   }
   return []
 }
 
 function _mergeSchemas(adapterSchema: Array<Field>, userFunction: Function) {
-  const schemaAsMap = new Map(adapterSchema.map(field => [field.field, field]))
+  const schemaAsMap = new Map<string, any>(adapterSchema.map(field => [field.field, field]) as any)
   userFunction(schemaAsMap)
 
   const result = []

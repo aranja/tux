@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { openModal } from '../TuxModalContainer'
@@ -11,7 +12,7 @@ export interface ModelCreatorProps {
 
 class ModelCreator extends React.Component<ModelCreatorProps, any> {
   static contextTypes = {
-    tux: React.PropTypes.object,
+    tux: PropTypes.object,
   }
 
   shouldBeVisible() {

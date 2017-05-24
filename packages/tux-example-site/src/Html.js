@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-import image from './ProductBannerImage.png'
+import React from 'react'
+import Document, { Html, Head, Body, App, Footer } from 'react-document'
 
 /**
  * This component is a template for the HTML file. You can add webfonts, meta tags,
@@ -18,31 +18,26 @@ import image from './ProductBannerImage.png'
  *     additional route specific props, e.g. a serialized store and meta tags.
  */
 
-const Html = ({ children, assets, helmet }) => (
-  // <!doctype html> is prepended externally.
-  <html {...helmet && helmet.htmlAttributes.toComponent()}>
-    <head>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      {helmet && [
-        helmet.title.toComponent(),
-        helmet.meta.toComponent(),
-        helmet.link.toComponent(),
-      ]}
-      <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,400i" rel="stylesheet" />
-      {assets['index.css'] && <link href={assets['index.css']} rel="stylesheet" />}
-      <script src={assets['manifest.js']} defer />
-      <script src={assets['index.js']} defer />
-    </head>
-    <body>
-      <div id="root" dangerouslySetInnerHTML={{ __html: children }} />
-    </body>
-  </html>
-)
-
-Html.propTypes = {
-  children: PropTypes.string,
-  assets: PropTypes.objectOf(PropTypes.string).isRequired,
+export default class extends Document {
+  render() {
+    // TODO: Remove when headProps is gone.
+    let helmet = this.props.helmet ||
+      this.props.headProps && this.props.headProps.helmet
+    return (
+      <Html lang="en">
+        <Head>
+          {helmet && [
+            helmet.title.toComponent(),
+            helmet.meta.toComponent(),
+            helmet.link.toComponent(),
+          ]}
+          <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,400i" rel="stylesheet" />
+        </Head>
+        <Body>
+          <App />
+          <Footer />
+        </Body>
+      </Html>
+    )
+  }
 }
-
-export default Html

@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { Editable } from 'tux'
+import { EditModal } from 'tux'
 
 import './styles.css'
 
@@ -10,7 +10,7 @@ const Article = ({ articles }) => {
 
   return (
     <article className="Article">
-      <Editable model={latest}>
+      <EditModal model={latest}>
         <h1 className="Article-heading">{latest.fields.title}</h1>
         <p className="Article-meta">Written by <a href="#" className="Article-metaAuthor">Johnny Bravo</a>, {moment(timeAgo).fromNow()}</p>
         <div className="Article-column">
@@ -21,8 +21,8 @@ const Article = ({ articles }) => {
           <a href="#" className="Article-more">
             <span className="Article-moreText">Read More</span>
           </a>
-        </Editable>
-      </article>
+      </EditModal>
+    </article>
   )
 }
 

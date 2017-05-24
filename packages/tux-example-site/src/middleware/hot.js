@@ -1,13 +1,5 @@
-const hotSymbol = Symbol('hot')
-
-const hot = (acceptFn) => async (renderChildren, context) => {
-  const { refresh, [hotSymbol]: alreadyHot } = context
-  if (!process.env.SERVER && module.hot && !alreadyHot) {
-    context[hotSymbol] = true
-    acceptFn(() => refresh())
+export default acceptFn => session => {
+  if (!process.env.SERVER && module.hot) {
+    acceptFn(() => session.refresh())
   }
-
-  return await renderChildren()
 }
-
-export default hot

@@ -1,6 +1,30 @@
-# TUX 
+<img height="250" alt="Tux logo" src="https://cloud.githubusercontent.com/assets/8494120/25946962/d72545b2-363c-11e7-9fee-9de03aa06b6a.png">
 
-[![CircleCI](https://circleci.com/gh/aranja/tux-next.svg?style=svg&circle-token=2d451777f7f436fcbc804480908ddd288253d334)](https://circleci.com/gh/aranja/tux-next)
+Create content-driven websites with React.
+
+Tux allows you to focus on building the website by taking care of Webpack, SSR and performance.
+
+If your website is fetching content from an api-driven CMS like Contentful, Tux has an integrated admin where the content can be edited inline.
+
+> **Note:** Tux is in active development and the API is subject to change drastically before it hits version `1.0.0`.
+
+[![CircleCI branch](https://img.shields.io/circleci/project/github/aranja/tux/master.svg)](https://circleci.com/gh/aranja/tux) [![npm](https://img.shields.io/npm/v/tux.svg)](https://www.npmjs.com/package/tux) [![Slack channel](https://img.shields.io/badge/slack-%23tux%20%40%20jsis-61dafb.svg)](http://jsis-slackin.herokuapp.com/)
+
+## Get started
+
+```bash
+npm install -g tux-cli
+
+tux new my-app
+cd my-app/
+npm start
+```
+
+Then open [http://localhost:5000/](http://localhost:5000/) to see your app.
+
+## Documentation
+
+First read the [introduction](/docs/introduction.md). Then take a look at [the example site](/packages/tux-example-site/).
 
 ## Development
 
@@ -8,33 +32,20 @@
 # Install shared dependencies
 npm install
 
-# Build packages and watch for changes
+# Build packages for development and watch for changes
 npm run watch
 
-# Run example site
+# Run example site.
+# Note that currently, the admin is 
 cd packages/tux-example-site && npm start
-```
 
-### QA
-
-Testing:
-```bash
+# Run tests
 npm test
-```
 
-Lint:
-```bash
+# Lint
 npm run lint
 ```
 
-### Other
+## License
 
-You can access lerna directly with:
-```bash 
-npm run lerna
-```
-
-To bootstreap manually, run:
-```bash
-npm run bootstrap
-```
+MIT

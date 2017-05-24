@@ -1,0 +1,34 @@
+import { Neutrino } from 'neutrino'
+import { Rule } from 'webpack-chain'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+
+export default function extractCss(neutrino: Neutrino) {
+  const { config } = neutrino
+
+  // Prepend extract text loader before style loader. Configure it
+  // to "omit" the next (1) loader when extracting text.
+  prependUse(config.module.rule('style'), rule =>
+    rule.use('extract-css')
+      .loader(require.resolve('extract-text-webpack-plugin/loader'))
+      .options({
+        omit: 1,
+        remove: true,
+      })
+  )
+
+  // Add plugin to save extracted css.
+  config.plugin('extract-css')
+    .use(ExtractTextPlugin, [{
+      filename: '[name].[chunkhash].bundle.css',
+    }])
+}
+
+// For loaders, the order matters. Since webpack-chain uses Maps, we must
+// jump through some hoops to prepend a loader. Maps iterate in insertion
+// order so we clear the Map and add the items back in correct order.
+const prependUse = (rule: Rule, cb: (rule: Rule) => void) => {
+  const existingUses = rule.uses.entries()
+  rule.uses.clear()
+  cb(rule)
+  rule.uses.merge(existingUses)
+}

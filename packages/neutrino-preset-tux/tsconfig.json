@@ -14,8 +14,10 @@
     "strictNullChecks": true,
     "target": "es5"
   },
+  "compileOnSave": false,
   "include": [
-    "./src"
+    "./src",
+    "../../shared/types"
   ],
   "exclude": [
     "./**/*.spec.ts"

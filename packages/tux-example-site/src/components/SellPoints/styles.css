@@ -6,6 +6,7 @@
 .SellPoint {
   flex: 0 1 33.333%;
   text-align: center;
+  margin: 0 1rem;
 }
 
 .SellPoint-icon {

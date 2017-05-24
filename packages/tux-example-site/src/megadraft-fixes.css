@@ -8,3 +8,7 @@
   letter-spacing: inherit;
   line-height: inherit;
 }
+
+.megadraft-editor .public-DraftEditorPlaceholder-root {
+  width: 100%;
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { Theme, input, button } from '../../theme'
 import { fade } from '../../utils/color'
@@ -7,7 +8,8 @@ import TuxSpinner from '../Spinner/Spinner'
 import Button from '../Button'
 
 import { get, set } from '../../utils/accessors'
-import { getEditorSchema, Field } from '../../services/editor'
+import { Field } from '../../interfaces'
+import { getEditorSchema } from '../../services/editor'
 
 export interface State {
   fullModel: any | null
@@ -23,7 +25,7 @@ export interface TuxModalProps {
 
 class TuxModal extends React.Component<TuxModalProps, State> {
   static contextTypes = {
-    tux: React.PropTypes.object,
+    tux: PropTypes.object,
   }
 
   state: State = {
@@ -152,8 +154,7 @@ class TuxModal extends React.Component<TuxModalProps, State> {
             margin: 0;
             margin-left: auto;
             max-width: 650px;
-            height: 100vh;
-            overflow: auto;
+            min-height: 100vh;
             padding: 0;
             position: relative;
             width: 60%;

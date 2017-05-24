@@ -1,33 +1,26 @@
-import BaseAdapter from './base-adapter'
+import BaseAdapter, { Config } from './base-adapter'
 import QueryApi from './query-api'
 import ManagementApi from './management-api'
 import generateEditorSchema from './editors'
 
-import { Field, Meta, AdapterInterface } from 'tux'
+import { Field, ModelMeta, Adapter } from 'tux'
 
 const errorMessages = {
   initializeManagementApi: 'Could not initialize management api.',
 }
 
-export interface Config {
-  space: string
-  deliveryToken: string
-  clientId: string
-  redirectUri: string
-}
-
-export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
+export class ContentfulAdapter extends BaseAdapter implements Adapter {
   private clientId: string
   private managementApi: ManagementApi | null
   private redirectUri: string
 
-  constructor({space, deliveryToken, clientId, redirectUri}: Config) {
-    super({ space, deliveryToken })
+  constructor(config: Config) {
+    super(config)
 
     this.managementApi = null
   }
 
-  create(meta: Meta) {
+  create(meta: ModelMeta) {
     if (!meta) {
       return null
     }
@@ -107,9 +100,18 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
   }
 
   async currentUser() {
-    const managementApi = await this._getManagementApi()
+    let managementApi
     try {
-      let [
+      managementApi = await this._getManagementApi()
+    } catch (error) {
+      if (error.message === errorMessages.initializeManagementApi) {
+        return null
+      }
+      throw error
+    }
+
+    try {
+      const [
         user,
         space,
       ] = await Promise.all([
@@ -159,8 +161,9 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
       `client_id=${this.clientId}&redirect_uri=${this.redirectUri}&scope=content_management_manage`
   }
 
-  async logout() {
-
+  logout() {
+    window.localStorage.removeItem('contentfulManagementToken')
+    window.location.reload(false)
   }
 
   async save(model: any) {
@@ -212,7 +215,10 @@ export class ContentfulAdapter extends BaseAdapter implements AdapterInterface {
     // Get auth token after login
     if (location.hash.indexOf('#access_token=') === 0) {
       const startOffset = '#access_token='.length
-      let accessToken = location.hash.substr(startOffset, location.hash.indexOf('&') - startOffset)
+      const accessToken = location.hash.substr(
+        startOffset,
+        location.hash.indexOf('&') - startOffset
+      )
       localStorage.setItem('contentfulManagementToken', accessToken)
       location.hash = ''
     }

@@ -1,6 +1,6 @@
 {
   "name": "tux-adapter-contentful",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -9,14 +9,14 @@
     "test": "../../node_modules/.bin/jest"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.15.3",
     "lodash": "^4.17.4",
-    "tux": "^0.1.0"
+    "tux": "^0.1.4"
   },
   "peerDependencies": {
-    "react": "^15.0.0"
+    "react": "^15.4.2"
   },
   "jest": {
     "transform": {

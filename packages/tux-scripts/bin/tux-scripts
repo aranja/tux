@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+// TODO: Remove this once babel-loader updates
+// https://github.com/babel/babel-loader/pull/391
+process.noDeprecation = true;
+
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them. In the future, promise rejections that are not handled will
+// terminate the Node.js process with a non-zero exit code.
+process.on('unhandledRejection', err => {
+  throw err;
+});
+
+const yargs = require('yargs')
+const compiler = require('../lib/compiler')
+
+const args = yargs
+  .option('ssr', { describe: 'Include server-side-rendering', type: 'boolean' })
+  .option('admin', { describe: 'Include admin functionality', type: 'boolean' })
+  .option('port', { describe: 'Server port', type: 'number', defaultDescription: '5000' })
+  .option('use', { describe: 'A list of Neutrino middleware used to configure the build', array: true, default: [], global: true })
+  .option('env', { describe: 'The value for the environment variable, NODE_ENV', string: true, global: true })
+  .command('build', 'Build project for production')
+  .command('start', 'Build and serve a project in development mode')
+  .command('serve [path]', 'Serve a build')
+  .demandCommand(1, 'Please specify a command.\nUSAGE:  $0 <command>')
+  .recommendCommands()
+  .strict()
+  .version()
+  .help()
+  .argv
+
+const command = require(`../lib/commands/${args._.shift()}`).default
+command(args, ...args._)
+  .catch(err => {
+    if (err) {
+      console.error(err.stack || err)
+      err.details && console.error(err.details)
+    }
+
+    process.exit(1)
+  })
