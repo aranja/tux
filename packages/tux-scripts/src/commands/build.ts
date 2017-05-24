@@ -8,7 +8,7 @@ export default async (options: CliOptions) => {
     ssr = true,
     admin = !!process.env.ADMIN,
   } = options
-  process.env.NODE_ENV = process.env.NODE_ENV || 'production'
+  process.env.NODE_ENV = options.env || process.env.NODE_ENV || 'production'
 
   const spinner = ora('Building project').start()
   let result

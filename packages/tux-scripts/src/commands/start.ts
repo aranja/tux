@@ -3,14 +3,14 @@ import { Compiler } from 'webpack'
 import { run } from '../compiler'
 import { CliOptions } from '../options'
 
-export default async (options: CliOptions, buildPath: string) => {
+export default async (options: CliOptions) => {
   const {
     ssr = false,
     admin = process.env.ADMIN !== '',
     port,
     host,
   } = options
-  process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+  process.env.NODE_ENV = options.env || process.env.NODE_ENV || 'development'
 
   const spinner = ora('Building project').start()
   let compilers

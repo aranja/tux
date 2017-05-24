@@ -6,4 +6,5 @@ export interface Options {
 }
 
 export interface CliOptions extends Options {
+  env?: string,
 }
