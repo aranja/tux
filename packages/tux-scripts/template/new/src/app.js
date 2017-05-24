@@ -10,7 +10,7 @@ import './index.css';
 const publicUrl = process.env.PUBLIC_URL
   ? process.env.PUBLIC_URL
   : process.env.SERVER
-      ? 'https://localhost:3000'
+      ? `https://localhost:${process.env.PORT || '5000'}`
       : `${location.protocol}//${location.host}/`;
 
 // Get your Contentful clientId (application Uid) from https://app.contentful.com/account/profile/developers/applications
