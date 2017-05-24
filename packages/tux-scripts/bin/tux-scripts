@@ -18,6 +18,7 @@ const args = yargs
   .option('ssr', { describe: 'Include server-side-rendering', type: 'boolean' })
   .option('admin', { describe: 'Include admin functionality', type: 'boolean' })
   .option('port', { describe: 'Server port', type: 'number', defaultDescription: '3000' })
+  .option('use', { describe: 'A list of Neutrino middleware used to configure the build', array: true, default: [], global: true })
   .option('env', { describe: 'The value for the environment variable, NODE_ENV', string: true, global: true })
   .command('build', 'Build project for production')
   .command('start', 'Build and serve a project in development mode')

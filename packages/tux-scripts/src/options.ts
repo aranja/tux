@@ -3,6 +3,7 @@ export interface Options {
   admin?: boolean,
   port?: number,
   host?: string,
+  use: string[],
 }
 
 export interface CliOptions extends Options {

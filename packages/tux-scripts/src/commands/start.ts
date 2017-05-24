@@ -7,6 +7,7 @@ export default async (options: CliOptions) => {
   const {
     ssr = false,
     admin = process.env.ADMIN !== '',
+    use,
     port,
     host,
   } = options
@@ -15,7 +16,7 @@ export default async (options: CliOptions) => {
   const spinner = ora('Building project').start()
   let compilers
   try {
-    compilers = await run('start', { ssr, admin, port, host }) as Compiler[]
+    compilers = await run('start', { ssr, admin, port, host, use }) as Compiler[]
   } catch (err) {
     spinner.fail('Building project failed')
     throw err
