@@ -10,5 +10,6 @@ module.exports = (params) => {
   const props = Object.assign({ title: options.title }, assets, options.props)
 
   const element = React.createElement(Document, props)
-  return ReactDOMServer.renderToStaticMarkup(element)
+  const html = ReactDOMServer.renderToStaticMarkup(element)
+  return `<!DOCTYPE html>${html}`
 }
