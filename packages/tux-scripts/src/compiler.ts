@@ -54,11 +54,13 @@ async function getOptions(options: Options) {
       html: {
         document,
       },
+      ...pathOr({}, ['neutrino', 'options'], pkg),
       config: {
         devServer: {
           host,
           port,
         },
+        ...pathOr({}, ['neutrino', 'config'], pkg),
       },
     }
   }
