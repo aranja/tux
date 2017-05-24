@@ -6,7 +6,7 @@ import { CliOptions } from '../options'
 export default async (options: CliOptions, buildPath: string) => {
   const {
     ssr = false,
-    admin = true,
+    admin = process.env.ADMIN !== '',
     port,
     host,
   } = options

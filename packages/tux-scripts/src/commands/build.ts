@@ -6,7 +6,7 @@ import { CliOptions } from '../options'
 export default async (options: CliOptions) => {
   const {
     ssr = true,
-    admin = false,
+    admin = !!process.env.ADMIN,
   } = options
   process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
