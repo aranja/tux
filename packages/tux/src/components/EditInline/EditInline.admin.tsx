@@ -8,7 +8,7 @@ import { EditableProps } from '../../interfaces'
 import { DraftJS, editorStateFromRaw, EditorState } from 'megadraft'
 import { get, set } from '../../utils/accessors'
 
-interface Props extends EditableProps {
+export interface Props extends EditableProps {
   onSave: (model: any) => Promise<any>,
   onLoad: (model: any) => void,
   placeholder: string,

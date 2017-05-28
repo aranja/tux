@@ -11,6 +11,7 @@
   ],
   "main": "lib/index.js",
   "module": "es/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "prepublish": "NODE_ENV=production ../../tasks/build-package.js",
     "watch": "../../tasks/build-package.js --watch",

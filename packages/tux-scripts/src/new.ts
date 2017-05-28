@@ -8,7 +8,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 // tslint:disable:no-console
-import fs from 'fs-promise'
+import fs from 'fs-extra'
 import path from 'path'
 import spawn from 'cross-spawn'
 import chalk from 'chalk'
@@ -56,7 +56,7 @@ const init = async (
   )).name
   const ownPath = path.join(appPath, 'node_modules', ownPackageName)
   const appPackage = require(path.join(appPath, 'package.json'))
-  const useYarn = await fs.exists(path.join(appPath, 'yarn.lock'))
+  const useYarn = await fs.pathExists(path.join(appPath, 'yarn.lock'))
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {}

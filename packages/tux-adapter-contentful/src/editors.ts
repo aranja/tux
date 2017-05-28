@@ -1,3 +1,4 @@
+import { ReactType } from 'react'
 import {
   BooleanField,
   DatePicker,
@@ -9,7 +10,7 @@ import {
   TagEditor,
 } from 'tux'
 
-const widgetIdToEditor = {
+const widgetIdToEditor: {[id: string]: ReactType | undefined} = {
   assetLinkEditor: ImageField,
   boolean: BooleanField,
   datePicker: DatePicker,
@@ -37,7 +38,7 @@ function _transformTypeMetaFieldToEditorField(typeMetaField: any) {
 
 function _getPropsForType(typeMetaField: any) {
   const widgetId = typeMetaField.control.widgetId
-  const props = {}
+  const props: any = {}
   if (widgetId === 'boolean') {
     props.boolLabels = Object.values(typeMetaField.control.settings)
   } else if (widgetId === 'dropdown') {

@@ -22,7 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "cross-spawn": "^5.1.0",
-    "fs-promise": "^2.0.2",
+    "fs-extra": "^3.0.1",
     "neutrino": "5.0.1",
     "neutrino-preset-tux": "^0.2.0",
     "optional": "^0.1.3",

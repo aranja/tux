@@ -52,6 +52,14 @@ gulp.task('build:js', () => {
   const tsResult = tsProject.src()
     .pipe(sourcemaps.init())
     .pipe(tsProject())
+    .once('error', function () {
+      // Crash CI builds on typescript error.
+      this.once('finish', () => {
+        if (process.env.TS_FAIL_ON_ERROR) {
+          process.exit(1)
+        }
+      })
+    })
 
   const streams = []
 

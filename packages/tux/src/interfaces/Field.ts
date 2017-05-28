@@ -1,7 +1,9 @@
+import { ReactType } from 'react'
+
 interface Field {
   field: string,
   label: string,
-  component: React.ReactElement<any>,
+  component: ReactType,
   props?: Object
 }
 
