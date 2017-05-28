@@ -5,4 +5,5 @@ machine:
 test:
   override:
     - npm run lint --silent
+    - npm run check-types --silent
     - npm test --silent

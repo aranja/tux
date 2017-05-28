@@ -5,6 +5,7 @@
     "start": "cd packages/tux-example-site && npm start",
     "postinstall": "npm run bootstrap",
     "lint": "tslint -c './tslint.json' -e './packages/**/node_modules/**/*' -e './packages/**/es/**/*' -e './packages/**/lib/**/*' './packages/**/*.{ts,tsx}'",
+    "check-types": "TS_FAIL_ON_ERROR=true lerna run prepublish --silent",
     "lerna": "lerna",
     "bootstrap": "lerna bootstrap --hoist",
     "watch": "lerna run watch --parallel",
