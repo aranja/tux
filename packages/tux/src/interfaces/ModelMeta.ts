@@ -1,4 +1,4 @@
-import Field from './field'
+import Field from './Field'
 
 interface ModelMeta {
   type: string,
