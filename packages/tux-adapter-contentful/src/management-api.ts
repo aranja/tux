@@ -3,6 +3,7 @@ import { AxiosInstance } from 'axios'
 import cloneDeep from 'lodash/cloneDeep'
 
 import { extractLocale, injectLocale } from './locale'
+import { ContentfulEditModel, ContentfulAdminModel } from './types'
 
 class ManagementApi {
   private client: AxiosInstance
@@ -39,8 +40,8 @@ class ManagementApi {
     }).then(result => result.data) as Promise<any>
   }
 
-  post(url: string, body: any, contentType: string, contentfulContentType: string) {
-    const headers = {
+  post(url: string, body: any, contentType: string, contentfulContentType?: string) {
+    const headers: {[header: string]: string} = {
       'Content-Type': contentType,
     }
     if (contentfulContentType) {
@@ -51,7 +52,7 @@ class ManagementApi {
     }).then(result => result.data) as Promise<any>
   }
 
-  getEntry(id: string) {
+  getEntry(id: string): Promise<ContentfulEditModel> {
     return this._getEntity(id, 'entries')
   }
 

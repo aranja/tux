@@ -6,7 +6,7 @@ interface Adapter {
   createAssetFromFile(file: File, title: string): Object | null
   createAssetFromUrl(url: string, fileName: string, title: string): Object | null
   currentUser(): any | null
-  getMeta(model: string | Object): ModelMeta | null
+  getMeta(model: string | Object): Promise<ModelMeta | null>
   getQueryApi(): any
   load(model: any): any
   loadAsset(model: any): any

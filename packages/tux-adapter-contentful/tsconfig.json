@@ -4,7 +4,7 @@
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "jsx": "preserve",
-    "lib": ["dom", "es2015"],
+    "lib": ["dom", "es2015", "es2017"],
     "module": "es6",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -16,7 +16,8 @@
   },
   "compileOnSave": false,
   "include": [
-    "./src"
+    "./src",
+    "../../shared/types"
   ],
   "exclude": [
     "./**/*.spec.ts"

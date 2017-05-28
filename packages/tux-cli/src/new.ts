@@ -38,7 +38,7 @@
 import yargs, { Argv } from 'yargs'
 import validateProjectName from 'validate-npm-package-name'
 import chalk from 'chalk'
-import fs from 'fs-promise'
+import fs from 'fs-extra'
 import path from 'path'
 import { execSync } from 'child_process'
 import spawn from 'cross-spawn'
@@ -90,14 +90,14 @@ async function createApp(verbose: boolean, version: string) {
   await run(appName, version, verbose)
 }
 
-async function onError(reason: Error) {
+async function onError(reason: Error | { command: string }) {
   console.log()
   console.log('Aborting installation.')
-  if (reason.command) {
-    console.log(`  ${chalk.cyan(reason.command)} has failed.`)
-  } else {
+  if (reason instanceof Error) {
     console.log(chalk.red('Unexpected error. Please report it as a bug:'))
     console.log(reason)
+  } else {
+    console.log(`  ${chalk.cyan(reason.command)} has failed.`)
   }
   console.log()
 
@@ -383,7 +383,7 @@ function checkIfOnline(useYarn: boolean) {
   })
 }
 
-function printValidationResults(results: string[]) {
+function printValidationResults(results?: string[]) {
   if (typeof results !== 'undefined') {
     results.forEach(error => {
       console.error(chalk.red(`  *  ${error}`))

@@ -4,7 +4,7 @@ import moment from 'moment'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import { Theme, input, button } from '../../theme'
 import { tuxDatePickerStyles } from './DatePicker.styles'
-import { FaCalendar } from 'react-icons/lib/fa'
+import FaCalendar from 'react-icons/lib/fa/calendar'
 import { fade } from '../../utils/color'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
@@ -109,7 +109,7 @@ class DatePicker extends Component<any, State> {
               <DayPicker
                 initialMonth={selectedDay || undefined}
                 onDayClick={this.handleDayClick}
-                selectedDays={day => DateUtils.isSameDay(selectedDay, day)}
+                selectedDays={day => !!selectedDay && DateUtils.isSameDay(selectedDay, day)}
               />
             </div>
           }

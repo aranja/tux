@@ -4,15 +4,14 @@ import ManagementApi from './management-api'
 import generateEditorSchema from './editors'
 
 import { Field, ModelMeta, Adapter } from 'tux'
+import { ContentfulEditModel } from './types'
 
 const errorMessages = {
   initializeManagementApi: 'Could not initialize management api.',
 }
 
 export class ContentfulAdapter extends BaseAdapter implements Adapter {
-  private clientId: string
   private managementApi: ManagementApi | null
-  private redirectUri: string
 
   constructor(config: Config) {
     super(config)
@@ -20,11 +19,7 @@ export class ContentfulAdapter extends BaseAdapter implements Adapter {
     this.managementApi = null
   }
 
-  create(meta: ModelMeta) {
-    if (!meta) {
-      return null
-    }
-
+  create(meta: ModelMeta): ContentfulEditModel {
     return {
       fields: {},
       sys: {
@@ -166,7 +161,7 @@ export class ContentfulAdapter extends BaseAdapter implements Adapter {
     window.location.reload(false)
   }
 
-  async save(model: any) {
+  async save(model: ContentfulEditModel) {
     const managementApi = await this._getManagementApi()
 
     if (model.sys.id) {

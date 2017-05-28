@@ -4,12 +4,12 @@ import { button } from '../../theme'
 import { fade, lighten } from '../../utils/color'
 
 export interface ButtonProps {
-  type: string
-  themeColor: string
-  flat: boolean
-  raised: boolean
-  onClick: (e: React.SyntheticEvent<any>) => void
-  children: any
+  type?: string
+  themeColor?: string
+  flat?: boolean
+  raised?: boolean
+  onClick?: (e: React.SyntheticEvent<any>) => void
+  children?: any
 }
 
 

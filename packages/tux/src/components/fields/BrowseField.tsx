@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
-import { FaImage } from 'react-icons/lib/fa'
+import FaImage from 'react-icons/lib/fa/image'
 import { button } from '../../theme'
 import { lighten } from '../../utils/color'
 
 class BrowseField extends Component<any, any> {
+  input: HTMLInputElement
+
   constructor(props: any) {
     super(props)
   }
 
   onChange = (event: React.FormEvent<any>) => {
     const { onChange } = this.props
-    const { input } = this.refs
+    const { input } = this
 
-    if (input.files.length) {
+    if (input.files && input.files.length) {
       onChange(input.files)
     }
   }
@@ -33,7 +35,7 @@ class BrowseField extends Component<any, any> {
           className="BrowseField-fileInput"
           id={id}
           onChange={this.onChange}
-          ref="input"
+          ref={el => this.input = el}
           type="file"
           value={value}
         />

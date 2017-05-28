@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { lighten, fade } from '../../utils/color'
 import { Theme } from '../../theme'
-import { FaMagic, FaSignOut, FaLifeBouy, FaCheck } from 'react-icons/lib/fa'
+import FaMagic from 'react-icons/lib/fa/magic'
+import FaSignOut from 'react-icons/lib/fa/sign-out'
+import FaLifeBouy from 'react-icons/lib/fa/life-bouy'
+import FaCheck from 'react-icons/lib/fa/check'
 
 export interface State {
   user: null | {
@@ -71,7 +74,7 @@ class TuxFab extends React.Component<any, State> {
     if (!this.state.user) {
       this.context.tux.adapter.login()
     } else {
-      this.props.onClickEdit();
+      this.props.onClickEdit()
     }
   }
 

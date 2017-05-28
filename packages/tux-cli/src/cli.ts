@@ -1,4 +1,4 @@
-import fs from 'fs-p'
+import fs from 'fs-extra'
 import pkgDir from 'pkg-dir'
 import chalk from 'chalk'
 import { join } from 'path'
@@ -6,22 +6,22 @@ import { join } from 'path'
 async function run() {
   const rootPath = await pkgDir()
   const isInPackage = rootPath !== null
-  let insideTuxProject = false
 
   if (isInPackage) {
     const scriptsPath = join(rootPath, 'node_modules', '.bin', 'tux-scripts')
-    insideTuxProject = await fs.exists(scriptsPath)
+    const insideTuxProject = await fs.pathExists(scriptsPath)
+
+    if (insideTuxProject) {
+      // tslint:disable-next-line:no-console
+      console.log(`Inside ${chalk.cyan('tux')} project.`)
+      require(scriptsPath)
+      return
+    }
   }
 
-  if (insideTuxProject) {
-    // tslint:disable-next-line:no-console
-    console.log(`Inside ${chalk.cyan('tux')} project.`)
-    require(scriptsPath)
-  } else {
-    // tslint:disable-next-line:no-console
-    console.log(`Not inside ${chalk.cyan('tux')} project.`)
-    require('./new')
-  }
+  // tslint:disable-next-line:no-console
+  console.log(`Not inside ${chalk.cyan('tux')} project.`)
+  require('./new')
 }
 
 run()

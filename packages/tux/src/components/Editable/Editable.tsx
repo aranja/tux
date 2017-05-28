@@ -6,7 +6,7 @@ export interface State {
   readOnly: boolean,
 }
 
-export function createEditable<OriginalProps>() {
+export function createEditable<OriginalProps extends Object>() {
   return function editable(
     Editor:
       ComponentClass<OriginalProps & EditableProps> |
@@ -33,7 +33,7 @@ export function createEditable<OriginalProps>() {
         const { tux, tuxModel } = this.context
         return (
           <Editor
-            {...this.props}
+            {...(this.props as any)}
             model={model || tuxModel || {}}
             isEditing={tux.isEditing}
             tux={tux}

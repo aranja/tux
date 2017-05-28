@@ -16,7 +16,7 @@ const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
       className="MarkdownField-textArea"
       id={id}
       value={value ? value : DEFAULT_VALUE}
-      onChange={(event: React.FormEvent<any>) => onChange(event.target.value)}
+      onChange={event => onChange(event.target.value)}
     />
     <style jsx>{`
         .MarkdownField {

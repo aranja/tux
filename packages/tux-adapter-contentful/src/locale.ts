@@ -1,11 +1,12 @@
 import cloneDeep from 'lodash/cloneDeep'
+import { ContentfulAdminModel, ContentfulEditModel } from './types'
 
-export function extractLocale(model: any, locale: string) {
+export function extractLocale(model: ContentfulAdminModel, locale: string) {
   const clone = cloneDeep(model)
-  const result = {
+  const result: ContentfulEditModel = {
     fields: {},
     sys: { locale, ...clone.sys },
-    __fullModel: null,
+    __fullModel: clone,
   }
 
   for (const fieldName of Object.keys(model.fields)) {
@@ -13,12 +14,10 @@ export function extractLocale(model: any, locale: string) {
     result.fields[fieldName] = fieldValue
   }
 
-  result.__fullModel = clone
-
   return result
 }
 
-export function injectLocale(model: any, locale: string) {
+export function injectLocale(model: ContentfulEditModel, locale: string) {
   if (!model.__fullModel) {
     throw new Error('injectLocale: __fullModel property is required on model')
   }
