@@ -1,4 +1,4 @@
-import React, { ComponentClass, StatelessComponent } from 'react'
+import React, { ReactType, ComponentClass, StatelessComponent } from 'react'
 import PropTypes from 'prop-types'
 import { EditableProps } from '../../interfaces'
 
@@ -6,13 +6,14 @@ export interface State {
   readOnly: boolean,
 }
 
-export function createEditable<OriginalProps extends Object>() {
+export function createEditable<OriginalProps>() {
+  type OuterProps = OriginalProps & EditableProps
   return function editable(
     Editor:
-      ComponentClass<OriginalProps & EditableProps> |
-      StatelessComponent<OriginalProps & EditableProps>
-  ): ComponentClass<EditableProps> {
-    class Editable extends React.Component<OriginalProps & EditableProps, State> {
+      ComponentClass<OuterProps> |
+      StatelessComponent<OuterProps>
+  ): ComponentClass<OuterProps> {
+    class Editable extends React.Component<OuterProps, State> {
       static contextTypes = {
         tux: PropTypes.object,
         tuxModel: PropTypes.object,
