@@ -25,7 +25,7 @@ export default (neutrino: Neutrino) => {
     Object.assign(neutrino.options, {
       compile: {
         targets: {
-          node: 6.9
+          node: '6.9',
         }
       }
     })
