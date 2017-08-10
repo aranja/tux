@@ -4,30 +4,31 @@ import { AxiosInstance } from 'axios'
 // TODO: Fill in
 export interface ContentfulJsonItem {
   sys: {
-    id: string
-    updatedAt: string
+    id: string,
+    updatedAt: string,
   }
-  fields: any
+  fields: any,
 }
 export interface ContentfulJsonEntry extends ContentfulJsonItem {
   fields: any
 }
-export interface ContentfulJsonAsset extends ContentfulJsonItem {}
+export interface ContentfulJsonAsset extends ContentfulJsonItem {
+}
 export interface ContentfulQueryResponse {
-  items: ContentfulJsonItem[]
+  items: ContentfulJsonItem[],
   includes?: {
-    Asset?: ContentfulJsonAsset[]
-    Entry?: ContentfulJsonEntry[]
-  }
-  total: number
+    Asset?: ContentfulJsonAsset[],
+    Entry?: ContentfulJsonEntry[],
+  },
+  total: number,
 }
 type LinkMap = {
-  [id: string]: ContentfulJsonItem
+  [id: string]: ContentfulJsonItem,
 }
 
 class QueryApi {
   private overrides: {
-    [id: string]: any
+    [id: string]: any,
   }
   private client: AxiosInstance
 
