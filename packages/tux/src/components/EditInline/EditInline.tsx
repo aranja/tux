@@ -1,8 +1,8 @@
 import React from 'react'
-import DraftRenderer from './DraftRenderer'
+import SlateRenderer from './SlateRenderer'
 import { createEditable } from '../Editable/Editable'
 import { EditableProps } from '../../interfaces'
-import { editorStateFromRaw } from 'megadraft'
+import { Raw } from 'slate'
 import { get } from '../../utils/accessors'
 
 export type Props = EditableProps & {
@@ -13,8 +13,8 @@ export default createEditable<Props>()(({ children, model, field }: Props) => {
   const value = get(model, field)
   if (value) {
     return (
-      <DraftRenderer
-        editorState={editorStateFromRaw(value)}
+      <SlateRenderer
+        editorState={Raw.deserialize(value)}
         readOnly={true}
       />
     )
