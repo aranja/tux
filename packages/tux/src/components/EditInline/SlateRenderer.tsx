@@ -1,5 +1,5 @@
 import React from 'react'
-import { Editor, Html as HtmlSerializer } from 'slate'
+import { Editor } from 'slate'
 
 export interface Props {
   state: any,

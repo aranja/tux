@@ -1,11 +1,11 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import SlateRenderer, { Html } from './SlateRenderer'
+import SlateRenderer from './SlateRenderer'
 import { createEditable } from '../Editable/Editable'
 import deepEqual from 'deep-eql'
 import humanize from 'string-humanize'
 import { EditableProps } from '../../interfaces'
-import { Raw, Plain, State } from 'slate'
+import { Raw, Plain, State, Html as HtmlSerializer } from 'slate'
 import { get, set } from '../../utils/accessors'
 
 export interface Props extends EditableProps {
