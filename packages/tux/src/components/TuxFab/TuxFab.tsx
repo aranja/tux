@@ -123,6 +123,7 @@ class TuxFab extends React.Component<any, State> {
             right: 40px;
             display: flex;
             flex-direction: column;
+            z-index: 1000000;
           }
 
           .TuxFab.is-hovered:hover {

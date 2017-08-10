@@ -73,7 +73,7 @@ export class ModalContainer extends React.Component<any, State> {
         <style jsx>{`
           .ModalContainer {
             position: relative;
-            z-index: 101;
+            z-index: 1000000;
           }
 
           .ModalContainer-overlay {

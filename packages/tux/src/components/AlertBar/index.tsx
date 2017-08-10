@@ -47,7 +47,7 @@ class AlertBar extends Component<any, any> {
             font-size: 14px;
             width: 100%;
             will-change: transform;
-            z-index: 50;
+            z-index: 1000000;
           }
           .AlertBar.is-hidden {
             transform: translateY(80%);
