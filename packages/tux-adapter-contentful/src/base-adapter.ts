@@ -18,10 +18,10 @@ export default class BaseAdapter {
     this.space = config.space
     this.clientId = config.clientId
     this.redirectUri = config.redirectUri
-    this.deliveryApi = new QueryApi(
+    this.deliveryApi = QueryApi.create(
       config.space,
       config.accessToken,
-      config.host || 'cdn.contentful.com'
+      config.host
     )
   }
 
