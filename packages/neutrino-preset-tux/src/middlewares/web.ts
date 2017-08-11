@@ -97,7 +97,7 @@ export default (neutrino: Neutrino) => {
 
   config.output
     .path(join(neutrino.options.output, 'static'))
-    .publicPath('./')
+    .publicPath('/')
     .filename('[name].bundle.js')
     .chunkFilename('[id].[chunkhash].js')
 
