@@ -60,7 +60,7 @@ class HoverPortal extends React.Component {
     const { editorState } = this.props
     if (!menu) return
 
-    const tmp = menu.firstChild || menu
+    const tmp = menu.firstChild || menu 
 
     if (editorState.isBlurred || editorState.isEmpty) {
       tmp.removeAttribute('style')
@@ -96,11 +96,6 @@ class HoverPortal extends React.Component {
           {this.renderMarkButton('code', <FaCode />)}
         </div>
         <style jsx>{`
-          .EditInline.is-editing:hover {
-            cursor: text;
-            outline: 1px dashed rgba(128, 128, 128, 0.7);
-            outline-offset: 10px;
-          }
           .HoverPortal {
             padding: 8px 7px 6px;
             position: absolute;
@@ -115,7 +110,6 @@ class HoverPortal extends React.Component {
             transition: opacity .75s;
           }
         `}</style>
-        )
       </Portal>
     )
   }
