@@ -1,9 +1,10 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import SlateRenderer from './SlateRenderer'
-import { createEditable } from '../Editable/Editable'
 import deepEqual from 'deep-eql'
 import humanize from 'string-humanize'
+import SlateRenderer from './SlateRenderer'
+import HoverPortal from './HoverPortal'
+import { createEditable } from '../Editable/Editable'
 import { EditableProps } from '../../interfaces'
 import { Raw, Plain, State, Html as HtmlSerializer } from 'slate'
 import { get, set } from '../../utils/accessors'
@@ -18,7 +19,6 @@ export interface Props extends EditableProps {
 export interface State {
   editorState: any,
 }
-
 
 /**
  * Tags to blocks.
@@ -130,7 +130,7 @@ class EditInline extends React.Component<Props, State> {
         const html = renderToStaticMarkup(this.props.children)
         return Html.deserialize(html)
       }
-    } catch(err) {
+    } catch (err) {
       console.error('Could not parse content', value, err)
     }
     return Plain.deserialize('')
@@ -217,6 +217,15 @@ class EditInline extends React.Component<Props, State> {
     return state
   }
 
+  onClickMark = (e, type) => {
+    e.preventDefault()
+    let { editorState } = this.state
+
+    editorState = editorState.transform().toggleMark(type).apply()
+
+    this.setState({ editorState })
+  }
+
   render() {
     const { isEditing, placeholder } = this.props
     const { editorState } = this.state
@@ -226,6 +235,7 @@ class EditInline extends React.Component<Props, State> {
 
     return (
       <div className={`EditInline${isEditing ? ' is-editing' : ''}`}>
+        <HoverPortal editorState={editorState} onClickMark={this.onClickMark} />
         <SlateRenderer
           state={editorState}
           onChange={this.onEditorChange}

@@ -12,6 +12,7 @@
     "test": "lerna run test"
   },
   "dependencies": {
+    "@types/react-portal": "^3.0.2",
     "core-js": "2.4.1",
     "moment": "^2.17.1",
     "prop-types": "~15.5.8",
@@ -22,7 +23,8 @@
     "react-day-picker": "^5.1.1",
     "react-document": "^0.6.0",
     "react-dom": "^16.0.0-beta.3",
-    "react-icons": "^2.2.3"
+    "react-icons": "^2.2.3",
+    "react-portal": "^3.1.0"
   },
   "devDependencies": {
     "@types/chalk": "^0.4.31",
