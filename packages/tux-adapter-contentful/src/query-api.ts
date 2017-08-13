@@ -6,6 +6,11 @@ export interface ContentfulJsonItem {
   sys: {
     id: string,
     updatedAt: string,
+    contentType: {
+      sys: {
+        id: string
+      }
+    }
   }
   fields: any,
 }
@@ -67,9 +72,16 @@ class QueryApi {
 
   private populateLinks(links: ContentfulJsonItem[], linkMap: LinkMap) {
     for (const asset of links) {
-      if (asset.sys) {
-        linkMap[asset.sys.id] = this.checkOverride(asset).fields
+      if (!asset.sys) {
+        return;
       }
+
+      const entry = this.checkOverride(asset)
+      const { fields } = entry
+      if (entry.sys.contentType) {
+        fields._contentType = entry.sys.contentType.sys.id
+      }
+      linkMap[entry.sys.id] = fields
     }
   }
 

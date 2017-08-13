@@ -76,6 +76,7 @@ describe('query entries', () => {
 
     const [{ entry: listItem }] = entry.fields.list
     expect(listItem.heading).toEqual('This is a list item with an image')
+    expect(listItem._contentType).toEqual('item')
     expect(listItem.image.asset.title).toEqual('Image title')
     expect(listItem.image.asset.file.url).toEqual('//path-to-image.jpg')
   })
