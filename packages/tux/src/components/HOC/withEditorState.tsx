@@ -61,12 +61,11 @@ export default function withEditorState(Component, getInitialEditorState) {
     onClickMark = (event, type) => {
       event.preventDefault()
       let { editorState } = this.state
-      
       editorState = editorState.transform().toggleMark(type).apply()
-      
+
       this.setState({ editorState })
     }
-    
+
     onClickNode = (event, type) => {
       event.preventDefault()
     }
