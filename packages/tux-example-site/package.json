@@ -1,6 +1,6 @@
 {
   "name": "tux-example-site",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "private": true,
   "license": "MIT",
   "devDependencies": {
@@ -22,7 +22,7 @@
     "react-helmet": "^5.0.1",
     "source-map-support": "^0.4.14",
     "tux": "^0.2.1",
-    "tux-adapter-contentful": "^0.2.2",
+    "tux-adapter-contentful": "^0.2.3",
     "tux-scripts": "^0.2.3",
     "universal-router": "^2.0.0",
     "whatwg-fetch": "^2.0.3"
