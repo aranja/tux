@@ -6,38 +6,32 @@ import SlateRenderer from './SlateRenderer'
 import HoverPortal from './HoverPortal'
 import { createEditable } from '../Editable/Editable'
 import { EditableProps } from '../../interfaces'
-import { Raw, Plain } from 'slate'
+import { Raw, Plain, State, Html as HtmlSerializer } from 'slate'
 import { Html } from '../../utils/slate'
 import { get, set } from '../../utils/accessors'
+import withEditorState from '../HOC/withEditorState'
 
 export interface Props extends EditableProps {
   onSave: (model: any) => Promise<any>,
   onLoad: (model: any) => void,
   placeholder: string,
   field: string | Array<string>,
-}
-
-export interface State {
   editorState: any,
+  onPaste: Function,
+  onClickMark: Function,
+  onClickNode: Function,
+  onEditorChange: Function,
+  onKeyDown: Function,
 }
 
-class EditInline extends React.Component<Props, State> {
-  constructor(props: Props, context: any) {
-    super(props, context)
-
-    this.state = {
-      editorState: this.getInitialState(),
-    }
-
-  }
-
-  getInitialState() {
-    const value = get(this.props.model, this.props.field)
+class EditInline extends React.Component<Props> {
+  static getInitialState(props) {
+    const value = get(props.model, props.field)
     try {
       if (value) {
         return Raw.deserialize(value, { terse: true })
-      } else if (this.props.children) {
-        const html = renderToStaticMarkup(this.props.children)
+      } else if (props.children) {
+        const html = renderToStaticMarkup(props.children)
         return Html.deserialize(html)
       }
     } catch (err) {
@@ -48,6 +42,12 @@ class EditInline extends React.Component<Props, State> {
 
   private timer: number
 
+  componentDidUpdate(oldProps) {
+    if (oldProps.editorState !== this.props.editorState) {
+      this.save()
+    }
+  }
+
   defaultPlaceholder() {
     let { field } = this.props
     if (typeof field === 'string') {
@@ -57,8 +57,7 @@ class EditInline extends React.Component<Props, State> {
   }
 
   private save = async () => {
-    const { tux, model, field } = this.props
-    const { editorState } = this.state
+    const { editorState, tux, model, field } = this.props
     const oldValue = get(model, field)
     const newValue = Raw.serialize(editorState, { terse: true })
 
@@ -73,89 +72,33 @@ class EditInline extends React.Component<Props, State> {
     await tux.adapter.save(fullModel)
   }
 
-  onEditorChange = async (editorState: any) => {
-    this.setState({ editorState })
+  onChange = async (editorState: any) => {
+    const { onEditorChange } = this.props
+    onEditorChange(editorState)
+
     if (this.timer) {
       window.clearTimeout(this.timer)
     }
     this.timer = window.setTimeout(this.save, 2000)
   }
 
-  /**
-   * Paste handler.
-   */
-  onPaste = (event, data, state) => {
-    if (data.type !== 'html') return
-    if (data.isShift) return
-    const { document } = Html.deserialize(data.html)
-    return state
-      .transform()
-      .insertFragment(document)
-      .apply()
-  }
-
-  /**
-   * On key down, if it's a formatting command toggle a mark.
-   */
-  onKeyDown = (event, data, state) => {
-    if (!data.isMod) return
-    let mark
-
-    switch (data.key) {
-      case 'b':
-        mark = 'bold'
-        break
-      case 'i':
-        mark = 'italic'
-        break
-      case 'u':
-        mark = 'underlined'
-        break
-      case '`':
-        mark = 'code'
-        break
-      default:
-        return
-    }
-
-    state = state
-      .transform()
-      .toggleMark(mark)
-      .apply()
-
-    event.preventDefault()
-    return state
-  }
-
-  /**
-   * Click handler for HoverPortal
-   */
-  onClickMark = (event, type) => {
-    event.preventDefault()
-    let { editorState } = this.state
-
-    editorState = editorState.transform().toggleMark(type).apply()
-
-    this.setState({ editorState })
-  }
-
   render() {
-    const { isEditing, placeholder } = this.props
-    const { editorState } = this.state
+    const { editorState, onPaste, onKeyDown, onClickMark, isEditing, placeholder } = this.props
+
     if (!isEditing && !editorState.document.length) {
       return null
     }
 
     return (
       <div className={`EditInline${isEditing ? ' is-editing' : ''}`}>
-        <HoverPortal editorState={editorState} onClickMark={this.onClickMark} />
+        <HoverPortal editorState={editorState} onClickMark={onClickMark} />
         <SlateRenderer
           state={editorState}
-          onChange={this.onEditorChange}
+          onChange={this.onChange}
           readOnly={!isEditing}
           placeholder={placeholder || this.defaultPlaceholder()}
-          onKeyDown={this.onKeyDown}
-          onPaste={this.onPaste}
+          onKeyDown={onKeyDown}
+          onPaste={onPaste}
         />
         <style jsx>{`
           .EditInline.is-editing:hover {
@@ -169,4 +112,5 @@ class EditInline extends React.Component<Props, State> {
   }
 }
 
-export default createEditable<Props>()(EditInline)
+const Exported = withEditorState(EditInline, EditInline.getInitialState)
+export default createEditable<Props>()(Exported)

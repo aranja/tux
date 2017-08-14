@@ -5,10 +5,6 @@ import FaItalic from 'react-icons/lib/fa/italic'
 import FaCode from 'react-icons/lib/fa/code'
 import FaUnderline from 'react-icons/lib/fa/underline'
 
-export interface State {
-  editorState: any
-}
-
 class HoverPortal extends React.Component {
   constructor(props) {
     super(props)

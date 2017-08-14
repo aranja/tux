@@ -28,16 +28,7 @@ export interface Props extends EditableProps {
   editorState: any
 }
 
-
 class RichTextField extends React.Component<Props> {
-  constructor(props: Props, context: any) {
-    super(props, context)
-  }
-
-  componentDidMount() {
-    console.log(this.props)
-  }
-
   static getInitialEditorState(props) {
     const { value } = props
 
@@ -55,8 +46,14 @@ class RichTextField extends React.Component<Props> {
   }
 
   onChange = async (editorState: any) => {
-    const { id, onEditorChange } = this.props
-    onEditorChange(editorState, id)
+    const { onEditorChange } = this.props
+    onEditorChange(editorState)
+  }
+
+  componentDidUpdate(oldProps) {
+    if (oldProps.editorState !== this.props.editorState) {
+      this.onChange()
+    }
   }
 
   hasMark = type => {

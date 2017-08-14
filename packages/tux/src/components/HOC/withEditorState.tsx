@@ -1,21 +1,30 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { Raw, Plain } from 'slate'
+import humanize from 'string-humanize'
 import { Html } from '../../utils/slate'
 
 export default function withEditorState(Component, getInitialEditorState) {
   return class extends React.Component {
     constructor(props: Props, context: any) {
       super(props, context)
-      console.log(getInitialEditorState)
 
       this.state = {
         editorState: getInitialEditorState(props)
       }
     }
 
-    componentDidMount() {
-      console.log(this.state)
+    /**
+     * Paste handler.
+     */
+    onPaste = (event, data, state) => {
+      if (data.type !== 'html') return
+      if (data.isShift) return
+      const { document } = Html.deserialize(data.html)
+      return state
+        .transform()
+        .insertFragment(document)
+        .apply()
     }
 
     /**
@@ -45,24 +54,21 @@ export default function withEditorState(Component, getInitialEditorState) {
       return state
     }
 
-    onEditorChange = async (editorState: any, id) => {
-      const { onChange } = this.props
+    onEditorChange = async (editorState: any) => {
       this.setState({ editorState })
-      onChange(Raw.serialize(editorState), id)
     }
-
 
     onClickMark = (event, type) => {
       event.preventDefault()
       let { editorState } = this.state
-
+      
       editorState = editorState.transform().toggleMark(type).apply()
-
+      
       this.setState({ editorState })
     }
-
+    
     onClickNode = (event, type) => {
-      // Todo
+      event.preventDefault()
     }
 
     render() {
@@ -75,8 +81,8 @@ export default function withEditorState(Component, getInitialEditorState) {
           onEditorChange={this.onEditorChange}
           onClickMark={this.onClickMark}
           onClickNode={this.onClickNode}
-          onEditorChange={this.onEditorChange}
           onKeyDown={this.onKeyDown}
+          onPaste={this.onPaste}
           {...rest}
         >
           {children}
