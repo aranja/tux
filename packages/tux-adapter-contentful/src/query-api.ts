@@ -73,14 +73,12 @@ class QueryApi {
   private populateLinks(links: ContentfulJsonItem[], linkMap: LinkMap) {
     for (const asset of links) {
       if (!asset.sys) {
-        return;
+        return
       }
 
       const entry = this.checkOverride(asset)
       const { fields } = entry
-      if (entry.sys.contentType) {
-        fields._contentType = entry.sys.contentType.sys.id
-      }
+      fields.sys = entry.sys
       linkMap[entry.sys.id] = fields
     }
   }
