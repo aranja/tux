@@ -6,7 +6,7 @@ import { Html } from '../../utils/slate'
 
 export default function withEditorState(Component, getInitialEditorState) {
   return class extends React.Component {
-    constructor(props: Props, context: any) {
+    constructor(props: any, context: any) {
       super(props, context)
 
       this.state = {
@@ -20,7 +20,7 @@ export default function withEditorState(Component, getInitialEditorState) {
     }
 
     hasMark = type => {
-      const { editorState } = this.props
+      const { editorState } = this.state
       return editorState.marks.some(mark => mark.type === type)
     }
 
