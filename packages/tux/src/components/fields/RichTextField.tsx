@@ -59,7 +59,7 @@ class RichTextField extends React.Component<Props, State> {
    * On key down, if it's a formatting command toggle a mark.
    */
   onKeyDown = (
-    e: Event,
+    event: Event,
     data: { isMod: boolean; key: string },
     state: State
   ) => {
@@ -82,7 +82,7 @@ class RichTextField extends React.Component<Props, State> {
 
     state = state.transform().toggleMark(mark).apply()
 
-    e.preventDefault()
+    event.preventDefault()
     return state
   }
 
@@ -100,7 +100,7 @@ class RichTextField extends React.Component<Props, State> {
 
   renderMarkButton(type, icon) {
     const isActive = this.hasMark(type)
-    const onMouseDown = e => this.onClickMark(e, type)
+    const onMouseDown = event => this.onClickMark(event, type)
 
     return (
       <span
@@ -130,8 +130,8 @@ class RichTextField extends React.Component<Props, State> {
     )
   }
 
-  onClickMark = (e, type) => {
-    e.preventDefault()
+  onClickMark = (event, type) => {
+    event.preventDefault()
     let { editorState } = this.state
 
     editorState = editorState.transform().toggleMark(type).apply()

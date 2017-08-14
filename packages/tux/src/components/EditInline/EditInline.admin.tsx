@@ -84,7 +84,7 @@ class EditInline extends React.Component<Props, State> {
   /**
    * Paste handler.
    */
-  onPaste = (e, data, state) => {
+  onPaste = (event, data, state) => {
     if (data.type !== 'html') return
     if (data.isShift) return
     const { document } = Html.deserialize(data.html)
@@ -97,7 +97,7 @@ class EditInline extends React.Component<Props, State> {
   /**
    * On key down, if it's a formatting command toggle a mark.
    */
-  onKeyDown = (e, data, state) => {
+  onKeyDown = (event, data, state) => {
     if (!data.isMod) return
     let mark
 
@@ -123,15 +123,15 @@ class EditInline extends React.Component<Props, State> {
       .toggleMark(mark)
       .apply()
 
-    e.preventDefault()
+    event.preventDefault()
     return state
   }
 
   /**
    * Click handler for HoverPortal
    */
-  onClickMark = (e, type) => {
-    e.preventDefault()
+  onClickMark = (event, type) => {
+    event.preventDefault()
     let { editorState } = this.state
 
     editorState = editorState.transform().toggleMark(type).apply()
