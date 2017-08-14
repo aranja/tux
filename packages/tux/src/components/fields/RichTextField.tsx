@@ -45,30 +45,21 @@ class RichTextField extends React.Component<Props> {
     return Plain.deserialize('')
   }
 
-  onChange = async () => {
-    const { onEditorChange, editorState } = this.props
-    onEditorChange(editorState)
-  }
-
   componentDidUpdate(oldProps) {
     if (oldProps.editorState !== this.props.editorState) {
       this.onChange()
     }
   }
 
-  hasMark = type => {
-    const { editorState } = this.props
-    return editorState.marks.some(mark => mark.type === type)
+  onChange = async () => {
+    const { onEditorChange, editorState } = this.props
+    onEditorChange(editorState)
   }
 
-  hasBlock = (type) => {
-    const { editorState } = this.props
-    return editorState.blocks.some(node => node.type === type)
-  }
 
   renderBlockButton(type, icon) {
-    const { onClickBlock } = this.props
-    const isActive = this.hasBlock(type)
+    const { onClickBlock, hasBlock } = this.props
+    const isActive = hasBlock(type)
     const onMouseDown = event => onClickBlock(event, type)
 
     return (
@@ -100,8 +91,8 @@ class RichTextField extends React.Component<Props> {
   }
 
   renderMarkButton(type, icon) {
-    const { onClickMark } = this.props
-    const isActive = this.hasMark(type)
+    const { onClickMark, hasMark } = this.props
+    const isActive = hasMark(type)
     const onMouseDown = event => onClickMark(event, type)
 
     return (

@@ -73,8 +73,8 @@ export default function withEditorState(Component, getInitialEditorState) {
       this.setState({ editorState })
     }
 
-    onClickBlock = (e, type) => {
-      e.preventDefault()
+    onClickBlock = (event, type) => {
+      event.preventDefault()
       let { editorState } = this.state
       const transform = editorState.transform()
       const { document } = editorState
@@ -119,8 +119,6 @@ export default function withEditorState(Component, getInitialEditorState) {
       }
 
       editorState = transform.apply()
-      console.log('editorState after')
-      console.log(editorState)
       this.setState({ editorState })
     }
 
