@@ -14,6 +14,16 @@ export default function withEditorState(Component, getInitialEditorState) {
       }
     }
 
+    hasBlock = type => {
+      const { editorState } = this.state
+      return editorState.blocks.some(node => node.type === type)
+    }
+
+    hasMark = type => {
+      const { editorState } = this.props
+      return editorState.marks.some(mark => mark.type === type)
+    }
+
     /**
      * Paste handler.
      */
@@ -21,10 +31,7 @@ export default function withEditorState(Component, getInitialEditorState) {
       if (data.type !== 'html') return
       if (data.isShift) return
       const { document } = Html.deserialize(data.html)
-      return state
-        .transform()
-        .insertFragment(document)
-        .apply()
+      return state.transform().insertFragment(document).apply()
     }
 
     /**
@@ -66,8 +73,55 @@ export default function withEditorState(Component, getInitialEditorState) {
       this.setState({ editorState })
     }
 
-    onClickNode = (event, type) => {
-      event.preventDefault()
+    onClickBlock = (e, type) => {
+      e.preventDefault()
+      let { editorState } = this.state
+      const transform = editorState.transform()
+      const { document } = editorState
+
+      // Handle everything but list buttons.
+      if (type !== 'bulleted-list' && type !== 'numbered-list') {
+        const isActive = this.hasBlock(type)
+        const isList = this.hasBlock('list-item')
+
+        if (isList) {
+          transform
+            .setBlock(isActive ? 'paragraph' : type)
+            .unwrapBlock('bulleted-list')
+            .unwrapBlock('numbered-list')
+        } else {
+          transform.setBlock(isActive ? 'paragraph' : type)
+        }
+      } else {
+        // Handle the extra wrapping required for list buttons.
+        const isList = this.hasBlock('list-item')
+        const isType = editorState.blocks.some(block => {
+          return !!document.getClosest(
+            block.key,
+            parent => parent.type === type
+          )
+        })
+
+        if (isList && isType) {
+          transform
+            .setBlock('paragraph')
+            .unwrapBlock('bulleted-list')
+            .unwrapBlock('numbered-list')
+        } else if (isList) {
+          transform
+            .unwrapBlock(
+              type === 'bulleted-list' ? 'numbered-list' : 'bulleted-list'
+            )
+            .wrapBlock(type)
+        } else {
+          transform.setBlock('list-item').wrapBlock(type)
+        }
+      }
+
+      editorState = transform.apply()
+      console.log('editorState after')
+      console.log(editorState)
+      this.setState({ editorState })
     }
 
     render() {
@@ -79,9 +133,11 @@ export default function withEditorState(Component, getInitialEditorState) {
           editorState={editorState}
           onEditorChange={this.onEditorChange}
           onClickMark={this.onClickMark}
-          onClickNode={this.onClickNode}
+          onClickBlock={this.onClickBlock}
           onKeyDown={this.onKeyDown}
           onPaste={this.onPaste}
+          hasBlock={this.hasBlock}
+          hasMark={this.hasMark}
           {...rest}
         >
           {children}

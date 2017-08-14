@@ -45,8 +45,8 @@ class RichTextField extends React.Component<Props> {
     return Plain.deserialize('')
   }
 
-  onChange = async (editorState: any) => {
-    const { onEditorChange } = this.props
+  onChange = async () => {
+    const { onEditorChange, editorState } = this.props
     onEditorChange(editorState)
   }
 
@@ -59,6 +59,44 @@ class RichTextField extends React.Component<Props> {
   hasMark = type => {
     const { editorState } = this.props
     return editorState.marks.some(mark => mark.type === type)
+  }
+
+  hasBlock = (type) => {
+    const { editorState } = this.props
+    return editorState.blocks.some(node => node.type === type)
+  }
+
+  renderBlockButton(type, icon) {
+    const { onClickBlock } = this.props
+    const isActive = this.hasBlock(type)
+    const onMouseDown = event => onClickBlock(event, type)
+
+    return (
+      <span
+        className="Toolbar-button"
+        onMouseDown={onMouseDown}
+        data-active={isActive}
+      >
+        {icon}
+        <style jsx>{`
+          .Toolbar-button {
+            display: flex;
+            margin: 4px;
+            margin-left: 12px;
+            width: 12px;
+            opacity: 0.5;
+          }
+
+          .Toolbar-button:first-child {
+            margin-left: 6px;
+          }
+
+          .Toolbar-button[data-active="true"] {
+            opacity: 1;
+          }
+        `}</style>
+      </span>
+    )
   }
 
   renderMarkButton(type, icon) {
@@ -94,9 +132,8 @@ class RichTextField extends React.Component<Props> {
     )
   }
 
-
   render() {
-    const { editorState, value, isEditing, placeholder, onKeyDown } = this.props
+    const { editorState, onEditorChange, value, isEditing, placeholder, onKeyDown } = this.props
     if (!isEditing && !editorState.document.length) {
       return null
     }
@@ -107,14 +144,14 @@ class RichTextField extends React.Component<Props> {
           {this.renderMarkButton('italic', <FaItalic />)}
           {this.renderMarkButton('underlined', <FaUnderline />)}
           {this.renderMarkButton('quote', <FaQuoteRight />)}
-          {this.renderMarkButton('bulleted-list', <FaListUl />)}
-          {this.renderMarkButton('numbered-list', <FaListOl />)}
+          {this.renderBlockButton('bulleted-list', <FaListUl />)}
+          {this.renderBlockButton('numbered-list', <FaListOl />)}
         </div>
         <div className="RichTextField-editor">
           <SlateRenderer
             style={{ width: '100%' }}
             state={editorState}
-            onChange={this.onChange}
+            onChange={onEditorChange}
             onKeyDown={onKeyDown}
             placeholder={placeholder || ''}
           />

@@ -72,8 +72,8 @@ class EditInline extends React.Component<Props> {
     await tux.adapter.save(fullModel)
   }
 
-  onChange = async (editorState: any) => {
-    const { onEditorChange } = this.props
+  onChange = async () => {
+    const { onEditorChange, editorState } = this.props
     onEditorChange(editorState)
 
     if (this.timer) {
@@ -83,7 +83,7 @@ class EditInline extends React.Component<Props> {
   }
 
   render() {
-    const { editorState, onPaste, onKeyDown, onClickMark, isEditing, placeholder } = this.props
+    const { editorState, onEditorChange, onPaste, onKeyDown, onClickMark, isEditing, placeholder } = this.props
 
     if (!isEditing && !editorState.document.length) {
       return null
@@ -94,7 +94,7 @@ class EditInline extends React.Component<Props> {
         <HoverPortal editorState={editorState} onClickMark={onClickMark} />
         <SlateRenderer
           state={editorState}
-          onChange={this.onChange}
+          onChange={onEditorChange}
           readOnly={!isEditing}
           placeholder={placeholder || this.defaultPlaceholder()}
           onKeyDown={onKeyDown}
