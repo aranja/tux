@@ -6,7 +6,7 @@ import SlateRenderer from './SlateRenderer'
 import HoverPortal from './HoverPortal'
 import { createEditable } from '../Editable/Editable'
 import { EditableProps } from '../../interfaces'
-import { Raw, Plain, State, Html as HtmlSerializer } from 'slate'
+import { Raw, Plain } from 'slate'
 import { Html } from '../../utils/slate'
 import { get, set } from '../../utils/accessors'
 

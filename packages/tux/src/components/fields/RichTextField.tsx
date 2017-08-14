@@ -1,13 +1,14 @@
 import React from 'react'
-import { Raw, Plain, State, Html as HtmlSerializer } from 'slate'
-import { renderToStaticMarkup } from 'react-dom/server'
+import { Raw, Plain } from 'slate'
 import deepEqual from 'deep-eql'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { Theme, input, button } from '../../theme'
 import SlateRenderer from '../EditInline/SlateRenderer'
 import { get, set } from '../../utils/accessors'
 import { Html } from '../../utils/slate'
 import { EditableProps } from '../../interfaces'
 import { createEditable } from '../Editable/Editable'
+import withEditorState from '../HOC/withEditorState'
 
 // icons
 import FaBold from 'react-icons/lib/fa/bold'
@@ -24,29 +25,27 @@ export interface Props extends EditableProps {
   field: string | Array<string>
   onChange: Function
   isEditing: boolean
-}
-
-export interface State {
   editorState: any
 }
 
-class RichTextField extends React.Component<Props, State> {
+
+class RichTextField extends React.Component<Props> {
   constructor(props: Props, context: any) {
     super(props, context)
-
-    this.state = {
-      editorState: this.getInitialState()
-    }
   }
 
-  getInitialState() {
-    const { value } = this.props
+  componentDidMount() {
+    console.log(this.props)
+  }
+
+  static getInitialEditorState(props) {
+    const { value } = props
 
     try {
       if (value) {
         return Raw.deserialize(value, { terse: true })
-      } else if (this.props.children) {
-        const html = renderToStaticMarkup(this.props.children)
+      } else if (props.children) {
+        const html = renderToStaticMarkup(props.children)
         return Html.deserialize(html)
       }
     } catch (err) {
@@ -55,52 +54,20 @@ class RichTextField extends React.Component<Props, State> {
     return Plain.deserialize('')
   }
 
-  /**
-   * On key down, if it's a formatting command toggle a mark.
-   */
-  onKeyDown = (
-    event: Event,
-    data: { isMod: boolean; key: string },
-    state: State
-  ) => {
-    if (!data.isMod) return
-    let mark
-
-    switch (data.key) {
-      case 'b':
-        mark = 'bold'
-        break
-      case 'i':
-        mark = 'italic'
-        break
-      case 'u':
-        mark = 'underlined'
-        break
-      default:
-        return
-    }
-
-    state = state.transform().toggleMark(mark).apply()
-
-    event.preventDefault()
-    return state
-  }
-
-  onEditorChange = async (editorState: any) => {
-    const { onChange, id } = this.props
-    this.setState({ editorState })
-    const content = Raw.serialize(editorState)
-    onChange(content, id)
+  onChange = async (editorState: any) => {
+    const { id, onEditorChange } = this.props
+    onEditorChange(editorState, id)
   }
 
   hasMark = type => {
-    const { editorState } = this.state
+    const { editorState } = this.props
     return editorState.marks.some(mark => mark.type === type)
   }
 
   renderMarkButton(type, icon) {
+    const { onClickMark } = this.props
     const isActive = this.hasMark(type)
-    const onMouseDown = event => this.onClickMark(event, type)
+    const onMouseDown = event => onClickMark(event, type)
 
     return (
       <span
@@ -130,18 +97,9 @@ class RichTextField extends React.Component<Props, State> {
     )
   }
 
-  onClickMark = (event, type) => {
-    event.preventDefault()
-    let { editorState } = this.state
-
-    editorState = editorState.transform().toggleMark(type).apply()
-
-    this.setState({ editorState })
-  }
 
   render() {
-    const { value, isEditing, placeholder } = this.props
-    const { editorState } = this.state
+    const { editorState, value, isEditing, placeholder, onKeyDown } = this.props
     if (!isEditing && !editorState.document.length) {
       return null
     }
@@ -157,9 +115,10 @@ class RichTextField extends React.Component<Props, State> {
         </div>
         <div className="RichTextField-editor">
           <SlateRenderer
+            style={{ width: '100%' }}
             state={editorState}
-            onChange={this.onEditorChange}
-            onKeyDown={this.onKeyDown}
+            onChange={this.onChange}
+            onKeyDown={onKeyDown}
             placeholder={placeholder || ''}
           />
         </div>
@@ -182,6 +141,7 @@ class RichTextField extends React.Component<Props, State> {
             background: #fff;
             border: 1px solid ${input.border};
             color: ${Theme.textDark};
+            display: flex;
             font-size: 16px;
             font-weight: 400;
             font-family: initial;
@@ -196,4 +156,4 @@ class RichTextField extends React.Component<Props, State> {
   }
 }
 
-export default createEditable<Props>()(RichTextField)
+export default withEditorState(RichTextField, RichTextField.getInitialEditorState)
