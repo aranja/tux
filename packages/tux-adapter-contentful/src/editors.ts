@@ -6,9 +6,9 @@ import {
   ImageField,
   MarkdownField,
   Radio,
-  RichTextField,
   Input,
   TagEditor,
+  RichTextField,
 } from 'tux'
 
 const widgetIdToEditor: {[id: string]: ReactType | undefined} = {

@@ -28,6 +28,7 @@ class EditInline extends React.Component<Props, State> {
     this.state = {
       editorState: this.getInitialState(),
     }
+
   }
 
   getInitialState() {
