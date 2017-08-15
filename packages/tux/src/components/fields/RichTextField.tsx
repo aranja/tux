@@ -52,8 +52,9 @@ class RichTextField extends React.Component<Props> {
   }
 
   onChange = async () => {
-    const { onEditorChange, editorState } = this.props
+    const { onEditorChange, editorState, onChange, id } = this.props
     onEditorChange(editorState)
+    onChange(Raw.serialize(editorState), id)
   }
 
   renderBlockButton(type, icon) {

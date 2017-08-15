@@ -62,6 +62,7 @@ export default function withEditorState(Component, getInitialEditorState) {
     }
 
     onEditorChange = async (editorState: any) => {
+      const { onChange, id } = this.props
       this.setState({ editorState })
     }
 
