@@ -1,5 +1,6 @@
 import React from 'react'
 import { Theme, input, button } from '../../theme'
+import TextField from 'material-ui/TextField'
 
 interface MarkdownField {
   id: string
@@ -10,34 +11,16 @@ interface MarkdownField {
 const DEFAULT_VALUE = ''
 
 const MarkdownField = ({ id, value, onChange }: MarkdownField) => (
-  <div className="MarkdownField">
-    <textarea
-      rows={12}
-      className="MarkdownField-textArea"
-      id={id}
+    <TextField
+      hintText="Markdown text"
+      floatingLabelText="Markdown text"
+      multiLine={true}
       value={value ? value : DEFAULT_VALUE}
-      onChange={event => onChange(event.target.value)}
+      rows={2}
+      onChange={(event, value) => onChange(value)}
+      id={id}
+      fullWidth
     />
-    <style jsx>{`
-        .MarkdownField {
-          align-items: baseline;
-          display: flex;
-          flex-direction: column;
-          flex-wrap: wrap;
-        }
-
-        .MarkdownField-textArea {
-          background: #FFF;
-          border: 1px solid ${input.border};
-          color: ${Theme.textDark};
-          font-size: 16px;
-          font-weight: 300;
-          line-height: 1.4;
-          padding: 8px;
-          width: 100%;
-        }
-      `}</style>
-  </div>
 )
 
 export default MarkdownField

@@ -1,23 +1,35 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import {
+  Card,
+  CardActions,
+  CardHeader,
+  CardMedia,
+  CardTitle,
+  CardText
+} from 'material-ui/Card'
 import { get } from '../../utils/accessors'
 import { input } from '../../theme'
 import Spinner from '../Spinner'
 import BrowseField from './BrowseField'
 
 export interface ImageFieldProps {
-  field: string | Array<string>,
-  id: string,
-  name: string,
-  onChange: Function,
-  value: any,
+  field: string | Array<string>
+  id: string
+  name: string
+  onChange: Function
+  value: any
 }
 
+const style = {
+  Card: { padding: '15px' },
+  CardHeader: { padding: 0, paddingBottom: '15px' }
+}
 
 class ImageField extends React.Component<ImageFieldProps, any> {
   static contextTypes = {
-    tux: PropTypes.object,
+    tux: PropTypes.object
   }
 
   constructor(props: ImageFieldProps) {
@@ -25,7 +37,7 @@ class ImageField extends React.Component<ImageFieldProps, any> {
 
     this.state = {
       fullModel: null,
-      isLoadingImage: false,
+      isLoadingImage: false
     }
   }
 
@@ -54,19 +66,22 @@ class ImageField extends React.Component<ImageFieldProps, any> {
 
       this.setState({
         fullModel,
-        isLoadingImage: false,
+        isLoadingImage: false
       })
     }
   }
 
-  onFileChange = async(files: FileList) => {
+  onFileChange = async (files: FileList) => {
     const { onChange } = this.props
 
     this.setState({
-      isLoadingImage: true,
+      isLoadingImage: true
     })
 
-    const asset = await this.context.tux.adapter.createAssetFromFile(files[0], 'Some title')
+    const asset = await this.context.tux.adapter.createAssetFromFile(
+      files[0],
+      'Some title'
+    )
 
     onChange(asset)
   }
@@ -80,36 +95,30 @@ class ImageField extends React.Component<ImageFieldProps, any> {
       const url = get(fullModel, 'fields.file.url')
 
       return (
+        <Card style={style.Card}>
+          <CardHeader style={style.CardHeader} subtitle="Upload image" />
           <div className="ImageField">
-            {isLoadingImage ? (
-              <div className="ImageField-preview">
-                <Spinner />
-              </div>
-            ) : url ? (
-              <div className="ImageField-preview">
-                <img
-                className="ImageField-previewImage"
-                alt={title}
-                width="128"
-                height="auto"
-                src={`${url}?w=128`}
-                />
-              </div>
-            ) : null}
-            <BrowseField
-              id={id}
-              onChange={this.onFileChange}
-              value=""
-            />
+            {isLoadingImage
+              ? <div className="ImageField-preview">
+                  <Spinner />
+                </div>
+              : url
+                ? <div className="ImageField-preview">
+                    <img
+                      className="ImageField-previewImage"
+                      alt={title}
+                      width="128"
+                      height="auto"
+                      src={`${url}?w=128`}
+                    />
+                  </div>
+                : null}
+            <BrowseField id={id} onChange={this.onFileChange} value="" />
             <style jsx>{`
               .ImageField {
-                display: inline-flex;
-                flex-direction: column;
+                display: inline-block;
               }
               .ImageField-preview {
-                background: white;
-                border-radius: 3px;
-                border: 1px solid ${input.border};
                 display: inline-block;
                 height: 140px;
                 overflow: hidden;
@@ -123,11 +132,10 @@ class ImageField extends React.Component<ImageFieldProps, any> {
               }
             `}</style>
           </div>
+        </Card>
       )
     }
-    return (
-      <div>Loading</div>
-    )
+    return <div>Loading</div>
   }
 }
 

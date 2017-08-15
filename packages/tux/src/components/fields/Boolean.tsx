@@ -57,19 +57,9 @@ class Boolean extends Component<any, State> {
 
       <style jsx>{`
         .Boolean-wrapper {
-          display: inline-flex;
-          flex-direction: column;
         }
 
         .Boolean {
-          cursor: pointer;
-          display: block;
-          font-size: 15px;
-          line-height: 24px;
-          margin-bottom: 5px;
-          padding-left: 28px;
-          position: relative;
-          user-select: none;
         }
       `}</style>
       </div>
