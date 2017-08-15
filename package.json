@@ -40,6 +40,8 @@
     "@types/react-dom": "^0.14.21",
     "@types/react-icons": "^2.2.1",
     "@types/semver": "^5.3.31",
+    "@types/tar": "^1.0.29",
+    "@types/tmp": "0.0.33",
     "@types/webpack": "^2.2.7",
     "@types/webpack-chain": "^3.0.0",
     "@types/yargs": "^6.6.0",
