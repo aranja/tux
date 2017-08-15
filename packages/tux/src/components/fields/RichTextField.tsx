@@ -56,7 +56,6 @@ class RichTextField extends React.Component<Props> {
     onEditorChange(editorState)
   }
 
-
   renderBlockButton(type, icon) {
     const { onClickBlock, hasBlock } = this.props
     const isActive = hasBlock(type)
@@ -124,10 +123,7 @@ class RichTextField extends React.Component<Props> {
   }
 
   render() {
-    const { editorState, onEditorChange, value, isEditing, placeholder, onKeyDown } = this.props
-    if (!isEditing && !editorState.document.length) {
-      return null
-    }
+    const { editorState, onEditorChange, isEditing, placeholder, onKeyDown } = this.props
     return (
       <div className="RichTextField">
         <div className="RichTextField-toolbar">
