@@ -93,12 +93,13 @@ class QueryApi {
     }
 
     // Add included models to items
-    for (const item of result.items) {
-      this.linkFields(item, linkMap)
+    for (let i = 0; i < result.items.length; i++) {
+      this.linkFields(result.items, i, linkMap)
     }
   }
 
-  private linkFields(item: any, linkMap: LinkMap) {
+  private linkFields(parent: any, key: any, linkMap: LinkMap) {
+    const item = parent[key]
     if (!item) {
       return
     }
@@ -115,14 +116,14 @@ class QueryApi {
 
         // Link nested models
         const fieldNames = Object.keys(item[linkType])
-        fieldNames.forEach(fieldName => this.linkFields(item[linkType][fieldName], linkMap))
+        fieldNames.forEach(fieldName => this.linkFields(item[linkType], fieldName, linkMap))
       }
       return
     } else if (isArray) {
-      item.forEach((subItem: ContentfulJsonItem) => this.linkFields(subItem, linkMap))
+      item.forEach((subItem: ContentfulJsonItem, index: Number) => this.linkFields(item, index, linkMap))
     } else {
       const fieldNames = Object.keys(item.fields)
-      fieldNames.forEach(fieldName => this.linkFields(item.fields[fieldName], linkMap))
+      fieldNames.forEach(fieldName => this.linkFields(item.fields, fieldName, linkMap))
     }
   }
 
