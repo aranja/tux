@@ -118,7 +118,6 @@ class QueryApi {
         const fieldNames = Object.keys(item[linkType])
         fieldNames.forEach(fieldName => this.linkFields(item[linkType], fieldName, linkMap))
       }
-      return
     } else if (isArray) {
       item.forEach((subItem: ContentfulJsonItem, index: Number) => this.linkFields(item, index, linkMap))
     } else {
