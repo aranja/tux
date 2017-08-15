@@ -178,8 +178,7 @@ class TuxModal extends React.Component<TuxModalProps, State> {
           }
 
           .TuxModal-meta {
-            font-size: 16px;
-            margin-bottom: 20px;
+            font-size: 12px;
             text-align: right;
           }
 

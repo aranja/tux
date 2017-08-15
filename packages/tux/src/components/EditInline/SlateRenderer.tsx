@@ -42,6 +42,7 @@ const schema = {
 const SlateRenderer = (props: Props) => {
   return (
     <Editor
+      style={{width: '100%'}}
       schema={schema}
       {...props}
     />

@@ -8,6 +8,7 @@ import {
   Radio,
   Input,
   TagEditor,
+  RichTextField,
 } from 'tux'
 
 const widgetIdToEditor: {[id: string]: ReactType | undefined} = {
@@ -19,6 +20,7 @@ const widgetIdToEditor: {[id: string]: ReactType | undefined} = {
   radio: Radio,
   singleLine: Input,
   tagEditor: TagEditor,
+  objectEditor: RichTextField,
 }
 
 export default function generateEditorSchema(typeMeta: any) {
@@ -27,7 +29,6 @@ export default function generateEditorSchema(typeMeta: any) {
 
 function _transformTypeMetaFieldToEditorField(typeMetaField: any) {
   const props = _getPropsForType(typeMetaField)
-
   return {
     field: `fields.${typeMetaField.id}`,
     label: typeMetaField.name,

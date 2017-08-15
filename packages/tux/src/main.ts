@@ -13,6 +13,7 @@ export const Dropdown = adminOnly('Dropdown')
 export const ImageField = adminOnly('ImageField')
 export const MarkdownField = adminOnly('MarkdownField')
 export const Radio = adminOnly('Radio')
+export const RichTextField = adminOnly('RichTextField')
 export const TagEditor = adminOnly('TagEditor')
 export const Input = adminOnly('Input')
 
