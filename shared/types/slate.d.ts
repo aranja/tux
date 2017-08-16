@@ -20,11 +20,31 @@ declare module 'slate' {
       tabIndex?: number
       role?: string
 
+      // Placeholder Properties
+      placeholder?: ReactNode
+      placeholderClassName?: string
+      placeholderStyle?: Object
+
       // Plugin-like Properties Properties
+      onBeforeInput?: BeforeInputHandler
+      onBlur?: BlurHandler
+      onFocus?: FocusHandler
+      onCopy?: CopyHandler
+      onCut?: CutHandler
+      onDrop?: DropHandler
+      onKeyDown?: KeyDownHandler
+      onPaste?: PasteHandler
+      onSelect?: SelectHandler
       schema?: Schema
     }
 
     class Editor extends Component<EditorProps, any> {
+      // Methods
+      blur(): void
+      focus(): void
+      getSchema(): Schema
+      getState(): State
+      onChange(state: State): void
     }
 
     // Completion: 100%

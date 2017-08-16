@@ -17,8 +17,7 @@ type TagObj = {
 }
 
 class TagEditor extends Component<TagEditorProps, any> {
-
-  private tagEditor: HTMLElement
+  private tagEditor: HTMLElement | null
   private isUnmounting: boolean
 
   state = {
@@ -27,12 +26,16 @@ class TagEditor extends Component<TagEditorProps, any> {
   }
 
   componentWillUnmount() {
-    this.tagEditor.removeEventListener('keypress', this.handleOnKeyUp)
+    if (this.tagEditor) {
+      this.tagEditor.removeEventListener('keypress', this.handleOnKeyUp)
+    }
     this.isUnmounting = true
   }
 
   componentDidMount() {
-    this.tagEditor.addEventListener('keypress', this.handleOnKeyUp)
+    if (this.tagEditor) {
+      this.tagEditor.addEventListener('keypress', this.handleOnKeyUp)
+    }
 
     const { value } = this.props
     const prevTags: Array<string> = []

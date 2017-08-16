@@ -18,7 +18,7 @@ export interface State {
 
 class DatePicker extends Component<any, State> {
   private clickTimeout: number
-  private input: {
+  private input: null | {
     focus: () => any
     blur: () => any
   }
@@ -64,7 +64,7 @@ class DatePicker extends Component<any, State> {
     })
 
     // Force input's focus if blur event was caused by clicking on the calendar
-    if (showOverlay) {
+    if (showOverlay && this.input) {
       this.input.focus()
     }
   }
@@ -76,7 +76,9 @@ class DatePicker extends Component<any, State> {
       selectedDay: day,
       showOverlay: false,
     })
-    this.input.blur()
+    if (this.input) {
+      this.input.blur()
+    }
 
     this.onDateChange(dateValue)
   }
@@ -98,7 +100,7 @@ class DatePicker extends Component<any, State> {
           <input
             id={id}
             type="text"
-            ref={(el) => {this.input = el}}
+            ref={el => this.input = el}
             placeholder="Select a date"
             value={value}
             onChange={(event) => this.onDateChange(event.target.value)}

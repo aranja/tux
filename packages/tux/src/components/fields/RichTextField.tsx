@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Raw, Plain } from 'slate'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { Theme, input } from '../../theme'
 import { EditableProps } from '../../interfaces'
 import SlateRenderer from '../EditInline/SlateRenderer'
 import { Html } from '../../utils/slate'
-import withEditorState from '../HOC/withEditorState'
+import withEditorState, { EditorStateProps } from '../HOC/withEditorState'
 
 // icons
 import FaBold from 'react-icons/lib/fa/bold'
@@ -15,17 +15,16 @@ import FaQuoteRight from 'react-icons/lib/fa/quote-right'
 import FaListUl from 'react-icons/lib/fa/list-ul'
 import FaListOl from 'react-icons/lib/fa/list-ol'
 
-export interface Props {
+export interface Props extends EditorStateProps {
   value: any
   id: string
   placeholder: string
   field: string | Array<string>
   onChange: Function
   isEditing: boolean
-  editorState: any
 }
 
-class RichTextField extends React.Component<Props, void> {
+class RichTextField extends React.Component<Props, {}> {
   static getInitialEditorState(props: Props) {
     const { value } = props
 
@@ -51,15 +50,14 @@ class RichTextField extends React.Component<Props, void> {
     onChange(Raw.serialize(editorState), id)
   }
 
-  renderBlockButton(type, icon) {
+  renderBlockButton(type: string, icon: ReactNode) {
     const { onClickBlock, hasBlock } = this.props
     const isActive = hasBlock(type)
-    const onMouseDown = event => onClickBlock(event, type)
 
     return (
       <span
         className="Toolbar-button"
-        onMouseDown={onMouseDown}
+        onMouseDown={event => onClickBlock(event, type)}
         data-active={isActive}
       >
         {icon}
@@ -84,15 +82,14 @@ class RichTextField extends React.Component<Props, void> {
     )
   }
 
-  renderMarkButton(type, icon) {
+  renderMarkButton(type: string, icon: ReactNode) {
     const { onClickMark, hasMark } = this.props
     const isActive = hasMark(type)
-    const onMouseDown = event => onClickMark(event, type)
 
     return (
       <span
         className="Toolbar-button"
-        onMouseDown={onMouseDown}
+        onMouseDown={event => onClickMark(event, type)}
         data-active={isActive}
       >
         {icon}

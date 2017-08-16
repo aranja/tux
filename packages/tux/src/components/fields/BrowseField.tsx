@@ -3,7 +3,7 @@ import { button } from '../../theme'
 import { lighten } from '../../utils/color'
 
 class BrowseField extends Component<any, any> {
-  input: HTMLInputElement
+  input: HTMLInputElement | null
 
   constructor(props: any) {
     super(props)
@@ -13,7 +13,7 @@ class BrowseField extends Component<any, any> {
     const { onChange } = this.props
     const { input } = this
 
-    if (input.files && input.files.length) {
+    if (input && input.files && input.files.length) {
       onChange(input.files)
     }
   }

@@ -1,13 +1,5 @@
 import React from 'react'
-import { Editor, Schema } from 'slate'
-
-export interface Props {
-  state: any,
-  children?: any,
-  onChange?: (editorState: any) => void
-  readOnly: boolean,
-  placeholder?: string,
-}
+import { Editor, EditorProps, Schema } from 'slate'
 
 /**
  * Define a schema.
@@ -39,7 +31,7 @@ const schema: Schema = {
   }
 }
 
-const SlateRenderer = (props: Props) => {
+const SlateRenderer = (props: EditorProps) => {
   return (
     <Editor
       style={{width: '100%'}}

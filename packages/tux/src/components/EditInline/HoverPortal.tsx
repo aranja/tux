@@ -7,7 +7,7 @@ import FaUnderline from 'react-icons/lib/fa/underline'
 import { State as EditorState } from 'slate'
 
 export interface Props {
-  editorState: any
+  editorState: EditorState
   onClickMark: (e: React.MouseEvent<any>, type: string) => void
 }
 
@@ -25,7 +25,7 @@ class HoverPortal extends React.Component<Props, State> {
 
   hasMark = (type: string) => {
     const { editorState } = this.props
-    return editorState.marks.some(mark => mark.type === type)
+    return editorState.marks.some(mark => mark == null ? false : mark.type === type)
   }
 
   renderMarkButton(type: string, icon: ReactElement<any>) {
