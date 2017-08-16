@@ -77,9 +77,7 @@ class QueryApi {
       }
 
       const entry = this.checkOverride(asset)
-      const { fields } = entry
-      fields.sys = entry.sys
-      linkMap[entry.sys.id] = fields
+      linkMap[entry.sys.id] = entry
     }
   }
 
@@ -109,14 +107,12 @@ class QueryApi {
 
     if (isLeaf) {
       if (item.sys && item.sys.type === 'Link') {
-        const linkType = item.sys.linkType.toLowerCase()
-        item[linkType] =
-          linkMap[item.sys.id] ||
-          (this.overrides[item.sys.id] && this.overrides[item.sys.id].fields)
+        const entry = linkMap[item.sys.id] || (this.overrides[item.sys.id] && this.overrides[item.sys.id].fields)
+        parent[key] = entry
 
         // Link nested models
-        const fieldNames = Object.keys(item[linkType])
-        fieldNames.forEach(fieldName => this.linkFields(item[linkType], fieldName, linkMap))
+        const fieldNames = Object.keys(entry.fields)
+        fieldNames.forEach(fieldName => this.linkFields(entry.fields, fieldName, linkMap))
       }
     } else if (isArray) {
       item.forEach((subItem: ContentfulJsonItem, index: Number) => this.linkFields(item, index, linkMap))
