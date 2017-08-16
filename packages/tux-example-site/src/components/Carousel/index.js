@@ -31,7 +31,7 @@ class Carousel extends React.Component {
               key={item.fields.title}
               model={item}
             >
-              <div className="Carousel-itemImage" style={{backgroundImage: `url(${item.fields.image.asset.file.url})`}}></div>
+              <div className="Carousel-itemImage" style={{backgroundImage: `url(${item.fields.image.fields.file.url})`}}></div>
               <div className="Carousel-itemBody">
                 <h1 className="Carousel-itemTitle">{item.fields.title}</h1>
                 <p className="Carousel-itemCopy">{item.fields.text}</p>
