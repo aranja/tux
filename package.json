@@ -12,7 +12,6 @@
     "test": "lerna run test"
   },
   "dependencies": {
-    "@types/react-portal": "^3.0.2",
     "core-js": "2.4.1",
     "moment": "^2.17.1",
     "prop-types": "~15.5.8",
@@ -39,10 +38,11 @@
     "@types/node": "^7.0.4",
     "@types/prop-types": "^15.5.1",
     "@types/ramda": "0.0.5",
-    "@types/react": "^15.0.4",
-    "@types/react-addons-css-transition-group": "^15.0.1",
-    "@types/react-dom": "^0.14.21",
+    "@types/react": "^15.6.1",
+    "@types/react-addons-css-transition-group": "^15.0.3",
+    "@types/react-dom": "^15.5.3",
     "@types/react-icons": "^2.2.1",
+    "@types/react-portal": "^3.0.2",
     "@types/semver": "^5.3.31",
     "@types/webpack": "^2.2.7",
     "@types/webpack-chain": "^3.0.0",
