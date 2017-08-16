@@ -41,7 +41,8 @@ function _getPropsForType(typeMetaField: any) {
   const widgetId = typeMetaField.control.widgetId
   const props: any = {}
   if (widgetId === 'boolean') {
-    props.boolLabels = Object.values(typeMetaField.control.settings)
+    const labels = typeMetaField.control.settings
+    props.boolLabels = Object.keys(labels).map(key => labels[key])
   } else if (widgetId === 'dropdown') {
     props.dropdownValues = typeMetaField.validations[0].in
   } else if (widgetId === 'radio') {
