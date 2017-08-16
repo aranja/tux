@@ -110,9 +110,11 @@ class QueryApi {
         const entry = linkMap[item.sys.id] || (this.overrides[item.sys.id] && this.overrides[item.sys.id].fields)
         parent[key] = entry
 
-        // Link nested models
-        const fieldNames = Object.keys(entry.fields)
-        fieldNames.forEach(fieldName => this.linkFields(entry.fields, fieldName, linkMap))
+        if (entry.fields) {
+          // Link nested models
+          const fieldNames = Object.keys(entry.fields)
+          fieldNames.forEach(fieldName => this.linkFields(entry.fields, fieldName, linkMap))
+        }
       }
     } else if (isArray) {
       item.forEach((subItem: ContentfulJsonItem, index: Number) => this.linkFields(item, index, linkMap))
