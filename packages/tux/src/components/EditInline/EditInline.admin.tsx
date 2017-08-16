@@ -29,6 +29,7 @@ class EditInline extends React.Component<Props> {
         return Html.deserialize(html)
       }
     } catch (err) {
+      // tslint:disable-next-line:no-console
       console.error('Could not parse content', value, err)
     }
     return Plain.deserialize('')

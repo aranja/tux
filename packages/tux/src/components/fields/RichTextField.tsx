@@ -33,6 +33,7 @@ class RichTextField extends React.Component<Props, {}> {
         return Raw.deserialize(value, { terse: true })
       }
     } catch (err) {
+      // tslint:disable-next-line:no-console
       console.error('Could not parse content', value, err)
     }
     return Plain.deserialize('')

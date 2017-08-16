@@ -60,9 +60,7 @@ export default function withEditorState<InnerProps>(
     onPaste: PasteHandler = (event, data, state) => {
       if (data.type !== 'html') return
       if (data.isShift) return
-      if (data.type === 'html') {
-        console.log(data.html)
-      }
+
       const { document } = Html.deserialize(data.html)
       return state.transform().insertFragment(document).apply()
     }
