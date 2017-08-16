@@ -1,13 +1,10 @@
 import React from 'react'
 import { Raw, Plain } from 'slate'
-import deepEqual from 'deep-eql'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { Theme, input, button } from '../../theme'
-import SlateRenderer from '../EditInline/SlateRenderer'
-import { get, set } from '../../utils/accessors'
-import { Html } from '../../utils/slate'
+import { Theme, input } from '../../theme'
 import { EditableProps } from '../../interfaces'
-import { createEditable } from '../Editable/Editable'
+import SlateRenderer from '../EditInline/SlateRenderer'
+import { Html } from '../../utils/slate'
 import withEditorState from '../HOC/withEditorState'
 
 // icons
@@ -18,7 +15,7 @@ import FaQuoteRight from 'react-icons/lib/fa/quote-right'
 import FaListUl from 'react-icons/lib/fa/list-ul'
 import FaListOl from 'react-icons/lib/fa/list-ol'
 
-export interface Props extends EditableProps {
+export interface Props {
   value: any
   id: string
   placeholder: string
@@ -28,16 +25,13 @@ export interface Props extends EditableProps {
   editorState: any
 }
 
-class RichTextField extends React.Component<Props> {
-  static getInitialEditorState(props) {
+class RichTextField extends React.Component<Props, void> {
+  static getInitialEditorState(props: Props) {
     const { value } = props
 
     try {
       if (value) {
         return Raw.deserialize(value, { terse: true })
-      } else if (props.children) {
-        const html = renderToStaticMarkup(props.children)
-        return Html.deserialize(html)
       }
     } catch (err) {
       console.error('Could not parse content', value, err)
@@ -45,7 +39,7 @@ class RichTextField extends React.Component<Props> {
     return Plain.deserialize('')
   }
 
-  componentDidUpdate(oldProps) {
+  componentDidUpdate(oldProps: Props) {
     if (oldProps.editorState !== this.props.editorState) {
       this.onChange()
     }

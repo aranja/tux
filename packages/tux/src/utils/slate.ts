@@ -3,7 +3,7 @@ import { Html as HtmlSerializer } from 'slate'
 /**
  * Tags to blocks.
  */
-const BLOCK_TAGS : { [key: string]: string } = {
+const BLOCK_TAGS: { [key: string]: string } = {
   p: 'paragraph',
   li: 'list-item',
   ul: 'bulleted-list',
@@ -21,7 +21,7 @@ const BLOCK_TAGS : { [key: string]: string } = {
 /**
  * Tags to marks.
  */
-const MARK_TAGS : { [key: string]: string } = {
+const MARK_TAGS: { [key: string]: string } = {
   strong: 'bold',
   em: 'italic',
   u: 'underline',
@@ -32,7 +32,7 @@ const MARK_TAGS : { [key: string]: string } = {
 /**
  * Serializer rules.
  */
-const RULES = [
+const RULES: HtmlSerializer.Rule[] = [
   {
     deserialize(el, next) {
       const block = BLOCK_TAGS[el.tagName.toLowerCase()]
@@ -59,7 +59,7 @@ const RULES = [
     // Special case for code blocks, which need to grab the nested childNodes.
     deserialize(el, next) {
       if (el.tagName.toLowerCase() !== 'pre') return
-      const code = el.childNodes[0]
+      const code = el.childNodes[0] as HTMLElement | undefined
       const childNodes = code && code.tagName.toLowerCase() === 'code'
         ? code.childNodes
         : el.childNodes

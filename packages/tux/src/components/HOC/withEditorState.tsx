@@ -1,11 +1,41 @@
-import React from 'react'
+import React, {
+  Component,
+  ComponentClass,
+  SyntheticEvent,
+  KeyboardEvent,
+  ClipboardEvent,
+} from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { Raw, Plain } from 'slate'
-import humanize from 'string-humanize'
+import {
+  State as EditorState,
+  KeyDownHandler,
+  PasteHandler,
+  Block,
+} from 'slate'
 import { Html } from '../../utils/slate'
 
-export default function withEditorState(Component, getInitialEditorState) {
-  return class extends React.Component {
+export interface EditorStateProps {
+  editorState: EditorState
+  onEditorChange(state: EditorState): void
+  onClickMark(event: SyntheticEvent<any>, type: string): void
+  onClickBlock(event: SyntheticEvent<any>, type: string): void
+  onKeyDown: KeyDownHandler
+  onPaste: PasteHandler
+  hasMark(type: string): boolean
+  hasBlock(type: string): boolean
+}
+
+export interface State {
+  editorState: EditorState,
+}
+
+export default function withEditorState<InnerProps>(
+  Component: ComponentClass<InnerProps | EditorStateProps>,
+  getInitialEditorState: (props: InnerProps) => EditorState,
+): ComponentClass<InnerProps> {
+  return class extends React.Component<InnerProps, State> {
+    state: State
+
     constructor(props: any, context: any) {
       super(props, context)
 
@@ -14,22 +44,25 @@ export default function withEditorState(Component, getInitialEditorState) {
       }
     }
 
-    hasBlock = type => {
+    hasBlock = (type: string) => {
       const { editorState } = this.state
-      return editorState.blocks.some(node => node.type === type)
+      return editorState.blocks.some(node => node ? node.type === type : false)
     }
 
-    hasMark = type => {
+    hasMark = (type: string) => {
       const { editorState } = this.state
-      return editorState.marks.some(mark => mark.type === type)
+      return editorState.marks.some(mark => mark ? mark.type === type : false)
     }
 
     /**
      * Paste handler.
      */
-    onPaste = (event, data, state) => {
+    onPaste: PasteHandler = (event, data, state) => {
       if (data.type !== 'html') return
       if (data.isShift) return
+      if (data.type === 'html') {
+        console.log(data.html)
+      }
       const { document } = Html.deserialize(data.html)
       return state.transform().insertFragment(document).apply()
     }
@@ -37,7 +70,7 @@ export default function withEditorState(Component, getInitialEditorState) {
     /**
      * On key down, if it's a formatting command toggle a mark.
      */
-    onKeyDown = (event, data, state) => {
+    onKeyDown: KeyDownHandler = (event, data, state) => {
       if (!data.isMod) return
       let mark
 
@@ -61,12 +94,11 @@ export default function withEditorState(Component, getInitialEditorState) {
       return state
     }
 
-    onEditorChange = async (editorState: any) => {
-      const { onChange, id } = this.props
+    onEditorChange = async (editorState: EditorState) => {
       this.setState({ editorState })
     }
 
-    onClickMark = (event, type) => {
+    onClickMark = (event: SyntheticEvent<any>, type: string) => {
       event.preventDefault()
       let { editorState } = this.state
       editorState = editorState.transform().toggleMark(type).apply()
@@ -74,7 +106,7 @@ export default function withEditorState(Component, getInitialEditorState) {
       this.setState({ editorState })
     }
 
-    onClickBlock = (event, type) => {
+    onClickBlock = (event: SyntheticEvent<any>, type: string) => {
       event.preventDefault()
       let { editorState } = this.state
       const transform = editorState.transform()
@@ -97,9 +129,9 @@ export default function withEditorState(Component, getInitialEditorState) {
         // Handle the extra wrapping required for list buttons.
         const isList = this.hasBlock('list-item')
         const isType = editorState.blocks.some(block => {
-          return !!document.getClosest(
+          return block == null ? false : !!document.getClosest(
             block.key,
-            parent => parent.type === type
+            parent => (parent as Block).type === type
           )
         })
 
@@ -124,7 +156,6 @@ export default function withEditorState(Component, getInitialEditorState) {
     }
 
     render() {
-      const { children, ...rest } = this.props
       const { editorState } = this.state
 
       return (
@@ -137,10 +168,8 @@ export default function withEditorState(Component, getInitialEditorState) {
           onPaste={this.onPaste}
           hasBlock={this.hasBlock}
           hasMark={this.hasMark}
-          {...rest}
-        >
-          {children}
-        </Component>
+          {...this.props}
+        />
       )
     }
   }

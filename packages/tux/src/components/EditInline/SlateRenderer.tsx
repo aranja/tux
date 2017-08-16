@@ -1,5 +1,5 @@
 import React from 'react'
-import { Editor } from 'slate'
+import { Editor, Schema } from 'slate'
 
 export interface Props {
   state: any,
@@ -12,7 +12,7 @@ export interface Props {
 /**
  * Define a schema.
  */
-const schema = {
+const schema: Schema = {
   nodes: {
     'bulleted-list': props => <ul {...props.attributes}>{props.children}</ul>,
     'code': props => <pre><code {...props.attributes}>{props.children}</code></pre>,
