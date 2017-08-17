@@ -92,36 +92,31 @@ class QueryApi {
 
     // Add included models to items
     for (let i = 0; i < result.items.length; i++) {
-      this.linkFields(result.items, i, linkMap)
+      const item = result.items[i]
+      result.items[i] = this.linkEntry(item, linkMap)
     }
   }
 
-  private linkFields(parent: any, key: any, linkMap: LinkMap) {
-    const item = parent[key]
-    if (!item) {
-      return
-    }
-
+  private linkEntry(item: any, linkMap: LinkMap) {
+    const hasSys = !!item.sys
+    const isLink = hasSys && item.sys.type === 'Link'
     const isArray = item instanceof Array
-    const isLeaf = !isArray && !item.fields
 
-    if (isLeaf) {
-      if (item.sys && item.sys.type === 'Link') {
-        const entry = linkMap[item.sys.id] || (this.overrides[item.sys.id] && this.overrides[item.sys.id].fields)
-        parent[key] = entry
-
-        if (entry.fields) {
-          // Link nested models
-          const fieldNames = Object.keys(entry.fields)
-          fieldNames.forEach(fieldName => this.linkFields(entry.fields, fieldName, linkMap))
-        }
-      }
-    } else if (isArray) {
-      item.forEach((subItem: ContentfulJsonItem, index: Number) => this.linkFields(item, index, linkMap))
-    } else {
-      const fieldNames = Object.keys(item.fields)
-      fieldNames.forEach(fieldName => this.linkFields(item.fields, fieldName, linkMap))
+    if (item.fields) {
+      Object.keys(item.fields).forEach(fieldName => {
+        item.fields[fieldName] = this.linkEntry(item.fields[fieldName], linkMap)
+      })
     }
+
+    if (isLink) {
+      const itemId = item.sys.id
+      const entry = linkMap[itemId] || this.overrides[itemId]
+
+      return this.linkEntry(entry, linkMap)
+    } else if (isArray) {
+      return item.map((subItem: any) => this.linkEntry(subItem, linkMap))
+    }
+    return item
   }
 
   private checkOverride = (entry: ContentfulJsonItem) => {
