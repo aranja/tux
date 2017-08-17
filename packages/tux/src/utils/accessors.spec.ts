@@ -32,10 +32,10 @@ describe('the get accessor', () => {
       first: {
         second: {
           third: {
-            fourth: expected
-          }
-        }
-      }
+            fourth: expected,
+          },
+        },
+      },
     }
 
     const result = get(source, key)
@@ -70,7 +70,7 @@ describe('the get accessor', () => {
     const source = {
       fields: {
         value: '',
-      }
+      },
     }
 
     const result = get(source, key)
@@ -94,8 +94,8 @@ describe('the set accessor', () => {
     const key = 'first.second.third'
     const source = {
       first: {
-        second: {}
-      }
+        second: {},
+      },
     }
 
     set(source, key, expected)

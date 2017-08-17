@@ -49,11 +49,8 @@ const init = async (
   verbose: boolean,
   originalDirectory: string
 ) => {
-  const ownPackageName = require(path.join(
-    __dirname,
-    '..',
-    'package.json'
-  )).name
+  const ownPackageName = require(path.join(__dirname, '..', 'package.json'))
+    .name
   const ownPath = path.join(appPath, 'node_modules', ownPackageName)
   const appPackage = require(path.join(appPath, 'package.json'))
   const useYarn = await fs.pathExists(path.join(appPath, 'yarn.lock'))
@@ -93,10 +90,7 @@ const init = async (
     return
   }
 
-  let dependencies = [
-    'tux',
-    'tux-adapter-contentful',
-  ]
+  let dependencies = ['tux', 'tux-adapter-contentful']
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
@@ -136,17 +130,11 @@ const init = async (
   console.log(chalk.cyan(`  ${displayedCommand} start`))
   console.log('    Starts the development server.')
   console.log()
-  console.log(
-    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`)
-  )
+  console.log(chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`))
   console.log('    Bundles the app into static files for production.')
   console.log()
-  console.log(
-    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}serve`)
-  )
-  console.log(
-    '    Starts a server for the built output.'
-  )
+  console.log(chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}serve`))
+  console.log('    Starts a server for the built output.')
   console.log()
   console.log('We suggest that you begin by typing:')
   console.log()

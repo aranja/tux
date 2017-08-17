@@ -20,7 +20,11 @@ export async function run(command: Command, args: Options) {
   return Promise.all(builders)
 }
 
-async function runNeutrino(command: Command, middleware: Middleware, options: any) {
+async function runNeutrino(
+  command: Command,
+  middleware: Middleware,
+  options: any
+) {
   const neutrino = new Neutrino(options.neutrinoOptions)
 
   neutrino.use(middleware)
@@ -29,9 +33,9 @@ async function runNeutrino(command: Command, middleware: Middleware, options: an
     await neutrino.requiresAndUses(options.use).promise()
   }
 
-  const result = await neutrino.run(command)
-      .promise()
-      .catch(err => { throw err[0] })
+  const result = await neutrino.run(command).promise().catch(err => {
+    throw err[0]
+  })
 
   return result
 }
@@ -62,6 +66,6 @@ async function getOptions(options: Options) {
         },
         ...pathOr({}, ['neutrino', 'config'], pkg),
       },
-    }
+    },
   }
 }

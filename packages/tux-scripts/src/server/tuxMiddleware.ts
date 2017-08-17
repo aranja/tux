@@ -6,7 +6,7 @@ import fs from 'fs'
 import DefaultDocument from 'react-document'
 
 export interface Options {
-  buildPath: string,
+  buildPath: string
 }
 
 const tuxMiddleware = (options: Options): express.RequestHandler => {
@@ -30,12 +30,19 @@ const tuxMiddleware = (options: Options): express.RequestHandler => {
     session.res = res
 
     try {
-      const body = await app.renderServer(session, ReactDOMServer.renderToString)
-      const html = createElement(Document, {
-        ...session,
-        css: assets.css,
-        js: assets.js,
-      }, body)
+      const body = await app.renderServer(
+        session,
+        ReactDOMServer.renderToString
+      )
+      const html = createElement(
+        Document,
+        {
+          ...session,
+          css: assets.css,
+          js: assets.js,
+        },
+        body
+      )
       res.status(session.status || 200)
       res.send('<!doctype html>' + ReactDOMServer.renderToStaticMarkup(html))
     } catch (error) {

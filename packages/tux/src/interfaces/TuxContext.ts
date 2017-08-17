@@ -1,7 +1,7 @@
 import Adapter from './Adapter'
 
 interface TuxContext {
-  isEditing: boolean,
+  isEditing: boolean
   editModel: (model: any) => boolean
   adapter: Adapter
 }

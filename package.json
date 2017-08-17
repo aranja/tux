@@ -8,6 +8,8 @@
     "check-types": "TS_FAIL_ON_ERROR=true lerna run prepublish --silent",
     "lerna": "lerna",
     "bootstrap": "lerna bootstrap --hoist",
+    "precommit": "lint-staged",
+    "prettier": "prettier --no-semi --single-quote --trailing-comma es5 --write \"**/*.ts\"",
     "watch": "lerna run watch --parallel",
     "test": "lerna run test"
   },
@@ -59,9 +61,12 @@
     "gulp-sourcemaps": "^2.4.1",
     "gulp-typescript": "^3.2.1",
     "gulp-util": "^3.0.8",
+    "husky": "^0.14.3",
     "jest": "^18.1.0",
     "lerna": "2.0.0-rc.5",
+    "lint-staged": "^4.0.3",
     "merge2": "^1.0.3",
+    "prettier": "^1.5.3",
     "react-hot-loader": "^3.0.0-beta.6",
     "run-sequence": "^1.2.2",
     "styled-jsx": "^0.5.4",
@@ -69,6 +74,12 @@
     "typescript": "^2.4.2",
     "webpack": "^2.2.1",
     "yargs": "^6.6.0"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier",
+      "git add"
+    ]
   },
   "babel": {
     "env": {

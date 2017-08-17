@@ -1,5 +1,10 @@
 declare module 'slate' {
-  import React, { Component, ComponentType, ReactNode, CSSProperties } from 'react'
+  import React, {
+    Component,
+    ComponentType,
+    ReactNode,
+    CSSProperties,
+  } from 'react'
   import { List, Set, Map } from 'immutable'
 
   export = Slate
@@ -95,7 +100,10 @@ declare module 'slate' {
     interface Transform {
       // Methods
       apply(options?: { save: boolean }): State
-      call(customTransform: (transform: Transform) => void, ...args: any[]): Transform
+      call(
+        customTransform: (transform: Transform) => void,
+        ...args: any[]
+      ): Transform
 
       // Current State Transforms
       deleteBackward(n: number): Transform
@@ -132,7 +140,10 @@ declare module 'slate' {
       text: string
 
       // Methods
-      getClosest(key: string | Node, match: (node: Node) => boolean): Node | void
+      getClosest(
+        key: string | Node,
+        match: (node: Node) => boolean
+      ): Node | void
     }
 
     // Completion 100%
@@ -149,14 +160,11 @@ declare module 'slate' {
       static isBlock(maybeBlock: any): maybeBlock is Block
     }
 
-    interface Inline extends Node {
-    }
+    interface Inline extends Node {}
 
-    interface Document extends Node {
-    }
+    interface Document extends Node {}
 
-    interface Selection {
-    }
+    interface Selection {}
 
     // Completion 100%
     class Character {
@@ -183,8 +191,7 @@ declare module 'slate' {
 
     interface Data extends Map<string, any> {}
 
-    interface String {
-    }
+    interface String {}
 
     namespace Html {
       interface Rule {
@@ -197,45 +204,60 @@ declare module 'slate' {
     }
 
     namespace Raw {
-      function deserialize(object: Object, options?: {
-        terse?: boolean,
-        normalize?: boolean,
-      }): State
+      function deserialize(
+        object: Object,
+        options?: {
+          terse?: boolean
+          normalize?: boolean
+        }
+      ): State
 
-      function serialize(state: State, options?: {
-        terse?: boolean,
-        preserveKeys?: boolean,
-        preserveSelection?: boolean,
-        preserveStateData?: boolean,
-      }): Object
+      function serialize(
+        state: State,
+        options?: {
+          terse?: boolean
+          preserveKeys?: boolean
+          preserveSelection?: boolean
+          preserveStateData?: boolean
+        }
+      ): Object
     }
 
     namespace Plain {
       function deserialize(str: string): State
       function deserialize(str: string, options: { toRaw: false }): State
       function deserialize(str: string, options: { toRaw: true }): Object
-      function deserialize(str: string, options?: { toRaw?: boolean }): State | Object
+      function deserialize(
+        str: string,
+        options?: { toRaw?: boolean }
+      ): State | Object
 
       function serialize(state: State): string
     }
 
     class Html {
       constructor(options?: {
-        rules?: Html.Rule[],
-        defaultBlockType?: string | { type: string },
-        parseHtml?(html: string): Node,
+        rules?: Html.Rule[]
+        defaultBlockType?: string | { type: string }
+        parseHtml?(html: string): Node
       })
 
-      deserialize(html: string, options?: {
-        toRaw?: boolean,
-      }): State
+      deserialize(
+        html: string,
+        options?: {
+          toRaw?: boolean
+        }
+      ): State
 
       serialize(state: State): string
       serialize(state: State, options: { render: true }): string
       serialize(state: State, options: { render: false }): ReactNode
-      serialize(state: State, options?: {
-        render?: boolean,
-      }): string | ReactNode
+      serialize(
+        state: State,
+        options?: {
+          render?: boolean
+        }
+      ): string | ReactNode
     }
 
     interface TextPaste {
@@ -304,8 +326,12 @@ declare module 'slate' {
       isNative: boolean
     }
 
-    type Handler<Event, Data> =
-      (event: Event, data: Data, state: State, editor: Editor) => State | void
+    type Handler<Event, Data> = (
+      event: Event,
+      data: Data,
+      state: State,
+      editor: Editor
+    ) => State | void
     type BeforeInputHandler = Handler<React.SyntheticEvent<any>, {}>
     type BlurHandler = Handler<React.FocusEvent<any>, {}>
     type FocusHandler = Handler<React.FocusEvent<any>, {}>
@@ -328,7 +354,11 @@ declare module 'slate' {
     interface Rule<Failure = any> {
       match?(object: Node | Mark): boolean
       decorate?(text: Text, object: Node): List<Character>
-      normalize?(transform: Transform, object: Node, failure: Failure): Transform
+      normalize?(
+        transform: Transform,
+        object: Node,
+        failure: Failure
+      ): Transform
       render?: ComponentType<NodeProps> | Object | string
       validate?(object: Node): Failure | void
     }
