@@ -15,7 +15,6 @@ html {
   font-size: calc(15.29577px + .18779vw);
 }
 
-
 @media (min-width: 1440px) {
   html {
     font-size: 16px;

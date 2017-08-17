@@ -15,57 +15,81 @@ import Pricetable from '../components/Pricetable'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
-const Home = ({ content, sellPoints, testimonial, carousel }) => (
+const Home = ({ content, sellPoints, testimonial, carousel }) =>
   <div className="p-Home">
-    <Helmet
-      title="Tux Demo Site"
-    />
+    <Helmet title="Tux Demo Site" />
     <Menu />
     <Editable model={content}>
       <ProductBanner image={ProductBannerImage} />
       <Section>
-        <H1><EditInline placeholder="Sell points: Heading" field="fields.content.tagline" /></H1>
+        <H1>
+          <EditInline
+            placeholder="Sell points: Heading"
+            field="fields.content.tagline"
+          />
+        </H1>
         <SellPoints sellPoints={sellPoints.items} />
         <ModelCreator model="sellPoint">
-          {(onClick) => (
-            <button style={{
-              backgroundColor: '#fff',
-              border: '1px dashed rgb(68, 68, 68)',
-              boxSizing: 'border-box',
-              color: '#444',
-              cursor: 'pointer',
-              fontSize: '16px',
-              margin: '20px 7px',
-              padding: '20px',
-              textAlign: 'center',
-              width: '100%'
-            }} onClick={onClick}>
+          {onClick =>
+            <button
+              style={{
+                backgroundColor: '#fff',
+                border: '1px dashed rgb(68, 68, 68)',
+                boxSizing: 'border-box',
+                color: '#444',
+                cursor: 'pointer',
+                fontSize: '16px',
+                margin: '20px 7px',
+                padding: '20px',
+                textAlign: 'center',
+                width: '100%',
+              }}
+              onClick={onClick}
+            >
               New Sell Point!
-            </button>
-          )}
+            </button>}
         </ModelCreator>
       </Section>
       <Section>
-        <Carousel carouselItems={carousel.items}/>
+        <Carousel carouselItems={carousel.items} />
       </Section>
       <Section>
-        <Testimonial testimonial={testimonial.items}/>
+        <Testimonial testimonial={testimonial.items} />
       </Section>
       <Section backgroundColor="#F5F7FA">
-        <H1><EditInline placeholder="Twitter: Heading" field="fields.content.twitterFeedTitle" /></H1>
-        <H2><EditInline placeholder="Twitter: Subtitle" field="fields.content.twitterFeedSubtitle" /></H2>
+        <H1>
+          <EditInline
+            placeholder="Twitter: Heading"
+            field="fields.content.twitterFeedTitle"
+          />
+        </H1>
+        <H2>
+          <EditInline
+            placeholder="Twitter: Subtitle"
+            field="fields.content.twitterFeedSubtitle"
+          />
+        </H2>
         <TwitterFeed />
         <SocialPlug>
           Are you using too much? <strong>Let us know on Twitter</strong>
         </SocialPlug>
       </Section>
       <Section>
-        <H1><EditInline placeholder="Newsletter: Heading" field="fields.content.newsletterTitle" /></H1>
-        <H2><EditInline placeholder="Newsletter: Subtitle" field="fields.content.newsletterSubtitle" /></H2>
+        <H1>
+          <EditInline
+            placeholder="Newsletter: Heading"
+            field="fields.content.newsletterTitle"
+          />
+        </H1>
+        <H2>
+          <EditInline
+            placeholder="Newsletter: Subtitle"
+            field="fields.content.newsletterSubtitle"
+          />
+        </H2>
         <Newsletter model={content} />
       </Section>
     </Editable>
   </div>
-)
 
 export default Home

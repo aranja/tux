@@ -25,13 +25,13 @@ export class ContentfulAdapter extends BaseAdapter implements Adapter {
       sys: {
         contentType: {
           sys: {
-            id: meta.type
-          }
-        }
+            id: meta.type,
+          },
+        },
       },
       __fullModel: {
-        fields: {}
-      }
+        fields: {},
+      },
     }
   }
 
@@ -41,7 +41,7 @@ export class ContentfulAdapter extends BaseAdapter implements Adapter {
         linkType: 'Asset',
         type: 'Link',
         id: null,
-      }
+      },
     }
   }
 
@@ -65,12 +65,12 @@ export class ContentfulAdapter extends BaseAdapter implements Adapter {
               linkType: 'Upload',
               id: upload.sys.id,
             },
-          }
-        }
+          },
+        },
       },
       __fullModel: {
-        fields: {}
-      }
+        fields: {},
+      },
     }
 
     return await this._createAsset(assetBody, 'upload')
@@ -84,11 +84,11 @@ export class ContentfulAdapter extends BaseAdapter implements Adapter {
           contentType: 'image/jpeg',
           fileName,
           upload: url,
-        }
+        },
       },
       __fullModel: {
-        fields: {}
-      }
+        fields: {},
+      },
     }
 
     return await this._createAsset(assetBody, 'url')
@@ -106,10 +106,7 @@ export class ContentfulAdapter extends BaseAdapter implements Adapter {
     }
 
     try {
-      const [
-        user,
-        space,
-      ] = await Promise.all([
+      const [user, space] = await Promise.all([
         managementApi.getUser(),
         managementApi.getSpace(),
       ])
@@ -152,8 +149,10 @@ export class ContentfulAdapter extends BaseAdapter implements Adapter {
   }
 
   async login() {
-    location.href = `https://be.contentful.com/oauth/authorize?response_type=token&` +
-      `client_id=${this.clientId}&redirect_uri=${this.redirectUri}&scope=content_management_manage`
+    location.href =
+      `https://be.contentful.com/oauth/authorize?response_type=token&` +
+      `client_id=${this.clientId}&redirect_uri=${this
+        .redirectUri}&scope=content_management_manage`
   }
 
   logout() {

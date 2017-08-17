@@ -6,22 +6,22 @@ describe('inject locale', () => {
     const source = {
       fields: {
         name: 'derp',
-        date: '1337'
+        date: '1337',
       },
       __fullModel: {
-        fields: {}
-      }
+        fields: {},
+      },
     }
 
     const expected = {
       fields: {
         name: {
-          [locale]: 'derp'
+          [locale]: 'derp',
         },
         date: {
-          [locale]: '1337'
-        }
-      }
+          [locale]: '1337',
+        },
+      },
     }
 
     const injected = injectLocale(source, locale)
@@ -33,22 +33,22 @@ describe('inject locale', () => {
     const source = {
       fields: {
         name: undefined,
-        date: undefined
+        date: undefined,
       },
       __fullModel: {
-        fields: {}
-      }
+        fields: {},
+      },
     }
 
     const expected = {
       fields: {
         name: {
-          [locale]: undefined
+          [locale]: undefined,
         },
         date: {
-          [locale]: undefined
-        }
-      }
+          [locale]: undefined,
+        },
+      },
     }
 
     const injected = injectLocale(source, locale)
@@ -59,28 +59,28 @@ describe('inject locale', () => {
     const locale = 'en-US'
     const source = {
       fields: {
-        name: 'hello'
+        name: 'hello',
       },
       sys: {
         locale,
       },
-      '__fullModel': {
+      __fullModel: {
         fields: {
           name: {
             [locale]: 'hello',
             'en-GB': 'tis a nice day',
-          }
-        }
-      }
+          },
+        },
+      },
     }
 
     const expected = {
       fields: {
         name: {
           'en-US': 'hello',
-          'en-GB': 'tis a nice day'
-        }
-      }
+          'en-GB': 'tis a nice day',
+        },
+      },
     }
 
     const injected = injectLocale(source, locale)
@@ -94,15 +94,15 @@ describe('extract locale', () => {
     const source = {
       fields: {
         name: {
-          [locale]: 'derp'
-        }
-      }
+          [locale]: 'derp',
+        },
+      },
     }
 
     const expected = {
       fields: {
         name: 'derp',
-      }
+      },
     }
 
     const extracted = extractLocale(source, locale)
@@ -114,15 +114,15 @@ describe('extract locale', () => {
     const source = {
       fields: {
         name: {
-          [locale]: undefined
-        }
-      }
+          [locale]: undefined,
+        },
+      },
     }
 
     const expected = {
       fields: {
         name: undefined,
-      }
+      },
     }
 
     const extracted = extractLocale(source, locale)
@@ -141,9 +141,9 @@ describe('extract locale', () => {
             year: 1337,
             month: 3,
             day: 14,
-          }
-        }
-      }
+          },
+        },
+      },
     }
 
     const expected = {
@@ -154,7 +154,7 @@ describe('extract locale', () => {
           month: 3,
           day: 14,
         },
-      }
+      },
     }
 
     const extracted = extractLocale(source, locale)
@@ -167,26 +167,26 @@ describe('extract locale', () => {
       fields: {
         name: {
           'en-US': 'hello',
-          'en-GB': 'tis a nice day'
-        }
-      }
+          'en-GB': 'tis a nice day',
+        },
+      },
     }
 
     const expected = {
       fields: {
-        name: 'hello'
+        name: 'hello',
       },
       sys: {
         locale,
       },
-      '__fullModel': {
+      __fullModel: {
         fields: {
           name: {
             [locale]: 'hello',
             'en-GB': 'tis a nice day',
-          }
-        }
-      }
+          },
+        },
+      },
     }
 
     const extracted = extractLocale(source, locale)

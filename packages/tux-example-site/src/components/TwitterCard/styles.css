@@ -1,5 +1,5 @@
 .TwitterCard {
-  background: #FFF;
+  background: #fff;
   border-radius: 10px;
   min-height: 11.875rem;
   width: calc(33.333% - 2rem);
@@ -23,7 +23,8 @@
   border-radius: 50%;
 }
 
-.TwitterCard-authorDetails {}
+.TwitterCard-authorDetails {
+}
 
 .TwitterCard-authorName {
   color: #000;

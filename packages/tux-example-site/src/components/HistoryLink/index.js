@@ -21,11 +21,11 @@ type Props = {
 }
 
 class HistoryLink extends React.Component {
-  context : {
+  context: {
     history?: History,
   }
 
-  props : Props
+  props: Props
 
   constructor(props, context) {
     super(props, context)
@@ -48,12 +48,12 @@ class HistoryLink extends React.Component {
     return href.match(/^(?:tel|mailto):/)
   }
 
-  getTarget(blank : blankProp) {
+  getTarget(blank: blankProp) {
     let actualBlank = blank === 'auto' ? this.isRemote() : blank
     return actualBlank ? '_blank' : undefined
   }
 
-  handleClick(event : SyntheticMouseEvent) {
+  handleClick(event: SyntheticMouseEvent) {
     if (this.props.onClick) {
       this.props.onClick(event)
     }
@@ -85,14 +85,16 @@ class HistoryLink extends React.Component {
   render() {
     const { href, children, blank, ...props } = this.props
 
-    return <a
-      href={href}
-      target={this.getTarget(blank)}
-      {...props}
-      onClick={this.handleClick}
-    >
-      {children}
-    </a>
+    return (
+      <a
+        href={href}
+        target={this.getTarget(blank)}
+        {...props}
+        onClick={this.handleClick}
+      >
+        {children}
+      </a>
+    )
   }
 }
 HistoryLink.contextTypes = {

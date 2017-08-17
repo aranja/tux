@@ -1,10 +1,9 @@
 .Banner {
-  color: #FFF;
+  color: #fff;
   display: flex;
   flex-direction: column;
   height: 40rem;
 }
-
 
 .Banner-heading {
   align-items: center;

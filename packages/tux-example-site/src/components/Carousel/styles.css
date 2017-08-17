@@ -28,7 +28,7 @@
   opacity: 0;
   padding-bottom: 40%;
   transform: translate(-20px, 0);
-  transition: transform 0.25s cubic-bezier(0,1,1,1.1), opacity 0.25s;
+  transition: transform 0.25s cubic-bezier(0, 1, 1, 1.1), opacity 0.25s;
   width: 55%;
   will-change: transform, opacity;
 }
