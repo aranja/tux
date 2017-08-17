@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import FaImage from 'react-icons/lib/fa/image'
 import { button } from '../../theme'
 import { lighten } from '../../utils/color'
 
 class BrowseField extends Component<any, any> {
-  input: HTMLInputElement
+  input: HTMLInputElement | null
 
   constructor(props: any) {
     super(props)
@@ -14,7 +13,7 @@ class BrowseField extends Component<any, any> {
     const { onChange } = this.props
     const { input } = this
 
-    if (input.files && input.files.length) {
+    if (input && input.files && input.files.length) {
       onChange(input.files)
     }
   }
@@ -29,7 +28,6 @@ class BrowseField extends Component<any, any> {
           aria-label="Browse for files"
           htmlFor={id}>
             Browse for files
-            <FaImage className="BrowseField-icon" />
         </label>
         <input
           className="BrowseField-fileInput"
@@ -46,11 +44,6 @@ class BrowseField extends Component<any, any> {
             height: 0;
             width: 0;
             overflow: hidden;
-          }
-
-          .BrowseField-icon {
-            margin-bottom: 1px;
-            margin-left: 6px;
           }
 
           .BrowseField-button {

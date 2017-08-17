@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "react": "^15.5.2",
-    "react-chain": "^0.3.0",
-    "react-chain-history": "^0.3.0",
-    "react-document": "^0.5.0",
-    "react-dom": "^15.5.2"
+    "react": "^16.0.0-beta.3",
+    "react-chain": "^0.4.0",
+    "react-chain-history": "^0.4.0",
+    "react-document": "^0.6.0",
+    "react-dom": "^16.0.0-beta.3"
   }
 }

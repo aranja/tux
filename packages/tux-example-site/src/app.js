@@ -9,8 +9,6 @@ import createReactChain from 'react-chain';
 
 import './reset.css';
 import './index.css';
-import './megadraft.css';
-import './megadraft-fixes.css';
 
 const publicUrl = process.env.PUBLIC_URL
   ? process.env.PUBLIC_URL

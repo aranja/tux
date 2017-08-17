@@ -10,6 +10,7 @@ export { default as Dropdown } from './components/fields/Dropdown'
 export { default as ImageField } from './components/fields/ImageField'
 export { default as MarkdownField } from './components/fields/MarkdownField'
 export { default as Radio } from './components/fields/Radio'
+export { default as RichTextField } from './components/fields/RichTextField'
 export { default as TagEditor } from './components/fields/TagEditor'
 export { default as Input } from './components/fields/Input'
 

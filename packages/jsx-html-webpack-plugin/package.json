@@ -11,7 +11,7 @@
     "html-webpack-plugin": "^2.28.0",
     "loader-utils": "^1.1.0",
     "lodash": "^4.17.4",
-    "react-document": "^0.5.0"
+    "react-document": "^0.6.0"
   },
   "peerDependencies": {
     "react": "15",

@@ -5,7 +5,7 @@
   "license": "MIT",
   "devDependencies": {
     "npm-run-all": "^4.0.2",
-    "redbox-react": "^1.3.4"
+    "redbox-react": "^1.5.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -13,12 +13,12 @@
     "neutrino": "5.0.1",
     "neutrino-preset-tux": "^0.2.2",
     "pretty-error": "^2.0.2",
-    "react": "^15.5.2",
-    "react-chain": "^0.3.0",
-    "react-chain-helmet": "^0.3.0",
-    "react-chain-history": "^0.3.0",
-    "react-document": "^0.5.0",
-    "react-dom": "^15.5.2",
+    "react": "^16.0.0-beta.3",
+    "react-chain": "^0.4.0-1",
+    "react-chain-helmet": "^0.4.0-1",
+    "react-chain-history": "^0.4.0-1",
+    "react-document": "^0.6.0",
+    "react-dom": "^16.0.0-beta.3",
     "react-helmet": "^5.0.1",
     "source-map-support": "^0.4.14",
     "tux": "^0.2.1",

@@ -369,7 +369,7 @@ async function isSafeToCreateProjectIn(root: string) {
   return files.every(file => validFiles.indexOf(file) >= 0)
 }
 
-function checkIfOnline(useYarn: boolean) {
+function checkIfOnline(useYarn: boolean): Promise<boolean> {
   if (!useYarn) {
     // Don't ping the Yarn registry.
     // We'll just assume the best case.

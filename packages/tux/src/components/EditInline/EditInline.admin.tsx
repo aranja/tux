@@ -1,59 +1,60 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import DraftRenderer from './DraftRenderer'
-import { createEditable } from '../Editable/Editable'
 import deepEqual from 'deep-eql'
 import humanize from 'string-humanize'
+import SlateRenderer from './SlateRenderer'
+import HoverPortal from './HoverPortal'
+import { createEditable } from '../Editable/Editable'
 import { EditableProps } from '../../interfaces'
-import { DraftJS, editorStateFromRaw, EditorState } from 'megadraft'
+import { Raw, Plain, State, Html as HtmlSerializer } from 'slate'
+import { Html } from '../../utils/slate'
 import { get, set } from '../../utils/accessors'
+import withEditorState, { EditorStateProps } from '../HOC/withEditorState'
 
-export interface Props extends EditableProps {
+export interface Props extends EditableProps, EditorStateProps {
   onSave: (model: any) => Promise<any>,
   onLoad: (model: any) => void,
   placeholder: string,
   field: string | Array<string>,
 }
 
-export interface State {
-  editorState: any,
-}
-
-function wrapChildren(children: any) {
-  if (typeof children === 'string') {
-    return <span>{children}</span>
-  } else if (Array.isArray(children) && children.length > 1) {
-    return <div>{children}</div>
-  } else {
-    return children
-  }
-}
-
-class EditInline extends React.Component<Props, State> {
-  constructor(props: Props, context: any) {
-    super(props, context)
-
+class EditInline extends React.Component<Props> {
+  static getInitialState(props: Props) {
     const value = get(props.model, props.field)
-    let editorState
-    if (!value && props.children) {
-      const html = renderToStaticMarkup(wrapChildren(props.children))
-      const content = DraftJS.ContentState.createFromBlockArray(DraftJS.convertFromHTML(html))
-      editorState = DraftJS.EditorState.createWithContent(content)
-    } else {
-      editorState = editorStateFromRaw(value)
+    try {
+      if (value) {
+        return Raw.deserialize(value, { terse: true })
+      } else if (props.children) {
+        const html = renderToStaticMarkup(props.children)
+        return Html.deserialize(html)
+      }
+    } catch (err) {
+      // tslint:disable-next-line:no-console
+      console.error('Could not parse content', value, err)
     }
-    this.state = {
-      editorState,
-    }
+    return Plain.deserialize('')
   }
 
   private timer: number
 
+  componentDidUpdate(oldProps: Props) {
+    if (oldProps.editorState !== this.props.editorState) {
+      this.save()
+    }
+  }
+
+  defaultPlaceholder() {
+    let { field } = this.props
+    if (typeof field === 'string') {
+      field = field.split('.')
+    }
+    return humanize(field[field.length - 1])
+  }
+
   private save = async () => {
-    const { tux, model, field } = this.props
-    const { editorState } = this.state
+    const { editorState, tux, model, field } = this.props
     const oldValue = get(model, field)
-    const newValue = DraftJS.convertToRaw(editorState.getCurrentContent())
+    const newValue = Raw.serialize(editorState, { terse: true })
 
     // TODO: Properly update props model after saving.
     if (deepEqual(oldValue, newValue)) {
@@ -66,36 +67,41 @@ class EditInline extends React.Component<Props, State> {
     await tux.adapter.save(fullModel)
   }
 
-  onEditorChange = async (editorState: EditorState) => {
-    this.setState({ editorState })
+  onChange = async (editorState: State) => {
+    const { onEditorChange } = this.props
+    onEditorChange(editorState)
+
     if (this.timer) {
       window.clearTimeout(this.timer)
     }
     this.timer = window.setTimeout(this.save, 2000)
   }
 
-  defaultPlaceholder() {
-    let { field } = this.props
-    if (typeof field === 'string') {
-      field = field.split('.')
-    }
-    return humanize(field[field.length - 1])
-  }
-
   render() {
-    const { isEditing, placeholder } = this.props
-    const { editorState } = this.state
-    if (!isEditing && !editorState.getCurrentContent().hasText()) {
+    const {
+      editorState,
+      onEditorChange,
+      onPaste,
+      onKeyDown,
+      onClickMark,
+      isEditing,
+      placeholder,
+    } = this.props
+
+    if (!isEditing && !editorState.document.length) {
       return null
     }
 
     return (
       <div className={`EditInline${isEditing ? ' is-editing' : ''}`}>
-        <DraftRenderer
-          editorState={editorState}
-          onChange={this.onEditorChange}
+        <HoverPortal editorState={editorState} onClickMark={onClickMark} />
+        <SlateRenderer
+          state={editorState}
+          onChange={this.onChange}
           readOnly={!isEditing}
           placeholder={placeholder || this.defaultPlaceholder()}
+          onKeyDown={onKeyDown}
+          onPaste={onPaste}
         />
         <style jsx>{`
           .EditInline.is-editing:hover {
@@ -109,4 +115,5 @@ class EditInline extends React.Component<Props, State> {
   }
 }
 
-export default createEditable<Props>()(EditInline)
+const Exported = withEditorState(EditInline, EditInline.getInitialState)
+export default createEditable<Props>()(Exported)
