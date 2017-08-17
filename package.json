@@ -9,7 +9,8 @@
     "lerna": "lerna",
     "bootstrap": "lerna bootstrap --hoist",
     "precommit": "lint-staged",
-    "prettier": "prettier --no-semi --single-quote --trailing-comma es5 --write \"**/*.ts\"",
+    "prettier:run": "prettier --no-semi --single-quote --trailing-comma es5 --write",
+    "prettier": "npm run prettier:run -- \"**/*.ts\" \"packages/*/*.js\" \"packages/*/src/**/*.js\" \"**/*.css\"",
     "watch": "lerna run watch --parallel",
     "test": "lerna run test"
   },
@@ -77,7 +78,15 @@
   },
   "lint-staged": {
     "*.ts": [
-      "prettier",
+      "prettier:run",
+      "git add"
+    ],
+    "packages/*/{,src/**/}*.js": [
+      "prettier:run",
+      "git add"
+    ],
+    "*.css": [
+      "prettier:run",
       "git add"
     ]
   },
