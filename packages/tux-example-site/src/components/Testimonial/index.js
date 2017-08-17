@@ -13,7 +13,7 @@ const Testimonial = ({ testimonial }) => (
               {`${testimony.fields.attestantName}, ${testimony.fields.attestantTitle}`}
             </p>
           </div>
-          <div className="Testimonial-image" style={{backgroundImage: `url('${testimony.fields.attestantImage.asset.file.url}')`}}></div>
+          <div className="Testimonial-image" style={{backgroundImage: `url('${testimony.fields.attestantImage.fields.file.url}')`}}></div>
         </div>
       </EditModal>
     ))}

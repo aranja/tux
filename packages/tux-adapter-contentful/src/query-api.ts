@@ -77,9 +77,7 @@ class QueryApi {
       }
 
       const entry = this.checkOverride(asset)
-      const { fields } = entry
-      fields.sys = entry.sys
-      linkMap[entry.sys.id] = fields
+      linkMap[entry.sys.id] = entry
     }
   }
 
@@ -93,37 +91,32 @@ class QueryApi {
     }
 
     // Add included models to items
-    for (const item of result.items) {
-      this.linkFields(item, linkMap)
+    for (let i = 0; i < result.items.length; i++) {
+      const item = result.items[i]
+      result.items[i] = this.linkEntry(item, linkMap)
     }
   }
 
-  private linkFields(item: any, linkMap: LinkMap) {
-    if (!item) {
-      return
-    }
-
+  private linkEntry(item: any, linkMap: LinkMap): any {
+    const hasSys = !!item.sys
+    const isLink = hasSys && item.sys.type === 'Link'
     const isArray = item instanceof Array
-    const isLeaf = !isArray && !item.fields
 
-    if (isLeaf) {
-      if (item.sys && item.sys.type === 'Link') {
-        const linkType = item.sys.linkType.toLowerCase()
-        item[linkType] =
-          linkMap[item.sys.id] ||
-          (this.overrides[item.sys.id] && this.overrides[item.sys.id].fields)
-
-        // Link nested models
-        const fieldNames = Object.keys(item[linkType])
-        fieldNames.forEach(fieldName => this.linkFields(item[linkType][fieldName], linkMap))
-      }
-      return
-    } else if (isArray) {
-      item.forEach((subItem: ContentfulJsonItem) => this.linkFields(subItem, linkMap))
-    } else {
-      const fieldNames = Object.keys(item.fields)
-      fieldNames.forEach(fieldName => this.linkFields(item.fields[fieldName], linkMap))
+    if (item.fields) {
+      Object.keys(item.fields).forEach(fieldName => {
+        item.fields[fieldName] = this.linkEntry(item.fields[fieldName], linkMap)
+      })
     }
+
+    if (isLink) {
+      const itemId = item.sys.id
+      const entry = linkMap[itemId] || this.overrides[itemId]
+
+      return this.linkEntry(entry, linkMap)
+    } else if (isArray) {
+      return item.map((subItem: any) => this.linkEntry(subItem, linkMap))
+    }
+    return item
   }
 
   private checkOverride = (entry: ContentfulJsonItem) => {

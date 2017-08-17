@@ -33,6 +33,7 @@ describe('query entries', () => {
                   contentType: {
                     sys: {
                       type: 'Link',
+                      linkType: '',
                       id: 'item',
                     },
                   },
@@ -74,10 +75,10 @@ describe('query entries', () => {
     const { items: [entry] } = await api.getEntries()
     expect(entry.fields.list.length).toEqual(1)
 
-    const [{ entry: listItem }] = entry.fields.list
-    expect(listItem.heading).toEqual('This is a list item with an image')
+    const [listItem] = entry.fields.list
+    expect(listItem.fields.heading).toEqual('This is a list item with an image')
     expect(listItem.sys.contentType.sys.id).toEqual('item')
-    expect(listItem.image.asset.title).toEqual('Image title')
-    expect(listItem.image.asset.file.url).toEqual('//path-to-image.jpg')
+    expect(listItem.fields.image.fields.title).toEqual('Image title')
+    expect(listItem.fields.image.fields.file.url).toEqual('//path-to-image.jpg')
   })
 })
