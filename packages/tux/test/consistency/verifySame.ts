@@ -4,5 +4,5 @@ export default {
     const adminExports = Object.keys(adminTux).sort()
     const prodExports = Object.keys(prodTux).sort()
     expect(adminExports).toEqual(prodExports)
-  }
+  },
 }

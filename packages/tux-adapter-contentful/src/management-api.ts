@@ -12,7 +12,7 @@ class ManagementApi {
 
   deliveryApi: any
 
-  constructor (space: string, accessToken: string) {
+  constructor(space: string, accessToken: string) {
     this.space = space
     this.deliveryApi = null
     this.currentLocale = ''
@@ -20,36 +20,44 @@ class ManagementApi {
       baseURL: `https://api.contentful.com`,
       headers: {
         'Content-Type': 'application/vnd.contentful.management.v1+json',
-        'Authorization': `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     })
   }
 
   get(url: string, params?: Object): Promise<any> {
-    return this.client.get(
-      url,
-      { params }
-    ).then(result => result.data) as Promise<any>
+    return this.client
+      .get(url, { params })
+      .then(result => result.data) as Promise<any>
   }
 
   put(url: string, body: any, version: string): Promise<any> {
-    return this.client.put(url, body, {
-      headers: {
-        'X-Contentful-Version': version,
-      }
-    }).then(result => result.data) as Promise<any>
+    return this.client
+      .put(url, body, {
+        headers: {
+          'X-Contentful-Version': version,
+        },
+      })
+      .then(result => result.data) as Promise<any>
   }
 
-  post(url: string, body: any, contentType: string, contentfulContentType?: string) {
-    const headers: {[header: string]: string} = {
+  post(
+    url: string,
+    body: any,
+    contentType: string,
+    contentfulContentType?: string
+  ) {
+    const headers: { [header: string]: string } = {
       'Content-Type': contentType,
     }
     if (contentfulContentType) {
       headers['X-Contentful-Content-Type'] = contentfulContentType
     }
-    return this.client.post(url, body, {
-      headers,
-    }).then(result => result.data) as Promise<any>
+    return this.client
+      .post(url, body, {
+        headers,
+      })
+      .then(result => result.data) as Promise<any>
   }
 
   getEntry(id: string): Promise<ContentfulEditModel> {
@@ -70,7 +78,12 @@ class ManagementApi {
     const url = `/spaces/${this.space}/entries/`
     const modelWithLocale = await this._formatForApi(model)
     const contentType = 'application/vnd.contentful.management.v1+json'
-    const newModel = await this.post(url, { fields: modelWithLocale.fields }, contentType, type)
+    const newModel = await this.post(
+      url,
+      { fields: modelWithLocale.fields },
+      contentType,
+      type
+    )
     await this._publish(newModel, 'entries')
     return newModel
   }
@@ -84,7 +97,8 @@ class ManagementApi {
   }
 
   processAsset(id: string, version: any) {
-    const url = `/spaces/${this.space}/assets/${id}/files/${this.currentLocale}/process`
+    const url = `/spaces/${this.space}/assets/${id}/files/${this
+      .currentLocale}/process`
     return this.put(url, null, version)
   }
 
@@ -144,16 +158,15 @@ class ManagementApi {
   }
 
   async getTypeMeta(type: string) {
-    const [
-      contentType,
-      editorInterface,
-    ] = await Promise.all([
+    const [contentType, editorInterface] = await Promise.all([
       this.get(`/spaces/${this.space}/content_types/${type}`),
       this.get(`/spaces/${this.space}/content_types/${type}/editor_interface`),
     ])
 
     contentType.fields.forEach((field: any) => {
-      field.control = editorInterface.controls.find((editor: any) => editor.fieldId === field.id)
+      field.control = editorInterface.controls.find(
+        (editor: any) => editor.fieldId === field.id
+      )
     })
     return contentType
   }
@@ -228,7 +241,7 @@ class ManagementApi {
         id: asset.sys.id,
         linkType: 'Asset',
         type: 'Link',
-      }
+      },
     }
   }
 }

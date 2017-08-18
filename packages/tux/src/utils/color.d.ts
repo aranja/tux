@@ -32,7 +32,10 @@ export declare function decomposeColor(color: any): any
  * @param {string} background - CSS color, i.e. one of: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla()
  * @returns {number} A contrast ratio value in the range 0 - 21 with 2 digit precision.
  */
-export declare function getContrastRatio(foreground: any, background: any): number
+export declare function getContrastRatio(
+  foreground: any,
+  background: any
+): number
 /**
  * The relative brightness of any point in a color space,
  * normalized to 0 for darkest black and 1 for lightest white.

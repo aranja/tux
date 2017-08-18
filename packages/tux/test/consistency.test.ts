@@ -13,7 +13,7 @@ describe('Admin vs Prod consistency', () => {
   // Build two bundles of tux,
   let adminTux, prodTux
   beforeAll(async () => {
-    [adminTux, prodTux] = await Promise.all([
+    ;[adminTux, prodTux] = await Promise.all([
       bundleTux('admin'),
       bundleTux('prod'),
     ])

@@ -4,45 +4,53 @@ import { AxiosInstance } from 'axios'
 // TODO: Fill in
 export interface ContentfulJsonItem {
   sys: {
-    id: string,
-    updatedAt: string,
+    id: string
+    updatedAt: string
     contentType: {
       sys: {
         id: string
       }
     }
   }
-  fields: any,
+  fields: any
 }
 export interface ContentfulJsonEntry extends ContentfulJsonItem {
   fields: any
 }
-export interface ContentfulJsonAsset extends ContentfulJsonItem {
-}
+export interface ContentfulJsonAsset extends ContentfulJsonItem {}
 export interface ContentfulQueryResponse {
-  items: ContentfulJsonItem[],
+  items: ContentfulJsonItem[]
   includes?: {
-    Asset?: ContentfulJsonAsset[],
-    Entry?: ContentfulJsonEntry[],
-  },
-  total: number,
+    Asset?: ContentfulJsonAsset[]
+    Entry?: ContentfulJsonEntry[]
+  }
+  total: number
 }
 type LinkMap = {
-  [id: string]: ContentfulJsonItem,
+  [id: string]: ContentfulJsonItem
 }
 
 class QueryApi {
   private overrides: {
-    [id: string]: any,
+    [id: string]: any
   }
   private client: AxiosInstance
 
-  constructor(space: string, accessToken: string, host: string, client: AxiosInstance) {
+  constructor(
+    space: string,
+    accessToken: string,
+    host: string,
+    client: AxiosInstance
+  ) {
     this.overrides = {}
     this.client = client
   }
 
-  static create(space: string, accessToken: string, host = 'cdn.contentful.com'): QueryApi {
+  static create(
+    space: string,
+    accessToken: string,
+    host = 'cdn.contentful.com'
+  ): QueryApi {
     const client = axios.create({
       baseURL: `https://${host}/spaces/${space}`,
       headers: {
@@ -62,7 +70,9 @@ class QueryApi {
   }
 
   async getEntry(id: string) {
-    const entry = await this.client.get(`/entries/${id}`).then(result => result.data)
+    const entry = await this.client
+      .get(`/entries/${id}`)
+      .then(result => result.data)
     return this.checkOverride(entry)
   }
 

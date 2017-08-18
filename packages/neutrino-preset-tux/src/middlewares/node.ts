@@ -26,8 +26,8 @@ export default (neutrino: Neutrino) => {
       compile: {
         targets: {
           node: '6.9',
-        }
-      }
+        },
+      },
     })
   }
 
@@ -37,57 +37,53 @@ export default (neutrino: Neutrino) => {
     babel: {
       plugins: [require.resolve('babel-plugin-dynamic-import-node')],
       presets: [
-        [require.resolve('babel-preset-env'), {
-          modules: false,
-          targets: neutrino.options.compile.targets
-        }]
-      ]
-    }
+        [
+          require.resolve('babel-preset-env'),
+          {
+            modules: false,
+            targets: neutrino.options.compile.targets,
+          },
+        ],
+      ],
+    },
   })
 
   config.performance.hints(false)
   config
     .target('node')
-    .node
-      .set('__filename', false)
-      .set('__dirname', false)
-      .end()
+    .node.set('__filename', false)
+    .set('__dirname', false)
+    .end()
     .devtool('source-map')
     .externals([nodeExternals({ whitelist: [/^webpack/, /tux/] })])
     .context(neutrino.options.root)
     .entry('app')
-      .add(neutrino.options.appEntry)
-      .end()
-    .output
-      .path(join(neutrino.options.output, 'ssr'))
-      .filename('[name].js')
-      .libraryTarget('commonjs2')
-      .chunkFilename('[id].[hash:5]-[chunkhash:7].js')
-      .end()
-    .resolve
-      .modules
-        .add('node_modules')
-        .add(neutrino.options.node_modules)
-        .add(MODULES)
-        .end()
-      .extensions
-        .add('.js')
-        .add('.json')
-        .end()
-      .end()
-    .resolveLoader
-      .modules
-        .add(neutrino.options.node_modules)
-        .add(MODULES)
+    .add(neutrino.options.appEntry)
+    .end()
+    .output.path(join(neutrino.options.output, 'ssr'))
+    .filename('[name].js')
+    .libraryTarget('commonjs2')
+    .chunkFilename('[id].[hash:5]-[chunkhash:7].js')
+    .end()
+    .resolve.modules.add('node_modules')
+    .add(neutrino.options.node_modules)
+    .add(MODULES)
+    .end()
+    .extensions.add('.js')
+    .add('.json')
+    .end()
+    .end()
+    .resolveLoader.modules.add(neutrino.options.node_modules)
+    .add(MODULES)
 
   // Build custom document component.
   const { html } = neutrino.options
   if (html && html.document) {
-    config.entry('document')
-      .add(html.document)
+    config.entry('document').add(html.document)
   }
 
-  const hasSourceMap = (pkg.dependencies && 'source-map-support' in pkg.dependencies) ||
+  const hasSourceMap =
+    (pkg.dependencies && 'source-map-support' in pkg.dependencies) ||
     (pkg.devDependencies && 'source-map-support' in pkg.devDependencies)
 
   if (hasSourceMap) {
@@ -140,8 +136,8 @@ export default (neutrino: Neutrino) => {
         'no-restricted-modules': 'off',
 
         // disallow use of synchronous methods (off by default)
-        'no-sync': 'off'
-      }
+        'no-sync': 'off',
+      },
     })
   }
 }

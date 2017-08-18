@@ -8,7 +8,8 @@ export default function extractCss(neutrino: Neutrino) {
   // Prepend extract text loader before style loader. Configure it
   // to "omit" the next (1) loader when extracting text.
   prependUse(config.module.rule('style'), rule =>
-    rule.use('extract-css')
+    rule
+      .use('extract-css')
       .loader(require.resolve('extract-text-webpack-plugin/loader'))
       .options({
         omit: 1,
@@ -17,10 +18,11 @@ export default function extractCss(neutrino: Neutrino) {
   )
 
   // Add plugin to save extracted css.
-  config.plugin('extract-css')
-    .use(ExtractTextPlugin, [{
+  config.plugin('extract-css').use(ExtractTextPlugin, [
+    {
       filename: '[name].[chunkhash].bundle.css',
-    }])
+    },
+  ])
 }
 
 // For loaders, the order matters. Since webpack-chain uses Maps, we must

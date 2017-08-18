@@ -1,1 +1,1 @@
-module.exports = require('./lib/static').default;
+module.exports = require('./lib/static').default

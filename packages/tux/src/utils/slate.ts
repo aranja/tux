@@ -15,7 +15,7 @@ const BLOCK_TAGS: { [key: string]: string } = {
   h3: 'heading-three',
   h4: 'heading-four',
   h5: 'heading-five',
-  h6: 'heading-six'
+  h6: 'heading-six',
 }
 
 /**
@@ -26,7 +26,7 @@ const MARK_TAGS: { [key: string]: string } = {
   em: 'italic',
   u: 'underline',
   s: 'strikethrough',
-  code: 'code'
+  code: 'code',
 }
 
 /**
@@ -40,9 +40,9 @@ const RULES: HtmlSerializer.Rule[] = [
       return {
         kind: 'block',
         type: block,
-        nodes: next(el.childNodes)
+        nodes: next(el.childNodes),
       }
-    }
+    },
   },
   {
     deserialize(el, next) {
@@ -51,25 +51,26 @@ const RULES: HtmlSerializer.Rule[] = [
       return {
         kind: 'mark',
         type: mark,
-        nodes: next(el.childNodes)
+        nodes: next(el.childNodes),
       }
-    }
+    },
   },
   {
     // Special case for code blocks, which need to grab the nested childNodes.
     deserialize(el, next) {
       if (el.tagName.toLowerCase() !== 'pre') return
       const code = el.childNodes[0] as HTMLElement | undefined
-      const childNodes = code && code.tagName.toLowerCase() === 'code'
-        ? code.childNodes
-        : el.childNodes
+      const childNodes =
+        code && code.tagName.toLowerCase() === 'code'
+          ? code.childNodes
+          : el.childNodes
 
       return {
         kind: 'block',
         type: 'code',
-        nodes: next(childNodes)
+        nodes: next(childNodes),
       }
-    }
+    },
   },
   {
     // Special case for links, to grab their href.
@@ -81,10 +82,10 @@ const RULES: HtmlSerializer.Rule[] = [
         nodes: next(el.childNodes),
         data: {
           href: el.getAttribute('href'),
-        }
+        },
       }
-    }
-  }
+    },
+  },
 ]
 
 /**
