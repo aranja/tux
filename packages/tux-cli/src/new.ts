@@ -50,16 +50,12 @@ const argv = (yargs as Argv)
   .option('version', { describe: 'Use a non-standard version of tux' })
   .command('new', 'Create a new tux project')
   .demandCommand(1, 'Please specify a command.\nUSAGE:  $0 <command>')
-  .help('help')
-  .argv
+  .help('help').argv
 
 const projectDir = argv._[1]
 const root = path.resolve(projectDir)
 const appName = path.basename(root)
-createApp(
-  argv.verbose,
-  argv.version,
-).catch(onError)
+createApp(argv.verbose, argv.version).catch(onError)
 
 async function createApp(verbose: boolean, version: string) {
   checkAppName(appName)
@@ -67,7 +63,9 @@ async function createApp(verbose: boolean, version: string) {
   const isSafe = await isSafeToCreateProjectIn(root)
   if (!isSafe) {
     console.log(
-      `The directory ${chalk.green(appName)} contains files that could conflict.`
+      `The directory ${chalk.green(
+        appName
+      )} contains files that could conflict.`
     )
     console.log('Try using a new directory name.')
     process.exit(1)
@@ -127,7 +125,9 @@ async function onError(reason: Error | { command: string }) {
   if (!remainingFiles.length) {
     // Delete target folder if empty
     console.log(
-      `Deleting ${chalk.cyan(`${appName} /`)} from ${chalk.cyan(path.resolve(root, '..'))}`
+      `Deleting ${chalk.cyan(`${appName} /`)} from ${chalk.cyan(
+        path.resolve(root, '..')
+      )}`
     )
     process.chdir(path.resolve(root, '..'))
     await fs.remove(path.join(root))
@@ -145,7 +145,12 @@ function shouldUseYarn() {
   }
 }
 
-function install(useYarn: boolean, dependencies: string[], verbose: boolean, isOnline: boolean) {
+function install(
+  useYarn: boolean,
+  dependencies: string[],
+  verbose: boolean,
+  isOnline: boolean
+) {
   return new Promise((resolve, reject) => {
     let command: string
     let args: string[]
@@ -155,7 +160,7 @@ function install(useYarn: boolean, dependencies: string[], verbose: boolean, isO
       if (!isOnline) {
         args.push('--offline')
       }
-      [].push.apply(args, dependencies)
+      ;[].push.apply(args, dependencies)
 
       if (!isOnline) {
         console.log(chalk.yellow('You appear to be offline.'))
@@ -167,6 +172,7 @@ function install(useYarn: boolean, dependencies: string[], verbose: boolean, isO
       command = 'npm'
       args = ['install', '--save', '--save-exact'].concat(dependencies)
     }
+    //fd
 
     if (verbose) {
       args.push('--verbose')
@@ -186,9 +192,7 @@ function install(useYarn: boolean, dependencies: string[], verbose: boolean, isO
 }
 
 async function run(appName: string, version: string, verbose: boolean) {
-  const allDependencies = [
-    appendVersion('tux-scripts', version),
-  ]
+  const allDependencies = [appendVersion('tux-scripts', version)]
 
   console.log('Installing packages. This might take a couple minutes.')
 
@@ -196,9 +200,7 @@ async function run(appName: string, version: string, verbose: boolean) {
 
   const isOnline = await checkIfOnline(useYarn)
 
-  console.log(
-    `Installing ${chalk.cyan('tux-scripts')}...`
-  )
+  console.log(`Installing ${chalk.cyan('tux-scripts')}...`)
   console.log()
 
   await install(useYarn, allDependencies, verbose, isOnline)
@@ -243,7 +245,7 @@ function checkNpmVersion() {
   console.log(
     chalk.yellow(
       'We suggest using npm 3 or Yarn for faster install times ' +
-      'and less disk space usage.'
+        'and less disk space usage.'
     )
   )
   console.log()
@@ -265,8 +267,8 @@ function checkNodeVersion() {
     console.error(
       chalk.red(
         'You are running Node %s.\n' +
-        'Tux requires Node %s or higher. \n' +
-        'Please update your version of Node.'
+          'Tux requires Node %s or higher. \n' +
+          'Please update your version of Node.'
       ),
       process.version,
       packageJson.engines.node
@@ -280,7 +282,7 @@ function checkAppName(appName: string) {
   if (!validationResult.validForNewPackages) {
     console.error(
       `Could not create a project called ${chalk.red(`"${appName}"`)}` +
-      `because of npm naming restrictions:`
+        `because of npm naming restrictions:`
     )
     printValidationResults(validationResult.errors)
     printValidationResults(validationResult.warnings)
@@ -293,18 +295,20 @@ function checkAppName(appName: string) {
   if (allDependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
-        `We cannot create a project called ${chalk.green(appName)} because a dependency ` +
-        `with the same name exists.\n` +
-        `Due to the way npm works, the following names are not allowed:\n\n`
+        `We cannot create a project called ${chalk.green(
+          appName
+        )} because a dependency ` +
+          `with the same name exists.\n` +
+          `Due to the way npm works, the following names are not allowed:\n\n`
       ) +
-      chalk.cyan(allDependencies.map(depName => `  ${depName}`).join('\n')) +
-      chalk.red('\n\nPlease choose a different project name.')
+        chalk.cyan(allDependencies.map(depName => `  ${depName}`).join('\n')) +
+        chalk.red('\n\nPlease choose a different project name.')
     )
     process.exit(1)
   }
 }
 
-function makeCaretRange(dependencies: {[key: string]: string}, name: string) {
+function makeCaretRange(dependencies: { [key: string]: string }, name: string) {
   const version = dependencies[name]
 
   if (typeof version === 'undefined') {
@@ -316,8 +320,9 @@ function makeCaretRange(dependencies: {[key: string]: string}, name: string) {
 
   if (!semver.validRange(patchedVersion)) {
     console.error(
-      `Unable to patch ${name} dependency version because version ${chalk.red(version)} will ` +
-      `become invalid ${chalk.red(patchedVersion)}`
+      `Unable to patch ${name} dependency version because version ${chalk.red(
+        version
+      )} will ` + `become invalid ${chalk.red(patchedVersion)}`
     )
     patchedVersion = version
   }
@@ -369,7 +374,7 @@ async function isSafeToCreateProjectIn(root: string) {
   return files.every(file => validFiles.indexOf(file) >= 0)
 }
 
-function checkIfOnline(useYarn: boolean) {
+function checkIfOnline(useYarn: boolean): Promise<boolean> {
   if (!useYarn) {
     // Don't ping the Yarn registry.
     // We'll just assume the best case.

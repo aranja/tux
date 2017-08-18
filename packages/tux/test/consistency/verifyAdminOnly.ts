@@ -1,6 +1,6 @@
 export default {
   label: 'verify safe vs admin only functions',
-  handler: (prodTux) => {
+  handler: prodTux => {
     const adminOnly = [
       'Input',
       'BooleanField',
@@ -12,11 +12,7 @@ export default {
       'TagEditor',
       'getEditorSchema',
     ]
-    const safe = [
-      'registerEditable',
-      'TuxProvider',
-      'Editable',
-    ]
+    const safe = ['registerEditable', 'TuxProvider', 'Editable']
 
     const all = new Set(Object.keys(prodTux))
     safe.forEach(name => all.delete(name))
@@ -27,5 +23,5 @@ export default {
     })
 
     expect(Array.from(all.size)).toHaveLength(0)
-  }
+  },
 }

@@ -8,11 +8,13 @@
     "check-types": "TS_FAIL_ON_ERROR=true lerna run prepublish --silent",
     "lerna": "lerna",
     "bootstrap": "lerna bootstrap --hoist",
+    "precommit": "lint-staged",
+    "prettier:run": "prettier --no-semi --single-quote --trailing-comma es5 --write",
+    "prettier": "npm run prettier:run -- \"**/*.ts\" \"packages/*/*.js\" \"packages/*/src/**/*.js\" \"**/*.css\"",
     "watch": "lerna run watch --parallel",
     "test": "lerna run test"
   },
   "dependencies": {
-    "@types/react-portal": "^3.0.2",
     "core-js": "2.4.1",
     "material-ui": "^0.19.0",
     "moment": "^2.17.1",
@@ -40,10 +42,11 @@
     "@types/node": "^7.0.4",
     "@types/prop-types": "^15.5.1",
     "@types/ramda": "0.0.5",
-    "@types/react": "^15.0.4",
-    "@types/react-addons-css-transition-group": "^15.0.1",
-    "@types/react-dom": "^0.14.21",
+    "@types/react": "^15.6.1",
+    "@types/react-addons-css-transition-group": "^15.0.3",
+    "@types/react-dom": "^15.5.3",
     "@types/react-icons": "^2.2.1",
+    "@types/react-portal": "^3.0.2",
     "@types/semver": "^5.3.31",
     "@types/webpack": "^2.2.7",
     "@types/webpack-chain": "^3.0.0",
@@ -58,18 +61,35 @@
     "gulp-cli": "^1.2.2",
     "gulp-clone": "^1.0.0",
     "gulp-sourcemaps": "^2.4.1",
-    "gulp-typescript": "^3.1.4",
+    "gulp-typescript": "^3.2.1",
     "gulp-util": "^3.0.8",
+    "husky": "^0.14.3",
     "jest": "^18.1.0",
     "lerna": "2.0.0-rc.5",
+    "lint-staged": "^4.0.3",
     "merge2": "^1.0.3",
+    "prettier": "^1.5.3",
     "react-hot-loader": "^3.0.0-beta.6",
     "run-sequence": "^1.2.2",
     "styled-jsx": "^0.5.4",
     "tslint": "^5.0.0",
-    "typescript": "^2.2.2",
+    "typescript": "^2.4.2",
     "webpack": "^2.2.1",
     "yargs": "^6.6.0"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier:run",
+      "git add"
+    ],
+    "packages/*/{,src/**/}*.js": [
+      "prettier:run",
+      "git add"
+    ],
+    "*.css": [
+      "prettier:run",
+      "git add"
+    ]
   },
   "babel": {
     "env": {

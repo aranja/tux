@@ -8,21 +8,26 @@ class TwitterFeed extends Component {
   render() {
     return (
       <div className="TwitterFeed">
-      {users && users.map((user, i) => {
-        return (
-          <TwitterCard
-            key={i}
-            name={`${user.name.first} ${user.name.last}`}
-            handle={user.login.username}
-            image={user.picture.thumbnail}
-          >
-          {peopleAreSaying[Math.floor(Math.random() * peopleAreSaying.length)]}
-          </TwitterCard>
-        )
-      })}
+        {users &&
+          users.map((user, i) => {
+            return (
+              <TwitterCard
+                key={i}
+                name={`${user.name.first} ${user.name.last}`}
+                handle={user.login.username}
+                image={user.picture.thumbnail}
+              >
+                {
+                  peopleAreSaying[
+                    Math.floor(Math.random() * peopleAreSaying.length)
+                  ]
+                }
+              </TwitterCard>
+            )
+          })}
       </div>
     )
   }
 }
 
-export default TwitterFeed;
+export default TwitterFeed

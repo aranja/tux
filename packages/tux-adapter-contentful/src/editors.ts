@@ -11,7 +11,7 @@ import {
   RichTextField,
 } from 'tux'
 
-const widgetIdToEditor: {[id: string]: ReactType | undefined} = {
+const widgetIdToEditor: { [id: string]: ReactType | undefined } = {
   assetLinkEditor: ImageField,
   boolean: BooleanField,
   datePicker: DatePicker,
@@ -24,7 +24,9 @@ const widgetIdToEditor: {[id: string]: ReactType | undefined} = {
 }
 
 export default function generateEditorSchema(typeMeta: any) {
-  return typeMeta.fields.map((field: any) => _transformTypeMetaFieldToEditorField(field))
+  return typeMeta.fields.map((field: any) =>
+    _transformTypeMetaFieldToEditorField(field)
+  )
 }
 
 function _transformTypeMetaFieldToEditorField(typeMetaField: any) {
@@ -41,7 +43,8 @@ function _getPropsForType(typeMetaField: any) {
   const widgetId = typeMetaField.control.widgetId
   const props: any = {}
   if (widgetId === 'boolean') {
-    props.boolLabels = Object.values(typeMetaField.control.settings)
+    const labels = typeMetaField.control.settings
+    props.boolLabels = Object.keys(labels).map(key => labels[key])
   } else if (widgetId === 'dropdown') {
     props.dropdownValues = typeMetaField.validations[0].in
   } else if (widgetId === 'radio') {

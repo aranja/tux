@@ -2,7 +2,7 @@ import React from 'react'
 import { EditInline } from 'tux'
 import './styles.css'
 
-const ProductBanner = ({ image }) => (
+const ProductBanner = ({ image }) =>
   <div className="ProductBanner">
     <div className="ProductBanner-content">
       <h1 className="ProductBanner-heading">
@@ -13,9 +13,12 @@ const ProductBanner = ({ image }) => (
       </div>
     </div>
     <div className="ProductBanner-imageWrap">
-      <img className="ProductBanner-image" src={image} alt="Tux running in a Macbook"/>
+      <img
+        className="ProductBanner-image"
+        src={image}
+        alt="Tux running in a Macbook"
+      />
     </div>
   </div>
-)
 
 export default ProductBanner

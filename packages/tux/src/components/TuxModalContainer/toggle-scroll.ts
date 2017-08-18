@@ -59,7 +59,9 @@ export default function toggleScroll(
   className: string = defaultClassName
 ) {
   if (typeof document === 'undefined') {
-    throw new Error('Should not toggle scrolling on the server. Use componentDidMount instead.')
+    throw new Error(
+      'Should not toggle scrolling on the server. Use componentDidMount instead.'
+    )
   }
 
   const scrollElement = element || document.documentElement

@@ -21,4 +21,3 @@ export default routes => session => async () => {
     )
   }
 }
-

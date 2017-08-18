@@ -1,12 +1,9 @@
-
 import { registerEditable, getEditorSchema, Field, Meta } from './editor'
 
 describe('editor service', () => {
   it('can register editable and receive editor schema', () => {
     const modelName = 'article'
-    const fields = [
-      { field: 'fields.testField', label: 'testLabel' }
-    ]
+    const fields = [{ field: 'fields.testField', label: 'testLabel' }]
 
     registerEditable(modelName, fields)
   })

@@ -9,23 +9,17 @@ import { EditableProps } from '../../interfaces'
 import { Raw, Plain, State, Html as HtmlSerializer } from 'slate'
 import { Html } from '../../utils/slate'
 import { get, set } from '../../utils/accessors'
-import withEditorState from '../HOC/withEditorState'
+import withEditorState, { EditorStateProps } from '../HOC/withEditorState'
 
-export interface Props extends EditableProps {
+export interface Props extends EditableProps, EditorStateProps {
   onSave: (model: any) => Promise<any>,
   onLoad: (model: any) => void,
   placeholder: string,
   field: string | Array<string>,
-  editorState: any,
-  onPaste: Function,
-  onClickMark: Function,
-  onClickNode: Function,
-  onEditorChange: Function,
-  onKeyDown: Function,
 }
 
 class EditInline extends React.Component<Props> {
-  static getInitialState(props) {
+  static getInitialState(props: Props) {
     const value = get(props.model, props.field)
     try {
       if (value) {
@@ -35,6 +29,7 @@ class EditInline extends React.Component<Props> {
         return Html.deserialize(html)
       }
     } catch (err) {
+      // tslint:disable-next-line:no-console
       console.error('Could not parse content', value, err)
     }
     return Plain.deserialize('')
@@ -42,7 +37,7 @@ class EditInline extends React.Component<Props> {
 
   private timer: number
 
-  componentDidUpdate(oldProps) {
+  componentDidUpdate(oldProps: Props) {
     if (oldProps.editorState !== this.props.editorState) {
       this.save()
     }
@@ -72,8 +67,8 @@ class EditInline extends React.Component<Props> {
     await tux.adapter.save(fullModel)
   }
 
-  onChange = async () => {
-    const { onEditorChange, editorState } = this.props
+  onChange = async (editorState: State) => {
+    const { onEditorChange } = this.props
     onEditorChange(editorState)
 
     if (this.timer) {
@@ -83,7 +78,15 @@ class EditInline extends React.Component<Props> {
   }
 
   render() {
-    const { editorState, onEditorChange, onPaste, onKeyDown, onClickMark, isEditing, placeholder } = this.props
+    const {
+      editorState,
+      onEditorChange,
+      onPaste,
+      onKeyDown,
+      onClickMark,
+      isEditing,
+      placeholder,
+    } = this.props
 
     if (!isEditing && !editorState.document.length) {
       return null
@@ -94,7 +97,7 @@ class EditInline extends React.Component<Props> {
         <HoverPortal editorState={editorState} onClickMark={onClickMark} />
         <SlateRenderer
           state={editorState}
-          onChange={onEditorChange}
+          onChange={this.onChange}
           readOnly={!isEditing}
           placeholder={placeholder || this.defaultPlaceholder()}
           onKeyDown={onKeyDown}

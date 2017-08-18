@@ -39,7 +39,7 @@ function devServer({ config }: Neutrino, options: any) {
       publicPath: false,
       timings: false,
       version: false,
-      warnings: true
+      warnings: true,
     })
 }
 
@@ -56,10 +56,10 @@ export default (neutrino: Neutrino) => {
             'last 2 Edge versions',
             'last 2 Opera versions',
             'last 2 Safari versions',
-            'last 2 iOS versions'
-          ]
-        }
-      }
+            'last 2 iOS versions',
+          ],
+        },
+      },
     })
   }
 
@@ -74,14 +74,17 @@ export default (neutrino: Neutrino) => {
     babel: {
       plugins: [require.resolve('babel-plugin-syntax-dynamic-import')],
       presets: [
-        [require.resolve('babel-preset-env'), {
-          modules: false,
-          useBuiltIns: true,
-          include: ['transform-regenerator'],
-          targets: neutrino.options.compile.targets
-        }]
-      ]
-    }
+        [
+          require.resolve('babel-preset-env'),
+          {
+            modules: false,
+            useBuiltIns: true,
+            include: ['transform-regenerator'],
+            targets: neutrino.options.compile.targets,
+          },
+        ],
+      ],
+    },
   })
 
   if (process.env.NODE_ENV !== 'test') {
@@ -97,11 +100,14 @@ export default (neutrino: Neutrino) => {
 
   config.output
     .path(join(neutrino.options.output, 'static'))
-    .publicPath('./')
+    .publicPath('/')
     .filename('[name].bundle.js')
     .chunkFilename('[id].[chunkhash].js')
 
-  config.resolve.modules.add('node_modules').add(neutrino.options.node_modules).add(MODULES)
+  config.resolve.modules
+    .add('node_modules')
+    .add(neutrino.options.node_modules)
+    .add(MODULES)
   config.resolve.extensions.add('.js').add('.json')
   config.resolveLoader.modules.add(neutrino.options.node_modules).add(MODULES)
 
@@ -119,23 +125,29 @@ export default (neutrino: Neutrino) => {
   if (config.module.rules.has('lint')) {
     neutrino.use(loaderMerge('lint', 'eslint'), {
       globals: ['Buffer'],
-      envs: ['browser', 'commonjs']
+      envs: ['browser', 'commonjs'],
     })
   }
 
   if (process.env.NODE_ENV === 'development') {
     const protocol = process.env.HTTPS ? 'https' : 'http'
-    const host = process.env.HOST ||
+    const host =
+      process.env.HOST ||
       pathOr('localhost', ['options', 'config', 'devServer', 'host'], neutrino)
-    const port = process.env.PORT ||
+    const port =
+      process.env.PORT ||
       pathOr(5000, ['options', 'config', 'devServer', 'port'], neutrino)
 
     neutrino.use(hot)
     neutrino.use(devServer, {
       host,
       port,
-      https: pathOr(protocol === 'https', ['options', 'config', 'devServer', 'https'], neutrino),
-      contentBase: neutrino.options.source
+      https: pathOr(
+        protocol === 'https',
+        ['options', 'config', 'devServer', 'https'],
+        neutrino
+      ),
+      contentBase: neutrino.options.source,
     })
 
     config
@@ -150,7 +162,7 @@ export default (neutrino: Neutrino) => {
     neutrino.use(minify)
     neutrino.use(copy, {
       patterns: [{ context: neutrino.options.source, from: '**/*' }],
-      options: { ignore: ['*.js*'] }
+      options: { ignore: ['*.js*'] },
     })
     config.output.filename('[name].[chunkhash].bundle.js')
   }

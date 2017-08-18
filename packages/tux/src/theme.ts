@@ -15,7 +15,7 @@ export const input = {
   labelText: '#888888',
   greenTheme: {
     border: `${Theme.primary}`,
-  }
+  },
 }
 
 export const button = {
@@ -26,5 +26,5 @@ export const button = {
     background: `${Theme.primary}`,
     border: '#CBCBCB',
     text: '#FFFFFF',
-  }
+  },
 }

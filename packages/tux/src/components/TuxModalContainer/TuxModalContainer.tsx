@@ -6,7 +6,7 @@ import { getState, setListener, State as StoreState, Modal } from './store'
 import { decelerationCurve, sharpCurve } from '../../utils/curves'
 
 export interface State {
-  modals: StoreState,
+  modals: StoreState
 }
 
 export class ModalContainer extends React.Component<any, State> {
@@ -55,7 +55,12 @@ export class ModalContainer extends React.Component<any, State> {
 
     return (
       <div className="ModalContainer">
-        <div className={classNames('ModalContainer-overlay', hasModals && 'is-active')} />
+        <div
+          className={classNames(
+            'ModalContainer-overlay',
+            hasModals && 'is-active'
+          )}
+        />
 
         <ReactCSSTransitionGroup
           transitionName="ModalTransition"
@@ -64,7 +69,10 @@ export class ModalContainer extends React.Component<any, State> {
         >
           {modals.map(({ element, id, onClose }) =>
             <div className="ModalContainer-scroll" key={id}>
-              <div className="ModalContainer-modal" onClick={this.onClickBackdrop}>
+              <div
+                className="ModalContainer-modal"
+                onClick={this.onClickBackdrop}
+              >
                 {React.cloneElement(element, { onClose })}
               </div>
             </div>
@@ -73,7 +81,7 @@ export class ModalContainer extends React.Component<any, State> {
         <style jsx>{`
           .ModalContainer {
             position: relative;
-            z-index: 1999;
+            z-index: 1000001;
           }
 
           .ModalContainer-overlay {
@@ -92,7 +100,7 @@ export class ModalContainer extends React.Component<any, State> {
             opacity: 1;
             transition-delay: 0s;
             visibility: visible;
-            transition: opacity 1s cubic-bezier(.11,.37,.83,.99);
+            transition: opacity 1s cubic-bezier(.11, .37, .83, .99);
           }
 
           .ModalContainer-scroll {

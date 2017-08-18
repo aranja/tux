@@ -3,7 +3,7 @@ import { join } from 'path'
 import tuxMiddleware from './tuxMiddleware'
 
 export interface ServerOptions {
-  buildPath: string,
+  buildPath: string
   port: number
   host: string
 }
@@ -26,11 +26,15 @@ class Server {
   }
 
   configureApp() {
-    this.app.use(express.static(join(this.options.buildPath, 'static'), { index: false }))
+    this.app.use(
+      express.static(join(this.options.buildPath, 'static'), { index: false })
+    )
 
-    this.app.use(tuxMiddleware({
-      buildPath: this.options.buildPath
-    }))
+    this.app.use(
+      tuxMiddleware({
+        buildPath: this.options.buildPath,
+      })
+    )
   }
 
   /**

@@ -12,9 +12,9 @@ export default (neutrino: Neutrino) => {
     plugins: [require.resolve('babel-plugin-transform-object-rest-spread')],
     env: {
       development: {
-        plugins: [require.resolve('react-hot-loader/babel')]
-      }
-    }
+        plugins: [require.resolve('react-hot-loader/babel')],
+      },
+    },
   })
 
   config.resolve.extensions.add('.jsx')
@@ -22,45 +22,46 @@ export default (neutrino: Neutrino) => {
   config.externals({
     'react/addons': true,
     'react/lib/ExecutionEnvironment': true,
-    'react/lib/ReactContext': 'window'
+    'react/lib/ReactContext': 'window',
   })
 
   if (process.env.NODE_ENV === 'development') {
-    config
-      .entry('index')
-      .prepend(require.resolve('react-hot-loader/patch'))
+    config.entry('index').prepend(require.resolve('react-hot-loader/patch'))
   }
 
   if (config.module.rules.has('lint')) {
     neutrino.use(loaderMerge('lint', 'eslint'), {
       plugins: ['react'],
       baseConfig: {
-        extends: ['plugin:react/recommended']
+        extends: ['plugin:react/recommended'],
       },
       parserOptions: {
         ecmaFeatures: {
-          experimentalObjectRestSpread: true
-        }
+          experimentalObjectRestSpread: true,
+        },
       },
       rules: {
         'react/prop-types': ['off'],
         'jsx-quotes': ['error', 'prefer-double'],
-        'class-methods-use-this': ['error', {
-          exceptMethods: [
-            'render',
-            'getInitialState',
-            'getDefaultProps',
-            'getChildContext',
-            'componentWillMount',
-            'componentDidMount',
-            'componentWillReceiveProps',
-            'shouldComponentUpdate',
-            'componentWillUpdate',
-            'componentDidUpdate',
-            'componentWillUnmount'
-          ]
-        }]
-      }
+        'class-methods-use-this': [
+          'error',
+          {
+            exceptMethods: [
+              'render',
+              'getInitialState',
+              'getDefaultProps',
+              'getChildContext',
+              'componentWillMount',
+              'componentDidMount',
+              'componentWillReceiveProps',
+              'shouldComponentUpdate',
+              'componentWillUpdate',
+              'componentDidUpdate',
+              'componentWillUnmount',
+            ],
+          },
+        ],
+      },
     })
   }
 }

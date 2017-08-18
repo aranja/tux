@@ -4,7 +4,9 @@ import { ModelMeta, Field } from '../interfaces'
 
 export function registerEditable(
   type: string,
-  value: Array<Field> | ((editorSchema: Map<string, Field>) => Map<string, Field>)
+  value:
+    | Array<Field>
+    | ((editorSchema: Map<string, Field>) => Map<string, Field>)
 ) {
   schema.set(type, value)
 }
@@ -38,7 +40,9 @@ export function getEditorSchema(meta: ModelMeta): Array<Field> {
 }
 
 function _mergeSchemas(adapterSchema: Array<Field>, userFunction: Function) {
-  const schemaAsMap = new Map<string, any>(adapterSchema.map(field => [field.field, field]) as any)
+  const schemaAsMap = new Map<string, any>(
+    adapterSchema.map(field => [field.field, field]) as any
+  )
   userFunction(schemaAsMap)
 
   const result = []

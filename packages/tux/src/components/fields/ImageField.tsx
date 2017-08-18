@@ -1,18 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import {
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
-  CardTitle,
-  CardText
-} from 'material-ui/Card'
 import { get } from '../../utils/accessors'
 import { input } from '../../theme'
 import Spinner from '../Spinner'
 import BrowseField from './BrowseField'
+import ModalLabel from '../ModalLabel'
 
 export interface ImageFieldProps {
   field: string | Array<string>
@@ -20,11 +13,6 @@ export interface ImageFieldProps {
   name: string
   onChange: Function
   value: any
-}
-
-const style = {
-  Card: { padding: '15px' },
-  CardHeader: { padding: 0, paddingBottom: '15px' }
 }
 
 class ImageField extends React.Component<ImageFieldProps, any> {
@@ -95,44 +83,42 @@ class ImageField extends React.Component<ImageFieldProps, any> {
       const url = get(fullModel, 'fields.file.url')
 
       return (
-        <Card style={style.Card}>
-          <CardHeader style={style.CardHeader} subtitle="Upload image" />
-          <div className="ImageField">
-            {isLoadingImage
+        <div className="ImageField">
+          <ModalLabel>Image</ModalLabel>
+          {isLoadingImage
+            ? <div className="ImageField-preview">
+                <Spinner />
+              </div>
+            : url
               ? <div className="ImageField-preview">
-                  <Spinner />
+                  <img
+                    className="ImageField-previewImage"
+                    alt={title}
+                    width="128"
+                    height="auto"
+                    src={`${url}?w=128`}
+                  />
                 </div>
-              : url
-                ? <div className="ImageField-preview">
-                    <img
-                      className="ImageField-previewImage"
-                      alt={title}
-                      width="128"
-                      height="auto"
-                      src={`${url}?w=128`}
-                    />
-                  </div>
-                : null}
-            <BrowseField id={id} onChange={this.onFileChange} value="" />
-            <style jsx>{`
-              .ImageField {
-                display: inline-block;
-              }
-              .ImageField-preview {
-                display: inline-block;
-                height: 140px;
-                overflow: hidden;
-                padding: 6px;
-                position: relative;
-                width: 140px;
-              }
-              .ImageField-preview > img {
-                height: 100%;
-                object-fit: contain;
-              }
-            `}</style>
-          </div>
-        </Card>
+              : null}
+          <BrowseField id={id} onChange={this.onFileChange} value="" />
+          <style jsx>{`
+            .ImageField {
+              display: inline-block;
+            }
+            .ImageField-preview {
+              display: inline-block;
+              height: 140px;
+              overflow: hidden;
+              padding: 6px;
+              position: relative;
+              width: 140px;
+            }
+            .ImageField-preview > img {
+              height: 100%;
+              object-fit: contain;
+            }
+          `}</style>
+        </div>
       )
     }
     return <div>Loading</div>

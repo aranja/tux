@@ -34,9 +34,10 @@ function adminExtension(neutrino: Neutrino) {
 }
 
 function targetEnv({ config }: Neutrino, target: string) {
-  config.plugin('target-env')
-    .use(DefinePlugin, [{
+  config.plugin('target-env').use(DefinePlugin, [
+    {
       [`process.env.SERVER`]: target === 'server' ? '"true"' : '""',
       [`process.env.BROWSER`]: target === 'browser' ? '"true"' : '""',
-    }])
+    },
+  ])
 }

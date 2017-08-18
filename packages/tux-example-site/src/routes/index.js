@@ -12,7 +12,7 @@ export default [
         sellPoints,
         pricetable,
         testimonial,
-        carousel
+        carousel,
       ] = await Promise.all([
         api.getEntries({ content_type: 'page' }),
         api.getEntries({ content_type: 'sellPoint' }),
@@ -21,7 +21,9 @@ export default [
         api.getEntries({ content_type: 'carousel' }),
       ])
 
-      const content = pages.items.find(page => page.sys.id === '3yu5uaHcisCiKgKU84oWei')
+      const content = pages.items.find(
+        page => page.sys.id === '3yu5uaHcisCiKgKU84oWei'
+      )
 
       return (
         <Home
@@ -32,7 +34,7 @@ export default [
           carousel={carousel}
         />
       )
-    }
+    },
   },
   {
     path: '/about',
@@ -53,7 +55,9 @@ export default [
         api.getEntries({ content_type: 'article', order: '-sys.createdAt' }),
       ])
 
-      const content = pages.items.find(page => page.sys.id === '1EKFlARWuoSCkiI6gamwc4')
+      const content = pages.items.find(
+        page => page.sys.id === '1EKFlARWuoSCkiI6gamwc4'
+      )
 
       return (
         <About
@@ -65,12 +69,12 @@ export default [
           articles={articles}
         />
       )
-    }
+    },
   },
   {
     path: '/*',
     action() {
       return <h1>404 Not Found</h1>
-    }
+    },
   },
 ]

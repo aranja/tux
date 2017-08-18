@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Raw, Plain } from 'slate'
-import deepEqual from 'deep-eql'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { Theme, input, button } from '../../theme'
+import { Theme, input } from '../../theme'
+import { EditableProps } from '../../interfaces'
 import SlateRenderer from '../EditInline/SlateRenderer'
-import { get, set } from '../../utils/accessors'
 import { Html } from '../../utils/slate'
+<<<<<<< HEAD
 import { EditableProps } from '../../interfaces'
 import { createEditable } from '../Editable/Editable'
 import withEditorState from '../HOC/withEditorState'
+import ModalLabel from '../ModalLabel'
+=======
+import withEditorState, { EditorStateProps } from '../HOC/withEditorState'
+>>>>>>> master
 
 // icons
 import FaBold from 'react-icons/lib/fa/bold'
@@ -18,34 +22,31 @@ import FaQuoteRight from 'react-icons/lib/fa/quote-right'
 import FaListUl from 'react-icons/lib/fa/list-ul'
 import FaListOl from 'react-icons/lib/fa/list-ol'
 
-export interface Props extends EditableProps {
+export interface Props extends EditorStateProps {
   value: any
   id: string
   placeholder: string
   field: string | Array<string>
   onChange: Function
   isEditing: boolean
-  editorState: any
 }
 
-class RichTextField extends React.Component<Props> {
-  static getInitialEditorState(props) {
+class RichTextField extends React.Component<Props, {}> {
+  static getInitialEditorState(props: Props) {
     const { value } = props
 
     try {
       if (value) {
         return Raw.deserialize(value, { terse: true })
-      } else if (props.children) {
-        const html = renderToStaticMarkup(props.children)
-        return Html.deserialize(html)
       }
     } catch (err) {
+      // tslint:disable-next-line:no-console
       console.error('Could not parse content', value, err)
     }
     return Plain.deserialize('')
   }
 
-  componentDidUpdate(oldProps) {
+  componentDidUpdate(oldProps: Props) {
     if (oldProps.editorState !== this.props.editorState) {
       this.onChange()
     }
@@ -57,15 +58,14 @@ class RichTextField extends React.Component<Props> {
     onChange(Raw.serialize(editorState), id)
   }
 
-  renderBlockButton(type, icon) {
+  renderBlockButton(type: string, icon: ReactNode) {
     const { onClickBlock, hasBlock } = this.props
     const isActive = hasBlock(type)
-    const onMouseDown = event => onClickBlock(event, type)
 
     return (
       <span
         className="Toolbar-button"
-        onMouseDown={onMouseDown}
+        onMouseDown={event => onClickBlock(event, type)}
         data-active={isActive}
       >
         {icon}
@@ -90,15 +90,14 @@ class RichTextField extends React.Component<Props> {
     )
   }
 
-  renderMarkButton(type, icon) {
+  renderMarkButton(type: string, icon: ReactNode) {
     const { onClickMark, hasMark } = this.props
     const isActive = hasMark(type)
-    const onMouseDown = event => onClickMark(event, type)
 
     return (
       <span
         className="Toolbar-button"
-        onMouseDown={onMouseDown}
+        onMouseDown={event => onClickMark(event, type)}
         data-active={isActive}
       >
         {icon}
@@ -127,6 +126,7 @@ class RichTextField extends React.Component<Props> {
     const { editorState, onEditorChange, isEditing, placeholder, onKeyDown } = this.props
     return (
       <div className="RichTextField">
+        <ModalLabel>Rich text</ModalLabel>
         <div className="RichTextField-toolbar">
           {this.renderMarkButton('bold', <FaBold />)}
           {this.renderMarkButton('italic', <FaItalic />)}
@@ -150,6 +150,7 @@ class RichTextField extends React.Component<Props> {
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
+            margin-top: 1rem;
           }
           .RichTextField-toolbar {
             border: 1px solid ${input.border};
@@ -165,11 +166,11 @@ class RichTextField extends React.Component<Props> {
             color: ${Theme.textDark};
             display: flex;
             font-size: 16px;
-            font-weight: 400;
-            font-family: initial;
-            line-height: 1.5;
+            font-weight: inherit;
+            font-family: inherit;
+            line-height: inherit;
             min-height: 12em;
-            padding: 8px;
+            padding: 10px;
             width: 100%;
           }
         `}</style>

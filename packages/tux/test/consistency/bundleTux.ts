@@ -10,28 +10,27 @@ function tuxPreset(neutrino, target) {
   config
     .context(neutrino.options.root)
     .plugin('env')
-      .use(EnvironmentPlugin, [{
+    .use(EnvironmentPlugin, [
+      {
         ADMIN: target === 'admin' ? 'true' : '',
-        SERVER: 'true'
-      }])
-      .end()
-    .resolve
-      .extensions
-        .merge([
-          ...(target === 'admin' ? ['.admin.js'] : []),
-          '.js',
-          '.json'
-        ])
-        .end()
-      .end()
+        SERVER: 'true',
+      },
+    ])
+    .end()
+    .resolve.extensions.merge([
+      ...(target === 'admin' ? ['.admin.js'] : []),
+      '.js',
+      '.json',
+    ])
+    .end()
+    .end()
     .target('node')
     .entry(target)
-      .add(neutrino.options.entry)
-      .end()
-    .output
-      .path(neutrino.options.output)
-      .libraryTarget('commonjs2')
-      .end()
+    .add(neutrino.options.entry)
+    .end()
+    .output.path(neutrino.options.output)
+    .libraryTarget('commonjs2')
+    .end()
 }
 
 export default function bundleTux(target) {

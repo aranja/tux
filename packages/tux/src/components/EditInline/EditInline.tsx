@@ -14,7 +14,7 @@ export default createEditable<Props>()(({ children, model, field }: Props) => {
   if (value) {
     return (
       <SlateRenderer
-        editorState={Raw.deserialize(value)}
+        state={Raw.deserialize(value)}
         readOnly={true}
       />
     )

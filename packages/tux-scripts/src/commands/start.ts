@@ -16,13 +16,19 @@ export default async (options: CliOptions) => {
   const spinner = ora('Building project').start()
   let compilers
   try {
-    compilers = await run('start', { ssr, admin, port, host, use }) as Compiler[]
+    compilers = (await run('start', {
+      ssr,
+      admin,
+      port,
+      host,
+      use,
+    })) as Compiler[]
   } catch (err) {
     spinner.fail('Building project failed')
     throw err
   }
 
-  const [ browserCompiler, serverCompiler ] = compilers
+  const [browserCompiler, serverCompiler] = compilers
   if (!browserCompiler.options.devServer) {
     return spinner.succeed('Build completed')
   }

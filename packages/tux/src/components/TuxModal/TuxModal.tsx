@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Theme, input, button } from '../../theme'
-import { fade } from '../../utils/color'
 import moment from 'moment'
 import TuxSpinner from '../Spinner/Spinner'
 import Button from '../Button'
@@ -11,18 +10,19 @@ import { get, set } from '../../utils/accessors'
 import { Field } from '../../interfaces'
 import { getEditorSchema } from '../../services/editor'
 
-// Material ui experimentation
+// Material ui
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+
 import {
   Toolbar,
   ToolbarGroup,
-  ToolbarSeparator,
   ToolbarTitle
 } from 'material-ui/Toolbar'
 import MenuItem from 'material-ui/MenuItem'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
+import { tuxUITheme } from '../../utils/TuxUITheme'
 
 export interface State {
   fullModel: any | null
@@ -97,10 +97,9 @@ class TuxModal extends React.Component<TuxModalProps, State> {
 
     const InputComponent = field.component
     const value = get(fullModel, field.field)
-
     return (
       InputComponent &&
-      <div className="TuxModal-field">
+      <div className="TuxModal-field" key={field.field}>
         <InputComponent
           id={field.field}
           onChange={(value: any) => this.onChange(value, field.field)}
@@ -123,11 +122,18 @@ class TuxModal extends React.Component<TuxModalProps, State> {
     const modalHeading = isNew ? 'Creating' : 'Editing'
     const modalAction = isNew ? 'Create' : 'Save'
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={tuxUITheme}>
         <div className="TuxModal">
           {fullModel
-            ? <form onSubmit={this.onSubmit}>
-                <Toolbar>
+            ? <form onSubmit={this.onSubmit} className="TuxModal-form">
+                <Toolbar
+                  style={{
+                    flex: '0 0 auto',
+                    boxShadow:
+                      'rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px',
+                    zIndex: 2
+                  }}
+                >
                   <ToolbarGroup>
                     <h1>
                       {modalHeading}
@@ -137,9 +143,7 @@ class TuxModal extends React.Component<TuxModalProps, State> {
                       </strong>
                     </h1>
                   </ToolbarGroup>
-
                   <ToolbarGroup>
-                    <ToolbarSeparator />
                     <FlatButton
                       label="Cancel"
                       secondary
@@ -166,52 +170,33 @@ class TuxModal extends React.Component<TuxModalProps, State> {
             .TuxModal {
               background: #fff;
               box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-              margin: 0;
-              margin-left: auto;
               max-width: 650px;
-              min-height: 100vh;
+              height: 100vh;
               padding: 0;
-              position: relative;
               width: 60%;
+              position: absolute;
+              right: 0;
             }
 
-            .TuxModal-topBar {
-              background: #f2f3f6;
-              border-bottom: 1px solid rgba(203, 203, 203, 0.53);
+            .TuxModal-form {
               display: flex;
-              justify-content: space-between;
-              padding: 30px;
-            }
-
-            .TuxModal-buttons {
-              display: flex;
-              justify-content: flex-end;
+              flex-direction: column;
+              position: absolute;
+              height: 100%;
+              width: 100%;
             }
 
             .TuxModal-content {
+              flex: 1 1 auto;
+              overflow-y: scroll;
               padding: 20px 30px;
             }
 
-            .TuxModal-meta {
-              font-size: 12px;
-              text-align: right;
-            }
-
             .TuxModal-metaLastUpdated {
-              color: ${fade(Theme.textGray, 0.5)};
+              opacity: 0.5;
               font-weight: 300;
-            }
-
-            .TuxModal-title {
-              color: ${Theme.textDark};
-              font-size: 25px;
-              font-weight: 300;
-              margin: 0;
-            }
-
-            .TuxModal-modelName {
-              font-weight: 400;
-              text-transform: capitalize;
+              font-size: 13px;
+              text-align: right;
             }
           `}</style>
         </div>

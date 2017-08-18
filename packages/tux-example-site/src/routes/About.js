@@ -12,12 +12,10 @@ import SocialPlug from '../components/SocialPlug'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
-const About = ({ content, gallery, pricetable, articles }) =>  (
+const About = ({ content, gallery, pricetable, articles }) =>
   <div className="p-About">
     <Editable model={content}>
-      <Helmet
-        title="About - Tux Demo Site"
-      />
+      <Helmet title="About - Tux Demo Site" />
       <Menu />
       <ProductBanner image={ProductBannerImage} />
       <Section>
@@ -32,12 +30,15 @@ const About = ({ content, gallery, pricetable, articles }) =>  (
         <Articles articles={articles} />
       </Section>
       <Section>
-        <H1><EditInline field="fields.content.pricetableTitle" /></H1>
-        <H2><EditInline field="fields.content.pricetableSubtitle" /></H2>
+        <H1>
+          <EditInline field="fields.content.pricetableTitle" />
+        </H1>
+        <H2>
+          <EditInline field="fields.content.pricetableSubtitle" />
+        </H2>
         <Pricetable pricetableItems={pricetable.items} />
       </Section>
     </Editable>
   </div>
-)
 
 export default About

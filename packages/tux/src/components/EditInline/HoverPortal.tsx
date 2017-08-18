@@ -1,32 +1,41 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import Portal from 'react-portal'
 import FaBold from 'react-icons/lib/fa/bold'
 import FaItalic from 'react-icons/lib/fa/italic'
 import FaCode from 'react-icons/lib/fa/code'
 import FaUnderline from 'react-icons/lib/fa/underline'
+import { State as EditorState } from 'slate'
 
-class HoverPortal extends React.Component {
-  constructor(props) {
+export interface Props {
+  editorState: EditorState
+  onClickMark: (e: React.MouseEvent<any>, type: string) => void
+}
+
+export interface State {
+  menu: HTMLElement | null,
+}
+
+class HoverPortal extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       menu: null
-    }
+    } as State
   }
 
-  hasMark = type => {
+  hasMark = (type: string) => {
     const { editorState } = this.props
-    return editorState.marks.some(mark => mark.type === type)
+    return editorState.marks.some(mark => mark == null ? false : mark.type === type)
   }
 
-  renderMarkButton(type, icon) {
+  renderMarkButton(type: string, icon: ReactElement<any>) {
     const { onClickMark } = this.props
     const isActive = this.hasMark(type)
-    const onMouseDown = e => onClickMark(e, type)
 
     return (
       <span
         className="HoverPortal-button"
-        onMouseDown={onMouseDown}
+        onMouseDown={e => onClickMark(e, type)}
         data-active={isActive}
       >
         {icon}
@@ -47,7 +56,7 @@ class HoverPortal extends React.Component {
     )
   }
 
-  onOpen = portal => {
+  onOpen = (portal: HTMLElement) => {
     this.setState({ menu: portal })
   }
 
@@ -56,7 +65,8 @@ class HoverPortal extends React.Component {
     const { editorState } = this.props
     if (!menu) return
 
-    const tmp = menu.firstChild || menu 
+    const tmp = menu.firstChild || menu
+    if (!(tmp instanceof HTMLElement)) return
 
     if (editorState.isBlurred || editorState.isEmpty) {
       tmp.removeAttribute('style')
@@ -66,7 +76,7 @@ class HoverPortal extends React.Component {
     const selection = window.getSelection()
     const range = selection.getRangeAt(0)
     const rect = range.getBoundingClientRect()
-    tmp.style.opacity = 1
+    tmp.style.opacity = '1'
     tmp.style.top = `${rect.top + window.scrollY - tmp.offsetHeight}px`
     tmp.style.left = `${rect.left +
       window.scrollX -
@@ -90,8 +100,7 @@ class HoverPortal extends React.Component {
           {this.renderMarkButton('italic', <FaItalic />)}
           {this.renderMarkButton('underlined', <FaUnderline />)}
           {this.renderMarkButton('code', <FaCode />)}
-        </div>
-        <style jsx>{`
+          <style jsx>{`
           .HoverPortal {
             padding: 8px 7px 6px;
             position: absolute;
@@ -106,6 +115,7 @@ class HoverPortal extends React.Component {
             transition: opacity .75s;
           }
         `}</style>
+        </div>
       </Portal>
     )
   }

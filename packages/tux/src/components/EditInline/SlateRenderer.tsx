@@ -1,18 +1,10 @@
 import React from 'react'
-import { Editor } from 'slate'
-
-export interface Props {
-  state: any,
-  children?: any,
-  onChange?: (editorState: any) => void
-  readOnly: boolean,
-  placeholder?: string,
-}
+import { Editor, EditorProps, Schema } from 'slate'
 
 /**
  * Define a schema.
  */
-const schema = {
+const schema: Schema = {
   nodes: {
     'bulleted-list': props => <ul {...props.attributes}>{props.children}</ul>,
     'code': props => <pre><code {...props.attributes}>{props.children}</code></pre>,
@@ -39,7 +31,7 @@ const schema = {
   }
 }
 
-const SlateRenderer = (props: Props) => {
+const SlateRenderer = (props: EditorProps) => {
   return (
     <Editor
       style={{width: '100%'}}

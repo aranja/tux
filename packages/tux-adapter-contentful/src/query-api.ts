@@ -4,45 +4,65 @@ import { AxiosInstance } from 'axios'
 // TODO: Fill in
 export interface ContentfulJsonItem {
   sys: {
-    id: string,
-    updatedAt: string,
+    id: string
+    updatedAt: string
+    contentType: {
+      sys: {
+        id: string
+      }
+    }
   }
+  fields: any
 }
 export interface ContentfulJsonEntry extends ContentfulJsonItem {
   fields: any
 }
-export interface ContentfulJsonAsset extends ContentfulJsonItem {
-}
+export interface ContentfulJsonAsset extends ContentfulJsonItem {}
 export interface ContentfulQueryResponse {
-  items: ContentfulJsonItem[],
+  items: ContentfulJsonItem[]
   includes?: {
-    Asset?: ContentfulJsonAsset[],
-    Entry?: ContentfulJsonEntry[],
-  },
-  total: number,
+    Asset?: ContentfulJsonAsset[]
+    Entry?: ContentfulJsonEntry[]
+  }
+  total: number
 }
 type LinkMap = {
-  [id: string]: ContentfulJsonItem,
+  [id: string]: ContentfulJsonItem
 }
 
 class QueryApi {
   private overrides: {
-    [id: string]: any,
+    [id: string]: any
   }
   private client: AxiosInstance
 
-  constructor(space: string, accessToken: string, host: string) {
+  constructor(
+    space: string,
+    accessToken: string,
+    host: string,
+    client: AxiosInstance
+  ) {
     this.overrides = {}
-    this.client = axios.create({
+    this.client = client
+  }
+
+  static create(
+    space: string,
+    accessToken: string,
+    host = 'cdn.contentful.com'
+  ): QueryApi {
+    const client = axios.create({
       baseURL: `https://${host}/spaces/${space}`,
       headers: {
-        'authorization': `Bearer ${accessToken}`,
+        authorization: `Bearer ${accessToken}`,
       },
     })
+    return new QueryApi(space, accessToken, host, client)
   }
 
   async getEntries(params?: Object) {
-    const result: ContentfulQueryResponse = await this.client.get('/entries', { params })
+    const result: ContentfulQueryResponse = await this.client
+      .get('/entries', { params })
       .then(result => result.data)
     result.items = result.items.map(this.checkOverride)
     this.linkIncluded(result)
@@ -50,7 +70,9 @@ class QueryApi {
   }
 
   async getEntry(id: string) {
-    const entry = await this.client.get(`/entries/${id}`).then(result => result.data)
+    const entry = await this.client
+      .get(`/entries/${id}`)
+      .then(result => result.data)
     return this.checkOverride(entry)
   }
 
@@ -60,9 +82,12 @@ class QueryApi {
 
   private populateLinks(links: ContentfulJsonItem[], linkMap: LinkMap) {
     for (const asset of links) {
-      if (asset.sys) {
-        linkMap[asset.sys.id] = this.checkOverride(asset).fields
+      if (!asset.sys) {
+        return
       }
+
+      const entry = this.checkOverride(asset)
+      linkMap[entry.sys.id] = entry
     }
   }
 
@@ -76,32 +101,32 @@ class QueryApi {
     }
 
     // Add included models to items
-    for (const item of result.items) {
-      this.linkFields(item, linkMap)
+    for (let i = 0; i < result.items.length; i++) {
+      const item = result.items[i]
+      result.items[i] = this.linkEntry(item, linkMap)
     }
   }
 
-  private linkFields(item: any, linkMap: LinkMap) {
-    if (!item) {
-      return
-    }
-
+  private linkEntry(item: any, linkMap: LinkMap): any {
+    const hasSys = !!item.sys
+    const isLink = hasSys && item.sys.type === 'Link'
     const isArray = item instanceof Array
-    const isLeaf = !isArray && !item.fields
 
-    if (isLeaf) {
-      if (item.sys && item.sys.type === 'Link') {
-        const linkType = item.sys.linkType.toLowerCase()
-        item[linkType] = linkMap[item.sys.id] ||
-          (this.overrides[item.sys.id] && this.overrides[item.sys.id].fields)
-      }
-      return
-    } else if (isArray) {
-      item.forEach((subItem: ContentfulJsonItem) => this.linkFields(subItem, linkMap))
-    } else {
-      const fieldNames = Object.keys(item.fields)
-      fieldNames.forEach(fieldName => this.linkFields(item.fields[fieldName], linkMap))
+    if (item.fields) {
+      Object.keys(item.fields).forEach(fieldName => {
+        item.fields[fieldName] = this.linkEntry(item.fields[fieldName], linkMap)
+      })
     }
+
+    if (isLink) {
+      const itemId = item.sys.id
+      const entry = linkMap[itemId] || this.overrides[itemId]
+
+      return this.linkEntry(entry, linkMap)
+    } else if (isArray) {
+      return item.map((subItem: any) => this.linkEntry(subItem, linkMap))
+    }
+    return item
   }
 
   private checkOverride = (entry: ContentfulJsonItem) => {

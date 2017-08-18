@@ -19,4 +19,3 @@ test('add a modal', () => {
   const modal = state[0]
   expect(modal.element).toBe(element)
 })
-

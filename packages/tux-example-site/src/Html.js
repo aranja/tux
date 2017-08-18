@@ -21,8 +21,8 @@ import Document, { Html, Head, Body, App, Footer } from 'react-document'
 export default class extends Document {
   render() {
     // TODO: Remove when headProps is gone.
-    let helmet = this.props.helmet ||
-      this.props.headProps && this.props.headProps.helmet
+    let helmet =
+      this.props.helmet || (this.props.headProps && this.props.headProps.helmet)
     return (
       <Html lang="en">
         <Head>
@@ -31,7 +31,10 @@ export default class extends Document {
             helmet.meta.toComponent(),
             helmet.link.toComponent(),
           ]}
-          <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,400i" rel="stylesheet" />
+          <link
+            href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,400i"
+            rel="stylesheet"
+          />
         </Head>
         <Body>
           <App />
