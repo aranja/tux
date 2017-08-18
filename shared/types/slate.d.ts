@@ -3,6 +3,7 @@ declare module 'slate' {
     Component,
     ComponentType,
     ReactNode,
+    ReactElement,
     CSSProperties,
   } from 'react'
   import { List, Set, Map } from 'immutable'
@@ -40,6 +41,30 @@ declare module 'slate' {
       onKeyDown?: KeyDownHandler
       onPaste?: PasteHandler
       onSelect?: SelectHandler
+      schema?: Schema
+    }
+
+    // Completion 100%
+    interface Plugin {
+      // Event Handler Properties
+      onBeforeInput?: BeforeInputHandler
+      onBlur?: BlurHandler
+      onFocus?: FocusHandler
+      onCopy?: CopyHandler
+      onCut?: CutHandler
+      onDrop?: DropHandler
+      onKeyDown?: KeyDownHandler
+      onPaste?: PasteHandler
+      onSelect?: SelectHandler
+
+      // Other Properties
+      onChange?(state: State): State | void
+      onBeforeChange?(state: State): State | void
+      render?(
+        props: Object,
+        state: State,
+        editor: Editor
+      ): ReactElement<any> | void
       schema?: Schema
     }
 
@@ -149,6 +174,7 @@ declare module 'slate' {
     // Completion 100%
     class Block extends Node {
       // Properties
+      kind: 'block'
       type: string
       key: string
       nodes: List<Node>
@@ -160,7 +186,11 @@ declare module 'slate' {
       static isBlock(maybeBlock: any): maybeBlock is Block
     }
 
-    interface Inline extends Node {}
+    interface Inline extends Node {
+      kind: 'inline'
+      type: string
+      isVoid: boolean
+    }
 
     interface Document extends Node {}
 
@@ -180,6 +210,7 @@ declare module 'slate' {
 
     // Completion 100%
     class Mark {
+      kind: 'mark'
       type: string
       data: Data
 
@@ -191,7 +222,10 @@ declare module 'slate' {
 
     interface Data extends Map<string, any> {}
 
-    interface String {}
+    interface String {
+      kind: 'string'
+      text: string
+    }
 
     namespace Html {
       interface Rule {

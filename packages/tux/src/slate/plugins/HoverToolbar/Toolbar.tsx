@@ -5,17 +5,18 @@ import FaItalic from 'react-icons/lib/fa/italic'
 import FaCode from 'react-icons/lib/fa/code'
 import FaUnderline from 'react-icons/lib/fa/underline'
 import { State as EditorState } from 'slate'
+import { hasMark, toggleMark } from '../../UiUtils'
 
 export interface Props {
-  editorState: EditorState
-  onClickMark: (e: React.MouseEvent<any>, type: string) => void
+  onChange(state: EditorState): void
+  state: EditorState
 }
 
 export interface State {
   menu: HTMLElement | null,
 }
 
-class HoverPortal extends React.Component<Props, State> {
+class Toolbar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -23,36 +24,38 @@ class HoverPortal extends React.Component<Props, State> {
     } as State
   }
 
-  hasMark = (type: string) => {
-    const { editorState } = this.props
-    return editorState.marks.some(mark => mark == null ? false : mark.type === type)
-  }
-
   renderMarkButton(type: string, icon: ReactElement<any>) {
-    const { onClickMark } = this.props
-    const isActive = this.hasMark(type)
+    const { state, onChange } = this.props
+    const isActive = hasMark(state, type)
 
     return (
-      <span
-        className="HoverPortal-button"
-        onMouseDown={e => onClickMark(e, type)}
-        data-active={isActive}
+      <button
+        className="Toolbar-button"
+        onMouseDown={e => {
+          e.preventDefault()
+          onChange(toggleMark(state, type))
+        }}
+        role="presentation"
+        tabIndex={-1}
+        type="button"
+
+        aria-pressed={isActive}
       >
         {icon}
         <style jsx>{`
-        .HoverPortal-button {
+        .Toolbar-button {
+          background: transparent;
+          border: 0;
           color: #fff;
-          display: flex;
           margin: 4px;
-          width: 12px;
           opacity: 0.8;
         }
 
-        .HoverPortal-button[data-active="true"] {
+        .Toolbar-button[aria-pressed="true"] {
           opacity: 1;
         }
       `}</style>
-      </span>
+      </button>
     )
   }
 
@@ -62,13 +65,13 @@ class HoverPortal extends React.Component<Props, State> {
 
   updateMenu = () => {
     const { menu } = this.state
-    const { editorState } = this.props
+    const { state } = this.props
     if (!menu) return
 
     const tmp = menu.firstChild || menu
     if (!(tmp instanceof HTMLElement)) return
 
-    if (editorState.isBlurred || editorState.isEmpty) {
+    if (state.isBlurred || state.isEmpty) {
       tmp.removeAttribute('style')
       return
     }
@@ -95,13 +98,13 @@ class HoverPortal extends React.Component<Props, State> {
   render() {
     return (
       <Portal isOpened onOpen={this.onOpen}>
-        <div className="HoverPortal">
+        <div className="Toolbar">
           {this.renderMarkButton('bold', <FaBold />)}
           {this.renderMarkButton('italic', <FaItalic />)}
           {this.renderMarkButton('underlined', <FaUnderline />)}
           {this.renderMarkButton('code', <FaCode />)}
           <style jsx>{`
-          .HoverPortal {
+          .Toolbar {
             padding: 8px 7px 6px;
             position: absolute;
             display: flex;
@@ -121,4 +124,4 @@ class HoverPortal extends React.Component<Props, State> {
   }
 }
 
-export default HoverPortal
+export default Toolbar

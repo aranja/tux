@@ -172,7 +172,6 @@ function install(
       command = 'npm'
       args = ['install', '--save', '--save-exact'].concat(dependencies)
     }
-    //fd
 
     if (verbose) {
       args.push('--verbose')
