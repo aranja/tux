@@ -18,11 +18,11 @@ const publicUrl = process.env.PUBLIC_URL
 
 const adapter = createContentfulAdapter({
   accessToken:
-    'e3e74d846929d5ee9f748d36a40f106fbd08a32c6d1dad8d9707c8dd4d9df2f5',
+    '61344f3579f7f80450ffc4bc7111624e1035c9588e9680c02519bce08bbbc3ca',
   clientId: '5be3eeb398764037af2e860d1933bc9518d2f71a72cade411c5f5260e8dd9335',
   host: 'preview.contentful.com',
   redirectUri: publicUrl,
-  space: 'p58cwyy6iobr',
+  space: 'n2difvpz16fj',
 })
 
 export default createReactChain()
