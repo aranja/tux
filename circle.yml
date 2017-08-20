@@ -2,8 +2,20 @@ machine:
   node:
     version: 8.4
 
+dependencies:
+  pre:
+    - npm install --global now
+    - echo $NOW_CONFIG | base64 --decode > ${HOME}/.now.json
+
 test:
   override:
     - npm test --silent
     - npm run lint --silent
     - npm run check-types --silent
+
+deployment:
+  example:
+    branch: master
+    commands:
+      - URL=$(now packages/tux-example-site)
+      - now alias set ${URL} tux-example.aranja.com
