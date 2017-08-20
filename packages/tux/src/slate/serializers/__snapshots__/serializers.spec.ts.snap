@@ -1,0 +1,193 @@
+exports[`serializers safely roundtrips html and raw 1`] = `
+Object {
+  "nodes": Array [
+    Object {
+      "kind": "block",
+      "nodes": Array [
+        Object {
+          "kind": "text",
+          "ranges": Array [
+            Object {
+              "text": "Hello ",
+            },
+            Object {
+              "marks": Array [
+                Object {
+                  "type": "italic",
+                },
+              ],
+              "text": "italic",
+            },
+            Object {
+              "text": " ",
+            },
+            Object {
+              "marks": Array [
+                Object {
+                  "type": "bold",
+                },
+              ],
+              "text": "bold",
+            },
+            Object {
+              "text": " ",
+            },
+            Object {
+              "marks": Array [
+                Object {
+                  "type": "underline",
+                },
+              ],
+              "text": "underlined",
+            },
+            Object {
+              "text": " ",
+            },
+          ],
+        },
+        Object {
+          "data": Object {
+            "href": "foo",
+          },
+          "kind": "inline",
+          "nodes": Array [
+            Object {
+              "kind": "text",
+              "text": "link",
+            },
+          ],
+          "type": "link",
+        },
+        Object {
+          "kind": "text",
+          "ranges": Array [
+            Object {
+              "text": " ",
+            },
+            Object {
+              "marks": Array [
+                Object {
+                  "type": "code",
+                },
+              ],
+              "text": "code",
+            },
+          ],
+        },
+      ],
+      "type": "paragraph",
+    },
+    Object {
+      "kind": "block",
+      "nodes": Array [
+        Object {
+          "kind": "block",
+          "nodes": Array [
+            Object {
+              "kind": "text",
+              "text": "List",
+            },
+          ],
+          "type": "list-item",
+        },
+      ],
+      "type": "bulleted-list",
+    },
+    Object {
+      "kind": "block",
+      "nodes": Array [
+        Object {
+          "kind": "block",
+          "nodes": Array [
+            Object {
+              "kind": "text",
+              "text": "Ordered list",
+            },
+          ],
+          "type": "list-item",
+        },
+      ],
+      "type": "numbered-list",
+    },
+    Object {
+      "kind": "block",
+      "nodes": Array [
+        Object {
+          "kind": "text",
+          "ranges": Array [
+            Object {
+              "marks": Array [
+                Object {
+                  "type": "code",
+                },
+              ],
+              "text": "Fancy code",
+            },
+          ],
+        },
+      ],
+      "type": "quote",
+    },
+    Object {
+      "kind": "block",
+      "nodes": Array [
+        Object {
+          "kind": "text",
+          "text": "H1",
+        },
+      ],
+      "type": "heading-one",
+    },
+    Object {
+      "kind": "block",
+      "nodes": Array [
+        Object {
+          "kind": "text",
+          "text": "H2",
+        },
+      ],
+      "type": "heading-two",
+    },
+    Object {
+      "kind": "block",
+      "nodes": Array [
+        Object {
+          "kind": "text",
+          "text": "H3",
+        },
+      ],
+      "type": "heading-three",
+    },
+    Object {
+      "kind": "block",
+      "nodes": Array [
+        Object {
+          "kind": "text",
+          "text": "H4",
+        },
+      ],
+      "type": "heading-four",
+    },
+    Object {
+      "kind": "block",
+      "nodes": Array [
+        Object {
+          "kind": "text",
+          "text": "H5",
+        },
+      ],
+      "type": "heading-five",
+    },
+    Object {
+      "kind": "block",
+      "nodes": Array [
+        Object {
+          "kind": "text",
+          "text": "H6",
+        },
+      ],
+      "type": "heading-six",
+    },
+  ],
+}
+`;

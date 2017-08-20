@@ -6,6 +6,8 @@ import { Editor, EditorProps, Schema } from 'slate'
  */
 const schema: Schema = {
   nodes: {
+    'line': props => <p {...props.attributes}>{props.children}</p>,
+    'paragraph': props => <p {...props.attributes}>{props.children}</p>,
     'bulleted-list': props => <ul {...props.attributes}>{props.children}</ul>,
     'code': props => <pre><code {...props.attributes}>{props.children}</code></pre>,
     'heading-one': props => <h1 {...props.attributes}>{props.children}</h1>,
