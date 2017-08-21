@@ -1,6 +1,6 @@
 {
   "name": "neutrino-preset-tux",
-  "version": "0.2.2",
+  "version": "0.3.0-beta.0",
   "description": "Neutrino preset for building tux websites",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "babel-preset-env": "^1.3.3",
     "babel-preset-react": "^6.24.1",
     "extract-text-webpack-plugin": "2.1.0",
-    "jsx-html-webpack-plugin": "^0.2.0",
+    "jsx-html-webpack-plugin": "^0.3.0-beta.0",
     "neutrino-middleware-banner": "5.0.1",
     "neutrino-middleware-chunk": "5.0.1",
     "neutrino-middleware-clean": "5.0.1",
