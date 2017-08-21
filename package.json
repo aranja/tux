@@ -3,6 +3,8 @@
   "license": "MIT",
   "scripts": {
     "start": "cd packages/tux-example-site && npm start",
+    "now-build": "cd packages/tux-example-site && npm run build -- --admin",
+    "now-start": "cd packages/tux-example-site && npm run serve",
     "postinstall": "npm run bootstrap",
     "lint": "tslint -c './tslint.json' -e './packages/**/node_modules/**/*' -e './packages/**/es/**/*' -e './packages/**/lib/**/*' './packages/**/*.{ts,tsx}'",
     "check-types": "TS_FAIL_ON_ERROR=true lerna run prepublish --silent",
@@ -75,6 +77,9 @@
     "typescript": "^2.4.2",
     "webpack": "^2.2.1",
     "yargs": "^6.6.0"
+  },
+  "now": {
+    "alias": "tux-example.aranja.com"
   },
   "lint-staged": {
     "*.ts": [

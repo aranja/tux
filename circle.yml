@@ -17,5 +17,5 @@ deployment:
   example:
     branch: master
     commands:
-      - URL=$(now packages/tux-example-site)
-      - now alias set ${URL} tux-example.aranja.com
+      - now
+      - now alias
