@@ -273,7 +273,7 @@ declare module 'slate' {
       constructor(options?: {
         rules?: Html.Rule[]
         defaultBlockType?: string | { type: string }
-        parseHtml?(html: string): Node
+        parseHtml?(html: string): any
       })
 
       deserialize(

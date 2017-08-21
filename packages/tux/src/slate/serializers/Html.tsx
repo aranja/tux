@@ -1,5 +1,6 @@
 import React from 'react'
 import { Block, Html as HtmlSerializer, Inline, Mark } from 'slate'
+import parse5 from 'parse5'
 
 /**
  * Tags to blocks.
@@ -128,4 +129,7 @@ const RULES: HtmlSerializer.Rule[] = [
 /**
  * Create a new HTML serializer with `RULES`.
  */
-export const Html = new HtmlSerializer({ rules: RULES })
+export const Html = new HtmlSerializer({
+  rules: RULES,
+  parseHtml: process.env.SERVER ? parse5.parseFragment : undefined,
+})
