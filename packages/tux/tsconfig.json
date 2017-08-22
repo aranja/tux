@@ -5,9 +5,5 @@
   "include": [
     "./src",
     "../../shared/types"
-  ],
-  "exclude": [
-    "./**/*.spec.ts",
-    "./**/*.spec.tsx"
   ]
 }

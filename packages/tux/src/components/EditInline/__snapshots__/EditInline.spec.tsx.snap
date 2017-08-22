@@ -1,0 +1,35 @@
+exports[`EditInlineAdmin should render html field from html model 1`] = `"<div data-slate-editor=\"true\" data-key=\"3\" contenteditable=\"false\" autocorrect=\"true\" spellcheck=\"true\" style=\"outline:none;white-space:pre-wrap;word-wrap:break-word;width:100%\" data-gramm=\"false\"><p data-key=\"2\"><span data-key=\"0\"><span data-offset-key=\"0-0\">Model </span><span data-offset-key=\"0-1\"><strong>value</strong></span></span></p></div>"`;
+
+exports[`EditInlineAdmin should render html field from raw model 1`] = `"<div data-slate-editor=\"true\" data-key=\"2\" contenteditable=\"false\" autocorrect=\"true\" spellcheck=\"true\" style=\"outline:none;white-space:pre-wrap;word-wrap:break-word;width:100%\" data-gramm=\"false\"><p data-key=\"1\"><span data-key=\"0\"><span data-offset-key=\"0-0\">Model </span><span data-offset-key=\"0-1\"><strong>value</strong></span></span></p></div>"`;
+
+exports[`EditInlineAdmin should render plain field from html model 1`] = `"<div data-slate-editor=\"true\" data-key=\"2\" contenteditable=\"false\" autocorrect=\"true\" spellcheck=\"true\" style=\"outline:none;white-space:pre-wrap;word-wrap:break-word;width:100%\" data-gramm=\"false\"><p data-key=\"1\"><span data-key=\"0\"><span data-offset-key=\"0-0\">Model &lt;strong&gt;value&lt;/strong&gt;</span></span></p></div>"`;
+
+exports[`EditInlineAdmin should render plain field from model 1`] = `"<div data-slate-editor=\"true\" data-key=\"2\" contenteditable=\"false\" autocorrect=\"true\" spellcheck=\"true\" style=\"outline:none;white-space:pre-wrap;word-wrap:break-word;width:100%\" data-gramm=\"false\"><p data-key=\"1\"><span data-key=\"0\"><span data-offset-key=\"0-0\">Model value</span></span></p></div>"`;
+
+exports[`EditInlineAdmin should render raw field from html model 1`] = `"<div data-slate-editor=\"true\" data-key=\"3\" contenteditable=\"false\" autocorrect=\"true\" spellcheck=\"true\" style=\"outline:none;white-space:pre-wrap;word-wrap:break-word;width:100%\" data-gramm=\"false\"><p data-key=\"2\"><span data-key=\"0\"><span data-offset-key=\"0-0\">Model </span><span data-offset-key=\"0-1\"><strong>value</strong></span></span></p></div>"`;
+
+exports[`EditInlineAdmin should render raw field from raw model 1`] = `"<div data-slate-editor=\"true\" data-key=\"2\" contenteditable=\"false\" autocorrect=\"true\" spellcheck=\"true\" style=\"outline:none;white-space:pre-wrap;word-wrap:break-word;width:100%\" data-gramm=\"false\"><p data-key=\"1\"><span data-key=\"0\"><span data-offset-key=\"0-0\">Model </span><span data-offset-key=\"0-1\"><strong>value</strong></span></span></p></div>"`;
+
+exports[`EditInlineAdmin should support empty value 1`] = `""`;
+
+exports[`EditInlineAdmin should support mixed fallback 1`] = `"Hello <strong>world</strong>"`;
+
+exports[`EditInlineAdmin should support string fallback 1`] = `"Foo"`;
+
+exports[`EditInlineProd should render html field from html model 1`] = `"<div data-slate-editor=\"true\" data-key=\"3\" contenteditable=\"false\" autocorrect=\"true\" spellcheck=\"true\" style=\"outline:none;white-space:pre-wrap;word-wrap:break-word;width:100%\" data-gramm=\"false\"><p data-key=\"2\"><span data-key=\"0\"><span data-offset-key=\"0-0\">Model </span><span data-offset-key=\"0-1\"><strong>value</strong></span></span></p></div>"`;
+
+exports[`EditInlineProd should render html field from raw model 1`] = `"<div data-slate-editor=\"true\" data-key=\"2\" contenteditable=\"false\" autocorrect=\"true\" spellcheck=\"true\" style=\"outline:none;white-space:pre-wrap;word-wrap:break-word;width:100%\" data-gramm=\"false\"><p data-key=\"1\"><span data-key=\"0\"><span data-offset-key=\"0-0\">Model </span><span data-offset-key=\"0-1\"><strong>value</strong></span></span></p></div>"`;
+
+exports[`EditInlineProd should render plain field from html model 1`] = `"<div data-slate-editor=\"true\" data-key=\"2\" contenteditable=\"false\" autocorrect=\"true\" spellcheck=\"true\" style=\"outline:none;white-space:pre-wrap;word-wrap:break-word;width:100%\" data-gramm=\"false\"><p data-key=\"1\"><span data-key=\"0\"><span data-offset-key=\"0-0\">Model &lt;strong&gt;value&lt;/strong&gt;</span></span></p></div>"`;
+
+exports[`EditInlineProd should render plain field from model 1`] = `"<div data-slate-editor=\"true\" data-key=\"2\" contenteditable=\"false\" autocorrect=\"true\" spellcheck=\"true\" style=\"outline:none;white-space:pre-wrap;word-wrap:break-word;width:100%\" data-gramm=\"false\"><p data-key=\"1\"><span data-key=\"0\"><span data-offset-key=\"0-0\">Model value</span></span></p></div>"`;
+
+exports[`EditInlineProd should render raw field from html model 1`] = `"<div data-slate-editor=\"true\" data-key=\"3\" contenteditable=\"false\" autocorrect=\"true\" spellcheck=\"true\" style=\"outline:none;white-space:pre-wrap;word-wrap:break-word;width:100%\" data-gramm=\"false\"><p data-key=\"2\"><span data-key=\"0\"><span data-offset-key=\"0-0\">Model </span><span data-offset-key=\"0-1\"><strong>value</strong></span></span></p></div>"`;
+
+exports[`EditInlineProd should render raw field from raw model 1`] = `"<div data-slate-editor=\"true\" data-key=\"2\" contenteditable=\"false\" autocorrect=\"true\" spellcheck=\"true\" style=\"outline:none;white-space:pre-wrap;word-wrap:break-word;width:100%\" data-gramm=\"false\"><p data-key=\"1\"><span data-key=\"0\"><span data-offset-key=\"0-0\">Model </span><span data-offset-key=\"0-1\"><strong>value</strong></span></span></p></div>"`;
+
+exports[`EditInlineProd should support empty value 1`] = `""`;
+
+exports[`EditInlineProd should support mixed fallback 1`] = `"Hello <strong>world</strong>"`;
+
+exports[`EditInlineProd should support string fallback 1`] = `"Foo"`;

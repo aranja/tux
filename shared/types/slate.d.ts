@@ -12,6 +12,8 @@ declare module 'slate' {
   type NativeNode = Node
 
   namespace Slate {
+    function resetKeyGenerator(): void
+
     // Completion 50%
     interface EditorProps {
       // Properties

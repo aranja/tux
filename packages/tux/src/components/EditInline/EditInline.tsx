@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { ReactNode, StatelessComponent } from 'react'
+import PropTypes from 'prop-types'
 import SlateRenderer from '../../slate/SlateRenderer'
 import { createEditable } from '../Editable/Editable'
 import { EditableProps } from '../../interfaces'
@@ -6,11 +7,12 @@ import { get } from '../../utils/accessors'
 import { deserialize, Format } from '../../slate/serializers'
 
 export type Props = EditableProps & {
-  field: string | Array<string>,
-  format: Format
+  children?: ReactNode
+  field: string | Array<string>
+  format?: Format
 }
 
-export default createEditable<Props>()(({ children, model, field, format }: Props) => {
+export const EditInline: StatelessComponent<Props> = ({ children, model, field, format }) => {
   const value = get(model, field)
   let state = null
   try {
@@ -30,4 +32,17 @@ export default createEditable<Props>()(({ children, model, field, format }: Prop
   } else {
     return children || null
   }
-})
+}
+
+EditInline.defaultProps = {
+  format: 'plain',
+}
+
+EditInline.propTypes = {
+  format: PropTypes.oneOf(['plain', 'html', 'raw']),
+  model: PropTypes.object,
+  field: PropTypes.string,
+  children: PropTypes.any,
+}
+
+export default createEditable<Props>()(EditInline)
