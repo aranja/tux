@@ -1,4 +1,4 @@
-import React, { ComponentType, ReactNode } from 'react'
+import React, { ComponentType, ReactElement, ReactNode } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { resetKeyGenerator } from 'slate'
 import { EditInline as EditInlineProd, Props } from './EditInline'
@@ -15,7 +15,7 @@ const describeBoth = (handler: (component: ComponentType<Props>) => void) => {
 }
 
 const staticSnapshot = (node: ReactNode) => {
-  const result = renderToStaticMarkup(node)
+  const result = renderToStaticMarkup(node as ReactElement<any>)
   expect(result).toMatchSnapshot()
 }
 

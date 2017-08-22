@@ -1,7 +1,7 @@
-import React, { ReactNode, StatelessComponent } from 'react'
+import React, { ReactElement, ReactNode, StatelessComponent } from 'react'
 import PropTypes from 'prop-types'
 import SlateRenderer from '../../slate/SlateRenderer'
-import { createEditable } from '../Editable/Editable'
+import { createEditable } from '../Editable'
 import { EditableProps } from '../../interfaces'
 import { get } from '../../utils/accessors'
 import { deserialize, Format } from '../../slate/serializers'
@@ -30,7 +30,7 @@ export const EditInline: StatelessComponent<Props> = ({ children, model, field, 
       />
     )
   } else {
-    return children || null
+    return (children as ReactElement<any>) || null
   }
 }
 

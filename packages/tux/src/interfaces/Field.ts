@@ -2,8 +2,8 @@ import { ReactType } from 'react'
 
 interface Field {
   field: string
-  label: string
-  component: ReactType
+  label?: string
+  component?: ReactType
   props?: Object
 }
 

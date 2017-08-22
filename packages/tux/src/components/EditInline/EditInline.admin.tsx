@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import deepEqual from 'deep-eql'
 import humanize from 'string-humanize'
 import SlateRenderer from '../../slate/SlateRenderer'
-import { createEditable } from '../Editable/Editable'
+import { createEditable } from '../Editable'
 import { EditableProps } from '../../interfaces'
 import { State as EditorState, Plugin } from 'slate'
 import { get, set } from '../../utils/accessors'
@@ -45,7 +45,7 @@ class EditInline extends React.Component<Props, State> {
     plugins: PropTypes.array,
   }
 
-  static defaultProps = {
+  static defaultProps: Partial<Props> = {
     format: 'plain',
   }
 
