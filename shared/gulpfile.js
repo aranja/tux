@@ -1,6 +1,5 @@
 'use strict'
 const gulp = require('gulp')
-const gutil = require('gulp-util')
 const ts = require('gulp-typescript')
 const sourcemaps = require('gulp-sourcemaps')
 const clone = require('gulp-clone')
@@ -44,11 +43,11 @@ const babel = target =>
     this.end()
   })
 
-gulp.task('clean', () => {
+const clean = () => {
   return del(['lib', 'es'])
-})
+}
 
-gulp.task('build:js', () => {
+const buildJs = () => {
   const tsResult = tsProject.src()
     .pipe(sourcemaps.init())
     .pipe(tsProject())
@@ -87,7 +86,7 @@ gulp.task('build:js', () => {
   }
 
   return merge(streams)
-})
+}
 
 /**
  * Build source files with typescript and babel.
@@ -97,12 +96,14 @@ gulp.task('build:js', () => {
  *   file.js.map - source map
  *   file.d.ts - typescript type declarations
  */
-gulp.task('build', () => {
-  return runSequence('clean', 'build:js')
+const build = gulp.series(clean, buildJs)
+
+const watch = gulp.series(build, () => {
+  gulp.watch('src/**/*.{ts,tsx}', buildJs)
 })
 
-gulp.task('watch', ['build'], () => {
-  gulp.watch('src/**/*.{ts,tsx}', ['build:js'])
-})
-
-gulp.task('default', ['build'])
+exports.clean = clean
+exports.buildJs = buildJs
+exports.build = build
+exports.watch = watch
+exports.default = build
