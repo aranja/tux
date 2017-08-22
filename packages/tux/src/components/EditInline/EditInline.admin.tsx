@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
+import PropTypes from 'prop-types'
 import { renderToStaticMarkup } from 'react-dom/server'
 import deepEqual from 'deep-eql'
 import humanize from 'string-humanize'
 import SlateRenderer from '../../slate/SlateRenderer'
-import { createEditable } from '../Editable/Editable'
+import { createEditable } from '../Editable'
 import { EditableProps } from '../../interfaces'
 import { State as EditorState, Plugin } from 'slate'
 import { get, set } from '../../utils/accessors'
@@ -11,10 +12,11 @@ import { serialize, deserialize, Format } from '../../slate/serializers'
 import { HoverToolbar, HtmlPaste, MarkShortcuts } from '../../slate/plugins'
 
 export interface Props extends EditableProps {
-  placeholder: string
+  children?: ReactNode
+  placeholder?: string
   field: string | Array<string>
-  format: Format
-  plugins: Plugin[]
+  format?: Format
+  plugins?: Plugin[]
 }
 
 export interface State {
@@ -32,6 +34,21 @@ class EditInline extends React.Component<Props, State> {
     }
   }
 
+  static propTypes = {
+    children: PropTypes.any,
+    format: PropTypes.oneOf(['plain', 'html', 'raw']),
+    field: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+    placeholder: PropTypes.string,
+    plugins: PropTypes.array,
+  }
+
+  static defaultProps: Partial<Props> = {
+    format: 'plain',
+  }
+
   getInitialEditorState() {
     const { model, field, format, children } = this.props
     const value = get(model, field)
@@ -44,14 +61,18 @@ class EditInline extends React.Component<Props, State> {
       console.error('Could not parse editor state', value, err)
     }
 
-    try {
-      if (!state && children) {
-        const html = renderToStaticMarkup(children)
-        state = deserialize(html, 'html')
+    if (!state && children) {
+      try {
+        if (typeof children === 'string') {
+          state = deserialize(children, 'plain')
+        } else if (React.isValidElement(children)) {
+          const html = renderToStaticMarkup(children)
+          state = deserialize(html, 'html')
+        }
+      } catch (err) {
+        // tslint:disable-next-line:no-console
+        console.error('Could not parse fallback content', value, err)
       }
-    } catch (err) {
-      // tslint:disable-next-line:no-console
-      console.error('Could not parse fallback content', value, err)
     }
 
     if (!state) {

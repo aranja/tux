@@ -1,6 +1,6 @@
 import React, { MouseEvent } from 'react'
 import classNames from 'classnames'
-import { createEditable } from '../Editable/Editable'
+import { createEditable } from '../Editable'
 import { EditableProps } from '../../interfaces'
 
 interface EditModalProps extends EditableProps {

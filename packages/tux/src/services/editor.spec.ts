@@ -1,4 +1,5 @@
-import { registerEditable, getEditorSchema, Field, Meta } from './editor'
+import { registerEditable, getEditorSchema } from './editor'
+import { Field } from '../interfaces'
 
 describe('editor service', () => {
   it('can register editable and receive editor schema', () => {
@@ -22,7 +23,7 @@ describe('editor service', () => {
       { field: 'fields._fieldThatShouldNotBeEditable' },
     ]
 
-    registerEditable(modelName, (schema: Map<string, Field>) => {
+    registerEditable(modelName, schema => {
       schema.delete('fields._fieldThatShouldNotBeEditable')
     })
 

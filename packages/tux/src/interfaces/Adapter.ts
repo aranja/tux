@@ -2,7 +2,7 @@ import ModelMeta from './ModelMeta'
 
 interface Adapter {
   create(model: any): Object | null
-  createAsset(): { sys: Object }
+  createAsset(): { sys: Object } | null
   createAssetFromFile(file: File, title: string): Object | null
   createAssetFromUrl(
     url: string,

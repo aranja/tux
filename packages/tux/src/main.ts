@@ -2,7 +2,7 @@ import adminOnly from './utils/adminOnly'
 const stub = () => {}
 
 export { default as TuxProvider } from './components/TuxProvider'
-export { default as Editable } from './components/Editable'
+export { default as Editable, createEditable } from './components/Editable'
 export { default as EditInline } from './components/EditInline'
 export { default as EditModal } from './components/EditModal'
 export { default as ModelCreator } from './components/ModelCreator'

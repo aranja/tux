@@ -1,5 +1,5 @@
 import React from 'react'
-import { createEditable } from './Editable'
+import createEditable from './createEditable'
 
 describe('createEditable', () => {
   it('should return a function', () => {

@@ -4,12 +4,15 @@ import ModalContainer, { openModal } from '../TuxModalContainer'
 import TuxFab from '../TuxFab'
 import TuxModal from '../TuxModal'
 import AlertBar from '../AlertBar'
+import { Adapter, TuxContext } from '../../interfaces'
 
 export interface TuxProviderProps {
-  adapter: {
-    currentUser: Function
-  }
+  adapter: Adapter
   onChange: () => {}
+}
+
+export interface TuxProviderContext {
+  tux: TuxContext
 }
 
 class TuxProvider extends Component<TuxProviderProps, any> {
@@ -38,7 +41,7 @@ class TuxProvider extends Component<TuxProviderProps, any> {
     })
   }
 
-  getChildContext() {
+  getChildContext(): TuxProviderContext {
     return {
       tux: {
         isEditing: this.state.isLoggedIn && this.state.isEditing,
@@ -69,7 +72,7 @@ class TuxProvider extends Component<TuxProviderProps, any> {
       this.props.onChange()
     }
 
-    return changed
+    return !!changed
   }
 
   onClickEdit = () => {
