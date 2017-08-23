@@ -108,6 +108,10 @@ class QueryApi {
   }
 
   private linkEntry(item: any, linkMap: LinkMap): any {
+    if (!item) {
+      return item
+    }
+
     const hasSys = !!item.sys
     const isLink = hasSys && item.sys.type === 'Link'
     const isArray = item instanceof Array
