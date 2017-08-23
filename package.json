@@ -78,9 +78,6 @@
     "webpack": "^2.2.1",
     "yargs": "^6.6.0"
   },
-  "now": {
-    "alias": "tux-example.aranja.com"
-  },
   "lint-staged": {
     "*.ts": [
       "prettier:run",

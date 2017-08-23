@@ -1,4 +1,6 @@
 machine:
+  environment:
+    TUX_CONTENTFUL_CLIENT_ID: 7074da10fd8b52237feeccead1462c5c898eaf58a69dc2df08c65b1b306553b6
   node:
     version: 8.4
 
@@ -17,5 +19,4 @@ deployment:
   example:
     branch: master
     commands:
-      - now
-      - now alias
+      - cd packages/tux-example-site; npm run build && now && now alias
