@@ -172,7 +172,7 @@ class ManagementApi {
   }
 
   getUser() {
-    return this.get('/user')
+    return this.get('/users/me')
   }
 
   getSpace() {
