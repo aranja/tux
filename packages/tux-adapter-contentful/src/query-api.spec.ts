@@ -40,6 +40,13 @@ describe('query entries', () => {
                 },
                 fields: {
                   heading: 'This is a list item with an image',
+                  missing: {
+                    sys: {
+                      type: 'Link',
+                      linkType: 'Entry',
+                      id: 'id-of-missing',
+                    },
+                  },
                   image: {
                     sys: {
                       type: 'Link',
