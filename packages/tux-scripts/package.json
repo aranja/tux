@@ -1,6 +1,6 @@
 {
   "name": "tux-scripts",
-  "version": "0.3.0-beta.0",
+  "version": "0.3.0-beta.1",
   "description": "",
   "main": "lib/index.js",
   "bin": {
@@ -30,7 +30,7 @@
     "ramda": "^0.23.0",
     "react-chain": "^0.4.0",
     "react-document": "^0.6.0",
-    "tux": "^0.3.0-beta.0",
+    "tux": "^0.3.0-beta.1",
     "yargs": "^6.6.0"
   },
   "peerDependencies": {

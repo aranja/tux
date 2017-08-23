@@ -1,6 +1,6 @@
 {
   "name": "tux",
-  "version": "0.3.0-beta.0",
+  "version": "0.3.0-beta.1",
   "description": "React app with CMS integration and SSR.",
   "bugs": {
     "url": "https://github.com/aranja/tux/issues"
