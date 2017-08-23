@@ -34,8 +34,8 @@
     "yargs": "^6.6.0"
   },
   "peerDependencies": {
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react": ">16.0.0-beta",
+    "react-dom": ">16.0.0-beta"
   },
   "jest": {
     "transform": {

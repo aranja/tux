@@ -14,8 +14,8 @@
     "react-document": "^0.6.0"
   },
   "peerDependencies": {
-    "react": "15",
-    "react-dom": "15",
+    "react": "15 || >16.0.0-beta",
+    "react-dom": "15 || >16.0.0-beta",
     "webpack": "^2"
   }
 }

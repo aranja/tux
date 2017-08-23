@@ -16,7 +16,7 @@
     "react": "^16.0.0-beta.5",
     "react-chain": "^0.4.0",
     "react-chain-helmet": "^0.4.0",
-    "react-chain-history": "^0.4.0",
+    "react-chain-history": "^0.4.1",
     "react-document": "^0.6.0",
     "react-dom": "^16.0.0-beta.5",
     "react-helmet": "^5.0.1",
