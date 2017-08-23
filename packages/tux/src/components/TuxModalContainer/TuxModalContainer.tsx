@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import CSSTransition from 'react-transition-group/CSSTransition'
+import TransitionGroup from 'react-transition-group/TransitionGroup'
 import toggleScroll from './toggle-scroll'
 import { getState, setListener, State as StoreState, Modal } from './store'
 import { decelerationCurve, sharpCurve } from '../../utils/curves'
@@ -57,19 +58,17 @@ export class ModalContainer extends React.Component<any, State> {
       <div className="ModalContainer">
         <div className={classNames('ModalContainer-overlay', hasModals && 'is-active')} />
 
-        <ReactCSSTransitionGroup
-          transitionName="ModalTransition"
-          transitionEnterTimeout={400}
-          transitionLeaveTimeout={300}
-        >
+        <TransitionGroup>
           {modals.map(({ element, id, onClose }) =>
-            <div className="ModalContainer-scroll" key={id}>
-              <div className="ModalContainer-modal" onClick={this.onClickBackdrop}>
-                {React.cloneElement(element, { onClose })}
+            <CSSTransition key={id} timeout={500} classNames="fade">
+              <div className="ModalContainer-scroll">
+                <div className="ModalContainer-modal" onClick={this.onClickBackdrop}>
+                  {React.cloneElement(element, { onClose })}
+                </div>
               </div>
-            </div>
+            </CSSTransition>
           )}
-        </ReactCSSTransitionGroup>
+        </TransitionGroup>
         <style jsx>{`
           .ModalContainer {
             position: relative;
@@ -110,20 +109,20 @@ export class ModalContainer extends React.Component<any, State> {
             min-height: 100vh;
           }
 
-          .ModalTransition-enter {
+          .fade-enter {
             transform: translateX(100%);
           }
 
-          .ModalTransition-enter-active {
+          .fade-enter-active {
             transform: translateX(0);
             transition: transform 450ms cubic-bezier(${decelerationCurve});
           }
 
-          .ModalTransition-leave {
+          .fade-exit {
             overflow: hidden;
           }
 
-          .ModalTransition-leave-active {
+          .fade-exit-active {
             transform: translateX(100%);
             transition: transform 0.4s cubic-bezier(${sharpCurve});
           }
