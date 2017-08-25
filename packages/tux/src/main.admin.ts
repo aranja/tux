@@ -15,4 +15,5 @@ export { default as TagEditor } from './components/fields/TagEditor'
 export { default as Input } from './components/fields/Input'
 
 export { registerEditable, getEditorSchema } from './services/editor'
+export { default as tuxMiddleware } from './tuxMiddleware'
 export * from './interfaces'

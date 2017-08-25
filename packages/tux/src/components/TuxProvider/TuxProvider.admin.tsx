@@ -8,7 +8,7 @@ import { Adapter, TuxContext } from '../../interfaces'
 
 export interface TuxProviderProps {
   adapter: Adapter
-  onChange: () => {}
+  onChange?(): void
 }
 
 export interface TuxProviderContext {
@@ -68,7 +68,7 @@ class TuxProvider extends Component<TuxProviderProps, any> {
     })
 
     // TODO: Make consistent for all Editable components?
-    if (changed) {
+    if (changed && this.props.onChange) {
       this.props.onChange()
     }
 

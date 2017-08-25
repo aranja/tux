@@ -1,6 +1,6 @@
 import React from 'react';
+import { tuxMiddleware as tux } from 'tux';
 import createContentfulAdapter from 'tux-adapter-contentful';
-import tux from './middleware/tux';
 import history from 'react-chain-history';
 import createReactChain from 'react-chain';
 import Home from './Home';
@@ -23,5 +23,5 @@ const adapter = createContentfulAdapter({
 
 export default createReactChain()
   .chain(history())
-  .chain(tux({adapter}))
+  .chain(tux({ adapter }))
   .chain(() => () => <Home />);

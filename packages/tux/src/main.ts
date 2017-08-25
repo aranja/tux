@@ -19,4 +19,5 @@ export const Input = adminOnly('Input')
 
 export const registerEditable = stub
 export const getEditorSchema = adminOnly('getEditorSchema')
+export { default as tuxMiddleware } from './tuxMiddleware'
 export * from './interfaces'

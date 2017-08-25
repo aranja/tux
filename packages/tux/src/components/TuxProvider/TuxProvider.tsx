@@ -4,6 +4,7 @@ import adminOnly from '../../utils/adminOnly'
 
 export interface TuxProviderProps {
   adapter: any
+  onChange?(): void
 }
 
 class TuxProvider extends Component<TuxProviderProps, any> {

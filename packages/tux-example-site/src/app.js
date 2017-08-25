@@ -1,7 +1,7 @@
 import createContentfulAdapter from 'tux-adapter-contentful'
 import routes from './routes'
 import router from './middleware/router'
-import tux from './middleware/tux'
+import { tuxMiddleware as tux } from 'tux'
 import hot from './middleware/hot'
 import history from 'react-chain-history'
 import helmet from 'react-chain-helmet'
