@@ -15,10 +15,10 @@ export default [
         carousel,
       ] = await Promise.all([
         api.getEntries({ content_type: 'page' }),
-        api.getEntries({ content_type: 'sellPoint' }),
+        api.getEntries({ content_type: 'sellPoint', order: 'sys.createdAt' }),
         api.getEntries({ content_type: 'priceTable', order: 'sys.createdAt' }),
-        api.getEntries({ content_type: 'testimony' }),
-        api.getEntries({ content_type: 'carousel' }),
+        api.getEntries({ content_type: 'testimony', order: '-sys.createdAt' }),
+        api.getEntries({ content_type: 'carousel', order: 'sys.createdAt' }),
       ])
 
       const content = pages.items.find(
@@ -39,18 +39,9 @@ export default [
   {
     path: '/about',
     async action({ context: { api } }) {
-      const [
-        pages,
-        sellPoints,
-        gallery,
-        testimonial,
-        pricetable,
-        articles,
-      ] = await Promise.all([
+      const [pages, gallery, pricetable, articles] = await Promise.all([
         api.getEntries({ content_type: 'page' }),
-        api.getEntries({ content_type: 'sellPoint' }),
-        api.getEntries({ content_type: 'gallery' }),
-        api.getEntries({ content_type: 'testimony' }),
+        api.getEntries({ content_type: 'gallery', order: '-sys.createdAt' }),
         api.getEntries({ content_type: 'priceTable', order: 'sys.createdAt' }),
         api.getEntries({ content_type: 'article', order: '-sys.createdAt' }),
       ])
@@ -62,9 +53,7 @@ export default [
       return (
         <About
           content={content}
-          sellPoints={sellPoints}
           gallery={gallery}
-          testimonial={testimonial}
           pricetable={pricetable}
           articles={articles}
         />
