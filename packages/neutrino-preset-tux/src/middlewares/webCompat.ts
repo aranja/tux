@@ -5,8 +5,8 @@ export default ({ config }: Neutrino) => {
   // Disable dev server.
   config.devServer.clear()
 
-  // Remove browser entry point.
-  config.entryPoints.delete('index')
+  // Remove browser entry points.
+  config.entryPoints.delete('index').delete('polyfill')
 
   // Disable style, url and file loaders.
   const rules = config.module.rules
@@ -25,9 +25,9 @@ export default ({ config }: Neutrino) => {
 
   // Disable plugins which are not useful in node.js.
   config.plugins
-    .delete('chunk')
+    .delete('vendor-chunk')
+    .delete('runtime-chunk')
     .delete('html')
-    .delete('hot')
     .delete('copy')
     .delete('minify')
     .delete('manifest')

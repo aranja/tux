@@ -1,4 +1,4 @@
-import { Neutrino } from 'neutrino'
+import { Neutrino, build } from 'neutrino'
 import { EnvironmentPlugin } from 'webpack'
 import { tmpdir } from 'os'
 
@@ -31,6 +31,7 @@ function tuxPreset(neutrino, target) {
     .output.path(neutrino.options.output)
     .libraryTarget('commonjs2')
     .end()
+  console.log(target)
 }
 
 export default function bundleTux(target) {
@@ -40,14 +41,14 @@ export default function bundleTux(target) {
 
   // Depending on the commonjs build, to avoid complicated typescript or babel config.
   const neutrino = new Neutrino({
-    build: output,
+    output,
     source: 'lib',
   })
-  neutrino.use(tuxPreset, target)
+  neutrino.register('build', build)
 
   // Build and load!
   return neutrino
-    .run('build')
+    .run('build', [[tuxPreset, target]])
     .promise()
     .then(() => require(`${output}/${target}`))
 }

@@ -25,7 +25,6 @@ class Carousel extends React.Component {
         {carouselItems &&
           carouselItems.map((item, index) => {
             const isActive = index === this.state.currentIndex
-
             return (
               <EditModal
                 className={classNames('Carousel-item', isActive && 'is-active')}

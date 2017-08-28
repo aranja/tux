@@ -1,12 +1,8 @@
 import Server from '../server'
-import { CliOptions } from '../options'
+import { Args } from '../options'
 
-export default async (options: CliOptions, buildPath: string) => {
-  const { port, host } = options
-
+export default async (options: Args, buildPath: string) => {
   new Server({
     buildPath,
-    port,
-    host,
   })
 }

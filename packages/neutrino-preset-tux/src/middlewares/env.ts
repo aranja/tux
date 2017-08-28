@@ -2,15 +2,11 @@ import { Neutrino } from 'neutrino'
 import env from 'neutrino-middleware-env'
 import { DefinePlugin } from 'webpack'
 
-export default (neutrino: Neutrino, target: string) => {
+export default (neutrino: Neutrino, options: any) => {
   // Add environment variables to bundle.
-  if (neutrino.options.tux.admin != null) {
-    process.env.ADMIN = neutrino.options.tux.admin ? 'true' : ''
-  } else if (!process.env.hasOwnProperty('ADMIN')) {
-    process.env.ADMIN = process.env.NODE_ENV !== 'production' ? 'true' : ''
-  }
+  process.env.ADMIN = options.tux.admin ? 'true' : ''
   neutrino.use(env, ['ADMIN', ...getTuxEnv()])
-  neutrino.use(targetEnv, target)
+  neutrino.use(targetEnv, neutrino.options.target)
 
   // Prioritize `source.admin.js` over `source.js` in admin builds.
   if (process.env.ADMIN) {
@@ -37,7 +33,7 @@ function targetEnv({ config }: Neutrino, target: string) {
   config.plugin('target-env').use(DefinePlugin, [
     {
       [`process.env.SERVER`]: target === 'server' ? '"true"' : '""',
-      [`process.env.BROWSER`]: target === 'browser' ? '"true"' : '""',
+      [`process.env.BROWSER`]: target !== 'server' ? '"true"' : '""',
     },
   ])
 }

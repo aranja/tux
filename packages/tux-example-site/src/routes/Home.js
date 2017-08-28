@@ -11,7 +11,6 @@ import Carousel from '../components/Carousel'
 import Testimonial from '../components/Testimonial'
 import TwitterFeed from '../components/TwitterFeed'
 import Newsletter from '../components/Newsletter'
-import Pricetable from '../components/Pricetable'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 

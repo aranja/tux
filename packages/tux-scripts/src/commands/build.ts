@@ -1,16 +1,30 @@
 import ora from 'ora'
+import merge from 'deepmerge'
 import { Stats } from 'webpack'
 import { run } from '../compiler'
-import { CliOptions } from '../options'
+import { Args } from '../options'
 
-export default async (options: CliOptions) => {
-  const { ssr = true, admin = !!process.env.ADMIN, use } = options
-  process.env.NODE_ENV = options.env || process.env.NODE_ENV || 'production'
+export default async (args: Args) => {
+  args = merge<Args>(
+    {
+      ssr: args.ssr != null ? args.ssr : true,
+      options: {
+        tux: {
+          admin: false,
+        },
+        env: {
+          NODE_ENV: process.env.NODE_ENV || 'production',
+        },
+      },
+      middleware: [],
+    },
+    args
+  )
 
   const spinner = ora('Building project').start()
   let result
   try {
-    result = (await run('build', { ssr, admin, use })) as Stats[]
+    result = (await run('build', args)) as Stats[]
   } catch (err) {
     spinner.fail('Building project failed')
     throw err
