@@ -32,6 +32,8 @@
     "neutrino-middleware-minify": "5.0.1",
     "neutrino-middleware-named-modules": "5.0.1",
     "neutrino-middleware-style-loader": "5.0.1",
+    "react-dev-utils": "~3.1.1",
+    "react-error-overlay": "^1.0.10",
     "react-hot-loader": "^3.0.0-beta.6",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.2",
