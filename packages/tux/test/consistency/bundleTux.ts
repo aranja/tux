@@ -31,7 +31,6 @@ function tuxPreset(neutrino, target) {
     .output.path(neutrino.options.output)
     .libraryTarget('commonjs2')
     .end()
-  console.log(target)
 }
 
 export default function bundleTux(target) {
