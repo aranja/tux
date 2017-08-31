@@ -1,6 +1,6 @@
 {
   "name": "tux-example-site",
-  "version": "0.3.0-beta.3",
+  "version": "0.3.0",
   "private": true,
   "license": "MIT",
   "devDependencies": {
@@ -11,7 +11,7 @@
     "classnames": "^2.2.5",
     "history": "^4.5.1",
     "neutrino": "6.1.5",
-    "neutrino-preset-tux": "^0.3.0-beta.3",
+    "neutrino-preset-tux": "^0.3.0",
     "pretty-error": "^2.0.2",
     "react": "^16.0.0-beta.5",
     "react-chain": "^0.4.3",
@@ -21,9 +21,9 @@
     "react-dom": "^16.0.0-beta.5",
     "react-helmet": "^5.0.1",
     "source-map-support": "^0.4.14",
-    "tux": "^0.3.0-beta.3",
-    "tux-adapter-contentful": "^0.3.0-beta.3",
-    "tux-scripts": "^0.3.0-beta.3",
+    "tux": "^0.3.0",
+    "tux-adapter-contentful": "^0.3.0",
+    "tux-scripts": "^0.3.0",
     "universal-router": "^2.0.0",
     "whatwg-fetch": "^2.0.3"
   },
