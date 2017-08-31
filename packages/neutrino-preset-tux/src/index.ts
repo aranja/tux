@@ -62,7 +62,10 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
           })
       }
     )
-    .when(neutrino.options.target === 'server', () =>
-      neutrino.use(ssr, options)
-    )
+
+  // Wait until all presets and middlewares have run before
+  // adapting the config for SSR.
+  if (neutrino.options.target === 'server') {
+    neutrino.on('prerun', () => neutrino.use(ssr, options))
+  }
 }

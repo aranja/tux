@@ -7,6 +7,10 @@
     "prepublish": "NODE_ENV=production TARGET=commonjs ../../tasks/build-package.js",
     "watch": "TARGET=commonjs ../../tasks/build-package.js --watch"
   },
+  "files": [
+    "lib",
+    "index.js"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
