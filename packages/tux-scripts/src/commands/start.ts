@@ -15,11 +15,9 @@ export default async (args: Args) => {
     {
       ssr: args.ssr != null ? args.ssr : false,
       options: {
-        devServer: {
-          port: parseInt(process.env.PORT, 10) || 5000,
-          host: process.env.HOST || '0.0.0.0',
-          https: process.env.HTTPS === 'true',
-        },
+        port: parseInt(process.env.PORT, 10) || 5000,
+        host: process.env.HOST || '0.0.0.0',
+        https: process.env.HTTPS === 'true',
         tux: {
           admin: true,
         },
@@ -32,7 +30,8 @@ export default async (args: Args) => {
     args
   )
 
-  if (!await fixPort(args)) {
+  await fixPort(args)
+  if (args.options.port == null) {
     return
   }
 
@@ -124,10 +123,6 @@ export default async (args: Args) => {
   })
 }
 
-async function fixPort({ options: { devServer } }: Args) {
-  if (!devServer) {
-    return false
-  }
-  devServer.port = await choosePort(devServer.host, devServer.port)
-  return devServer.port != null
+async function fixPort({ options }: Args) {
+  options.port = await choosePort(options.host, options.port)
 }

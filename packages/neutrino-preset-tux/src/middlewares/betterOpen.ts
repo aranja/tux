@@ -1,4 +1,5 @@
 import { Neutrino } from 'neutrino'
+import merge from 'deepmerge'
 import openBrowser from 'react-dev-utils/openBrowser'
 import { Options } from '../Options'
 
@@ -17,8 +18,17 @@ const getPublic = (neutrino: Neutrino, { devServer: options }: Options) => {
 }
 
 export default (neutrino: Neutrino, opts: Options) => {
+  const options = merge.all<any>([
+    {
+      port: 5000,
+      https: false,
+    },
+    opts.devServer,
+    neutrino.options.port ? { port: neutrino.options.port } : {},
+    neutrino.options.https ? { https: neutrino.options.https } : {},
+  ])
   const publicHost = getPublic(neutrino, opts)
-  const protocol = opts.devServer.https ? 'https' : 'http'
-  const url = `${protocol}://${publicHost}:${opts.devServer.port}`
+  const protocol = options.https ? 'https' : 'http'
+  const url = `${protocol}://${publicHost}:${options.port}`
   neutrino.on('start', () => openBrowser(url))
 }

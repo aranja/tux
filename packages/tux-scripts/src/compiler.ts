@@ -1,7 +1,7 @@
 import { Neutrino, build, start, test, inspect } from 'neutrino'
 import merge from 'deepmerge'
 import { pathOr } from 'ramda'
-import { Args } from './options'
+import { Args, Options } from './options'
 
 type Command = 'inspect' | 'build' | 'start' | 'test'
 type Target = 'browser' | 'server'
@@ -30,7 +30,7 @@ function runNeutrino(command: Command, args: Args, target: Target) {
 }
 
 function getOptions(args: Args, target: Target) {
-  return merge<Object>(
+  return merge<Options>(
     {
       entry: target === 'browser' ? 'index' : 'app',
       output: target === 'browser' ? 'build/static' : 'build/ssr',

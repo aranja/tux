@@ -9,11 +9,9 @@ export default async (args: Args) => {
     {
       ssr: args.ssr != null ? args.ssr : false,
       options: {
-        devServer: {
-          port: parseInt(process.env.PORT, 10) || 5000,
-          host: process.env.HOST || '0.0.0.0',
-          https: process.env.HTTPS === 'true',
-        },
+        port: parseInt(process.env.PORT, 10) || 5000,
+        host: process.env.HOST || '0.0.0.0',
+        https: process.env.HTTPS === 'true',
         tux: {
           admin: true,
         },
