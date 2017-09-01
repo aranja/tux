@@ -48,10 +48,13 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
   // Add more environment variables.
   neutrino.use(env, options)
 
-  neutrino.config// Neutrino defaults to relative paths './'. Tux is optimized for SPAs, where apsolute paths
-  // are a better default.
-  .output
-    .publicPath('/')
+  // prettier-ignore
+  neutrino.config
+    // Neutrino defaults to relative paths './'. Tux is optimized for SPAs, where apsolute paths
+    // are a better default.
+    .output
+      .publicPath('/')
+      .end()
     // Use a better open utility.
     .when(options.devServer.open, () => neutrino.use(betterOpen, options))
     .when(
