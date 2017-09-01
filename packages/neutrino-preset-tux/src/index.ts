@@ -36,20 +36,32 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
     },
     opts as Options
   )
+  // This preset depends on a target option, let's give it a default.
   neutrino.options.target = neutrino.options.target || 'browser'
 
+  // Build on top of the offical react preset (overriding open functionality).
   neutrino.use(react, merge<any>(options, { devServer: { open: false } }))
+
+  // Switch to custom html plugin.
   neutrino.use(html, options.html)
+
+  // Add more environment variables.
   neutrino.use(env, options)
 
-  neutrino.config
+  neutrino.config// Neutrino defaults to relative paths './'. Tux is optimized for SPAs, where apsolute paths
+  // are a better default.
+  .output
+    .publicPath('/')
+    // Use a better open utility.
     .when(options.devServer.open, () => neutrino.use(betterOpen, options))
     .when(
       process.env.NODE_ENV === 'production',
+      // Extract and minify stylesheets in production.
       () => {
         neutrino.use(extractStyle)
         neutrino.use(minifyStyle)
       },
+      // Add better error handling in development.
       config => {
         config
           .entry('index')
