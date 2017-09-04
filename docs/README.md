@@ -23,7 +23,11 @@ npm start
 
 Then open [http://localhost:5000/](http://localhost:5000/) to see your app.
 
-When you'
+When you're ready to deploy to production, run `npm run build` to build production bundles, then `npm run serve` to serve those bundles. If you don't need SSR, you can ship `build/static` to your favorite HTTP server.
+
+### What you get
+
+
 
 ## Documentation
 

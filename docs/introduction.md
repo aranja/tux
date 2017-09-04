@@ -8,7 +8,7 @@ There are three parts to creating a great content-driven website with React and 
 
 ## Build setup
 
-Tux uses [Webpack](https://webpack.js.org/) to bundle your website for the browser as well as server rendering. Configuration is done with [Neutrino](https://neutrino.js.org/). 
+Tux uses [Webpack](https://webpack.js.org/) to bundle your website for the browser as well as server rendering. Configuration is done with [Neutrino](https://neutrino.js.org/).
 
 The default Tux preset builds on top of the official [Web](https://neutrino.js.org/presets/neutrino-preset-web/), [React](https://neutrino.js.org/presets/neutrino-preset-react/) and [Node](https://neutrino.js.org/presets/neutrino-preset-node/) presets, who's features are repeated here for your convenience:
 
@@ -25,20 +25,17 @@ On top of this, Tux adds:
 * Environment variables to detect BROWSER, SERVER and ADMIN builds and remove unused code.
 * Automatic creation of HTML pages using a [React Document](https://www.npmjs.com/package/react-document) component.
 
-Tux supports additional Neutrino presets in package.json.
+Tux supports additional Neutrino presets in `.neutrinorc.js`.
 
 ```json
-{
-  "neutrino": {
-    "use": [
-      "neutrino-preset-something"
-    ]
-  }
+module.exports = {
+  use: [
+    "tux/neutrino",
+    "tux-admin/neutrino",
+    "tux-something/neutrino",
+  ],
 }
 ```
-
-**Note:** Tux does not currently support Neutrino configuration in package.json. Check out [the issue](https://github.com/aranja/tux/issues/104) for information and progress.
-
 
 ## Rendering
 
