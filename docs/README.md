@@ -96,10 +96,8 @@ If the add-on provides a build middleware, then add it to `.neutrinorc.js`.
 ```javascript
 module.exports = {
   use: [
-    "neutrino-preset-airbnb",
     ["tux/neutrino", {}],
-    "tux-addon-react-router-web/neutrino",
-
+    "tux-addon-styled-components/neutrino",
   ],
 }
 ```
