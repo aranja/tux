@@ -72,7 +72,7 @@ Add-ons serve to integrate different tools and libraries into Tux. Each add-on h
 Use npm to install the add-on as well as any peer dependencies.
 
 ```bash
-npm install --save @tux/styled-components styled-components
+npm install --save tux-addon-styled-components styled-components
 ```
 
 ### 2. Add rendering middleware
@@ -81,7 +81,7 @@ If the add-on provides a rendering middleware, then add it to `src/app.js`. The 
 
 ```javascript
 import { createApp } from 'tux'
-import styledComponents from '@tux/styled-components'
+import styledComponents from 'tux-addon-styled-components'
 
 export default createApp()
     .chain(styledComponents())
@@ -96,8 +96,10 @@ If the add-on provides a build middleware, then add it to `.neutrinorc.js`.
 ```javascript
 module.exports = {
   use: [
+    "neutrino-preset-airbnb",
     ["tux/neutrino", {}],
-    "@tux/styled-components/neutrino",
+    "tux-addon-react-router-web/neutrino",
+
   ],
 }
 ```
