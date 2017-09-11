@@ -4,19 +4,20 @@ export interface Config {
   space: string
   accessToken: string
   host: string
-  clientId: string
+  applicationUid: string
+  clientId: string // Deprecated
   redirectUri: string
 }
 
 export default class BaseAdapter {
   deliveryApi: QueryApi
   space: string
-  clientId: string
+  applicationUid: string
   redirectUri: string
 
   constructor(config: Config) {
     this.space = config.space
-    this.clientId = config.clientId
+    this.applicationUid = config.applicationUid || config.clientId
     this.redirectUri = config.redirectUri
     this.deliveryApi = QueryApi.create(
       config.space,
