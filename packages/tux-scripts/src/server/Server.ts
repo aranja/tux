@@ -15,7 +15,7 @@ class Server {
   constructor(options: Partial<ServerOptions>) {
     this.options = {
       port: options.port || process.env.PORT || 5000,
-      host: options.host || 'localhost',
+      host: options.host || '0.0.0.0',
       buildPath: options.buildPath || join(process.cwd(), 'build'),
     }
     this.app = express()
