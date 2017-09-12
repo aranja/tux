@@ -14,17 +14,17 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "babel-plugin-dynamic-import-node": "1.0.1",
+    "babel-plugin-dynamic-import-node": "^1.0.1",
     "deepmerge": "^1.5.1",
-    "extract-text-webpack-plugin": "2.1.0",
+    "extract-text-webpack-plugin": "^2.1.0",
     "jsx-html-webpack-plugin": "^0.3.0",
-    "neutrino-middleware-banner": "6.1.5",
-    "neutrino-middleware-compile-loader": "6.1.5",
+    "neutrino-middleware-banner": "^6.1.5",
+    "neutrino-middleware-compile-loader": "^6.1.5",
     "neutrino-middleware-env": "^6.1.5",
     "neutrino-preset-react": "6.1.5",
     "react-dev-utils": "~3.1.1",
     "react-error-overlay": "^1.0.10",
-    "webpack": "^3.5.5",
+    "webpack": "^2.6.1",
     "webpack-node-externals": "^1.5.4"
   },
   "peerDependencies": {
