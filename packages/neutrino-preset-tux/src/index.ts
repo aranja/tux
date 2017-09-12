@@ -5,14 +5,15 @@ import {
   env,
   ssr,
   betterOpen,
+  betterDev,
   extractStyle,
   html,
   minifyStyle,
 } from './middlewares'
-import { removeEntryPoints } from './utils'
 import { Options } from './Options'
 
 export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
+  const isProd = process.env.NODE_ENV === 'production'
   const options = merge<Options>(
     {
       devServer: {
@@ -57,26 +58,13 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
       .end()
     // Use a better open utility.
     .when(options.devServer.open, () => neutrino.use(betterOpen, options))
-    .when(
-      process.env.NODE_ENV === 'production',
-      // Extract and minify stylesheets in production.
-      () => {
-        neutrino.use(extractStyle)
-        neutrino.use(minifyStyle)
-      },
-      // Add better error handling in development.
-      config => {
-        config
-          .entry('index')
-          .prepend(require.resolve('react-error-overlay'))
-          .when(options.hot, entry => {
-            removeEntryPoints(entry, /dev-server/)
-            entry.prepend(
-              require.resolve('react-dev-utils/webpackHotDevClient')
-            )
-          })
-      }
-    )
+    .when(isProd, () => {
+      neutrino.use(extractStyle)
+      neutrino.use(minifyStyle)
+    })
+    .when(!isProd, () => {
+      neutrino.use(betterDev, options)
+    })
 
   // Wait until all presets and middlewares have run before
   // adapting the config for SSR.
