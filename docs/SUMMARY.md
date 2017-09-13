@@ -7,5 +7,5 @@
 * [React router](react-router.md)
 * [Introduction](introduction.md)
 * [Contributing](contributing.md)
-* * [Code of Conduct](../code-of-conduct.md)
+    * [Code of Conduct](../code-of-conduct.md)
 
