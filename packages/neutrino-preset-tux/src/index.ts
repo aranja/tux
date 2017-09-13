@@ -51,17 +51,32 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
 
   // prettier-ignore
   neutrino.config
-    // Neutrino defaults to relative paths './'. Tux is optimized for SPAs, where apsolute paths
+    // Neutrino defaults to relative paths './'. Tux is optimized for SPAs, where absolute paths
     // are a better default.
     .output
       .publicPath('/')
       .end()
+
+    // Fix svg imports: https://github.com/mozilla-neutrino/neutrino-dev/issues/272
+    .module
+      .rule('svg')
+        .use('url')
+          .loader(require.resolve('file-loader'))
+          .options({ limit: 8192 })
+          .end()
+        .end()
+      .end()
+
     // Use a better open utility.
     .when(options.devServer.open, () => neutrino.use(betterOpen, options))
+
+    // Extract and minify css in production.
     .when(isProd, () => {
       neutrino.use(extractStyle)
       neutrino.use(minifyStyle)
     })
+
+    // Add goodies from create-react-app project.
     .when(!isProd, () => {
       neutrino.use(betterDev, options)
     })
