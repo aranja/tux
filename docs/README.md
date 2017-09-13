@@ -102,7 +102,7 @@ module.exports = {
 }
 ```
 
-These are Neutrino middlewares that modify the webpack config. They can customize the build for different environments, e.g. dev/prod and browser/server.
+These are Neutrino middlewares that modify the webpack config. They customize the build for different environments, e.g. dev vs prod and browser vs server.
 
 ## Documentation
 
