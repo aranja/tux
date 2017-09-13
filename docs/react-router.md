@@ -1,8 +1,8 @@
 # Tux React Router Add-on
 
-[![](https://img.shields.io/npm/v/tux-addon-react-router-web.svg)](https://npmjs.org/package/tux-addon-react-router-web) [![](https://img.shields.io/npm/dt/tux-addon-react-router-web.svg)](https://npmjs.org/package/tux-addon-react-router-web)
+[![](https://img.shields.io/npm/v/tux-addon-react-router.svg)](https://npmjs.org/package/tux-addon-react-router) [![](https://img.shields.io/npm/dt/tux-addon-react-router.svg)](https://npmjs.org/package/tux-addon-react-router)
 
-`tux-addon-react-router` is a Tux add-on for integrating \[React Router v4\]\[peer-url\].
+`tux-addon-react-router` is a Tux add-on for integrating [React Router v4](https://reacttraining.com/react-router/).
 
 ## Requirements
 
@@ -69,5 +69,4 @@ There's no build middleware in this add-on. That's it!
 
 This add-on is part of the [tux](https://github.com/aranja/tux) monorepo. Follow the [contributing guide](/contributing.md) for details.
 
-\[peer-url\]: [https://reacttraining.com/react-router/](https://reacttraining.com/react-router/)
-
+[peer-url]: [https://reacttraining.com/react-router/](https://reacttraining.com/react-router/)
