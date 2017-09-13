@@ -26,19 +26,17 @@
 ❯ npm install --save tux-addon-react-router react-router-dom@4
 ```
 
-## Render middleware
+### Render middleware
 
-`tux-addon-react-router` has a render middleware that wraps the app in `BrowserRouter` and `StaticRouter`, in the browser and the server respectively.  Require this package and plug it into the Tux app:
+`tux-addon-react-router` has a render middleware that wraps the app in `BrowserRouter` and `StaticRouter`, in the browser and the server respectively.  Require this package and plug it into `src/app.js`:
 
 ```js
-import { createApp } from 'tux'
 import router from 'tux-addon-react-router'
 
-const app = createApp()
 app.use(router())
-
-export default app
 ```
+
+The order does not matter but usually the router is right before the App component.
 
 ```js
 // Passing props to the Router.
@@ -59,11 +57,27 @@ app.use(router({
 })
 ```
 
-All options except `browserRouter` and `serverRouter` are passed as props to the routers. See the [react-router-dom docs](https://reacttraining.com/react-router/web) docs for more details.
+#### browserRouter: ReactType
 
-## Build middleware
+The router component which should be used in the browser.
 
-There's no build middleware in this add-on. That's it!
+#### serverRouter: ReactType
+
+The router component which should be used on the server.
+
+#### ...props: any
+
+All options except browserRouter and serverRouter are passed as props to the routers. See the [react-router-dom docs](https://reacttraining.com/react-router/web) docs for more details.
+
+### Build middleware
+
+There's no build middleware in this add-on.
+
+## Usage
+
+That's it! Just use React Router like normal.
+
+On the server, if you set `context.status` and `context.url` (eg using `<Redirect />`), the response will be updated with a status code and a redirect respectively.
 
 ## Contributing
 

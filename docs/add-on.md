@@ -1,6 +1,8 @@
 # Add-ons
 
-Add-ons serve to integrate different tools and libraries into Tux. Each add-on has specific instructions, but usually they amount to these steps:
+Add-ons serve to integrate different tools and libraries into Tux. They provide build and render middlewares, which tux feeds into Neutrino and React Chain respectively.
+
+Each add-on has specific instructions, but usually they amount to these steps:
 
 ### 1. Install
 
