@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, ReactElement } from 'react'
 import PropTypes from 'prop-types'
 import { renderToStaticMarkup } from 'react-dom/server'
 import deepEqual from 'deep-eql'
@@ -14,14 +14,18 @@ import { HoverToolbar, HtmlPaste, MarkShortcuts } from '../../slate/plugins'
 export interface Props extends EditableProps {
   children?: ReactNode
   placeholder?: string
+  defaultValue?: string
   field: string | Array<string>
   format?: Format
   plugins?: Plugin[]
+  render?: (options: { isEditing: boolean, value: any, renderer: ReactElement<any> }) => Element
+  value?: any
 }
 
 export interface State {
   editorState: EditorState
   plugins: Plugin[]
+  value: any
 }
 
 class EditInline extends React.Component<Props, State> {
@@ -30,7 +34,8 @@ class EditInline extends React.Component<Props, State> {
 
     this.state = {
       editorState: this.getInitialEditorState(),
-      plugins: props.plugins || this.getDefaultPlugins()
+      plugins: props.plugins || this.getDefaultPlugins(),
+      value: get(props.model, props.field),
     }
   }
 
@@ -53,7 +58,7 @@ class EditInline extends React.Component<Props, State> {
     const { model, field, format, children } = this.props
     const value = get(model, field)
     let state: EditorState | null = null
-
+    
     try {
       state = deserialize(value, format)
     } catch (err) {
@@ -117,6 +122,7 @@ class EditInline extends React.Component<Props, State> {
     const fullModel = await tux.adapter.load(model)
     set(fullModel, field, newValue)
     await tux.adapter.save(fullModel)
+    this.setState({ value: newValue })
   }
 
   onChange = async (editorState: EditorState) => {
@@ -132,25 +138,33 @@ class EditInline extends React.Component<Props, State> {
     const {
       isEditing,
       placeholder,
+      render,
+      format,
     } = this.props
+
     const {
       editorState,
       plugins,
+      value,
     } = this.state
 
-    if (!isEditing && !editorState.document.length) {
-      return null
+    let renderer = (
+      <SlateRenderer
+        state={editorState}
+        onChange={this.onChange}
+        readOnly={!isEditing}
+        placeholder={placeholder || this.defaultPlaceholder()}
+        plugins={plugins}
+      />
+    )
+
+    if (render && typeof render === 'function') {
+      renderer = render({ value, renderer, isEditing })
     }
 
     return (
       <div className={`EditInline${isEditing ? ' is-editing' : ''}`}>
-        <SlateRenderer
-          state={editorState}
-          onChange={this.onChange}
-          readOnly={!isEditing}
-          placeholder={placeholder || this.defaultPlaceholder()}
-          plugins={plugins}
-        />
+        {renderer}
         <style jsx>{`
           .EditInline.is-editing:hover {
             cursor: text;
