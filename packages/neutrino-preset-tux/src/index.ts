@@ -30,9 +30,6 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
       polyfills: {
         async: true,
       },
-      tux: {
-        admin: process.env.NODE_ENV !== 'production',
-      },
       html: {},
     },
     opts as Options

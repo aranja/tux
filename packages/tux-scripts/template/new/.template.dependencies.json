@@ -1,9 +1,6 @@
 {
   "dependencies": {
     "react": "^16.0.0-beta.5",
-    "react-chain": "^0.4.3",
-    "react-chain-history": "^0.4.3",
-    "react-document": "^0.7.0",
     "react-dom": "^16.0.0-beta.5"
   }
 }

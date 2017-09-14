@@ -1,8 +1,7 @@
 import React from 'react';
-import { tuxMiddleware as tux } from 'tux';
+import { createApp } from 'tux';
+import admin from 'tux-addon-admin';
 import createContentfulAdapter from 'tux-adapter-contentful';
-import history from 'react-chain-history';
-import createReactChain from 'react-chain';
 import Home from './Home';
 
 import './index.css';
@@ -22,7 +21,8 @@ const adapter = createContentfulAdapter({
   redirectUri: publicUrl,
 });
 
-export default createReactChain()
-  .chain(history())
-  .chain(tux({ adapter }))
-  .chain(() => () => <Home />);
+const app = createApp();
+app.use(admin({ adapter }))
+app.use(<Home />);
+
+export default app

@@ -13,8 +13,5 @@ export interface Options {
   polyfills: {
     async: boolean
   }
-  tux: {
-    admin: boolean
-  }
   html: {}
 }
