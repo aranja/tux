@@ -18,7 +18,7 @@ export interface Props extends EditableProps {
   field: string | Array<string>
   format?: Format
   plugins?: Plugin[]
-  render?: (options: { isEditing: boolean, value: any, renderer: ReactElement<any> }) => Element
+  render?: (options: { isEditing: boolean, value: any, renderer: ReactElement<any> }) => ReactElement<any>
   value?: any
 }
 
