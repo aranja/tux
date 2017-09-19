@@ -2,6 +2,8 @@
 
 Thank you for your interest in contributing to Tux! We are still working on this guide, but please stick around and reach out to us in the issues or on Twitter if you have any questions.
 
+Before contributing, please read our [code of conduct](CODE_OF_CONDUCT.md).
+
 ## Getting started
 
 Here's a way to quickly get started working in the repo.
