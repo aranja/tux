@@ -8,7 +8,7 @@ If your website is fetching content from an api-driven CMS like Contentful, Tux 
 
 > **Note:** Tux is in active development and the API is subject to change drastically before it hits version `1.0.0`.
 
-[![CircleCI branch](https://img.shields.io/circleci/project/github/aranja/tux/master.svg)](https://circleci.com/gh/aranja/tux) [![npm](https://img.shields.io/npm/v/tux.svg)](https://www.npmjs.com/package/tux) [![Slack channel](https://img.shields.io/badge/slack-%23tux %40 jsis-61dafb.svg)](http://jsis-slackin.herokuapp.com/)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/aranja/tux/master.svg)](https://circleci.com/gh/aranja/tux) [![npm](https://img.shields.io/npm/v/tux.svg)](https://www.npmjs.com/package/tux) [![Slack channel](https://img.shields.io/badge/slack-%23tux%40jsis-61dafb.svg)](http://jsis-slackin.herokuapp.com/)
 
 ## Quick start
 
