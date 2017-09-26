@@ -1,4 +1,6 @@
 export interface Options {
+  browserEntry?: string
+  serverEntry?: string
   entry?: string
   output?: string
   target?: string

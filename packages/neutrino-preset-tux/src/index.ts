@@ -34,8 +34,16 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
     },
     opts as Options
   )
+
   // This preset depends on a target option, let's give it a default.
   neutrino.options.target = neutrino.options.target || 'browser'
+  const isServer = neutrino.options.target === 'server'
+
+  // Replace entry based on target.
+  neutrino.options.appEntry = neutrino.options.entry
+  neutrino.options.entry = isServer
+    ? neutrino.options.serverEntry
+    : neutrino.options.browserEntry
 
   // Build on top of the offical react preset (overriding open functionality).
   neutrino.use(react, merge<any>(options, { devServer: { open: false } }))
@@ -80,7 +88,7 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
 
   // Wait until all presets and middlewares have run before
   // adapting the config for SSR.
-  if (neutrino.options.target === 'server') {
+  if (isServer) {
     neutrino.on('prerun', () => neutrino.use(ssr, options))
   }
 }

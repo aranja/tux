@@ -32,7 +32,9 @@ function runNeutrino(command: Command, args: Args, target: Target) {
 function getOptions(args: Args, target: Target) {
   return merge<Options>(
     {
-      entry: target === 'browser' ? 'index' : 'app',
+      browserEntry: require.resolve('./entry-points/browser'),
+      serverEntry: require.resolve('./entry-points/server'),
+      entry: 'app',
       output: target === 'browser' ? 'build/static' : 'build/ssr',
       target: target,
       port: 5000,

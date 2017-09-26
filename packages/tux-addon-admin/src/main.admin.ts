@@ -1,3 +1,4 @@
+export { default } from './tuxMiddleware'
 export { default as TuxProvider } from './components/TuxProvider'
 export { default as Editable, createEditable } from './components/Editable'
 export { default as EditInline } from './components/EditInline'
@@ -15,5 +16,4 @@ export { default as TagEditor } from './components/fields/TagEditor'
 export { default as Input } from './components/fields/Input'
 
 export { registerEditable, getEditorSchema } from './services/editor'
-export { default as tuxMiddleware } from './tuxMiddleware'
 export * from './interfaces'

@@ -1,6 +1,7 @@
 import adminOnly from './utils/adminOnly'
 const stub = () => {}
 
+export { default } from './tuxMiddleware'
 export { default as TuxProvider } from './components/TuxProvider'
 export { default as Editable, createEditable } from './components/Editable'
 export { default as EditInline } from './components/EditInline'
@@ -19,5 +20,4 @@ export const Input = adminOnly('Input')
 
 export const registerEditable = stub
 export const getEditorSchema = adminOnly('getEditorSchema')
-export { default as tuxMiddleware } from './tuxMiddleware'
 export * from './interfaces'

@@ -20,6 +20,7 @@
     "react-helmet": "^5.0.1",
     "source-map-support": "^0.4.14",
     "tux": "^0.3.0",
+    "tux-addon-admin": "^0.3.0",
     "tux-adapter-contentful": "^0.3.1",
     "tux-scripts": "^0.3.2",
     "universal-router": "^2.0.0",
