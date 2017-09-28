@@ -1,10 +1,12 @@
+import createContentfulAdapter from 'tux-adapter-contentful'
+
 const publicUrl = process.env.PUBLIC_URL
   ? process.env.PUBLIC_URL
   : process.env.SERVER
     ? 'https://localhost:5000'
     : `${location.protocol}//${location.host}/`
 
-const adapter = createContentfulAdapter({
+export default createContentfulAdapter({
   space: process.env.TUX_CONTENTFUL_SPACE_ID || 'n2difvpz16fj',
   accessToken:
     process.env.TUX_CONTENTFUL_ACCESS_TOKEN ||
