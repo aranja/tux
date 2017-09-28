@@ -1,5 +1,5 @@
 import React from 'react'
-import { Editable, EditInline } from 'tux'
+import { Editable, EditInline } from 'tux-addon-admin'
 import Helmet from 'react-helmet'
 import { H1, H2 } from '../components/typography'
 import Pricetable from '../components/Pricetable'
@@ -12,7 +12,7 @@ import SocialPlug from '../components/SocialPlug'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
-const About = ({ content, gallery, pricetable, articles }) =>
+const About = ({ content, gallery, pricetable, articles }) => (
   <div className="p-About">
     <Editable model={content}>
       <Helmet title="About - Tux Demo Site" />
@@ -40,5 +40,6 @@ const About = ({ content, gallery, pricetable, articles }) =>
       </Section>
     </Editable>
   </div>
+)
 
 export default About

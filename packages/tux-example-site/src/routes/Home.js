@@ -1,5 +1,5 @@
 import React from 'react'
-import { Editable, EditInline, ModelCreator } from 'tux'
+import { Editable, EditInline, ModelCreator } from 'tux-addon-admin'
 import Helmet from 'react-helmet'
 import { H1, H2 } from '../components/typography'
 import ProductBanner from '../components/ProductBanner'
@@ -14,7 +14,7 @@ import Newsletter from '../components/Newsletter'
 
 import ProductBannerImage from '../ProductBannerImage.png'
 
-const Home = ({ content, sellPoints, testimonial, carousel }) =>
+const Home = ({ content, sellPoints, testimonial, carousel }) => (
   <div className="p-Home">
     <Helmet title="Tux Demo Site" />
     <Menu />
@@ -29,7 +29,7 @@ const Home = ({ content, sellPoints, testimonial, carousel }) =>
         </H1>
         <SellPoints sellPoints={sellPoints.items} />
         <ModelCreator model="sellPoint">
-          {onClick =>
+          {onClick => (
             <button
               style={{
                 backgroundColor: '#fff',
@@ -46,7 +46,8 @@ const Home = ({ content, sellPoints, testimonial, carousel }) =>
               onClick={onClick}
             >
               New Sell Point!
-            </button>}
+            </button>
+          )}
         </ModelCreator>
       </Section>
       <Section>
@@ -90,5 +91,6 @@ const Home = ({ content, sellPoints, testimonial, carousel }) =>
       </Section>
     </Editable>
   </div>
+)
 
 export default Home

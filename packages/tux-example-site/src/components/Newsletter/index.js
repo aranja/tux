@@ -1,8 +1,8 @@
 import React from 'react'
-import { EditInline } from 'tux'
+import { EditInline } from 'tux-addon-admin'
 import './styles.css'
 
-const Newsletter = () =>
+const Newsletter = () => (
   <div className="Newsletter">
     <div className="Newsletter-register">
       <input
@@ -27,5 +27,6 @@ const Newsletter = () =>
       </p>
     </div>
   </div>
+)
 
 export default Newsletter

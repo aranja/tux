@@ -1,5 +1,5 @@
 import React from 'react'
-import { EditModal } from 'tux'
+import { EditModal } from 'tux-addon-admin'
 import classNames from 'classnames'
 
 import './styles.css'
@@ -39,12 +39,8 @@ class Carousel extends React.Component {
                   }}
                 />
                 <div className="Carousel-itemBody">
-                  <h1 className="Carousel-itemTitle">
-                    {item.fields.title}
-                  </h1>
-                  <p className="Carousel-itemCopy">
-                    {item.fields.text}
-                  </p>
+                  <h1 className="Carousel-itemTitle">{item.fields.title}</h1>
+                  <p className="Carousel-itemCopy">{item.fields.text}</p>
                 </div>
               </EditModal>
             )

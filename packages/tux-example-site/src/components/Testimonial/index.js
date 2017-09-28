@@ -1,17 +1,15 @@
 import React from 'react'
-import { EditModal } from 'tux'
+import { EditModal } from 'tux-addon-admin'
 import './styles.css'
 
-const Testimonial = ({ testimonial }) =>
+const Testimonial = ({ testimonial }) => (
   <div>
     {testimonial &&
-      testimonial.map(testimony =>
+      testimonial.map(testimony => (
         <EditModal key={testimony.fields.attestantName} model={testimony}>
           <div className="Testimonial">
             <div className="Testimonial-quote">
-              <p className="Testimonial-quoteText">
-                {testimony.fields.quote}
-              </p>
+              <p className="Testimonial-quoteText">{testimony.fields.quote}</p>
               <p className="Testimonial-quoteAuthor">
                 {`${testimony.fields.attestantName}, ${testimony.fields
                   .attestantTitle}`}
@@ -26,7 +24,8 @@ const Testimonial = ({ testimonial }) =>
             />
           </div>
         </EditModal>
-      )}
+      ))}
   </div>
+)
 
 export default Testimonial
