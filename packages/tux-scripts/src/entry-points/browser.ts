@@ -1,6 +1,3 @@
-import { startClient } from 'react-chain'
-const app = require(__appEntry)
+import { start } from 'tux'
 
-startClient(app, document.getElementById('app'))
-
-//
+start(require(__appEntry).default)
