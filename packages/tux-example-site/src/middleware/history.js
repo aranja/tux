@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import createBrowserHistory from 'history/createBrowserHistory'
+import createMemoryHistory from 'history/createMemoryHistory'
 
 class HistoryProvider extends React.Component {
   static propTypes = {
@@ -21,11 +23,6 @@ class HistoryProvider extends React.Component {
     return React.Children.only(this.props.children)
   }
 }
-
-import createBrowserHistory from 'history/createBrowserHistory'
-import createMemoryHistory from 'history/createMemoryHistory'
-import { History } from 'history'
-import { CreateElement, Session, Middleware } from 'react-chain'
 
 export default () => session => {
   if (session.req) {
