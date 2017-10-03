@@ -1,6 +1,12 @@
-import createReactChain, { ReactChain } from 'react-chain'
+import createReactChain, { ReactChain, Session } from 'react-chain'
 import { render } from 'react-dom'
-import DocumentMiddleware from './DocumentMiddleware'
+import express from 'express'
+import DocumentMiddleware, { DocumentSession } from './DocumentMiddleware'
+
+export type TuxSession = Session &
+  DocumentSession & {
+    refresh: (onComplete?: (element: Element) => void) => Promise<any>
+  }
 
 export const createApp = () => {
   const app = createReactChain()
@@ -12,16 +18,18 @@ export const start = (
   app: ReactChain,
   container = document.getElementById('app')
 ) => {
-  const session = app.createSession()
+  const session = app.createSession() as TuxSession
 
-  async function refresh(onComplete?: (element: Element) => void) {
-    return await app.renderBrowser(session, (element: any) => {
+  session.refresh = async onComplete =>
+    await app.renderBrowser(session, element => {
       render(element, container, onComplete)
     })
-  }
 
-  session.refresh = refresh
-  refresh()
+  session.refresh()
 }
 
-export const serve = app => (req, res, next) => {}
+export const serve = (app: ReactChain): express.RequestHandler => (
+  req,
+  res,
+  next
+) => {}
