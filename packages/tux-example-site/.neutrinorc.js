@@ -8,6 +8,11 @@ module.exports = {
         },
       },
     ],
-    neutrino => neutrino.config.entry('vendor').add('react').add('react-dom'),
+    'tux-addon-admin/neutrino',
+    neutrino =>
+      neutrino.config
+        .entry('vendor')
+        .add('react')
+        .add('react-dom'),
   ],
 }
