@@ -12,7 +12,7 @@
 }
 
 html {
-  font-size: calc(15.29577px + .18779vw);
+  font-size: calc(15.29577px + 0.18779vw);
 }
 
 @media (min-width: 1440px) {
