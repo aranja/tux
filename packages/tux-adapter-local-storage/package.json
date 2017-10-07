@@ -1,0 +1,28 @@
+{
+  "name": "tux-adapter-local-storage",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepublish": "../../tasks/build-package.js",
+    "watch": "../../tasks/build-package.js --watch",
+    "test": "../../node_modules/.bin/jest"
+  },
+  "author": "Aranja",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.15.3",
+    "lodash": "^4.17.4",
+    "tux": "^0.3.0"
+  },
+  "peerDependencies": {
+    "react": ">16.0.0-beta"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/../../shared/jest-preprocessor"
+    },
+    "testRegex": "\\.(test|spec)\\.(ts|tsx)$",
+    "moduleFileExtensions": ["ts", "tsx", "js"]
+  }
+}

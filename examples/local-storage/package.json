@@ -1,0 +1,22 @@
+{
+  "name": "demo-local-storage",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "neutrino": "6.1.5",
+    "neutrino-preset-tux": "^0.3.2",
+    "react": "^16.0.0-beta.5",
+    "tux": "^0.3.0",
+    "tux-addon-admin": "^0.3.0",
+    "tux-adapter-local-storage": "^0.0.1",
+    "tux-scripts": "^0.3.2"
+  },
+  "scripts": {
+    "start": "HTTPS=true tux-scripts start",
+    "build": "tux-scripts build --admin",
+    "serve": "tux-scripts serve",
+    "now-build": "true",
+    "now-start": "npm run serve"
+  }
+}
