@@ -1,1 +1,1 @@
-import app from __appEntry
+const app = require(__appEntry).default

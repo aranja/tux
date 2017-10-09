@@ -8,5 +8,8 @@ packages/*/es
 packages/*/build
 packages/*/coverage
 
+# examples
+examples/*/build
+
 # dependencies
 node_modules

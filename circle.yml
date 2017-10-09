@@ -19,4 +19,4 @@ deployment:
   example:
     branch: master
     commands:
-      - cd packages/tux-example-site; npm run build && now && now alias
+      - cd examples/admin; npm run build && now && now alias
