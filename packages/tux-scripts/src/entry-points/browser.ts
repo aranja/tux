@@ -1,9 +1,11 @@
 import { start } from 'tux'
 
 /*
- * global __appEntry
- *
  * Defined with Webpack in 'neutrino-preset-tux' and is the starting point
  * of the application, eg 'src/app.js'.
  */
-start(require(__appEntry).default)
+declare global {
+  const __appEntry: string
+}
+const app = require(__appEntry)
+start(app.__esModule ? app.default : app)
