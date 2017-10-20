@@ -10,18 +10,17 @@ const menuItems = [
   { name: 'Try out Tux', href: '/' },
 ]
 
-const Menu = () =>
+const Menu = () => (
   <div className="Menu">
     <Logo />
     <ul className="Menu-list">
-      {menuItems.map(item =>
+      {menuItems.map(item => (
         <li key={item.name} className="Menu-item">
-          <Link href={item.href}>
-            {item.name}
-          </Link>
+          <Link href={item.href}>{item.name}</Link>
         </li>
-      )}
+      ))}
     </ul>
   </div>
+)
 
 export default Menu

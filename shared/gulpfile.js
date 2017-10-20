@@ -18,23 +18,25 @@ const babel = target =>
   gulpBabel({
     plugins: [
       'styled-jsx/babel',
-      ['transform-runtime', {
-        helpers: false,
-        polyfill: false,
-        regenerator: true,
-      }],
+      [
+        'transform-runtime',
+        {
+          helpers: false,
+          polyfill: false,
+          regenerator: true,
+        },
+      ],
     ],
     presets: [
       'react',
-      ['es2015', { 'modules': target === 'es2015' ? false : 'commonjs' }],
+      ['es2015', { modules: target === 'es2015' ? false : 'commonjs' }],
     ],
     env: {
       development: {
-        plugins: [require.resolve('react-hot-loader/babel')]
-      }
-    }
-  })
-  .on('error', function(error) {
+        plugins: [require.resolve('react-hot-loader/babel')],
+      },
+    },
+  }).on('error', function(error) {
     // only log babel errors once.
     if (target === 'es2015') {
       console.log(error.stack || error.message)
@@ -48,10 +50,11 @@ const clean = () => {
 }
 
 const buildJs = () => {
-  const tsResult = tsProject.src()
+  const tsResult = tsProject
+    .src()
     .pipe(sourcemaps.init())
     .pipe(tsProject())
-    .once('error', function () {
+    .once('error', function() {
       // Crash CI builds on typescript error.
       this.once('finish', () => {
         if (process.env.TS_FAIL_ON_ERROR) {
@@ -65,8 +68,7 @@ const buildJs = () => {
   // CommonJS Modules
   if (process.env.TARGET !== 'es2015') {
     streams.push(
-      tsResult.dts
-        .pipe(gulp.dest('lib')),
+      tsResult.dts.pipe(gulp.dest('lib')),
       tsResult.js
         .pipe(clone())
         .pipe(babel('commonjs'))
@@ -77,11 +79,8 @@ const buildJs = () => {
   // ES2015 Modules
   if (process.env.TARGET !== 'commonjs') {
     streams.push(
-      tsResult.dts
-        .pipe(gulp.dest('es')),
-      tsResult.js
-        .pipe(babel('es2015'))
-        .pipe(gulp.dest('es'))
+      tsResult.dts.pipe(gulp.dest('es')),
+      tsResult.js.pipe(babel('es2015')).pipe(gulp.dest('es'))
     )
   }
 

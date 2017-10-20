@@ -2,7 +2,7 @@ import createContentfulAdapter from 'tux-adapter-contentful'
 
 const publicUrl = process.env.PUBLIC_URL
   ? process.env.PUBLIC_URL
-  : process.env.SERVER
+  : process.env.TUX_BUILD_TARGET === 'server'
     ? 'https://localhost:5000'
     : `${location.protocol}//${location.host}/`
 

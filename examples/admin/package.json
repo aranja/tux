@@ -13,9 +13,12 @@
     "react-dom": "^16.0.0-beta.5",
     "react-helmet": "^5.0.1",
     "tux": "^0.3.0",
+<<<<<<< HEAD
+    "tux-scripts": "^0.3.2",
+=======
+>>>>>>> v1
     "tux-addon-admin": "^0.3.0",
     "tux-adapter-contentful": "^0.3.1",
-    "tux-scripts": "^0.3.2",
     "universal-router": "^2.0.0"
   },
   "now": {
@@ -23,7 +26,7 @@
     "files": ["build"]
   },
   "scripts": {
-    "start": "tux-scripts start",
+    "start": "HTTPS='true' tux-scripts start",
     "build": "tux-scripts build --admin",
     "serve": "tux-scripts serve",
     "now-build": "true",

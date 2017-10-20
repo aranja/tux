@@ -13,15 +13,16 @@ const defaultCompanies = [
   { name: 'React', logo: reactLogo, url: 'https://facebook.github.io/react/' },
 ]
 
-const FeaturedIn = ({ companies = defaultCompanies }) =>
+const FeaturedIn = ({ companies = defaultCompanies }) => (
   <div className="FeaturedIn">
-    {companies.map(company =>
+    {companies.map(company => (
       <div key={company.name} className="FeaturedIn-logo">
         <a href={company.url} rel="noopener" target="_blank">
           <img src={company.logo} alt={company.name} />
         </a>
       </div>
-    )}
+    ))}
   </div>
+)
 
 export default FeaturedIn

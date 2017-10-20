@@ -2,7 +2,7 @@ import React from 'react'
 import twitterLogo from './Twitter.svg'
 import './styles.css'
 
-const SocialPlug = ({ children }) =>
+const SocialPlug = ({ children }) => (
   <div className="SocialPlug">
     <a
       className="SocialPlug-link"
@@ -14,10 +14,9 @@ const SocialPlug = ({ children }) =>
         src={twitterLogo}
         alt="Follow us on Twitter"
       />
-      <p>
-        {children}
-      </p>
+      <p>{children}</p>
     </a>
   </div>
+)
 
 export default SocialPlug
