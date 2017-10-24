@@ -15,6 +15,7 @@
     "tux": "^0.3.0",
     "tux-scripts": "^0.3.2",
     "tux-addon-admin": "^0.3.0",
+    "tux-addon-helmet": "^0.1.0",
     "tux-adapter-contentful": "^0.3.1",
     "universal-router": "^2.0.0"
   },
