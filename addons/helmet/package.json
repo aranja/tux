@@ -1,52 +1,37 @@
 {
-    "name": "tux-addon-helmet",
-    "version": "0.1.0",
-    "description": "Use helmet for server and client side metadata.",
-    "bugs": {
-        "url": "https://github.com/aranja/tux/issues"
+  "name": "tux-addon-helmet",
+  "version": "0.1.0",
+  "description": "Use helmet for server and client side metadata.",
+  "bugs": {
+    "url": "https://github.com/aranja/tux/issues"
+  },
+  "repository": "aranja/tux",
+  "keywords": ["react", "react-helmet", "tux-addon"],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "prepublish": "NODE_ENV=production ../../tasks/build-package.js",
+    "watch": "../../tasks/build-package.js --watch",
+    "test": "../../node_modules/.bin/jest"
+  },
+  "peerDependencies": {
+    "react": ">16.0.0-beta",
+    "react-chain": "^0.5.0",
+    "react-helmet": "^5.0.1"
+  },
+  "files": ["es", "lib"],
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^18.1.0",
+    "react": "^16.0.0-beta.5",
+    "react-dom": "^16.0.0-beta.5"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/../../shared/jest-preprocessor"
     },
-    "repository": "aranja/tux",
-    "keywords": [
-        "react",
-        "react-helmet",
-        "tux-addon"
-    ],
-    "main": "lib/index.js",
-    "module": "es/index.js",
-    "types": "lib/index.d.ts",
-    "scripts": {
-        "prepublish": "NODE_ENV=production ../../tasks/build-package.js",
-        "watch": "../../tasks/build-package.js --watch",
-        "test": "../../node_modules/.bin/jest"
-    },
-    "peerDependencies": {
-        "react": ">16.0.0-beta"
-    },
-    "files": [
-        "es",
-        "lib"
-    ],
-    "license": "MIT",
-    "dependencies": {
-        "babel-runtime": "^6.23.0",
-        "react-chain": "^0.5.0",
-        "react-helmet": "^5.0.1"
-    },
-    "devDependencies": {
-        "jest": "^18.1.0",
-        "react": "^16.0.0-beta.5",
-        "react-dom": "^16.0.0-beta.5"
-    },
-    "jest": {
-        "transform": {
-            ".(ts|tsx)": "<rootDir>/../../shared/jest-preprocessor"
-        },
-        "testRegex": "/(src|test).*(\\.|/)(test|spec)\\.tsx?$",
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "json"
-        ]
-    }
+    "testRegex": "/(src|test).*(\\.|/)(test|spec)\\.tsx?$",
+    "moduleFileExtensions": ["ts", "tsx", "js", "json"]
+  }
 }
