@@ -28,11 +28,11 @@ export default async (args: Args) => {
     const compiler = await run('inspect', args)
     ora('Browser config').info()
     // tslint:disable-next-line:no-console
-    console.log(results[0])
-    if (results[1]) {
+    console.log(compiler[0])
+    if (compiler[1]) {
       ora('Server config').info()
       // tslint:disable-next-line:no-console
-      console.log(results[1])
+      console.log(compiler[1])
     }
   } catch (err) {
     // tslint:disable-next-line:no-console

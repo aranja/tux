@@ -32,7 +32,16 @@ export async function run(commandName: Command, args: Args) {
   const configs = await Promise.all(apis.map(buildConfig))
 
   // Create a webpack compiler instance
-  const compiler = webpack(configs)
+  const compiler =
+    commandName === 'start'
+      ? webpack(configs)
+      : await Promise.all(
+          [].concat(
+            apis.map(api =>
+              api.commands[commandName](api.config.toConfig(), api).promise()
+            )
+          )
+        )
 
   // Trigger all post events
   await Promise.all(
