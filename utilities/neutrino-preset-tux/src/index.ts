@@ -26,7 +26,7 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
           errorDetails: false,
         },
       },
-      hot: true,
+      hot: false,
       polyfills: {
         async: true,
       },

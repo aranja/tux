@@ -51,8 +51,6 @@ export const serve = ({
   assets,
   Document,
 }: Options): express.RequestHandler => {
-  console.log(app)
-
   return async (req, res, next) => {
     const session = app.createSession() as TuxServeeSession
 

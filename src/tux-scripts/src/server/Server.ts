@@ -35,6 +35,7 @@ class Server {
     const webpackDevMiddleware = require('webpack-dev-middleware')
     const webpackHotMiddleware = require('webpack-hot-middleware')
     const webpackHotServerMiddleware = require('webpack-hot-server-middleware')
+
     const clientCompiler = multiCompiler.compilers.find(
       compiler => compiler.name === 'client'
     )
@@ -42,8 +43,14 @@ class Server {
     this.app.use(
       webpackDevMiddleware(multiCompiler, {
         serverSideRender: true,
-        noInfo: true,
-        quiet: true,
+        index: false,
+        stats: {
+          colors: true,
+        },
+        watchOptions: {
+          aggregateTimeout: 300,
+          poll: false,
+        },
       })
     )
 
@@ -52,6 +59,7 @@ class Server {
     this.app.use(
       webpackHotServerMiddleware(multiCompiler, {
         chunkName: 'app',
+        serverRendererOptions: {},
       })
     )
   }
@@ -63,7 +71,7 @@ class Server {
     const { host, port } = this.options
     this.app.listen(port, host, () => {
       // tslint:disable-next-line:no-console
-      console.log(`The server is running at http://${host}:${port}/`)
+      console.log(`\nThe server is running at http://${host}:${port}/`)
     })
   }
 }
