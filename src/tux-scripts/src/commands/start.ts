@@ -1,23 +1,28 @@
 import ora from 'ora'
 import merge from 'deepmerge'
-import { Compiler } from 'webpack'
+import { Compiler, Stats } from 'webpack'
 import chalk from 'chalk'
 import { choosePort } from 'react-dev-utils/WebpackDevServerUtils'
 import clearConsole from 'react-dev-utils/clearConsole'
 import formatWebpackMessages from 'react-dev-utils/formatWebpackMessages'
 import { run } from '../compiler'
 import { Args } from '../options'
+import Server from '../server'
 
 const isInteractive = process.stdout.isTTY
 
 export default async (args: Args) => {
+  const port = parseInt(process.env.PORT, 10) || 5000
+  const host = process.env.HOST || '0.0.0.0'
+  const https = process.env.HTTPS === 'true'
+
   args = merge<Args>(
     {
-      ssr: args.ssr != null ? args.ssr : false,
+      ssr: true,
       options: {
-        port: parseInt(process.env.PORT, 10) || 5000,
-        host: process.env.HOST || '0.0.0.0',
-        https: process.env.HTTPS === 'true',
+        port,
+        host,
+        https,
         tux: {
           admin: true,
         },
@@ -39,30 +44,29 @@ export default async (args: Args) => {
     clearConsole()
   }
   const spinner = ora('Building project').start()
-  let compilers
+  let multiCompiler
   try {
-    compilers = (await run('start', args)) as Compiler[]
+    multiCompiler = await run('start', args)
   } catch (err) {
     spinner.fail('Building project failed')
     throw err
   }
 
-  const [browserCompiler, serverCompiler] = compilers
-  if (!browserCompiler.options.devServer) {
-    return spinner.succeed('Build completed')
-  }
+  const server = new Server({
+    port,
+    host,
+    https,
+    multiCompiler,
+  })
 
-  const { devServer } = browserCompiler.options
-  const protocol = devServer.https ? 'https' : 'http'
-  let compileCount = compilers.length
-
-  spinner.succeed(
-    `Development server running on: ${protocol}://${devServer.host}:${devServer.port}`
-  )
-
+  spinner.succeed(`Development server running on: ${https}://${host}:${port}`)
   const building = ora('Waiting for initial build to finish').start()
-  compilers.forEach(compiler => {
-    compiler.plugin('done', stats => {
+  let compileCount = 1
+
+  multiCompiler.compilers.forEach(compiler => {
+    compiler.plugin('done', (stats: Stats) => {
+      const name = compiler.name.toUpperCase()
+
       compileCount--
       if (compileCount > 0) {
         // What if builds have different results.
@@ -75,7 +79,7 @@ export default async (args: Args) => {
       const messages = formatWebpackMessages(stats.toJson({}, true))
       const isSuccessful = !messages.errors.length && !messages.warnings.length
       if (isSuccessful) {
-        building.succeed('Build completed')
+        building.succeed(`${name}: Build completed`)
       }
 
       // If errors exist, only show errors.
@@ -85,7 +89,7 @@ export default async (args: Args) => {
         if (messages.errors.length > 1) {
           messages.errors.length = 1
         }
-        building.fail('Failed to compile')
+        building.fail(`${name}: Failed to compile`)
         // tslint:disable-next-line:no-console
         console.log(messages.errors.join('\n\n'))
         return
@@ -93,7 +97,7 @@ export default async (args: Args) => {
 
       // Show warnings if no errors were found.
       if (messages.warnings.length) {
-        building.warn('Compiled with warnings')
+        building.warn(`${name}: Compiled with warnings`)
         // tslint:disable-next-line:no-console
         console.log(messages.warnings.join('\n\n'))
 

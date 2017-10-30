@@ -25,7 +25,7 @@ export default async (args: Args) => {
   )
 
   try {
-    const results = await run('inspect', args)
+    const compiler = await run('inspect', args)
     ora('Browser config').info()
     // tslint:disable-next-line:no-console
     console.log(results[0])

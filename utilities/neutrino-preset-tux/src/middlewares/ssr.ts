@@ -55,8 +55,11 @@ export default (neutrino: Neutrino, options: any = {}) => {
 
   // prettier-ignore
   neutrino.config
+    .set('name', 'server')
     .when(options.html.document, config =>
-      config.entry('document').add(resolve(neutrino.options.root, options.html.document))
+      config
+        .entry('document')
+        .add(resolve(neutrino.options.root, options.html.document))
     )
     .when(sourceMap, () => neutrino.use(banner))
     .performance

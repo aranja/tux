@@ -1,6 +1,6 @@
 import ora from 'ora'
 import merge from 'deepmerge'
-import { Stats } from 'webpack'
+import { Stats, Compiler } from 'webpack'
 import { run } from '../compiler'
 import { Args } from '../options'
 
@@ -22,23 +22,23 @@ export default async (args: Args) => {
   )
 
   const spinner = ora('Building project').start()
-  let result
+  let compiler
   try {
-    result = (await run('build', args)) as Stats[]
+    compiler = await run('build', args)
   } catch (err) {
     spinner.fail('Building project failed')
     throw err
   }
 
-  const [browserStats, serverStats] = result
-
-  spinner.succeed('Building project completed')
-  // tslint:disable-next-line:no-console
-  console.log(
-    browserStats.toString({
-      colors: true,
-      chunks: false,
-      children: false,
-    })
-  )
+  compiler.run((err, stats: Stats) => {
+    spinner.succeed('Building project completed')
+    // tslint:disable-next-line:no-console
+    console.log(
+      stats.toString({
+        colors: true,
+        chunks: false,
+        children: false,
+      })
+    )
+  })
 }

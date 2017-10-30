@@ -56,6 +56,9 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
 
   // prettier-ignore
   neutrino.config
+    // Webpack Hot Server Middleware expects your Webpack config to be named.
+    .set('name', 'client')
+  
     // Neutrino defaults to relative paths './'. Tux is optimized for SPAs, where absolute paths
     // are a better default.
     .output
