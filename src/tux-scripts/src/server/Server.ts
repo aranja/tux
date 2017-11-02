@@ -47,14 +47,10 @@ class Server {
         stats: {
           colors: true,
         },
-        watchOptions: {
-          aggregateTimeout: 300,
-          poll: false,
-        },
       })
     )
 
-    this.app.use(webpackHotMiddleware(clientCompiler, {}))
+    this.app.use(webpackHotMiddleware(clientCompiler))
 
     this.app.use(
       webpackHotServerMiddleware(multiCompiler, {

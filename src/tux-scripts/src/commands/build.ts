@@ -29,16 +29,4 @@ export default async (args: Args) => {
     spinner.fail('Building project failed')
     throw err
   }
-
-  compiler.run((err, stats: Stats) => {
-    spinner.succeed('Building project completed')
-    // tslint:disable-next-line:no-console
-    console.log(
-      stats.toString({
-        colors: true,
-        chunks: false,
-        children: false,
-      })
-    )
-  })
 }

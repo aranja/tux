@@ -1,4 +1,5 @@
-import { serve } from 'tux'
+import { serve, buildAssets } from 'tux'
+import { join } from 'path'
 import Document from 'react-document'
 
 /*
@@ -8,10 +9,10 @@ import Document from 'react-document'
 // tslint:disable variable-name no-var-requires
 const app = require(__appEntry)
 
-export default stats => {
+export default ({ clientStats }: any) => {
   return serve({
-    assets: {},
-    app: app.__esModule ? app.default : app,
     Document,
+    assets: buildAssets(clientStats),
+    app: app.__esModule ? app.default : app,
   })
 }
