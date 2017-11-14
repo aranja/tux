@@ -326,7 +326,6 @@ class DatePicker extends Component<any, State> {
             color: ${tuxDatePickerStyles.textColor};
             cursor: default;
           }
-
           .TuxDayPicker-input {
             background: ${tuxDatePickerStyles.backgroundColor};
             border: 1px solid ${input.border};
@@ -337,7 +336,6 @@ class DatePicker extends Component<any, State> {
             line-height: 1.5;
             width: 260px;
           }
-
           .TuxDayPicker-input:focus {
             border-color: ${input.greenTheme.border};
             outline: 1px solid ${input.greenTheme.border};
