@@ -1,6 +1,6 @@
 {
   "name": "tux-addon-admin",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "A full-fledged admin for React apps for managing cms data.",
   "bugs": {
     "url": "https://github.com/aranja/tux/issues"
