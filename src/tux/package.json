@@ -6,9 +6,7 @@
     "url": "https://github.com/aranja/tux/issues"
   },
   "repository": "aranja/tux",
-  "keywords": [
-    "react"
-  ],
+  "keywords": ["react"],
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
@@ -20,10 +18,7 @@
   "peerDependencies": {
     "react": ">16.0.0-beta"
   },
-  "files": [
-    "es",
-    "lib"
-  ],
+  "files": ["es", "lib", "neutrino.js"],
   "license": "MIT",
   "dependencies": {
     "neutrino-preset-tux": "^1.0.0",
@@ -37,15 +32,8 @@
     "transform": {
       ".(ts|tsx)": "<rootDir>/../../shared/jest-preprocessor"
     },
-    "setupFiles": [
-      "./src/__tests__/globals.ts"
-    ],
+    "setupFiles": ["./src/__tests__/globals.ts"],
     "testRegex": "/(src|test).*(\\.|/)(test|spec)\\.tsx?$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json"
-    ]
+    "moduleFileExtensions": ["ts", "tsx", "js", "json"]
   }
 }
