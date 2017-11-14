@@ -1,12 +1,16 @@
 {
   "name": "tux-addon-helmet",
-  "version": "0.1.0",
+  "version": "1.0.2",
   "description": "Use helmet for server and client side metadata.",
   "bugs": {
     "url": "https://github.com/aranja/tux/issues"
   },
   "repository": "aranja/tux",
-  "keywords": ["react", "react-helmet", "tux-addon"],
+  "keywords": [
+    "react",
+    "react-helmet",
+    "tux-addon"
+  ],
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
@@ -20,7 +24,10 @@
     "react-chain": "^0.5.0",
     "react-helmet": "^5.0.1"
   },
-  "files": ["es", "lib"],
+  "files": [
+    "es",
+    "lib"
+  ],
   "license": "MIT",
   "devDependencies": {
     "jest": "^18.1.0",
@@ -32,6 +39,11 @@
       ".(ts|tsx)": "<rootDir>/../../shared/jest-preprocessor"
     },
     "testRegex": "/(src|test).*(\\.|/)(test|spec)\\.tsx?$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "json"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ]
   }
 }
