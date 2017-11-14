@@ -1,12 +1,16 @@
 {
-  "name": "tux",
-  "version": "1.0.1",
-  "description": "Configurable React app with SSR.",
+  "name": "tux-addon-helmet",
+  "version": "1.0.2",
+  "description": "Use helmet for server and client side metadata.",
   "bugs": {
     "url": "https://github.com/aranja/tux/issues"
   },
   "repository": "aranja/tux",
-  "keywords": ["react"],
+  "keywords": [
+    "react",
+    "react-helmet",
+    "tux-addon"
+  ],
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
@@ -16,29 +20,30 @@
     "test": "../../node_modules/.bin/jest"
   },
   "peerDependencies": {
-    "react": ">16.0.0-beta"
+    "react": ">16.0.0-beta",
+    "react-chain": "^0.5.0",
+    "react-helmet": "^5.0.1"
   },
   "files": [
     "es",
-    "lib",
-    "neutrino.js"
+    "lib"
   ],
   "license": "MIT",
-  "dependencies": {
-    "neutrino-preset-tux": "^1.0.0",
-    "react-chain": "^0.5.0",
-    "webpack-sort-chunks": "^0.1.0",
-    "tux-scripts": "^1.0.0"
-  },
   "devDependencies": {
-    "neutrino": "6.1.5"
+    "jest": "^18.1.0",
+    "react": "^16.0.0-beta.5",
+    "react-dom": "^16.0.0-beta.5"
   },
   "jest": {
     "transform": {
       ".(ts|tsx)": "<rootDir>/../../shared/jest-preprocessor"
     },
-    "setupFiles": ["./src/__tests__/globals.ts"],
     "testRegex": "/(src|test).*(\\.|/)(test|spec)\\.tsx?$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "json"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ]
   }
 }

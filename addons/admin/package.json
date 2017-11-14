@@ -1,6 +1,6 @@
 {
   "name": "tux-addon-admin",
-  "version": "0.3.0",
+  "version": "1.0.2",
   "description": "A full-fledged admin for React apps for managing cms data.",
   "bugs": {
     "url": "https://github.com/aranja/tux/issues"
@@ -22,7 +22,8 @@
   },
   "files": [
     "es",
-    "lib"
+    "lib",
+    "neutrino.js"
   ],
   "license": "MIT",
   "dependencies": {

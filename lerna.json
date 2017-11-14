@@ -1,4 +1,11 @@
 {
   "lerna": "2.0.0-rc.5",
-  "packages": ["utilities/*", "src/*", "addons/*", "adapters/*", "examples/*"]
+  "packages": [
+    "utilities/*",
+    "src/*",
+    "addons/*",
+    "adapters/*",
+    "examples/*"
+  ],
+  "version": "1.0.2"
 }

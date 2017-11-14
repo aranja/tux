@@ -1,26 +1,29 @@
 {
   "name": "tux-example-adapter-contentful",
-  "version": "0.3.2",
+  "version": "1.0.2",
   "private": true,
   "license": "MIT",
   "dependencies": {
     "classnames": "^2.2.5",
     "history": "^4.5.1",
     "neutrino": "6.1.5",
-    "neutrino-preset-tux": "^0.3.2",
+    "neutrino-preset-tux": "^1.0.0",
     "react": "^16.0.0-beta.5",
     "react-document": "^0.7.0",
     "react-dom": "^16.0.0-beta.5",
     "react-helmet": "^5.0.1",
-    "tux": "^0.3.0",
-    "tux-scripts": "^0.3.2",
-    "tux-addon-admin": "^0.3.0",
-    "tux-adapter-contentful": "^0.3.1",
+    "tux": "^1.0.1",
+    "tux-adapter-contentful": "^1.0.2",
+    "tux-addon-admin": "^1.0.2",
+    "tux-addon-helmet": "^1.0.2",
+    "tux-scripts": "^1.0.0",
     "universal-router": "^2.0.0"
   },
   "now": {
     "alias": "tux-example.aranja.com",
-    "files": ["build"]
+    "files": [
+      "build"
+    ]
   },
   "scripts": {
     "start": "HTTPS='true' tux-scripts start",
