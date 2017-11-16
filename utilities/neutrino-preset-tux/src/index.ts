@@ -1,6 +1,7 @@
 import { Neutrino } from 'neutrino'
 import merge from 'deepmerge'
 import react from 'neutrino-preset-react'
+import hot from 'neutrino-middleware-hot'
 import {
   env,
   ssr,
@@ -46,7 +47,12 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
     : neutrino.options.browserEntry
 
   // Build on top of the offical react preset (overriding open functionality).
-  neutrino.use(react, merge<any>(options, { devServer: { open: false } }))
+  // Skip react-hot-loader for now while enabling other HMR functionality.
+  neutrino.use(
+    react,
+    merge<any>(options, { devServer: { open: false }, hot: false })
+  )
+  neutrino.use(hot)
 
   // Switch to custom html plugin.
   neutrino.use(html, options.html)

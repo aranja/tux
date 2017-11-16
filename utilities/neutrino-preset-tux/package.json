@@ -21,6 +21,7 @@
     "neutrino-middleware-banner": "^6.1.5",
     "neutrino-middleware-compile-loader": "^6.1.5",
     "neutrino-middleware-env": "^6.1.5",
+    "neutrino-middleware-hot": "^6.1.5",
     "neutrino-preset-react": "6.1.5",
     "react-dev-utils": "~4.0.1",
     "react-error-overlay": "~2.0.1",
