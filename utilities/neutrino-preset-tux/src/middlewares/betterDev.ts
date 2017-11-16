@@ -5,11 +5,16 @@ import WatchMissingNodeModulesPlugin from 'react-dev-utils/WatchMissingNodeModul
 import { removeEntryPoints } from '../utils'
 import { Options } from '../Options'
 
-export default ({ config }: Neutrino, options: Options) => {
+export default (
+  { config, options: { target } }: Neutrino,
+  options: Options
+) => {
   // Add better error handling from react-dev-utils
-  config.entry('index').when(options.hot, entry => {
+  config.entry('index').when(options.hot && target === 'browser', entry => {
     removeEntryPoints(entry, /dev-server/)
-    entry.prepend(require.resolve('react-dev-utils/webpackHotDevClient'))
+    entry.prepend(
+      require.resolve('webpack-hot-middleware/client') + '?reload=true'
+    )
   })
 
   // Support opening files from the runtime error overlay.

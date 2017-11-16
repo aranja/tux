@@ -83,9 +83,5 @@ export default (neutrino: Neutrino, options: any = {}) => {
       .end()
     .when(neutrino.options.env.NODE_ENV === 'development', config => {
       config.devtool('inline-source-map');
-      config.output.devtoolModuleFilenameTemplate('[absolute-resource-path]');
-      config.when(options.hot, () => {
-        config.entry('app').add('webpack/hot/poll?1000');
-      });
     });
 }
