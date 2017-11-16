@@ -15,6 +15,7 @@ export default async (args: Args) => {
   const port = parseInt(process.env.PORT, 10) || 5000
   const host = process.env.HOST || '0.0.0.0'
   const https = process.env.HTTPS === 'true'
+  const protocol = https ? 'https' : 'http'
 
   args = merge<Args>(
     {
@@ -59,7 +60,9 @@ export default async (args: Args) => {
     multiCompiler,
   })
 
-  spinner.succeed(`Development server running on: ${https}://${host}:${port}`)
+  spinner.succeed(
+    `Development server running on: ${protocol}://${host}:${port}`
+  )
   const building = ora('Waiting for initial build to finish').start()
   let compileCount = 1
 

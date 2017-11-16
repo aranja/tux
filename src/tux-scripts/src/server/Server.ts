@@ -65,10 +65,7 @@ class Server {
    */
   listen() {
     const { host, port } = this.options
-    this.app.listen(port, host, () => {
-      // tslint:disable-next-line:no-console
-      console.log(`\nThe server is running at http://${host}:${port}/`)
-    })
+    this.app.listen(port, host)
   }
 }
 
