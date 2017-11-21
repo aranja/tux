@@ -21,7 +21,7 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
         quiet: neutrino.options.quiet,
         noInfo: neutrino.options.quiet,
         port: 5000,
-        https: false,
+        https: neutrino.options.https,
         open: true,
         stats: {
           errorDetails: false,

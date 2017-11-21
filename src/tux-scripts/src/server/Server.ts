@@ -8,7 +8,8 @@ export interface ServerOptions {
   buildPath: string
   port: number
   host: string
-  multiCompiler: MultiCompiler
+  secure: boolean
+  multiCompiler?: MultiCompiler
 }
 
 class Server {
@@ -21,6 +22,7 @@ class Server {
       host: options.host || '0.0.0.0',
       buildPath: options.buildPath || join(process.cwd(), 'build'),
       multiCompiler: options.multiCompiler,
+      secure: !!options.secure,
     }
     this.app = express()
 

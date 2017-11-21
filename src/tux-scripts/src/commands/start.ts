@@ -1,6 +1,6 @@
 import ora from 'ora'
 import merge from 'deepmerge'
-import { Compiler, Stats } from 'webpack'
+import { Compiler, Stats, MultiCompiler } from 'webpack'
 import chalk from 'chalk'
 import { choosePort } from 'react-dev-utils/WebpackDevServerUtils'
 import clearConsole from 'react-dev-utils/clearConsole'
@@ -56,8 +56,8 @@ export default async (args: Args) => {
   const server = new Server({
     port,
     host,
-    https,
-    multiCompiler,
+    secure: https,
+    multiCompiler: multiCompiler as MultiCompiler,
   })
 
   spinner.succeed(
