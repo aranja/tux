@@ -147,7 +147,7 @@ export const serve = ({
         },
         body
       )
-      res.status(session.status || 200)
+
       res.send('<!doctype html>' + ReactDOMServer.renderToStaticMarkup(html))
     } catch (error) {
       next(error)
