@@ -1,68 +1,72 @@
-import { Neutrino, build, test, inspect } from 'neutrino'
+import { Neutrino, test, inspect } from 'neutrino'
 import merge from 'deepmerge'
 import { pathOr } from 'ramda'
 import webpack, { Compiler } from 'webpack'
-import { Args, Options } from './options'
+import { start, build } from './webpack'
+import { Args, Options, Target } from './options'
 
 type Command = 'inspect' | 'build' | 'start' | 'test'
-type Target = 'browser' | 'server'
 
-const createBuilder = (commandName: Command) => async (api: Neutrino) => {
-  // Trigger all pre-events for the current command
-  await api.emitForAll(`pre${commandName}`, api.options.args)
-  // Trigger generic pre-event
-  await api.emitForAll(`prerun`, api.options.args)
-  // Extract webpack config
-  return api.config.toConfig()
+const multiCommands = {
+  start,
+  build,
 }
+
+const emitForAll = (apis: Neutrino[], eventName: string) =>
+  Promise.all(apis.map(api => api.emitForAll(eventName, api.options.args)))
 
 export async function run(commandName: Command, args: Args) {
-  const buildConfig = createBuilder(commandName)
-  const apis = createNeutrinoApis(commandName, [
-    getOptions(args, 'browser'),
-    getOptions(args, 'server'),
-  ])
+  const target =
+    args.target || (commandName in multiCommands ? 'multi' : 'browser')
+  const apis = createNeutrinoApis(target, args)
 
-  // Require and use all middleware for both apis
-  apis.map(api => {
-    args.middleware.forEach(middleware => api.use(middleware))
-  })
+  // Trigger all pre events
+  await emitForAll(apis, `pre${commandName}`)
+  await emitForAll(apis, 'prerun')
 
-  // Generate webpack configuration array
-  const configs = await Promise.all(apis.map(buildConfig))
+  // Prepare run command. Handle multi config here.
+  const configs = apis.map(api => api.config.toConfig())
+  const mainApi = apis[0]
+  const config = target === 'multi' ? configs : configs[0]
 
-  // Create a webpack compiler instance
-  const compiler =
-    commandName === 'start'
-      ? webpack(configs)
-      : await Promise.all(
-          [].concat(
-            apis.map(api =>
-              api.commands[commandName](api.config.toConfig(), api).promise()
-            )
-          )
-        )
+  // Note: Always runs multi commands against browser Neutrino.
+  if (!mainApi.commands[commandName]) {
+    throw new Error(`Unknown command ${commandName}.`)
+  }
+  const result = mainApi.commands[commandName](config, mainApi)
 
-  // Trigger all post events
-  await Promise.all(
-    [].concat(
-      apis.map(api => [
-        api.emitForAll(commandName, api.options.args),
-        api.emitForAll('run', api.options.args),
-      ])
-    )
-  )
+  // Wait for the result.
+  const promiseResult = await (result.promise
+    ? result.promise()
+    : Promise.resolve(result))
 
-  return compiler
+  // Trigger all post events.
+  await emitForAll(apis, commandName)
+  await emitForAll(apis, `run`)
+
+  return promiseResult
 }
 
-function createNeutrinoApis(command: Command, targets: Options[]) {
-  return targets.map(options => {
+function createNeutrinoApis(target: Target, args: Args) {
+  const apiOptions = []
+  if (target === 'browser' || target === 'multi') {
+    apiOptions.push(getOptions(args, 'browser'))
+  }
+  if (target === 'server' || target === 'multi') {
+    apiOptions.push(getOptions(args, 'server'))
+  }
+
+  return apiOptions.map(options => {
     const api = new Neutrino(options)
 
+    // Register built in commands
+    api.register('start', start)
     api.register('build', build)
     api.register('inspect', inspect)
     api.register('test', test)
+
+    // Require and use all configured middlewares.
+    args.middleware.forEach(middleware => api.use(middleware))
 
     return api
   })

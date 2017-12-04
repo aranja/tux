@@ -26,7 +26,10 @@ declare module 'neutrino' {
     config: Config
     options: Options | any
     commands: {
-      [command: string]: (config: Configuration, api: Neutrino) => any
+      [command: string]: (
+        config: Configuration | Configuration[],
+        api: Neutrino
+      ) => any
     }
 
     on(event: string, callback: Function): void

@@ -1,3 +1,5 @@
+export type Target = 'browser' | 'server' | 'multi'
+
 export interface Options {
   browserEntry?: string
   serverEntry?: string
@@ -19,5 +21,6 @@ export interface Options {
 export interface Args {
   options: Options
   ssr: boolean
+  target?: Target
   middleware: any[]
 }
