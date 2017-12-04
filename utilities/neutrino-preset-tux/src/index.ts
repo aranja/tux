@@ -52,7 +52,6 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
     react,
     merge<any>(options, { devServer: { open: false }, hot: false })
   )
-  neutrino.use(hot)
 
   // Switch to custom html plugin.
   neutrino.use(html, options.html)
@@ -64,7 +63,7 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
   neutrino.config
     // Webpack Hot Server Middleware expects your Webpack config to be named.
     .set('name', 'client')
-  
+
     // Neutrino defaults to relative paths './'. Tux is optimized for SPAs, where absolute paths
     // are a better default.
     .output
@@ -92,6 +91,7 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
 
     // Add goodies from create-react-app project.
     .when(!isProd, () => {
+      neutrino.use(hot)
       neutrino.use(betterDev, options)
     })
 
