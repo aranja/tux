@@ -80,9 +80,18 @@
     "yargs": "^6.6.0"
   },
   "lint-staged": {
-    "*.ts": ["prettier --write", "git add"],
-    "packages/*/{,src/**/}*.js": ["prettier --write", "git add"],
-    "*.css": ["prettier --write", "git add"]
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ],
+    "packages/*/{,src/**/}*.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.css": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "babel": {
     "env": {
@@ -98,7 +107,10 @@
             }
           ]
         ],
-        "presets": ["react", "es2015"]
+        "presets": [
+          "react",
+          "es2015"
+        ]
       }
     }
   },

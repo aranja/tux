@@ -21,7 +21,7 @@ export default function extractCss(neutrino: Neutrino) {
   // Add plugin to save extracted css.
   config.plugin('extract-css').use(ExtractTextPlugin, [
     {
-      filename: '[name].[chunkhash].bundle.css',
+      filename: '[name].[contenthash].css',
     },
   ])
 }

@@ -4,14 +4,14 @@ const fs = require('fs')
 
 // TODO: Remove this once babel-loader updates
 // https://github.com/babel/babel-loader/pull/391
-process.noDeprecation = true;
+process.noDeprecation = true
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
 process.on('unhandledRejection', err => {
   throw err;
-});
+})
 
 const yargs = require('yargs')
 const compiler = require('../lib/compiler')
