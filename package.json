@@ -12,7 +12,7 @@
     "lerna": "lerna",
     "bootstrap": "lerna bootstrap --hoist",
     "precommit": "lint-staged",
-    "prettier": "prettier --write -- \"**/*.{ts,tsx,css,js}\"",
+    "pretty": "prettier --write -- \"**/*.{ts,tsx,css,js}\"",
     "watch": "lerna run watch --parallel",
     "test": "lerna run test"
   },
