@@ -46,7 +46,8 @@ class Dropdown extends Component<any, State> {
         <div className="Dropdown">
           <select
             onChange={(event: React.ChangeEvent<any>) =>
-              this.handleChange(event.target.value)}
+              this.handleChange(event.target.value)
+            }
             value={selectedValue}
           >
             {dropdownValues.map((value: string) => (

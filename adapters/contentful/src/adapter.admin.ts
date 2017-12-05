@@ -151,8 +151,9 @@ export class ContentfulAdapter extends BaseAdapter implements Adapter {
   async login() {
     location.href =
       `https://be.contentful.com/oauth/authorize?response_type=token&` +
-      `client_id=${this.applicationUid}&redirect_uri=${this
-        .redirectUri}&scope=content_management_manage`
+      `client_id=${this.applicationUid}&redirect_uri=${
+        this.redirectUri
+      }&scope=content_management_manage`
   }
 
   logout() {

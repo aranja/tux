@@ -34,8 +34,9 @@ class Carousel extends React.Component {
                 <div
                   className="Carousel-itemImage"
                   style={{
-                    backgroundImage: `url(${item.fields.image.fields.file
-                      .url})`,
+                    backgroundImage: `url(${
+                      item.fields.image.fields.file.url
+                    })`,
                   }}
                 />
                 <div className="Carousel-itemBody">

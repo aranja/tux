@@ -96,8 +96,9 @@ class ManagementApi {
   }
 
   processAsset(id: string, version: any) {
-    const url = `/spaces/${this.space}/assets/${id}/files/${this
-      .currentLocale}/process`
+    const url = `/spaces/${this.space}/assets/${id}/files/${
+      this.currentLocale
+    }/process`
     return this.put(url, null, version)
   }
 

@@ -119,7 +119,8 @@ class DatePicker extends Component<any, State> {
                 initialMonth={selectedDay || undefined}
                 onDayClick={this.handleDayClick}
                 selectedDays={day =>
-                  !!selectedDay && DateUtils.isSameDay(selectedDay, day)}
+                  !!selectedDay && DateUtils.isSameDay(selectedDay, day)
+                }
               />
             </div>
           )}
