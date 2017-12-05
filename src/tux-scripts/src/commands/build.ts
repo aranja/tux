@@ -9,7 +9,6 @@ import { Args } from '../options'
 export default async (args: Args) => {
   args = merge<Args>(
     {
-      ssr: args.ssr != null ? args.ssr : true,
       options: {
         tux: {
           admin: false,

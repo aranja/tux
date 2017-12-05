@@ -17,10 +17,6 @@ const yargs = require('yargs')
 const compiler = require('../lib/compiler')
 
 const args = yargs
-  .option('ssr', {
-    describe: 'Include server-side-rendering',
-    type: 'boolean',
-  })
   .option('use', {
     describe: 'A list of Neutrino middleware used to configure the build',
     default: [],

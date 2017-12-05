@@ -20,7 +20,6 @@ export interface Options {
 
 export interface Args {
   options: Options
-  ssr: boolean
   target?: Target
   middleware: any[]
 }

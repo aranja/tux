@@ -7,7 +7,6 @@ import { Args } from '../options'
 export default async (args: Args) => {
   args = merge<Args>(
     {
-      ssr: args.ssr != null ? args.ssr : false,
       options: {
         port: parseInt(process.env.PORT, 10) || 5000,
         host: process.env.HOST || '0.0.0.0',

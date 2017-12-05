@@ -19,7 +19,6 @@ export default async (args: Args) => {
 
   args = merge<Args>(
     {
-      ssr: true,
       options: {
         port,
         host,
