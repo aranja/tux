@@ -46,12 +46,13 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
     ? neutrino.options.serverEntry
     : neutrino.options.browserEntry
 
-  // Build on top of the offical react preset (overriding open functionality).
+  // Build on top of the offical react preset (overriding devServer and open functionality).
   // Skip react-hot-loader for now while enabling other HMR functionality.
-  neutrino.use(
-    react,
-    merge<any>(options, { devServer: { open: false }, hot: false })
-  )
+  const reactOptions = merge<any>(options, {
+    devServer: { open: false },
+    hot: false,
+  })
+  neutrino.use(react, reactOptions)
 
   // Switch to custom html plugin.
   neutrino.use(html, options.html)
@@ -61,8 +62,11 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
 
   // prettier-ignore
   neutrino.config
-    // Webpack Hot Server Middleware expects your Webpack config to be named.
-    .set('name', 'client')
+    // Webpack Hot Server Middleware expects a MultiConfiguration with "server" and "client" names.
+    .set('name', isServer ? 'server' : 'client')
+
+    // Remove devServer. We use webpack-dev-middleware
+    .devServer.clear().end()
 
     // Neutrino defaults to relative paths './'. Tux is optimized for SPAs, where absolute paths
     // are a better default.

@@ -46,13 +46,11 @@ class Server {
       webpackDevMiddleware(multiCompiler, {
         serverSideRender: true,
         index: false,
-        stats: {
-          colors: true,
-        },
+        quiet: true,
       })
     )
 
-    this.app.use(webpackHotMiddleware(clientCompiler))
+    this.app.use(webpackHotMiddleware(clientCompiler, { log: false }))
 
     this.app.use(
       webpackHotServerMiddleware(multiCompiler, {

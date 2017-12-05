@@ -54,7 +54,6 @@ export default (neutrino: Neutrino, options: any = {}) => {
   neutrino.use(webCompat)
   // prettier-ignore
   neutrino.config
-    .set('name', 'server')
     .when(options.html.document, config =>
       config
         .entry('document')
