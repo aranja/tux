@@ -1,12 +1,14 @@
 {
   "name": "tux",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Configurable React app with SSR.",
   "bugs": {
     "url": "https://github.com/aranja/tux/issues"
   },
   "repository": "aranja/tux",
-  "keywords": ["react"],
+  "keywords": [
+    "react"
+  ],
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
@@ -25,10 +27,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "neutrino-preset-tux": "^1.0.0",
+    "neutrino-preset-tux": "^1.0.3",
     "react-chain": "^0.5.0",
-    "webpack-sort-chunks": "^0.1.0",
-    "tux-scripts": "^1.0.0"
+    "tux-scripts": "^1.0.3",
+    "webpack-sort-chunks": "^0.1.0"
   },
   "devDependencies": {
     "neutrino": "6.1.5"
@@ -37,8 +39,15 @@
     "transform": {
       ".(ts|tsx)": "<rootDir>/../../shared/jest-preprocessor"
     },
-    "setupFiles": ["./src/__tests__/globals.ts"],
+    "setupFiles": [
+      "./src/__tests__/globals.ts"
+    ],
     "testRegex": "/(src|test).*(\\.|/)(test|spec)\\.tsx?$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "json"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ]
   }
 }

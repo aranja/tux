@@ -1,6 +1,6 @@
 {
   "name": "neutrino-preset-tux",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Neutrino preset for building tux websites",
   "main": "index.js",
   "scripts": {
