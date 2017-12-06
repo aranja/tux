@@ -80,7 +80,6 @@ function getOptions(args: Args, target: Target) {
       serverEntry: require.resolve('./entry-points/server'),
       entry: 'app',
       output: target === 'browser' ? 'build/static' : 'build/ssr',
-      port: 5000,
       quiet: true,
     },
     args.options

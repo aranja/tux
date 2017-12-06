@@ -27,7 +27,8 @@
     "react-error-overlay": "~2.0.1",
     "webpack": "^2.6.1",
     "webpack-hot-middleware": "^2.20.0",
-    "webpack-node-externals": "^1.5.4"
+    "webpack-node-externals": "^1.5.4",
+    "webpack-stats-plugin": "^0.1.5"
   },
   "peerDependencies": {
     "neutrino": "^6.1.5"

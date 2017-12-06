@@ -48,7 +48,9 @@ args.middleware = [
 const command = require(`../lib/commands/${args._.shift()}`).default
 command(args, ...args._)
   .catch(err => {
-    if (err) {
+    if (err && err.code === 'TUX_SOFT_EXIT') {
+      process.exit(err.exitCode)
+    } else if (err) {
       console.error(err.stack || err)
       err.details && console.error(err.details)
     }

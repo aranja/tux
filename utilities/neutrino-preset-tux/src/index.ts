@@ -5,11 +5,11 @@ import hot from 'neutrino-middleware-hot'
 import {
   env,
   ssr,
-  betterOpen,
   betterDev,
   extractStyle,
   html,
   minifyStyle,
+  stats,
 } from './middlewares'
 import { Options } from './Options'
 
@@ -17,16 +17,6 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
   const isProd = process.env.NODE_ENV === 'production'
   const options = merge<Options>(
     {
-      devServer: {
-        quiet: neutrino.options.quiet,
-        noInfo: neutrino.options.quiet,
-        port: 5000,
-        https: neutrino.options.https,
-        open: true,
-        stats: {
-          errorDetails: false,
-        },
-      },
       hot: true,
       polyfills: {
         async: true,
@@ -46,7 +36,7 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
     ? neutrino.options.serverEntry
     : neutrino.options.browserEntry
 
-  // Build on top of the offical react preset (overriding devServer and open functionality).
+  // Build on top of the offical react preset (overriding devServer and open functionality for our own in tux-scripts).
   // Skip react-hot-loader for now while enabling other HMR functionality.
   const reactOptions = merge<any>(options, {
     devServer: { open: false },
@@ -60,12 +50,15 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
   // Add more environment variables.
   neutrino.use(env, options)
 
+  // Write stats files when building.
+  neutrino.use(stats)
+
   // prettier-ignore
   neutrino.config
     // Webpack Hot Server Middleware expects a MultiConfiguration with "server" and "client" names.
     .set('name', isServer ? 'server' : 'client')
 
-    // Remove devServer. We use webpack-dev-middleware
+    // Remove devServer. We use webpack-dev-middleware for SSR support.
     .devServer.clear().end()
 
     // Neutrino defaults to relative paths './'. Tux is optimized for SPAs, where absolute paths
@@ -83,9 +76,6 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
           .end()
         .end()
       .end()
-
-    // Use a better open utility.
-    .when(options.devServer.open, () => neutrino.use(betterOpen, options))
 
     // Extract and minify css in production.
     .when(isProd, () => {

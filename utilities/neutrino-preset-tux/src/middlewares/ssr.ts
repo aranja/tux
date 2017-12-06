@@ -54,11 +54,6 @@ export default (neutrino: Neutrino, options: any = {}) => {
   neutrino.use(webCompat)
   // prettier-ignore
   neutrino.config
-    .when(options.html.document, config =>
-      config
-        .entry('document')
-        .add(resolve(neutrino.options.root, options.html.document))
-    )
     .when(sourceMap, () => neutrino.use(banner))
     .performance
       .hints(false)
@@ -71,7 +66,7 @@ export default (neutrino: Neutrino, options: any = {}) => {
       .end()
     .devtool('source-map')
     .externals([nodeExternals({ whitelist: [/^webpack/, /tux/] })])
-    .entry('app')
+    .entry('index')
       .add(neutrino.options.entry)
       .end()
     .output

@@ -32,12 +32,17 @@
     "react-chain": "^0.5.0",
     "react-dev-utils": "~4.0.1",
     "react-document": "^0.7.0",
+    "selfsigned": "^1.10.1",
+    "spdy": "^3.4.7",
     "tux": "^1.0.1",
     "yargs": "^6.6.0",
     "webpack": "^2.6.1",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.20.0",
     "webpack-hot-server-middleware": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/spdy": "3.4.4"
   },
   "peerDependencies": {
     "react": ">16.0.0-beta",

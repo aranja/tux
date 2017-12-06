@@ -7,9 +7,6 @@ export interface Options {
   output?: string
   target?: string
   quiet?: boolean
-  https?: boolean
-  port?: number
-  host?: string
   tux?: {
     admin?: boolean
   }

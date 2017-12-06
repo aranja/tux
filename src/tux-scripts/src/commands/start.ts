@@ -2,30 +2,24 @@ import ora from 'ora'
 import merge from 'deepmerge'
 import { Compiler, Stats, MultiCompiler } from 'webpack'
 import chalk from 'chalk'
-import { choosePort } from 'react-dev-utils/WebpackDevServerUtils'
 import clearConsole from 'react-dev-utils/clearConsole'
+import openBrowser from 'react-dev-utils/openBrowser'
 import formatWebpackMessages from 'react-dev-utils/formatWebpackMessages'
 import { run } from '../compiler'
 import { Args } from '../options'
 import Server from '../server'
+import { exitProcess, getServerOptions } from './utilities'
 
 const isInteractive = process.stdout.isTTY
 
 export default async (args: Args) => {
-  const port = parseInt(process.env.PORT, 10) || 5000
-  const host = process.env.HOST || '0.0.0.0'
-  const https = process.env.HTTPS === 'true'
-  const protocol = https ? 'https' : 'http'
+  const serverOptions = await getServerOptions(args)
+  const protocol = serverOptions.https ? 'https' : 'http'
+  const url = `${protocol}://${serverOptions.host}:${serverOptions.port}`
 
   args = merge<Args>(
     {
       options: {
-        port,
-        host,
-        https,
-        tux: {
-          admin: true,
-        },
         env: {
           NODE_ENV: process.env.NODE_ENV || 'development',
         },
@@ -34,11 +28,6 @@ export default async (args: Args) => {
     },
     args
   )
-
-  await fixPort(args)
-  if (args.options.port == null) {
-    return
-  }
 
   if (isInteractive) {
     clearConsole()
@@ -52,22 +41,19 @@ export default async (args: Args) => {
     console.log()
     console.log(err.message || err)
     console.log()
-    process.exit(1)
+    throw exitProcess(1)
   }
 
   const server = new Server({
-    port,
-    host,
-    secure: https,
     multiCompiler,
+    ...serverOptions,
   })
+  await server.listen()
 
-  spinner.succeed(
-    `Development server running on: ${protocol}://${host}:${port}`
-  )
+  spinner.succeed(`Development server running on: ${url}`)
+  openBrowser(url)
+
   const building = ora('Waiting for initial compilation to finish').start()
-  let compileCount = 1
-
   multiCompiler.plugin('done', (stats: Stats) => {
     if (isInteractive) {
       clearConsole()
@@ -124,8 +110,4 @@ export default async (args: Args) => {
     building.text = 'Compiling...'
     building.start()
   })
-}
-
-async function fixPort({ options }: Args) {
-  options.port = await choosePort(options.host, options.port)
 }
