@@ -4,7 +4,7 @@ declare module 'neutrino-middleware-compile-loader'
 declare module 'neutrino-preset-react'
 declare module 'neutrino' {
   import Config from 'webpack-chain'
-  import { Compiler, Stats } from 'webpack'
+  import { Compiler, Configuration, Stats } from 'webpack'
 
   interface Future<T> {
     promise(): Promise<T>
@@ -25,10 +25,17 @@ declare module 'neutrino' {
     constructor(options: Options | any)
     config: Config
     options: Options | any
+    commands: {
+      [command: string]: (
+        config: Configuration | Configuration[],
+        api: Neutrino
+      ) => any
+    }
 
     on(event: string, callback: Function): void
     use(preset: Middleware, options?: any): void
     getWebpackOptions(): any
+    emitForAll(eventName: string, payload: any): Promise<Array<any>>
     register(
       command: string,
       handler: (config: any, api: Neutrino) => void

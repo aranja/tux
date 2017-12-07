@@ -1,20 +1,19 @@
 import { Neutrino } from 'neutrino'
 import path from 'path'
-import errorOverlayMiddleware from 'react-dev-utils/errorOverlayMiddleware'
 import WatchMissingNodeModulesPlugin from 'react-dev-utils/WatchMissingNodeModulesPlugin'
 import { removeEntryPoints } from '../utils'
 import { Options } from '../Options'
 
-export default ({ config }: Neutrino, options: Options) => {
+export default (
+  { config, options: { target } }: Neutrino,
+  options: Options
+) => {
   // Add better error handling from react-dev-utils
-  config.entry('index').when(options.hot, entry => {
+  config.entry('index').when(options.hot && target === 'browser', entry => {
     removeEntryPoints(entry, /dev-server/)
-    entry.prepend(require.resolve('react-dev-utils/webpackHotDevClient'))
-  })
-
-  // Support opening files from the runtime error overlay.
-  config.devServer.setup(app => {
-    app.use(errorOverlayMiddleware())
+    entry.prepend(
+      require.resolve('webpack-hot-middleware/client') + '?reload=true'
+    )
   })
 
   // Point sourcemap entries to original disk location (format as URL on Windows)

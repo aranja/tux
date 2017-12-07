@@ -1,6 +1,6 @@
 {
   "name": "tux-addon-helmet",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Use helmet for server and client side metadata.",
   "bugs": {
     "url": "https://github.com/aranja/tux/issues"

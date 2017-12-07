@@ -6,8 +6,13 @@ const helmet = () => session => {
     const data = Helmet.renderStatic()
     session.helmet = data
 
+    session.htmlProps = session.htmlProps || {}
+    session.bodyProps = session.bodyProps || {}
+    session.head = session.head || []
+
     Object.assign(session.htmlProps, data.htmlAttributes.toComponent())
     Object.assign(session.bodyProps, data.bodyAttributes.toComponent())
+
     session.head.push(
       ...data.title.toComponent(),
       ...data.meta.toComponent(),

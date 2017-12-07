@@ -1,6 +1,6 @@
 {
   "name": "neutrino-preset-tux",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Neutrino preset for building tux websites",
   "main": "index.js",
   "scripts": {
@@ -21,11 +21,14 @@
     "neutrino-middleware-banner": "^6.1.5",
     "neutrino-middleware-compile-loader": "^6.1.5",
     "neutrino-middleware-env": "^6.1.5",
+    "neutrino-middleware-hot": "^6.1.5",
     "neutrino-preset-react": "6.1.5",
     "react-dev-utils": "~4.0.1",
     "react-error-overlay": "~2.0.1",
     "webpack": "^2.6.1",
-    "webpack-node-externals": "^1.5.4"
+    "webpack-hot-middleware": "^2.20.0",
+    "webpack-node-externals": "^1.5.4",
+    "webpack-stats-plugin": "^0.1.5"
   },
   "peerDependencies": {
     "neutrino": "^6.1.5"

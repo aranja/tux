@@ -1,0 +1,17 @@
+{
+  "name": "tux-example-simple",
+  "version": "1.0.3",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.0.0-beta.5",
+    "react-dom": "^16.0.0-beta.5",
+    "tux": "^1.0.3",
+    "tux-scripts": "^1.0.3"
+  },
+  "scripts": {
+    "start": "tux-scripts start",
+    "build": "tux-scripts build",
+    "serve": "tux-scripts serve"
+  }
+}

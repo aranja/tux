@@ -15,7 +15,7 @@ export default routes => session => async () => {
     }
     return (
       <div>
-        <h1>404 Page not found</h1>
+        <h1>Whoops!</h1>
         {error.message}
       </div>
     )

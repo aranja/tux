@@ -12,7 +12,7 @@
     "lerna": "lerna",
     "bootstrap": "lerna bootstrap --hoist",
     "precommit": "lint-staged",
-    "prettier": "prettier --write -- \"**/*.{ts,tsx,css,js}\"",
+    "pretty": "prettier --write -- \"**/*.{ts,tsx,css,js}\"",
     "watch": "lerna run watch --parallel",
     "test": "lerna run test"
   },
@@ -67,7 +67,7 @@
     "lerna": "2.1.2",
     "lint-staged": "^4.0.3",
     "merge2": "^1.0.3",
-    "prettier": "^1.5.3",
+    "prettier": "^1.8.2",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-test-renderer": "^16.0.0-beta.5",
     "run-sequence": "^1.2.2",
@@ -80,9 +80,18 @@
     "yargs": "^6.6.0"
   },
   "lint-staged": {
-    "*.ts": ["prettier", "git add"],
-    "packages/*/{,src/**/}*.js": ["prettier", "git add"],
-    "*.css": ["prettier", "git add"]
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ],
+    "packages/*/{,src/**/}*.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.css": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "babel": {
     "env": {
@@ -98,7 +107,10 @@
             }
           ]
         ],
-        "presets": ["react", "es2015"]
+        "presets": [
+          "react",
+          "es2015"
+        ]
       }
     }
   },

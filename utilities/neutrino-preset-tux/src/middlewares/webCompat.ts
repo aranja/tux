@@ -5,8 +5,8 @@ export default ({ config }: Neutrino) => {
   // Disable dev server.
   config.devServer.clear()
 
-  // Remove browser entry points.
-  config.entryPoints.delete('index').delete('polyfill')
+  // Remove all entry points. We'll add SSR entry point manually.
+  config.entryPoints.clear()
 
   // Disable style, url and file loaders.
   const rules = config.module.rules

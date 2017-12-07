@@ -11,15 +11,17 @@ const Testimonial = ({ testimonial }) => (
             <div className="Testimonial-quote">
               <p className="Testimonial-quoteText">{testimony.fields.quote}</p>
               <p className="Testimonial-quoteAuthor">
-                {`${testimony.fields.attestantName}, ${testimony.fields
-                  .attestantTitle}`}
+                {`${testimony.fields.attestantName}, ${
+                  testimony.fields.attestantTitle
+                }`}
               </p>
             </div>
             <div
               className="Testimonial-image"
               style={{
-                backgroundImage: `url('${testimony.fields.attestantImage.fields
-                  .file.url}')`,
+                backgroundImage: `url('${
+                  testimony.fields.attestantImage.fields.file.url
+                }')`,
               }}
             />
           </div>

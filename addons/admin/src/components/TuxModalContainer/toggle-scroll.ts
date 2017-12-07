@@ -32,7 +32,9 @@ export function calculateScrollbarWidth({ className = defaultClassName } = {}) {
 
   function setCssRuleset(sidebarWidth: number) {
     const style = document.createElement('style')
-    const ruleset = `.${className} { margin-right: ${sidebarWidth}px; overflow: hidden; }`
+    const ruleset = `.${className} { margin-right: ${
+      sidebarWidth
+    }px; overflow: hidden; }`
     style.innerText = ruleset
     document.head.appendChild(style)
   }

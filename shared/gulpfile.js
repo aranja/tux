@@ -31,11 +31,6 @@ const babel = target =>
       'react',
       ['es2015', { modules: target === 'es2015' ? false : 'commonjs' }],
     ],
-    env: {
-      development: {
-        plugins: [require.resolve('react-hot-loader/babel')],
-      },
-    },
   }).on('error', function(error) {
     // only log babel errors once.
     if (target === 'es2015') {
