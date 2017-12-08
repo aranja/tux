@@ -60,9 +60,11 @@ Your `src/app.js` file defines a series of middlewares that compile and run diff
 
 Middlewares can add tags to the html [Document](https://github.com/aranja/react-document) on the server. They can also write data into a script tag and use it for the first render in the browser.
 
-## Documentation
+## Topics
 
-First read the [introduction](/docs/introduction.md). Then take a look at [the example site](/packages/tux-example-site/).
+* [Add-ons](docs/add-on.md)
+* Dev Server (**Coming soon**)
+* Admin (**Coming soon**)
 
 ## License
 
