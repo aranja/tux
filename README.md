@@ -2,9 +2,7 @@
 
 Create content-driven websites with React.
 
-Tux allows you to focus on building the website by taking care of Webpack, SSR and performance.
-
-If your website is fetching content from an api-driven CMS like Contentful, Tux has an integrated admin where the content can be edited inline.
+Tux takes care of Webpack and SSR, allowing you to focus on building the website of your dreams. Take advantage of the full React ecosystem and all of the recent innovations without "ejecting".
 
 **This is the documentation for tux@next, or v1.** Things are a bit rough right now. If you have questions, try reaching out on slack.
 

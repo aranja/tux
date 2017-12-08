@@ -1,8 +1,10 @@
 # TUX
 
-Create content-driven React websites with SSR and a plug-and-play configuration.
+Create content-driven websites with React.
 
-Tux uses add-ons, containing [Neutrino](https://neutrino.js.org/) and [React Chain](https://github.com/aranja/react-chain/) middlewares, to configure the build and render pipeline respectively.
+Tux takes care of Webpack and SSR, allowing you to focus on building the website of your dreams. Take advantage of the full React ecosystem and all of the recent innovations without "ejecting".
+
+Tux uses [add-ons](/add-on.md), containing [Neutrino](https://neutrino.js.org/) and [React Chain](https://github.com/aranja/react-chain/) middlewares, to configure the build and render pipeline respectively.
 
 **This is the [documentation](https://tux.js.org/v/v1/) for tux@next, or v1.** Things are still a bit rough. If you have questions, feel free to reach out on [Twitter](https://twitter.com/eirikurn) or [Slack](http://slack.javascript.is/).
 
@@ -62,7 +64,6 @@ Middlewares can add tags to the html [Document](https://github.com/aranja/react-
 
 ## Documentation
 
-First read the [introduction](/docs/introduction.md). Then take a look at [the example site](/packages/tux-example-site/).
 
 ## License
 
