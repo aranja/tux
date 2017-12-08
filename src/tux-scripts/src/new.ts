@@ -90,7 +90,7 @@ const init = async (
     return
   }
 
-  let dependencies = ['tux', 'tux-adapter-contentful']
+  let dependencies: string[] = []
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
