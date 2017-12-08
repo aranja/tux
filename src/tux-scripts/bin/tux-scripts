@@ -41,7 +41,7 @@ const args = yargs
 
 const rc = '.neutrinorc.js'
 args.middleware = [
-  ...(fs.existsSync(rc) ? [rc] : [require.resolve('neutrino-preset-tux')]),
+  ...(fs.existsSync(rc) ? [rc] : [require.resolve('tux/neutrino')]),
   ...args.use,
 ]
 
