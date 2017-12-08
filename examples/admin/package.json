@@ -1,22 +1,22 @@
 {
   "name": "tux-example-adapter-contentful",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "license": "MIT",
   "dependencies": {
     "classnames": "^2.2.5",
     "history": "^4.5.1",
     "neutrino": "6.1.5",
-    "neutrino-preset-tux": "^1.0.3",
+    "neutrino-preset-tux": "^1.0.4",
     "react": "^16.0.0",
     "react-document": "^0.7.0",
     "react-dom": "^16.0.0",
     "react-helmet": "^5.0.1",
-    "tux": "^1.0.3",
-    "tux-adapter-contentful": "^1.0.3",
+    "tux": "^1.0.4",
+    "tux-adapter-contentful": "^1.0.4",
     "tux-addon-admin": "^1.0.3",
-    "tux-addon-helmet": "^1.0.3",
-    "tux-scripts": "^1.0.3",
+    "tux-addon-helmet": "^1.0.4",
+    "tux-scripts": "^1.0.4",
     "universal-router": "^2.0.0"
   },
   "now": {
