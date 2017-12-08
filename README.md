@@ -6,7 +6,7 @@ Tux allows you to focus on building the website by taking care of Webpack, SSR a
 
 If your website is fetching content from an api-driven CMS like Contentful, Tux has an integrated admin where the content can be edited inline.
 
-> **Note:** Tux is in active development and the API is subject to change drastically before it hits version `1.0.0`.
+> **Note:** This is v0 of tux, check out the early release of [v1](https://tux.js.org/v/v1/).
 
 [![CircleCI branch](https://img.shields.io/circleci/project/github/aranja/tux/master.svg)](https://circleci.com/gh/aranja/tux) [![npm](https://img.shields.io/npm/v/tux.svg)](https://www.npmjs.com/package/tux) [![Slack channel](https://img.shields.io/badge/slack-%23tux%20%40%20jsis-61dafb.svg)](http://jsis-slackin.herokuapp.com/)
 
