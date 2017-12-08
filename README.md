@@ -6,16 +6,16 @@ Tux allows you to focus on building the website by taking care of Webpack, SSR a
 
 If your website is fetching content from an api-driven CMS like Contentful, Tux has an integrated admin where the content can be edited inline.
 
-> **Note:** Tux is in active development and the API is subject to change drastically before it hits version `1.0.0`.
+**This is the documentation for tux@next, or v1.** Things are a bit rough right now. If you have questions, try reaching out on slack.
 
-[![CircleCI branch](https://img.shields.io/circleci/project/github/aranja/tux/master.svg)](https://circleci.com/gh/aranja/tux) [![npm](https://img.shields.io/npm/v/tux.svg)](https://www.npmjs.com/package/tux) [![Slack channel](https://img.shields.io/badge/slack-%23tux%20%40%20jsis-61dafb.svg)](http://jsis-slackin.herokuapp.com/)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/aranja/tux/v1.svg)](https://circleci.com/gh/aranja/tux/tree/v1) [![npm](https://img.shields.io/npm/v/tux/next.svg)](https://www.npmjs.com/package/tux) [![Slack channel](https://img.shields.io/badge/slack-%23tux%20%40%20jsis-61dafb.svg)](http://slack.javascript.is/)
 
 ## Get started
 
 ```bash
-npm install -g tux-cli
+npm install -g create-tux-app@next
 
-tux new my-app
+create-tux-app my-app
 cd my-app/
 npm start
 ```
@@ -30,20 +30,19 @@ First read the [introduction](/docs/introduction.md). Then take a look at [the e
 
 ```bash
 # Install shared dependencies
-npm install
+yarn
 
 # Build packages for development and watch for changes
-npm run watch
+yarn watch
 
-# Run example site.
-# Note that currently, the admin is 
-cd packages/tux-example-site && npm start
+# Run an example site.
+cd examples/simple && yarn start
 
 # Run tests
-npm test
+yarn test
 
 # Lint
-npm run lint
+yarn lint
 ```
 
 ## License

@@ -77,10 +77,11 @@ There's no build middleware in this add-on.
 
 That's it! Just use React Router like normal.
 
-On the server, if you set `context.status` and `context.url` (eg using `<Redirect />`), the response will be updated with a status code and a redirect respectively.
+On the server, if you set `context.status` and `context.url` \(eg using `<Redirect />`\), the response will be updated with a status code and a redirect respectively.
 
 ## Contributing
 
 This add-on is part of the [tux](https://github.com/aranja/tux) monorepo. Follow the [contributing guide](/contributing.md) for details.
 
-[peer-url]: [https://reacttraining.com/react-router/](https://reacttraining.com/react-router/)
+\[peer-url\]: [https://reacttraining.com/react-router/](https://reacttraining.com/react-router/)
+
