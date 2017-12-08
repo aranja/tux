@@ -1,6 +1,6 @@
 {
   "name": "create-tux-app",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "license": "MIT",
   "description": "yarn create tux-app <name>",
   "keywords": [
@@ -17,6 +17,6 @@
   },
   "dependencies": {
     "execa": "^0.6.3",
-    "tux-cli": "^1.0.0"
+    "tux-cli": "^1.0.6"
   }
 }
