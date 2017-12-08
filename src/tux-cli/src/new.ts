@@ -49,7 +49,6 @@ const argv = (yargs as Argv)
   .option('verbose', { describe: 'Print additional logs' })
   .option('version', {
     describe: 'Use a non-standard version of tux',
-    default: '^1.0.0',
   })
   .command('new', 'Create a new tux project')
   .demandCommand(1, 'Please specify a command.\nUSAGE:  $0 <command>')
@@ -194,7 +193,7 @@ function install(
 }
 
 async function run(app: string, version: string, verbose: boolean) {
-  const allDependencies = [appendVersion('tux-scripts', version)]
+  const allDependencies = [appendVersion('tux-scripts', version || '^1.0.0')]
 
   console.log('Installing packages. This might take a couple minutes.')
 
