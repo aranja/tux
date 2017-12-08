@@ -83,7 +83,7 @@ export default async (args: Args) => {
 
     // Show warnings if no errors were found.
     if (messages.warnings.length) {
-      building.warn(`${name}: Compiled with warnings`)
+      building.warn('Compiled with warnings')
       // tslint:disable-next-line:no-console
       console.log(messages.warnings.join('\n\n'))
 
