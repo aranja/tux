@@ -6,7 +6,6 @@
     "start": "cd examples/admin && npm start",
     "now-build": "cd examples/admin && npm run build -- --admin",
     "now-start": "cd examples/admin && npm run serve",
-    "postinstall": "npm run bootstrap",
     "lint": "./tasks/lint-project.sh",
     "check-types": "TS_FAIL_ON_ERROR=true lerna run prepublish --silent",
     "lerna": "lerna",
@@ -118,5 +117,12 @@
     "commitizen": {
       "path": "./node_modules/cz-lerna-changelog"
     }
-  }
+  },
+  "workspaces": [
+    "utilities/*",
+    "src/*",
+    "addons/*",
+    "adapters/*",
+    "examples/*"
+  ]
 }
