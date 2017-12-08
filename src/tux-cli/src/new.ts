@@ -193,7 +193,9 @@ function install(
 }
 
 async function run(app: string, version: string, verbose: boolean) {
-  const allDependencies = [appendVersion('tux-scripts', version || '^1.0.0')]
+  const allDependencies = [
+    version ? appendVersion('tux-scripts', version) : 'tux-scripts@^1.0.0',
+  ]
 
   console.log('Installing packages. This might take a couple minutes.')
 
