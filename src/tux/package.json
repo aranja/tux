@@ -1,6 +1,6 @@
 {
   "name": "tux",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Configurable React app with SSR.",
   "bugs": {
     "url": "https://github.com/aranja/tux/issues"
