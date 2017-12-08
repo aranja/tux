@@ -6,10 +6,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "history": "^4.5.1",
-    "neutrino": "6.1.5",
-    "neutrino-preset-tux": "^1.0.4",
     "react": "^16.0.0",
-    "react-document": "^0.7.0",
     "react-dom": "^16.0.0",
     "react-helmet": "^5.0.1",
     "tux": "^1.0.5",

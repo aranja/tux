@@ -1,7 +1,7 @@
 import { Neutrino } from 'neutrino'
 import merge from 'deepmerge'
-import react from 'neutrino-preset-react'
-import hot from 'neutrino-middleware-hot'
+import react from '@neutrinojs/react'
+import hot from '@neutrinojs/hot'
 import {
   env,
   ssr,
@@ -79,8 +79,7 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
 
     // Extract and minify css in production.
     .when(isProd, () => {
-      neutrino.use(extractStyle)
-      neutrino.use(minifyStyle)
+      // neutrino.use(minifyStyle)
     })
 
     // Add goodies from create-react-app project.
