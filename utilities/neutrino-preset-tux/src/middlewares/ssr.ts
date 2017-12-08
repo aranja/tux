@@ -66,7 +66,7 @@ export default (neutrino: Neutrino, options: any = {}) => {
     .devtool('source-map')
     .externals([nodeExternals({ whitelist: [/^webpack/, /tux/] })])
     .entry('index')
-      .add(neutrino.options.entry)
+      .add(neutrino.options.mains.index)
       .end()
     .output
       .path(neutrino.options.output)

@@ -7,6 +7,9 @@ export interface Options {
   output?: string
   target?: string
   quiet?: boolean
+  mains?: {
+    index?: string
+  }
   tux?: {
     admin?: boolean
   }

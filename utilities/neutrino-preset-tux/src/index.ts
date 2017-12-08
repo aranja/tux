@@ -31,8 +31,8 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
   const isServer = neutrino.options.target === 'server'
 
   // Replace entry based on target.
-  neutrino.options.appEntry = neutrino.options.entry
-  neutrino.options.entry = isServer
+  neutrino.options.appEntry = neutrino.options.mains.index
+  neutrino.options.mains.index = isServer
     ? neutrino.options.serverEntry
     : neutrino.options.browserEntry
 
