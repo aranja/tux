@@ -1,7 +1,7 @@
-declare module 'neutrino-middleware-env'
-declare module 'neutrino-middleware-banner'
-declare module 'neutrino-middleware-compile-loader'
-declare module 'neutrino-preset-react'
+declare module '@neutrinojs/env'
+declare module '@neutrinojs/banner'
+declare module '@neutrinojs/compile-loader'
+declare module '@neutrinojs/react'
 declare module 'neutrino' {
   import Config from 'webpack-chain'
   import { Compiler, Configuration, Stats } from 'webpack'
@@ -49,6 +49,7 @@ declare module 'neutrino' {
     ): Future<Stats | Compiler | string>
     requiresAndUses(middleware: string[]): Future<any>
   }
+  export function Neutrino(options: Options): Neutrino
 
   export function run(
     command: string,

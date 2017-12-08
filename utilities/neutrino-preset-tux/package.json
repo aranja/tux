@@ -16,21 +16,23 @@
   "dependencies": {
     "babel-plugin-dynamic-import-node": "^1.0.1",
     "deepmerge": "^1.5.1",
-    "extract-text-webpack-plugin": "^2.1.0",
     "jsx-html-webpack-plugin": "^1.0.4",
-    "neutrino-middleware-banner": "^6.1.5",
-    "neutrino-middleware-compile-loader": "^6.1.5",
-    "neutrino-middleware-env": "^6.1.5",
-    "neutrino-middleware-hot": "^6.1.5",
-    "neutrino-preset-react": "6.1.5",
+    "@neutrinojs/banner": "8.0.0",
+    "@neutrinojs/env": "8.0.0",
+    "@neutrinojs/hot": "8.0.0",
+    "@neutrinojs/react": "8.0.0",
     "react-dev-utils": "~4.0.1",
     "react-error-overlay": "~2.0.1",
-    "webpack": "^2.6.1",
+    "webpack": "^3.1.0",
     "webpack-hot-middleware": "^2.20.0",
     "webpack-node-externals": "^1.5.4",
     "webpack-stats-plugin": "^0.1.5"
   },
+  "devDependencies": {
+    "eslint": "^4.0.0",
+    "neutrino": "^8.0.0"
+  },
   "peerDependencies": {
-    "neutrino": "^6.1.5"
+    "neutrino": "^8.0.0"
   }
 }

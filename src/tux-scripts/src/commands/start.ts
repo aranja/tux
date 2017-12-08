@@ -39,7 +39,7 @@ export default async (args: Args) => {
   } catch (err) {
     spinner.fail('Failed to compile')
     console.log()
-    console.log(err.message || err)
+    console.log(err.stackTrace || err)
     console.log()
     throw exitProcess(1)
   }

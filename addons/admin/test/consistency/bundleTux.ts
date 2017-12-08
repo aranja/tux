@@ -37,7 +37,7 @@ export default function bundleTux(target) {
   const output = `${tmpdir()}/tux`
 
   // Depending on the commonjs build, to avoid complicated typescript or babel config.
-  const neutrino = new Neutrino({
+  const neutrino = Neutrino({
     output,
     source: 'lib',
   })

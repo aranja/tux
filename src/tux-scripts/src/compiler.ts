@@ -57,7 +57,7 @@ function createNeutrinoApis(target: Target, args: Args) {
   }
 
   return apiOptions.map(options => {
-    const api = new Neutrino(options)
+    const api = Neutrino(options)
 
     // Register built in commands
     api.register('start', start)

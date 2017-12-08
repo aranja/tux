@@ -1,5 +1,5 @@
 import { Neutrino } from 'neutrino'
-import env from 'neutrino-middleware-env'
+import env from '@neutrinojs/env'
 import { DefinePlugin } from 'webpack'
 
 export default (neutrino: Neutrino) => {
