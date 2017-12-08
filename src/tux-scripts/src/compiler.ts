@@ -78,7 +78,7 @@ function getOptions(args: Args, target: Target) {
       target,
       browserEntry: require.resolve('./entry-points/browser'),
       serverEntry: require.resolve('./entry-points/server'),
-      entry: 'app',
+      mains: { index: 'app' },
       output: target === 'browser' ? 'build/static' : 'build/ssr',
       quiet: true,
     },
