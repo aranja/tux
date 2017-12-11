@@ -40,7 +40,7 @@
     "styled-jsx": "^0.5.4"
   },
   "devDependencies": {
-    "neutrino": "^8.0.0"
+    "neutrino": "^8.0.1"
   },
   "jest": {
     "transform": {

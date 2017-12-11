@@ -17,10 +17,10 @@
     "babel-plugin-dynamic-import-node": "^1.0.1",
     "deepmerge": "^1.5.1",
     "jsx-html-webpack-plugin": "^1.0.4",
-    "@neutrinojs/banner": "8.0.0",
-    "@neutrinojs/env": "8.0.0",
-    "@neutrinojs/hot": "8.0.0",
-    "@neutrinojs/react": "8.0.0",
+    "@neutrinojs/banner": "8.0.10",
+    "@neutrinojs/env": "8.0.10",
+    "@neutrinojs/hot": "8.0.10",
+    "@neutrinojs/react": "8.0.10",
     "react-dev-utils": "~4.0.1",
     "react-error-overlay": "~2.0.1",
     "webpack": "^3.1.0",
@@ -30,9 +30,9 @@
   },
   "devDependencies": {
     "eslint": "^4.0.0",
-    "neutrino": "^8.0.0"
+    "neutrino": "^8.0.1"
   },
   "peerDependencies": {
-    "neutrino": "^8.0.0"
+    "neutrino": "^8.0.1"
   }
 }

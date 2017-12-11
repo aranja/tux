@@ -32,7 +32,7 @@
     "webpack-sort-chunks": "^0.1.0"
   },
   "devDependencies": {
-    "neutrino": "^8.0.0"
+    "neutrino": "^8.0.1"
   },
   "jest": {
     "transform": {
