@@ -19,104 +19,117 @@
     normalize-path "^2.0.1"
     through2 "^2.0.3"
 
-"@neutrinojs/babel-minify@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/babel-minify/-/babel-minify-8.0.0.tgz#69df6fe4b447161d68f4145c0695f83721b2edb4"
+"@neutrinojs/babel-minify-webpack-plugin@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/babel-minify-webpack-plugin/-/babel-minify-webpack-plugin-0.2.0.tgz#be87d8e7049e216ed8cce07b9b7ff292293832d8"
   dependencies:
-    babel-minify-webpack-plugin "^0.2.0"
+    babel-core "^6.24.1"
+    babel-preset-minify "^0.2.0"
+    webpack-sources "1.0.1"
 
-"@neutrinojs/banner@8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/banner/-/banner-8.0.0.tgz#0b2ce022b928d493cb64cab5ce2ceb3b76698685"
+"@neutrinojs/babel-minify@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/babel-minify/-/babel-minify-8.0.10.tgz#4d1d8080e625de6f1036bbb1d2048d2db8ab336c"
+  dependencies:
+    "@neutrinojs/babel-minify-webpack-plugin" "^0.2.0"
+
+"@neutrinojs/banner@8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/banner/-/banner-8.0.10.tgz#12d56b6b4dc74bc1608bc0334e3bd1ec16322e2e"
   dependencies:
     deepmerge "^1.5.2"
     webpack "^3.10.0"
+    webpack-sources "1.0.1"
 
-"@neutrinojs/chunk@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/chunk/-/chunk-8.0.0.tgz#796648af8601619e76b90e1c9c98ebd77e65bcf0"
+"@neutrinojs/chunk@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/chunk/-/chunk-8.0.10.tgz#2a107c25ae3a1216ef9ff2f97aacd0e8ea2983e5"
   dependencies:
     name-all-modules-plugin "^1.0.1"
     webpack "^3.10.0"
+    webpack-sources "1.0.1"
 
-"@neutrinojs/clean@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/clean/-/clean-8.0.0.tgz#7a0fff468f98e31f18a8130ce896db5955a8968b"
+"@neutrinojs/clean@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/clean/-/clean-8.0.10.tgz#39955a7b2f5ff872db4383e7b5588f73eb700db0"
   dependencies:
     clean-webpack-plugin "^0.1.17"
     deepmerge "^1.5.2"
 
-"@neutrinojs/compile-loader@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/compile-loader/-/compile-loader-8.0.0.tgz#c6b56a8b31498f0c2ce1067027c2dd250b362368"
+"@neutrinojs/compile-loader@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/compile-loader/-/compile-loader-8.0.10.tgz#586418143ad57dd9fa6859e5da4846c30b156f50"
   dependencies:
     babel-core "^6.26.0"
     babel-loader "^7.1.2"
     babel-merge "^1.1.0"
     deepmerge "^1.5.2"
 
-"@neutrinojs/copy@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/copy/-/copy-8.0.0.tgz#033de5df092ffdf31d22faab92201b5a6925cf8d"
+"@neutrinojs/copy@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/copy/-/copy-8.0.10.tgz#530ed1ee03d136eccae5296c4128148a1ebbd898"
   dependencies:
     copy-webpack-plugin "^4.2.3"
     deepmerge "^1.5.2"
 
-"@neutrinojs/dev-server@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/dev-server/-/dev-server-8.0.0.tgz#f579f425255ec368719f8c623ff0e1ac1a6491fd"
+"@neutrinojs/dev-server@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/dev-server/-/dev-server-8.0.10.tgz#1b63ef5a11cc14aba9b84b9e8697edf2430c5d63"
   dependencies:
     deepmerge "^1.5.2"
     opn "^5.1.0"
     webpack "^3.10.0"
     webpack-dev-server "^2.9.7"
+    webpack-sources "1.0.1"
 
-"@neutrinojs/env@8.0.0", "@neutrinojs/env@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/env/-/env-8.0.0.tgz#a79cb19049f3fc2018227dc601cc862a7ab3e8ec"
+"@neutrinojs/env@8.0.10", "@neutrinojs/env@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/env/-/env-8.0.10.tgz#fa6afeb217efd17eb7215a960e595dc28141f7d5"
   dependencies:
     webpack "^3.10.0"
+    webpack-sources "1.0.1"
 
-"@neutrinojs/font-loader@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/font-loader/-/font-loader-8.0.0.tgz#1b0650da96a242343bef05fe57fc4fba93e783e5"
+"@neutrinojs/font-loader@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/font-loader/-/font-loader-8.0.10.tgz#441c46c68f690ddc8848f079d5647179e75eed13"
   dependencies:
     deepmerge "^1.5.2"
     file-loader "^1.0.0"
     url-loader "^0.6.0"
 
-"@neutrinojs/hot@8.0.0", "@neutrinojs/hot@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/hot/-/hot-8.0.0.tgz#11b5c992a3b0e00ad975a8667d6100c50b241a6e"
+"@neutrinojs/hot@8.0.10", "@neutrinojs/hot@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/hot/-/hot-8.0.10.tgz#c4703d6baaa5fbc7559e9b3f532724c809a80ba7"
   dependencies:
     webpack "^3.10.0"
+    webpack-sources "1.0.1"
 
-"@neutrinojs/html-loader@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/html-loader/-/html-loader-8.0.0.tgz#c733c65ac30d83367109bcd6bbd23812bb17297a"
+"@neutrinojs/html-loader@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/html-loader/-/html-loader-8.0.10.tgz#de65b5039e23672744792c894d2947ae490ea1a6"
   dependencies:
     deepmerge "^1.5.2"
     html-loader "^0.5.1"
 
-"@neutrinojs/html-template@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/html-template/-/html-template-8.0.0.tgz#77702ba009a93f7893482e262bd9b5f9fbc5a66b"
+"@neutrinojs/html-template@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/html-template/-/html-template-8.0.10.tgz#3c42084c4f2d9f51aba19bf1efe00081e5147230"
   dependencies:
     deepmerge "^1.5.2"
     html-webpack-plugin "^2.30.1"
     html-webpack-template "^6.1.0"
 
-"@neutrinojs/image-loader@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/image-loader/-/image-loader-8.0.0.tgz#50491a9c8c13a5136fe33d9c8f1a6e1e4cb93370"
+"@neutrinojs/image-loader@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/image-loader/-/image-loader-8.0.10.tgz#06540e9c53eeaa63c7a7af1bdc2b4523fdcb4394"
   dependencies:
     deepmerge "^1.5.2"
     file-loader "^1.0.0"
     url-loader "^0.6.0"
 
-"@neutrinojs/image-minify@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/image-minify/-/image-minify-8.0.0.tgz#b20c6233994887972e69c17d0af7f9b1306317e8"
+"@neutrinojs/image-minify@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/image-minify/-/image-minify-8.0.10.tgz#7bf5c47d55df85b6ecb6c514caef2eaabf4dda08"
   dependencies:
     deepmerge "^1.5.2"
     imagemin-gifsicle "5.2.0"
@@ -126,28 +139,28 @@
     imagemin-webp "^4.0.0"
     imagemin-webpack "^1.1.2"
 
-"@neutrinojs/loader-merge@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/loader-merge/-/loader-merge-8.0.0.tgz#f5880b1da97b1195af6517bb786f55e9a13ee0d0"
+"@neutrinojs/loader-merge@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/loader-merge/-/loader-merge-8.0.10.tgz#81c1e4ee9f5751a9770cffef383e5b6ec20d8a9f"
   dependencies:
     deepmerge "^1.5.2"
 
-"@neutrinojs/minify@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/minify/-/minify-8.0.0.tgz#8afea92a62b390847cb25a0c7da7065908783c2e"
+"@neutrinojs/minify@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/minify/-/minify-8.0.10.tgz#1e7b80cfbea247b81b0ef9f34c1add897ed93fe5"
   dependencies:
-    "@neutrinojs/babel-minify" "^8.0.0"
-    "@neutrinojs/image-minify" "^8.0.0"
-    "@neutrinojs/style-minify" "^8.0.0"
+    "@neutrinojs/babel-minify" "^8.0.10"
+    "@neutrinojs/image-minify" "^8.0.10"
+    "@neutrinojs/style-minify" "^8.0.10"
     deepmerge "^1.5.2"
 
-"@neutrinojs/react@8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/react/-/react-8.0.0.tgz#1ecce13a19174d1afc569852eaa760d88fa37311"
+"@neutrinojs/react@8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/react/-/react-8.0.10.tgz#c89c9b485eb124ede37113d696e9ccaf417d9db8"
   dependencies:
-    "@neutrinojs/compile-loader" "^8.0.0"
-    "@neutrinojs/loader-merge" "^8.0.0"
-    "@neutrinojs/web" "^8.0.0"
+    "@neutrinojs/compile-loader" "^8.0.10"
+    "@neutrinojs/loader-merge" "^8.0.10"
+    "@neutrinojs/web" "^8.0.10"
     babel-plugin-jsx-pragmatic "^1.0.2"
     babel-plugin-transform-class-properties "^6.24.1"
     babel-plugin-transform-es2015-classes "^6.24.1"
@@ -158,9 +171,9 @@
     eslint-plugin-react "^7.5.1"
     react-hot-loader "^3.1.3"
 
-"@neutrinojs/style-loader@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/style-loader/-/style-loader-8.0.0.tgz#709d41f442cf1c029c2ed93926525bdc2c86d1cb"
+"@neutrinojs/style-loader@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/style-loader/-/style-loader-8.0.10.tgz#e2202717dbcaf63a7ab19782fbd64402d44a6611"
   dependencies:
     css-hot-loader "^1.3.4"
     css-loader "^0.28.7"
@@ -168,37 +181,38 @@
     extract-text-webpack-plugin "^3.0.2"
     style-loader "^0.19.0"
 
-"@neutrinojs/style-minify@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/style-minify/-/style-minify-8.0.0.tgz#3a931a1a7b1be4093d6f9cd68019bdec6f93232d"
+"@neutrinojs/style-minify@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/style-minify/-/style-minify-8.0.10.tgz#3cd4cf2a3c937085a8a8a0404f9533de569d894b"
   dependencies:
     deepmerge "^1.5.2"
     optimize-css-assets-webpack-plugin "^3.2.0"
 
-"@neutrinojs/web@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@neutrinojs/web/-/web-8.0.0.tgz#a3b18a7278b339f3badc841b5c6dcdd4600995ab"
+"@neutrinojs/web@^8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/web/-/web-8.0.10.tgz#65f6234635bc94978b047bd4e7c98da85fbf8df7"
   dependencies:
-    "@neutrinojs/chunk" "^8.0.0"
-    "@neutrinojs/clean" "^8.0.0"
-    "@neutrinojs/compile-loader" "^8.0.0"
-    "@neutrinojs/copy" "^8.0.0"
-    "@neutrinojs/dev-server" "^8.0.0"
-    "@neutrinojs/env" "^8.0.0"
-    "@neutrinojs/font-loader" "^8.0.0"
-    "@neutrinojs/hot" "^8.0.0"
-    "@neutrinojs/html-loader" "^8.0.0"
-    "@neutrinojs/html-template" "^8.0.0"
-    "@neutrinojs/image-loader" "^8.0.0"
-    "@neutrinojs/loader-merge" "^8.0.0"
-    "@neutrinojs/minify" "^8.0.0"
-    "@neutrinojs/style-loader" "^8.0.0"
+    "@neutrinojs/chunk" "^8.0.10"
+    "@neutrinojs/clean" "^8.0.10"
+    "@neutrinojs/compile-loader" "^8.0.10"
+    "@neutrinojs/copy" "^8.0.10"
+    "@neutrinojs/dev-server" "^8.0.10"
+    "@neutrinojs/env" "^8.0.10"
+    "@neutrinojs/font-loader" "^8.0.10"
+    "@neutrinojs/hot" "^8.0.10"
+    "@neutrinojs/html-loader" "^8.0.10"
+    "@neutrinojs/html-template" "^8.0.10"
+    "@neutrinojs/image-loader" "^8.0.10"
+    "@neutrinojs/loader-merge" "^8.0.10"
+    "@neutrinojs/minify" "^8.0.10"
+    "@neutrinojs/style-loader" "^8.0.10"
     babel-plugin-syntax-dynamic-import "^6.18.0"
     babel-preset-env "^1.6.0"
     deepmerge "^1.5.2"
     fast-async "^6.3.0"
     webpack "^3.10.0"
     webpack-manifest-plugin "^1.3.2"
+    webpack-sources "1.0.1"
     worker-loader "^1.0.0"
 
 "@semantic-release/commit-analyzer@^2.0.0":
@@ -1021,14 +1035,6 @@ babel-messages@^6.23.0, babel-messages@^6.8.0:
   resolved "https://registry.yarnpkg.com/babel-messages/-/babel-messages-6.23.0.tgz#f3cdf4703858035b2a2951c6ec5edf6c62f2630e"
   dependencies:
     babel-runtime "^6.22.0"
-
-babel-minify-webpack-plugin@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/babel-minify-webpack-plugin/-/babel-minify-webpack-plugin-0.2.0.tgz#ef9694d11a1b8ab8f3204d89f5c9278dd28fc2a9"
-  dependencies:
-    babel-core "^6.24.1"
-    babel-preset-minify "^0.2.0"
-    webpack-sources "^1.0.1"
 
 babel-plugin-check-es2015-constants@^6.22.0:
   version "6.22.0"
@@ -6936,9 +6942,9 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-neutrino@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/neutrino/-/neutrino-8.0.0.tgz#66258468964e3343afbf971b0bd21914ebbaf06e"
+neutrino@^8.0.1:
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/neutrino/-/neutrino-8.0.10.tgz#7be826b30c82033fc61f2c86877019c3bd1c2f3f"
   dependencies:
     deep-sort-object "^1.0.2"
     deepmerge "^1.5.2"
@@ -6952,6 +6958,7 @@ neutrino@^8.0.0:
     webpack "^3.10.0"
     webpack-chain "^4.5.0"
     webpack-dev-server "^2.9.7"
+    webpack-sources "1.0.1"
     yargs "^10.0.0"
 
 next-tick@1:
@@ -10267,6 +10274,13 @@ webpack-sort-chunks@^0.1.0:
   resolved "https://registry.yarnpkg.com/webpack-sort-chunks/-/webpack-sort-chunks-0.1.0.tgz#a0295287788fe1bd47e2bbceaa73eba13025ea30"
   dependencies:
     toposort "^1.0.3"
+
+webpack-sources@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.0.1.tgz#c7356436a4d13123be2e2426a05d1dad9cbe65cf"
+  dependencies:
+    source-list-map "^2.0.0"
+    source-map "~0.5.3"
 
 webpack-sources@^1.0.0, webpack-sources@^1.0.1:
   version "1.1.0"
