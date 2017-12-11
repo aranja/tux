@@ -83,7 +83,7 @@ class Server {
       const serverStats = require(CLIENT_STATS_PATH)
 
       // Serve static files and server renderer.
-      this.app.use(express.static(CLIENT_ASSETS_DIR))
+      this.app.use(express.static(CLIENT_ASSETS_DIR, { index: false }))
       this.app.use(serverRenderer({ clientStats, serverStats }))
     } else {
       throw new Error(
