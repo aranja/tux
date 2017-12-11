@@ -18,7 +18,7 @@ const emitForAll = (apis: Neutrino[], eventName: string) =>
 export async function run(commandName: Command, args: Args) {
   const target =
     args.target || (commandName in multiCommands ? 'multi' : 'browser')
-  const apis = createNeutrinoApis(target, args)
+  const apis = createNeutrinoApis(commandName, target, args)
 
   // Trigger all pre events
   await emitForAll(apis, `pre${commandName}`)
@@ -47,13 +47,13 @@ export async function run(commandName: Command, args: Args) {
   return promiseResult
 }
 
-function createNeutrinoApis(target: Target, args: Args) {
+function createNeutrinoApis(commandName: Command, target: Target, args: Args) {
   const apiOptions = []
   if (target === 'browser' || target === 'multi') {
-    apiOptions.push(getOptions(args, 'browser'))
+    apiOptions.push(getOptions(commandName, args, 'browser'))
   }
   if (target === 'server' || target === 'multi') {
-    apiOptions.push(getOptions(args, 'server'))
+    apiOptions.push(getOptions(commandName, args, 'server'))
   }
 
   return apiOptions.map(options => {
@@ -72,10 +72,11 @@ function createNeutrinoApis(target: Target, args: Args) {
   })
 }
 
-function getOptions(args: Args, target: Target) {
+function getOptions(command: Command, args: Args, target: Target) {
   return merge<Options>(
     {
       target,
+      command,
       browserEntry: require.resolve('./entry-points/browser'),
       serverEntry: require.resolve('./entry-points/server'),
       mains: { index: 'app' },
