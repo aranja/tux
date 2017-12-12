@@ -27,11 +27,14 @@ export default ({ config }: Neutrino) => {
   config.plugins
     .delete('vendor-chunk')
     .delete('runtime-chunk')
-    .delete('html')
     .delete('copy')
     .delete('minify')
     .delete('manifest')
-    .delete('extract-css')
+
+  // HTML template plugins, one for each main.
+  Object.keys(config.plugins.entries())
+    .filter(plugin => plugin.startsWith('html-'))
+    .forEach(plugin => config.plugins.delete(plugin))
 }
 
 function fixFileLoader(options: any) {

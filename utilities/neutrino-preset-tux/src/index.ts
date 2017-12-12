@@ -33,6 +33,7 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
   const reactOptions = merge<any>(options, {
     devServer: { open: false },
     hot: false,
+    ...isServer ? { style: { extract: false } } : {},
   })
   neutrino.use(react, reactOptions)
 
