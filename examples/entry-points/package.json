@@ -6,8 +6,8 @@
   "dependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "tux": "^1.0.5",
-    "tux-scripts": "^1.0.10"
+    "tux": "^0.4.0",
+    "tux-scripts": "^0.4.0"
   },
   "scripts": {
     "start": "tux-scripts start --options.serverEntry server --options.browserEntry browser",

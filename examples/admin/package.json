@@ -1,6 +1,6 @@
 {
   "name": "tux-example-adapter-contentful",
-  "version": "1.0.10",
+  "version": "0.4.0",
   "private": true,
   "license": "MIT",
   "dependencies": {
@@ -9,11 +9,11 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-helmet": "^5.0.1",
-    "tux": "^1.0.5",
-    "tux-adapter-contentful": "^1.0.5",
-    "tux-addon-admin": "^1.0.3",
-    "tux-addon-helmet": "^1.0.4",
-    "tux-scripts": "^1.0.10",
+    "tux": "^0.4.0",
+    "tux-adapter-contentful": "^0.4.0",
+    "tux-addon-admin": "^0.4.0",
+    "tux-addon-helmet": "^0.4.0",
+    "tux-scripts": "^0.4.0",
     "universal-router": "^2.0.0"
   },
   "now": {

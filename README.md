@@ -4,15 +4,14 @@ Create content-driven React websites with SSR and a plug-and-play configuration.
 
 Tux uses add-ons, containing [Neutrino](https://neutrino.js.org/) and [React Chain](https://github.com/aranja/react-chain/) middlewares, to configure the build and render pipeline respectively.
 
-**This is the [documentation](https://tux.js.org/v/v1/) for tux@next, or v1.** Things are still a bit rough. If you have questions, feel free to reach out on [Twitter](https://twitter.com/eirikurn) or [Slack](http://slack.javascript.is/).
+> **Note:** Tux is still in an experimental development stage. The documentation is not complete or may be out of date. If you have questions, feel free to reach out on [Twitter](https://twitter.com/eirikurn) or [Slack](http://slack.javascript.is/).
 
-[![CircleCI branch](https://img.shields.io/circleci/project/github/aranja/tux/v1.svg)](https://circleci.com/gh/aranja/tux/tree/v1) [![npm](https://img.shields.io/npm/v/tux/next.svg)](https://www.npmjs.com/package/tux) [![Slack channel](https://img.shields.io/badge/slack-%23tux%40jsis-61dafb.svg)](http://slack.javascript.is/)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/aranja/tux/master.svg)](https://circleci.com/gh/aranja/tux/tree/master) [![npm](https://img.shields.io/npm/v/tux.svg)](https://www.npmjs.com/package/tux) [![Slack channel](https://img.shields.io/badge/slack-%23tux%40jsis-61dafb.svg)](http://slack.javascript.is/)
 
 ## Quick start
 
 ```bash
-npm install --global create-tux-app@next
-create-tux-app hello-tux
+yarn create tux-app hello-tux
 
 cd hello-tux/
 npm start
