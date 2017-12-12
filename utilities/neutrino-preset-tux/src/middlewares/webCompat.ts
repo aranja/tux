@@ -30,6 +30,7 @@ export default ({ config }: Neutrino) => {
     .delete('copy')
     .delete('minify')
     .delete('manifest')
+    .delete('jsx-html')
 
   // HTML template plugins, one for each main.
   Object.keys(config.plugins.entries())

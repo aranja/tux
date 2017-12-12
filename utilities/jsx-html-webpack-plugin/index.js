@@ -11,7 +11,7 @@ class JsxHtmlWebpackPlugin {
     this.options = Object.assign(
       {
         document: ReactDocument.file,
-        assetsFileName: 'assets.json',
+        assetsFileName: null,
         props: {},
       },
       options
