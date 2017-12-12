@@ -1,7 +1,7 @@
 export interface Modal {
   id: number
   element: any
-  onClose: (result: any) => void
+  onClose: (result?: any) => void
 }
 
 export type State = Array<Modal>

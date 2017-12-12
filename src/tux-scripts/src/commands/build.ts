@@ -10,9 +10,6 @@ export default async (args: Args) => {
   args = merge<Args>(
     {
       options: {
-        tux: {
-          admin: false,
-        },
         env: {
           NODE_ENV: process.env.NODE_ENV || 'production',
         },

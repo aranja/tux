@@ -14,11 +14,10 @@ function adminExtension(neutrino: Neutrino) {
 export default (neutrino: Neutrino) => {
   // Configure admin variable.
   if (process.env.ADMIN == null) {
-    if (neutrino.options.admin != null) {
-      process.env.ADMIN = neutrino.options.admin
-    } else {
-      process.env.ADMIN = process.env.NODE_ENV === 'development'
-    }
+    const { admin } = neutrino.options
+    const buildAdmin =
+      admin != null ? admin : process.env.NODE_ENV === 'development'
+    process.env.ADMIN = buildAdmin ? 'true' : ''
   }
 
   // Add ADMIN environment variable to bundle.

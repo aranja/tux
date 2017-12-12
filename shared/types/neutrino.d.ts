@@ -2,6 +2,7 @@ declare module '@neutrinojs/env'
 declare module '@neutrinojs/banner'
 declare module '@neutrinojs/compile-loader'
 declare module '@neutrinojs/react'
+declare module '@neutrinojs/hot'
 declare module 'neutrino' {
   import Config from 'webpack-chain'
   import { Compiler, Configuration, Stats } from 'webpack'
@@ -21,8 +22,7 @@ declare module 'neutrino' {
 
   export type Middleware = (neutrino: Neutrino, options?: any) => void
 
-  export class Neutrino {
-    constructor(options: Options | any)
+  export interface Neutrino {
     config: Config
     options: Options | any
     commands: {
@@ -49,7 +49,7 @@ declare module 'neutrino' {
     ): Future<Stats | Compiler | string>
     requiresAndUses(middleware: string[]): Future<any>
   }
-  export function Neutrino(options: Options): Neutrino
+  export function Neutrino(options: Options | any): Neutrino
 
   export function run(
     command: string,

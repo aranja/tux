@@ -38,9 +38,11 @@ export default async (args: Args) => {
     multiCompiler = await run('start', args)
   } catch (err) {
     spinner.fail('Failed to compile')
+    // tslint:disable:no-console
     console.log()
     console.log(err.stackTrace || err)
     console.log()
+    // tslint:enable:no-console
     throw exitProcess(1)
   }
 
@@ -62,7 +64,7 @@ export default async (args: Args) => {
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
-    const messages = formatWebpackMessages(stats.toJson({}, true))
+    const messages = formatWebpackMessages(stats.toJson())
     const isSuccessful = !messages.errors.length && !messages.warnings.length
     if (isSuccessful) {
       building.succeed(`Compiled successfully!`)

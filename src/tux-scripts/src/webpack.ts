@@ -11,7 +11,7 @@ export function start(config: Configuration | Configuration[]) {
   return webpack(config)
 }
 
-export function build(config: Configuration | Configuration[]) {
+export function build<T>(config: T) {
   const compiler = webpack(config)
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
@@ -19,7 +19,7 @@ export function build(config: Configuration | Configuration[]) {
         return reject(err)
       }
 
-      const messages = formatWebpackMessages(stats.toJson({}, true))
+      const messages = formatWebpackMessages(stats.toJson())
       if (messages.errors.length) {
         // Only keep the first error. Others are often indicative
         // of the same problem, but confuse the reader with noise.

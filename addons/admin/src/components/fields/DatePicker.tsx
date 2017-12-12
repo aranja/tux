@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import moment from 'moment'
-import DayPicker, { DateUtils } from 'react-day-picker'
+import DayPicker from 'react-day-picker'
 import { Theme, input, button } from '../../theme'
 import { tuxDatePickerStyles } from './DatePicker.styles'
 import FaCalendar from 'react-icons/lib/fa/calendar'
 import { fade } from '../../utils/color'
 
+const { DateUtils } = DayPicker
 const DATE_FORMAT = 'YYYY-MM-DD'
 const DEFAULT_VALUE = moment(new Date()).format(DATE_FORMAT)
 

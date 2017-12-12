@@ -8,12 +8,6 @@ export default async (args: Args) => {
   args = merge<Args>(
     {
       options: {
-        port: parseInt(process.env.PORT, 10) || 5000,
-        host: process.env.HOST || '0.0.0.0',
-        https: process.env.HTTPS === 'true',
-        tux: {
-          admin: true,
-        },
         env: {
           NODE_ENV: process.env.NODE_ENV || 'development',
         },

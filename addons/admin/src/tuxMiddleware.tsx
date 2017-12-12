@@ -9,13 +9,19 @@ export interface Options {
 }
 
 export interface TuxSession extends Session {
-  api: any
+  api: any,
+  refresh: () => void
 }
 
 const tuxMiddleware = ({ adapter }: Options): Middleware => (
   session: TuxSession
 ) => {
   session.api = adapter.getQueryApi()
+  const refresh = session.refresh
+  if (!refresh) {
+    // tslint:disable-next-line:no-console
+    console.error('Can not find tux refresh. Admin functionality may be limited.')
+  }
 
   if (process.env.TUX_BUILD_TARGET === 'server') {
     session.on('server', render => {
@@ -27,7 +33,7 @@ const tuxMiddleware = ({ adapter }: Options): Middleware => (
   return async next => {
     const children = await next()
     return (
-      <TuxProvider adapter={adapter} onChange={session.refresh}>
+      <TuxProvider adapter={adapter} onChange={refresh}>
         {children}
       </TuxProvider>
     )

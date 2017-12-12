@@ -3,11 +3,13 @@ import { hydrate } from 'react-dom'
 import express from 'express'
 import DocumentMiddleware, { DocumentSession } from './DocumentMiddleware'
 import { join } from 'path'
-import { createElement } from 'react'
+import { createElement, ReactElement } from 'react'
 import ReactDOMServer from 'react-dom/server'
 import fs from 'fs'
 import DefaultDocument from 'react-document'
 import sortChunks from 'webpack-sort-chunks'
+
+export { DocumentSession }
 
 // Some chunks may contain content hash in their names, for ex. 'main.css?1e7cac4e4d8b52fd5ccd2541146ef03f'.
 // We must proper handle such cases, so we use regexp testing here
@@ -116,7 +118,8 @@ export const start = (
 
   session.refresh = async onComplete =>
     await app.renderBrowser(session, element => {
-      hydrate(element, container, onComplete)
+      // ts: element argument doesn't match correctly.
+      ;(hydrate as any)(element, container, onComplete)
     })
 
   session.refresh()

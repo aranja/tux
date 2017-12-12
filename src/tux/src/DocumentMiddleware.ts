@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { Session } from 'react-chain'
 
-export type DocumentSession = {
+export interface DocumentSession extends Session {
   document: {
     htmlProps: { [key: string]: string }
     bodyProps: { [key: string]: string }
@@ -13,7 +13,7 @@ export type DocumentSession = {
   }
 }
 
-const DocumentMiddleware = (session: Session & DocumentSession) => {
+const DocumentMiddleware = (session: DocumentSession) => {
   session.document = {
     htmlProps: {},
     bodyProps: {},

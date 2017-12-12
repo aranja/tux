@@ -1,6 +1,6 @@
 import express from 'express'
 import { join } from 'path'
-import { MultiCompiler } from 'webpack'
+import { MultiCompiler, Compiler } from 'webpack'
 import selfsigned from 'selfsigned'
 import { Server as NetServer } from 'net'
 import http from 'http'
@@ -47,8 +47,8 @@ class Server {
       const webpackHotMiddleware = require('webpack-hot-middleware')
       const webpackHotServerMiddleware = require('webpack-hot-server-middleware')
 
-      const clientCompiler = multiCompiler.compilers.find(
-        childCompiler => childCompiler.name === 'client'
+      const clientCompiler = (multiCompiler as any).compilers.find(
+        (childCompiler: Compiler) => childCompiler.name === 'client'
       )
 
       this.app.use(

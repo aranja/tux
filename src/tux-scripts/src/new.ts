@@ -71,7 +71,7 @@ const init = async (
     JSON.stringify(appPackage, null, 2)
   )
 
-  const readmeExists = await fs.exists(path.join(appPath, 'README.md'))
+  const readmeExists = await fs.pathExists(path.join(appPath, 'README.md'))
   if (readmeExists) {
     await fs.rename(
       path.join(appPath, 'README.md'),
@@ -81,7 +81,7 @@ const init = async (
 
   // Copy the files for the user
   const templatePath = path.join(ownPath, 'template', 'new')
-  if (await fs.exists(templatePath)) {
+  if (await fs.pathExists(templatePath)) {
     await fs.copy(templatePath, appPath)
   } else {
     console.error(
@@ -97,7 +97,7 @@ const init = async (
     appPath,
     '.template.dependencies.json'
   )
-  if (await fs.exists(templateDependenciesPath)) {
+  if (await fs.pathExists(templateDependenciesPath)) {
     const templateDependencies = require(templateDependenciesPath).dependencies
     dependencies = dependencies.concat(
       Object.keys(templateDependencies).map(key => {

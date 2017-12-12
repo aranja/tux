@@ -1,25 +1,28 @@
-import Helmet from 'react-helmet'
+import { ReactElement } from 'react'
+import Helmet, { HelmetData } from 'react-helmet'
+import { Middleware } from 'react-chain'
+import { DocumentSession } from 'tux'
 
-const helmet = () => session => {
+interface HelmetSession extends DocumentSession {
+  helmet: HelmetData
+}
+
+const helmet = (): Middleware => (session: HelmetSession) => {
   session.on('server', render => {
     render()
     const data = Helmet.renderStatic()
     session.helmet = data
 
-    session.htmlProps = session.htmlProps || {}
-    session.bodyProps = session.bodyProps || {}
-    session.head = session.head || []
-
-    Object.assign(session.htmlProps, data.htmlAttributes.toComponent())
-    Object.assign(session.bodyProps, data.bodyAttributes.toComponent())
-
-    session.head.push(
-      ...data.title.toComponent(),
-      ...data.meta.toComponent(),
-      ...data.link.toComponent(),
-      ...data.style.toComponent(),
-      ...data.noscript.toComponent(),
-      ...data.script.toComponent()
+    Object.assign(session.document.htmlProps, data.htmlAttributes.toComponent())
+    Object.assign(session.document.bodyProps, data.bodyAttributes.toComponent())
+    session.document.head.push(
+      // @types/react-helmet returns wrong types.
+      ...(<any>data.title.toComponent()),
+      ...(<any>data.meta.toComponent()),
+      ...(<any>data.link.toComponent()),
+      ...(<any>data.style.toComponent()),
+      ...(<any>data.noscript.toComponent()),
+      ...(<any>data.script.toComponent())
     )
   })
 }
