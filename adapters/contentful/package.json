@@ -1,6 +1,6 @@
 {
   "name": "tux-adapter-contentful",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -13,8 +13,8 @@
   "dependencies": {
     "axios": "^0.15.3",
     "lodash": "^4.17.4",
-    "tux": "^1.0.5",
-    "tux-addon-admin": "^1.0.3"
+    "tux": "^1.0.9",
+    "tux-addon-admin": "^1.0.9"
   },
   "peerDependencies": {
     "react": ">16.0.0-beta"

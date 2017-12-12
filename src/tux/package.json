@@ -1,6 +1,6 @@
 {
   "name": "tux",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "description": "Configurable React app with SSR.",
   "bugs": {
     "url": "https://github.com/aranja/tux/issues"
@@ -27,7 +27,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "neutrino-preset-tux": "^1.0.4",
+    "neutrino-preset-tux": "^1.0.9",
     "react-chain": "^0.5.0",
     "webpack-sort-chunks": "^0.1.0"
   },
