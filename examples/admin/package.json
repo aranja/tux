@@ -1,6 +1,6 @@
 {
   "name": "tux-example-adapter-contentful",
-  "version": "1.0.5",
+  "version": "1.0.10",
   "private": true,
   "license": "MIT",
   "dependencies": {
@@ -16,7 +16,7 @@
     "tux-adapter-contentful": "^1.0.5",
     "tux-addon-admin": "^1.0.3",
     "tux-addon-helmet": "^1.0.4",
-    "tux-scripts": "^1.0.5",
+    "tux-scripts": "^1.0.10",
     "universal-router": "^2.0.0"
   },
   "now": {
