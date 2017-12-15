@@ -1,0 +1,17 @@
+{
+  "name": "tux-example-entry-points",
+  "version": "1.0.10",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "tux": "^0.4.0",
+    "tux-scripts": "^0.4.0"
+  },
+  "scripts": {
+    "start": "tux-scripts start --options.serverEntry server --options.browserEntry browser",
+    "build": "tux-scripts build --options.serverEntry server --options.browserEntry browser",
+    "serve": "tux-scripts serve"
+  }
+}

@@ -1,10 +1,11 @@
-declare module 'neutrino-middleware-env'
-declare module 'neutrino-middleware-banner'
-declare module 'neutrino-middleware-compile-loader'
-declare module 'neutrino-preset-react'
+declare module '@neutrinojs/env'
+declare module '@neutrinojs/banner'
+declare module '@neutrinojs/compile-loader'
+declare module '@neutrinojs/react'
+declare module '@neutrinojs/hot'
 declare module 'neutrino' {
   import Config from 'webpack-chain'
-  import { Compiler, Stats } from 'webpack'
+  import { Compiler, Configuration, Stats } from 'webpack'
 
   interface Future<T> {
     promise(): Promise<T>
@@ -21,14 +22,20 @@ declare module 'neutrino' {
 
   export type Middleware = (neutrino: Neutrino, options?: any) => void
 
-  export class Neutrino {
-    constructor(options: Options | any)
+  export interface Neutrino {
     config: Config
     options: Options | any
+    commands: {
+      [command: string]: (
+        config: Configuration | Configuration[],
+        api: Neutrino
+      ) => any
+    }
 
     on(event: string, callback: Function): void
     use(preset: Middleware, options?: any): void
     getWebpackOptions(): any
+    emitForAll(eventName: string, payload: any): Promise<Array<any>>
     register(
       command: string,
       handler: (config: any, api: Neutrino) => void
@@ -42,6 +49,7 @@ declare module 'neutrino' {
     ): Future<Stats | Compiler | string>
     requiresAndUses(middleware: string[]): Future<any>
   }
+  export function Neutrino(options: Options | any): Neutrino
 
   export function run(
     command: string,

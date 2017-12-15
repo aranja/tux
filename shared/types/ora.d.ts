@@ -8,7 +8,7 @@ declare module 'ora' {
     text: string
   }
 
-  function ora(message: string): Ora
+  function ora(message?: string): Ora
 
   export = ora
 }

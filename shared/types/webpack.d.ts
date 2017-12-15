@@ -1,6 +1,7 @@
 declare module 'css-loader/locals'
 declare module 'extract-text-webpack-plugin'
 declare module 'webpack-node-externals'
+declare module 'webpack-stats-plugin'
 
 declare module 'jsx-html-webpack-plugin' {
   import { Plugin } from 'webpack'

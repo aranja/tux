@@ -1,0 +1,63 @@
+{
+  "name": "tux-scripts",
+  "version": "0.4.0",
+  "description": "",
+  "main": "lib/index.js",
+  "bin": {
+    "tux-scripts": "./bin/tux-scripts"
+  },
+  "scripts": {
+    "prepublish": "TARGET=commonjs NODE_ENV=production ../../tasks/build-package.js",
+    "watch": "TARGET=commonjs ../../tasks/build-package.js --watch",
+    "test": "../../node_modules/.bin/jest"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "ssl",
+    "new.js",
+    "template"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "cross-spawn": "^5.1.0",
+    "fs-extra": "^4.0.3",
+    "neutrino": "^8.0.1",
+    "optional": "^0.1.3",
+    "ora": "^1.2.0",
+    "ramda": "^0.23.0",
+    "react-chain": "^0.5.0",
+    "react-dev-utils": "~4.0.1",
+    "react-document": "^0.7.0",
+    "selfsigned": "^1.10.1",
+    "spdy": "^3.4.7",
+    "tux": "^0.4.0",
+    "webpack": "^3.1.0",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.20.0",
+    "webpack-hot-server-middleware": "^0.2.0",
+    "yargs": "^6.6.0"
+  },
+  "devDependencies": {
+    "@types/spdy": "3.4.4"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/../../shared/jest-preprocessor"
+    },
+    "testRegex": "/(src|test).*(\\.|/)(test|spec)\\.tsx?$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ]
+  }
+}

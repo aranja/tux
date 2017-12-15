@@ -2,11 +2,11 @@
 npm-debug.log*
 lerna-debug.log
 
-# production
-packages/*/lib
-packages/*/es
-packages/*/build
-packages/*/coverage
-
 # dependencies
 node_modules
+
+# production
+/*/*/lib
+/*/*/es
+/*/*/build
+/*/*/coverage

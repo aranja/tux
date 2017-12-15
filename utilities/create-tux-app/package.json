@@ -1,0 +1,22 @@
+{
+  "name": "create-tux-app",
+  "version": "0.4.0",
+  "license": "MIT",
+  "description": "yarn create tux-app <name>",
+  "keywords": [
+    "tux",
+    "tux-cli",
+    "yarn"
+  ],
+  "bin": {
+    "create-tux-app": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aranja/tux.git"
+  },
+  "dependencies": {
+    "execa": "^0.6.3",
+    "tux-cli": "^0.4.0"
+  }
+}
