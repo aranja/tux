@@ -10,8 +10,8 @@
     "tux-scripts": "^0.4.0"
   },
   "scripts": {
-    "start": "tux-scripts start --options.serverEntry server --options.browserEntry browser",
-    "build": "tux-scripts build --options.serverEntry server --options.browserEntry browser",
+    "start": "tux-scripts start",
+    "build": "tux-scripts build",
     "serve": "tux-scripts serve"
   }
 }
