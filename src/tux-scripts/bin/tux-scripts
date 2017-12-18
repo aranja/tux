@@ -28,6 +28,7 @@ const args = yargs
     default: {},
     global: true,
   })
+  .command('test', 'Run tests')
   .command('build', 'Build project for production')
   .command('start', 'Build and serve a project in development mode')
   .command('serve [path]', 'Serve a build')

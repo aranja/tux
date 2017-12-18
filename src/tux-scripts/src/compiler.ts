@@ -75,6 +75,7 @@ function createNeutrinoApis(commandName: Command, target: Target, args: Args) {
 function getOptions(command: Command, args: Args, target: Target) {
   return merge<Options>(
     {
+      args,
       target,
       command,
       browserEntry: require.resolve('./entry-points/browser'),
