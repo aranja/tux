@@ -97,7 +97,7 @@ export type TuxBrowserSession = Session &
     refresh: (onComplete?: (element: Element) => void) => Promise<any>
   }
 
-export type TuxServeeSession = Session &
+export type TuxServerSession = Session &
   DocumentSession & {
     req: express.Request
     res: express.Response
@@ -131,7 +131,7 @@ export const serve = ({
   Document,
 }: Options): express.RequestHandler => {
   return async (req, res, next) => {
-    const session = app.createSession() as TuxServeeSession
+    const session = app.createSession() as TuxServerSession
 
     session.req = req
     session.res = res
@@ -144,7 +144,7 @@ export const serve = ({
       const html = createElement(
         Document,
         {
-          ...session,
+          ...session.document,
           css: assets.css,
           js: assets.js,
         },
