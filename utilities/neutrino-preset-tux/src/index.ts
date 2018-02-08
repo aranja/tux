@@ -20,7 +20,8 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
 
   // This preset depends on a target option, let's give it a default.
   neutrino.options.target = neutrino.options.target || 'browser'
-  const isServer = neutrino.options.target === 'server'
+  const isServer = (neutrino.options.isServer =
+    neutrino.options.target === 'server')
 
   // Replace entry based on target.
   neutrino.options.appEntry = neutrino.options.mains.index
