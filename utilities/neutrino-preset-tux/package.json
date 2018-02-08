@@ -1,6 +1,6 @@
 {
   "name": "neutrino-preset-tux",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Neutrino preset for building tux websites",
   "main": "index.js",
   "scripts": {
@@ -14,13 +14,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "babel-plugin-dynamic-import-node": "^1.0.1",
-    "deepmerge": "^1.5.1",
-    "jsx-html-webpack-plugin": "^0.4.0",
     "@neutrinojs/banner": "8.0.10",
     "@neutrinojs/env": "8.0.10",
     "@neutrinojs/hot": "8.0.10",
     "@neutrinojs/react": "8.0.10",
+    "babel-plugin-dynamic-import-node": "^1.0.1",
+    "deepmerge": "^1.5.1",
+    "jsx-html-webpack-plugin": "^0.4.0",
     "react-dev-utils": "~4.0.1",
     "react-error-overlay": "~2.0.1",
     "webpack": "^3.1.0",
