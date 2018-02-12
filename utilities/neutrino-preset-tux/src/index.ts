@@ -6,7 +6,7 @@ import { env, ssr, betterDev, html, stats } from './middlewares'
 import { Options } from './Options'
 
 export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
-  const isProd = process.env.NODE_ENV === 'production'
+  const isDev = process.env.NODE_ENV === 'development'
   const options = merge<Options>(
     {
       hot: true,
@@ -72,7 +72,7 @@ export default (neutrino: Neutrino, opts: Partial<Options> = {}) => {
       .end()
 
     // Add goodies from create-react-app project.
-    .when(!isProd, () => {
+    .when(isDev, () => {
       neutrino.use(hot)
       neutrino.use(betterDev, options)
     })
