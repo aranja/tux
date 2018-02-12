@@ -1,6 +1,6 @@
 {
   "name": "tux-example-sass",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "license": "MIT",
   "dependencies": {
@@ -8,8 +8,8 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "sass-loader": "^6.0.6",
-    "tux": "^0.4.1",
-    "tux-scripts": "^0.4.1"
+    "tux": "^0.4.2",
+    "tux-scripts": "^0.4.2"
   },
   "scripts": {
     "start": "tux-scripts start",
