@@ -1,6 +1,6 @@
 {
   "name": "tux-scripts",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "",
   "main": "lib/index.js",
   "bin": {
@@ -34,7 +34,7 @@
     "react-document": "^0.7.0",
     "selfsigned": "^1.10.1",
     "spdy": "^3.4.7",
-    "tux": "^0.5.1",
+    "tux": "^0.5.2",
     "webpack": "^3.1.0",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.20.0",
