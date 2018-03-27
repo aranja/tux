@@ -1,13 +1,13 @@
 {
   "name": "tux-example-entry-points",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "license": "MIT",
   "dependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "tux": "^0.5.0",
-    "tux-scripts": "^0.5.0"
+    "tux": "^0.5.1",
+    "tux-scripts": "^0.5.1"
   },
   "scripts": {
     "start": "tux-scripts start",
