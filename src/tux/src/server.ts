@@ -1,6 +1,5 @@
 import express from 'express'
 import { ReactChain, Session } from 'react-chain'
-import { join } from 'path'
 import sortChunks from 'webpack-sort-chunks'
 import { createElement, ReactElement } from 'react'
 import ReactDOMServer from 'react-dom/server'
@@ -58,7 +57,7 @@ export interface Assets {
 
 export const buildAssets = ({ chunks, publicPath }: WebpackStats): Assets => {
   const assets: Assets = { publicPath, chunks: {}, js: [], css: [] }
-  const createAbsolutePath = (file: string) => join(publicPath, file)
+  const createAbsolutePath = (file: string) => publicPath + file
   const onlyCssFiles = (file: string) => cssExtension.test(file)
 
   sortChunks(chunks.filter(filter)).forEach(chunk => {
