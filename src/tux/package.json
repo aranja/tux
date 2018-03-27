@@ -23,7 +23,7 @@
   "files": [
     "es",
     "lib",
-    "index.js",
+    "server.js",
     "neutrino.js"
   ],
   "license": "MIT",
