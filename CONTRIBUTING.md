@@ -6,23 +6,28 @@ Before contributing, please read our [code of conduct](CODE_OF_CONDUCT.md).
 
 ## Getting started
 
-Here's a way to quickly get started working in the repo.
+This is a monorepo containing all tux related packages. It uses [yarn workspaces](https://yarnpkg.com/blog/2017/08/02/introducing-workspaces/) so you need to install the latest version of `yarn` to manage dependencies in this project:
+
+```
+npm install --global yarn
+```
+
+When `yarn` has been successfully installed, get started developing by running the following scripts:
 
 ```bash
 # Install shared dependencies
-npm install
+yarn
 
 # Build all packages for development and watch for changes
-npm run watch
+yarn watch
 
 # Run example site.
-# Currently the content comes from Contentful so the admin is not publicly accessible.
-cd packages/tux-example-site && npm start
+cd packages/tux-example-site && yarn start
 
 # Run tests, lint and typescript validation
-npm test
-npm run lint
-npm run check-types
+yarn test
+yarn lint
+yarn check-types
 ```
 
 Please create issues for major changes and enhancements that you wish to make. Discuss things transparently and get feedback from the community.
