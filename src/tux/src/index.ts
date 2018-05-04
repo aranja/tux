@@ -2,6 +2,8 @@ import createReactChain, { ReactChain, Session } from 'react-chain'
 import { hydrate } from 'react-dom'
 import DocumentMiddleware, { DocumentSession } from './DocumentMiddleware'
 
+export { TuxServerSession as ServerSession } from './server'
+
 export { DocumentSession }
 
 export type TuxBrowserSession = Session &

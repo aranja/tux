@@ -1,0 +1,19 @@
+{
+  "name": "react-router",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2",
+    "tux": "0.5.2"
+  },
+  "devDependencies": {
+    "tux-scripts": "0.5.2"
+  },
+  "scripts": {
+    "start": "tux-scripts start",
+    "build": "tux-scripts build",
+    "serve": "tux-scripts serve"
+  }
+}

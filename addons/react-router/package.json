@@ -1,0 +1,37 @@
+{
+  "name": "tux-addon-react-router",
+  "version": "0.4.0",
+  "description": "Use react-router on the server and client.",
+  "bugs": {
+    "url": "https://github.com/aranja/tux/issues"
+  },
+  "repository": "aranja/tux",
+  "keywords": ["react", "react-router", "tux-addon"],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "prepublish": "NODE_ENV=production ../../tasks/build-package.js",
+    "watch": "../../tasks/build-package.js --watch",
+    "test": "../../node_modules/.bin/jest"
+  },
+  "peerDependencies": {
+    "react": ">16.0.0-beta",
+    "react-router-dom": "^4.2.2"
+  },
+  "files": ["es", "lib"],
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^18.1.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/../../shared/jest-preprocessor"
+    },
+    "testRegex": "/(src|test).*(\\.|/)(test|spec)\\.tsx?$",
+    "moduleFileExtensions": ["ts", "tsx", "js", "json"]
+  }
+}
