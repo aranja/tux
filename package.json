@@ -9,7 +9,7 @@
     "lint": "./tasks/lint-project.sh",
     "check-types": "TS_FAIL_ON_ERROR=true lerna run prepublish --silent",
     "lerna": "lerna",
-    "bootstrap": "lerna bootstrap --hoist",
+    "bootstrap": "lerna bootstrap",
     "precommit": "lint-staged",
     "pretty": "prettier --write -- \"**/*.{ts,tsx,css,js}\"",
     "watch": "lerna run watch --parallel",
