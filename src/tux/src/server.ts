@@ -107,17 +107,21 @@ export const serve = ({
         session,
         ReactDOMServer.renderToString
       )
-      const html = createElement(
-        Document,
-        {
-          ...session.document,
-          css: assets.css,
-          js: assets.js,
-        },
-        body
-      )
 
-      res.send('<!doctype html>' + ReactDOMServer.renderToStaticMarkup(html))
+      // render middlewares might respond early, eg redirects.
+      if (!res.headersSent) {
+        const html = createElement(
+          Document,
+          {
+            ...session.document,
+            css: assets.css,
+            js: assets.js,
+          },
+          body
+        )
+
+        res.send('<!doctype html>' + ReactDOMServer.renderToStaticMarkup(html))
+      }
     } catch (error) {
       next(error)
     }
