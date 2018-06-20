@@ -1,11 +1,12 @@
-import { Plain, Raw, State } from 'slate'
+import { State } from 'slate'
+import Plain from 'slate-plain-serializer'
 import { Html } from './Html'
 import { Format } from './Format'
 
 function serialize(state: State, format: Format = 'raw'): any {
   switch (format) {
     case 'raw':
-      return Raw.serialize(state, { terse: true })
+      return state.toJSON()
     case 'html':
       return Html.serialize(state)
     case 'plain':

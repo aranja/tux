@@ -128,7 +128,7 @@ class EditInline extends React.Component<Props, State> {
     const { isEditing, placeholder } = this.props
     const { editorState, plugins } = this.state
 
-    if (!isEditing && !editorState.document.length) {
+    if (!isEditing && !editorState.document.size) {
       return null
     }
 

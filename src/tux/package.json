@@ -39,9 +39,6 @@
     "transform": {
       ".(ts|tsx)": "<rootDir>/../../shared/jest-preprocessor"
     },
-    "setupFiles": [
-      "./src/__tests__/globals.ts"
-    ],
     "testRegex": "/(src|test).*(\\.|/)(test|spec)\\.tsx?$",
     "moduleFileExtensions": [
       "ts",

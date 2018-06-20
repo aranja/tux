@@ -9,7 +9,7 @@ const ProductBanner = ({ image }) => (
         <EditInline field="fields.content.title" />
       </h1>
       <div className="ProductBanner-text">
-        <EditInline field="fields.content.subtitle" />
+        <EditInline format="raw" field="fields.content.subtitle" />
       </div>
     </div>
     <div className="ProductBanner-imageWrap">

@@ -1,4 +1,5 @@
-import { Plain, Raw, State } from 'slate'
+import { Value, State } from 'slate'
+import Plain from 'slate-plain-serializer'
 import { Html } from './Html'
 import { Format } from './Format'
 
@@ -11,7 +12,7 @@ function deserialize(value: any, format: Format = 'raw'): State | null {
   // Always handle raw values.
   // Make it easier to migrate between raw and html.
   if (typeof value === 'object' && value.nodes) {
-    return Raw.deserialize(value, { terse: true })
+    return Value.fromJSON(value)
   }
 
   if (typeof value !== 'string') {

@@ -24,7 +24,7 @@ function tuxPreset(neutrino, target) {
     .end()
   .target('node')
   .entry(target)
-    .add(neutrino.options.entry)
+    .add(neutrino.options.mains.index)
     .end()
   .output.path(neutrino.options.output)
     .libraryTarget('commonjs2')
@@ -42,10 +42,11 @@ export default function bundleTux(target) {
     source: 'lib',
   })
   neutrino.register('build', build)
+  neutrino.use(tuxPreset, target)
 
   // Build and load!
   return neutrino
-    .run('build', [[tuxPreset, target]])
+    .run('build')
     .promise()
     .then(() => require(`${output}/${target}`))
 }

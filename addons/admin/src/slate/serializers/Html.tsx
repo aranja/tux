@@ -1,5 +1,6 @@
 import React from 'react'
-import { Block, Html as HtmlSerializer, Inline, Mark } from 'slate'
+import { Block, Inline, Mark } from 'slate'
+import HtmlSerializer from 'slate-html-serializer'
 
 /**
  * Tags to blocks.

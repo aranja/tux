@@ -1,5 +1,6 @@
 import React from 'react'
-import { Editor, EditorProps, Schema } from 'slate'
+import { Schema } from 'slate'
+import { Editor, EditorProps } from 'slate-react'
 
 /**
  * Define a schema.
