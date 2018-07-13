@@ -19,16 +19,16 @@ export const EditInline: StatelessComponent<Props> = ({
   format,
 }) => {
   const value = get(model, field)
-  let state = null
+  let parsedValue = null
   try {
-    state = deserialize(value, format)
+    parsedValue = deserialize(value, format)
   } catch (err) {
     // tslint:disable-next-line:no-console
     console.error('Could not parse content value', value, err)
   }
 
-  if (state) {
-    return <SlateRenderer state={state} readOnly={true} />
+  if (parsedValue) {
+    return <SlateRenderer value={parsedValue} readOnly={true} />
   } else {
     return (children as ReactElement<any>) || null
   }

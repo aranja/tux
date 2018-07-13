@@ -350,8 +350,10 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^16.0.3":
-  version "16.0.28"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.28.tgz#eb0b31272528da8f20477ec27569c4f767315b33"
+  version "16.4.6"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.6.tgz#5024957c6bcef4f02823accf5974faba2e54fada"
+  dependencies:
+    csstype "^2.2.0"
 
 "@types/semver@^5.3.31":
   version "5.4.0"
@@ -2850,6 +2852,10 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   resolved "https://registry.yarnpkg.com/cssstyle/-/cssstyle-0.2.37.tgz#541097234cb2513c83ceed3acddc27ff27987d54"
   dependencies:
     cssom "0.3.x"
+
+csstype@^2.2.0:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.5.5.tgz#4125484a3d42189a863943f23b9e4b80fedfa106"
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -5417,6 +5423,10 @@ is-glob@^4.0.0:
 is-gzip@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-gzip/-/is-gzip-1.0.0.tgz#6ca8b07b99c77998025900e555ced8ed80879a83"
+
+is-hotkey@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/is-hotkey/-/is-hotkey-0.0.3.tgz#3713fea135f86528c87cf39810b3934e45151390"
 
 is-hotkey@^0.1.1:
   version "0.1.2"
@@ -9205,6 +9215,13 @@ slate-html-serializer@^0.6.7:
   resolved "https://registry.yarnpkg.com/slate-html-serializer/-/slate-html-serializer-0.6.7.tgz#90cc928b6a99da259b35460c0129a8e9e7413598"
   dependencies:
     slate-dev-logger "^0.1.39"
+    type-of "^2.0.1"
+
+slate-mark-hotkeys@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/slate-mark-hotkeys/-/slate-mark-hotkeys-0.2.0.tgz#00d8b0f8a2885abc546b5db49bc5b35e93c65978"
+  dependencies:
+    is-hotkey "^0.0.3"
     type-of "^2.0.1"
 
 slate-plain-serializer@^0.5.16:

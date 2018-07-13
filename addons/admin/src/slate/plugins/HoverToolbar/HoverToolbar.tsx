@@ -1,5 +1,5 @@
 import React from 'react'
-import { Plugin } from 'slate'
+import { Plugin } from 'slate-react'
 import Toolbar from './Toolbar'
 
 /**
@@ -7,10 +7,10 @@ import Toolbar from './Toolbar'
  */
 function HoverToolbar(): Plugin {
   return {
-    render: (props: any, state, editor) => (
+    renderEditor: (props, editor) => (
       <span>
         {props.children}
-        <Toolbar key="toolbar" state={state} onChange={editor.onChange} />
+        <Toolbar key="toolbar" value={props.value} onChange={editor.onChange} />
       </span>
     ),
   }

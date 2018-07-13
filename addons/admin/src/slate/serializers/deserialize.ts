@@ -3,7 +3,7 @@ import Plain from 'slate-plain-serializer'
 import { Html } from './Html'
 import { Format } from './Format'
 
-function deserialize(value: any, format: Format = 'raw'): State | null {
+function deserialize(value: any, format: Format = 'raw'): Value | null {
   // Don't try to deserialize null.
   if (value == null) {
     return null

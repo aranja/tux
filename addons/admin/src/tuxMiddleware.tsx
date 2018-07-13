@@ -1,5 +1,5 @@
 import React from 'react'
-import { Middleware, Session } from 'react-chain'
+import { Middleware, Session, WrapRenderCall } from 'react-chain'
 import { resetKeyGenerator } from 'slate'
 import TuxProvider from './components/TuxProvider'
 import { Adapter } from './interfaces'
@@ -13,6 +13,11 @@ export interface TuxSession extends Session {
   refresh: () => void
 }
 
+const resetBeforeRender = (render: WrapRenderCall) => {
+  resetKeyGenerator()
+  render()
+}
+
 const tuxMiddleware = ({ adapter }: Options): Middleware => (
   session: TuxSession
 ) => {
@@ -23,12 +28,10 @@ const tuxMiddleware = ({ adapter }: Options): Middleware => (
     console.error('Can not find tux refresh. Admin functionality may be limited.')
   }
 
-  if (process.env.TUX_BUILD_TARGET === 'server') {
-    session.on('server', render => {
-      resetKeyGenerator()
-      render()
-    })
-  }
+
+  session.on('server', resetBeforeRender)
+  session.on('browser', resetBeforeRender)
+
 
   return async next => {
     const children = await next()

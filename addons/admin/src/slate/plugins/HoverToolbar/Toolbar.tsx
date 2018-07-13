@@ -4,12 +4,12 @@ import FaBold from 'react-icons/lib/fa/bold'
 import FaItalic from 'react-icons/lib/fa/italic'
 import FaCode from 'react-icons/lib/fa/code'
 import FaUnderline from 'react-icons/lib/fa/underline'
-import { State as EditorState } from 'slate'
+import { Value } from 'slate'
 import { hasMark, toggleMark } from '../../UiUtils'
 
 export interface Props {
-  onChange(state: EditorState): void
-  state: EditorState
+  onChange(value: Value): void
+  value: Value
 }
 
 export interface State {
@@ -25,15 +25,15 @@ class Toolbar extends React.Component<Props, State> {
   }
 
   renderMarkButton(type: string, icon: ReactElement<any>) {
-    const { state, onChange } = this.props
-    const isActive = hasMark(state, type)
+    const { value, onChange } = this.props
+    const isActive = hasMark(value, type)
 
     return (
       <button
         className="Toolbar-button"
         onMouseDown={e => {
           e.preventDefault()
-          onChange(toggleMark(state, type))
+          onChange(toggleMark(value, type))
         }}
         role="presentation"
         tabIndex={-1}
@@ -64,7 +64,7 @@ class Toolbar extends React.Component<Props, State> {
 
   updateMenu = () => {
     const { menu } = this.state
-    const { state } = this.props
+    const { value } = this.props
     if (!menu) {
       return
     }
@@ -74,7 +74,7 @@ class Toolbar extends React.Component<Props, State> {
       return
     }
 
-    if (state.isBlurred || state.isEmpty) {
+    if (value.isBlurred || value.isEmpty) {
       tmp.removeAttribute('style')
       return
     }

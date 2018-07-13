@@ -38,6 +38,7 @@
     "react-transition-group": "^2.2.0",
     "slate": "^0.34.0",
     "slate-html-serializer": "^0.6.7",
+    "slate-mark-hotkeys": "^0.2.0",
     "slate-plain-serializer": "^0.5.16",
     "slate-react": "^0.12.10",
     "string-humanize": "^1.0.0"

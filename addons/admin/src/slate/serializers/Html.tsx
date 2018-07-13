@@ -1,6 +1,6 @@
 import React from 'react'
 import { Block, Inline, Mark } from 'slate'
-import HtmlSerializer from 'slate-html-serializer'
+import HtmlSerializer, { Rule } from 'slate-html-serializer'
 
 /**
  * Tags to blocks.
@@ -34,7 +34,7 @@ const MARK_TAGS: { [key: string]: string } = {
 /**
  * Serializer rules.
  */
-const RULES: HtmlSerializer.Rule[] = [
+const RULES: Rule[] = [
   {
     // Special case for code blocks, which need to grab the nested childNodes.
     deserialize(el, next) {

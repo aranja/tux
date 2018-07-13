@@ -1,10 +1,11 @@
 import React, { ReactNode } from 'react'
-import { State as EditorState, Plugin } from 'slate'
-import { renderToStaticMarkup } from 'react-dom/server'
+import { Value, Change } from 'slate'
+import { Plugin } from 'slate-react'
+import MarkHotkeys from 'slate-mark-hotkeys'
 import { Theme, input } from '../../../theme'
 import SlateRenderer from '../../../slate/SlateRenderer'
 import { deserialize, serialize, Format } from '../../../slate/serializers'
-import { HtmlPaste, MarkShortcuts } from '../../../slate/plugins'
+import { HtmlPaste } from '../../../slate/plugins'
 import {
   hasBlock,
   hasMark,
@@ -32,7 +33,7 @@ export interface Props {
 }
 
 export interface State {
-  editorState: EditorState
+  value: Value
   plugins: Plugin[]
 }
 
@@ -41,52 +42,56 @@ class RichTextField extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      editorState: this.getInitialEditorState(),
+      value: this.getInitialValue(),
       plugins: props.plugins || this.getDefaultPlugins(),
     }
   }
 
-  getInitialEditorState() {
+  getInitialValue() {
     const { value, format } = this.props
-    let state: EditorState | null = null
+    let parsedValue: Value | null = null
 
     try {
-      state = deserialize(value, format)
+      parsedValue = deserialize(value, format)
     } catch (err) {
       // tslint:disable-next-line:no-console
       console.error('Could not parse editor state', value, err)
     }
 
-    return state || (deserialize('', 'plain') as EditorState)
+    return parsedValue || (deserialize('', 'plain') as Value)
   }
 
   getDefaultPlugins() {
     if (this.props.format === 'plain') {
       return []
     }
-    return [HtmlPaste(), MarkShortcuts()]
+    return [HtmlPaste(), MarkHotkeys()]
   }
 
-  onChange = async (editorState: EditorState) => {
-    const { format, onChange } = this.props
-
-    this.setState({ editorState })
-    onChange(serialize(editorState, format))
+  onChange = async ({ value }: Change) => {
+    this.updateValue(value)
   }
 
   onClickMark = (type: string) => {
-    const { editorState } = this.state
-    this.onChange(toggleMark(editorState, type))
+    const { value } = this.state
+    this.updateValue(toggleMark(value, type))
   }
 
   onClickBlock = (type: string) => {
-    const { editorState } = this.state
-    this.onChange(toggleBlock(editorState, type))
+    const { value } = this.state
+    this.updateValue(toggleBlock(value, type))
+  }
+
+  updateValue(value: Value) {
+    const { format, onChange } = this.props
+
+    this.setState({ value })
+    onChange(serialize(value, format))
   }
 
   renderBlockButton(type: string, icon: ReactNode) {
-    const { editorState } = this.state
-    const isActive = hasBlock(editorState, type)
+    const { value } = this.state
+    const isActive = hasBlock(value, type)
 
     return (
       <ToolbarButton
@@ -99,8 +104,8 @@ class RichTextField extends React.Component<Props, State> {
   }
 
   renderMarkButton(type: string, icon: ReactNode) {
-    const { editorState } = this.state
-    const isActive = hasMark(editorState, type)
+    const { value } = this.state
+    const isActive = hasMark(value, type)
 
     return (
       <ToolbarButton
@@ -114,7 +119,7 @@ class RichTextField extends React.Component<Props, State> {
 
   render() {
     const { placeholder } = this.props
-    const { editorState, plugins } = this.state
+    const { value, plugins } = this.state
     return (
       <div className="RichTextField">
         <div className="RichTextField-toolbar">
@@ -130,7 +135,7 @@ class RichTextField extends React.Component<Props, State> {
             onChange={this.onChange}
             placeholder={placeholder || ''}
             plugins={plugins}
-            state={editorState}
+            value={value}
             style={{ width: '100%' }}
           />
         </div>

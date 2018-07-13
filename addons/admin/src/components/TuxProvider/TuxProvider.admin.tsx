@@ -112,7 +112,7 @@ class TuxProvider extends Component<TuxProviderProps, any> {
 
   render() {
     return (
-      <div style={{ paddingBottom: this.state.isEditing && 36 }}>
+      <div style={{ paddingBottom: this.state.isEditing ? 36 : undefined }}>
         {this.props.children}
         {this.renderTux()}
       </div>

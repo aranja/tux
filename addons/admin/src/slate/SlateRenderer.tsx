@@ -1,51 +1,77 @@
 import React from 'react'
-import { Schema } from 'slate'
-import { Editor, EditorProps } from 'slate-react'
+import {
+  Editor,
+  EditorProps,
+  RenderMarkProps,
+  RenderNodeProps,
+} from 'slate-react'
 
-/**
- * Define a schema.
- */
-const schema: Schema = {
-  nodes: {
-    line: props => <p {...props.attributes}>{props.children}</p>,
-    paragraph: props => <p {...props.attributes}>{props.children}</p>,
-    'bulleted-list': props => <ul {...props.attributes}>{props.children}</ul>,
-    code: props => (
-      <pre>
-        <code {...props.attributes}>{props.children}</code>
-      </pre>
-    ),
-    'heading-one': props => <h1 {...props.attributes}>{props.children}</h1>,
-    'heading-two': props => <h2 {...props.attributes}>{props.children}</h2>,
-    'heading-three': props => <h3 {...props.attributes}>{props.children}</h3>,
-    'heading-four': props => <h4 {...props.attributes}>{props.children}</h4>,
-    'heading-five': props => <h5 {...props.attributes}>{props.children}</h5>,
-    'heading-six': props => <h6 {...props.attributes}>{props.children}</h6>,
-    'list-item': props => <li {...props.attributes}>{props.children}</li>,
-    'numbered-list': props => <ol {...props.attributes}>{props.children}</ol>,
-    quote: props => (
-      <blockquote {...props.attributes}>{props.children}</blockquote>
-    ),
-    link: props => {
+const renderNode = (props: RenderNodeProps) => {
+  const { attributes, children, node } = props
+
+  switch (node.type) {
+    case 'bulleted-list':
+      return <ul {...attributes}>{children}</ul>
+    case 'code':
+      return (
+        <pre>
+          <code {...props.attributes}>{props.children}</code>
+        </pre>
+      )
+    case 'heading-one':
+      return <h1 {...attributes}>{children}</h1>
+    case 'heading-two':
+      return <h2 {...attributes}>{children}</h2>
+    case 'heading-three':
+      return <h3 {...attributes}>{children}</h3>
+    case 'heading-four':
+      return <h4 {...attributes}>{children}</h4>
+    case 'heading-five':
+      return <h5 {...attributes}>{children}</h5>
+    case 'heading-six':
+      return <h6 {...attributes}>{children}</h6>
+    case 'list-item':
+      return <li {...attributes}>{children}</li>
+    case 'numbered-list':
+      return <ol {...attributes}>{children}</ol>
+    case 'quote':
+      return <blockquote {...attributes}>{children}</blockquote>
+    case 'link': {
       const { data } = props.node
       const href = data.get('href')
       return (
-        <a href={href} {...props.attributes}>
-          {props.children}
+        <a href={href} {...attributes}>
+          {children}
         </a>
       )
-    },
-  },
-  marks: {
-    bold: props => <strong>{props.children}</strong>,
-    code: props => <code>{props.children}</code>,
-    italic: props => <em>{props.children}</em>,
-    underlined: props => <u>{props.children}</u>,
-  },
+    }
+  }
+}
+
+const renderMark = (props: RenderMarkProps) => {
+  const { attributes, children, mark } = props
+
+  switch (mark.type) {
+    case 'bold':
+      return <strong {...attributes}>{children}</strong>
+    case 'code':
+      return <code {...attributes}>{children}</code>
+    case 'italic':
+      return <em {...attributes}>{children}</em>
+    case 'underlined':
+      return <u {...attributes}>{children}</u>
+  }
 }
 
 const SlateRenderer = (props: EditorProps) => {
-  return <Editor style={{ width: '100%' }} schema={schema} {...props} />
+  return (
+    <Editor
+      style={{ width: '100%' }}
+      renderNode={renderNode}
+      renderMark={renderMark}
+      {...props}
+    />
+  )
 }
 
 export default SlateRenderer

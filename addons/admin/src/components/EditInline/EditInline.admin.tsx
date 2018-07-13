@@ -1,15 +1,18 @@
 import React, { ReactNode } from 'react'
 import PropTypes from 'prop-types'
+
 import { renderToStaticMarkup } from 'react-dom/server'
 import deepEqual from 'deep-eql'
 import humanize from 'string-humanize'
 import SlateRenderer from '../../slate/SlateRenderer'
 import { createEditable } from '../Editable'
 import { EditableProps } from '../../interfaces'
-import { State as EditorState, Plugin } from 'slate'
+import { Value, Change } from 'slate'
+import { Plugin } from 'slate-react'
+import MarkHotkeys from 'slate-mark-hotkeys'
 import { get, set } from '../../utils/accessors'
 import { serialize, deserialize, Format } from '../../slate/serializers'
-import { HoverToolbar, HtmlPaste, MarkShortcuts } from '../../slate/plugins'
+import { HoverToolbar, HtmlPaste } from '../../slate/plugins'
 
 export interface Props extends EditableProps {
   children?: ReactNode
@@ -20,7 +23,7 @@ export interface Props extends EditableProps {
 }
 
 export interface State {
-  editorState: EditorState
+  value: Value
   plugins: Plugin[]
 }
 
@@ -29,7 +32,7 @@ class EditInline extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      editorState: this.getInitialEditorState(),
+      value: this.getInitialValue(),
       plugins: props.plugins || this.getDefaultPlugins(),
     }
   }
@@ -49,25 +52,25 @@ class EditInline extends React.Component<Props, State> {
     format: 'plain',
   }
 
-  getInitialEditorState() {
+  getInitialValue() {
     const { model, field, format, children } = this.props
     const value = get(model, field)
-    let state: EditorState | null = null
+    let parsedValue: Value | null = null
 
     try {
-      state = deserialize(value, format)
+      parsedValue = deserialize(value, format)
     } catch (err) {
       // tslint:disable-next-line:no-console
       console.error('Could not parse editor state', value, err)
     }
 
-    if (!state && children) {
+    if (!parsedValue && children) {
       try {
         if (typeof children === 'string') {
-          state = deserialize(children, 'plain')
+          parsedValue = deserialize(children, 'plain')
         } else if (React.isValidElement(children)) {
           const html = renderToStaticMarkup(children)
-          state = deserialize(html, 'html')
+          parsedValue = deserialize(html, 'html')
         }
       } catch (err) {
         // tslint:disable-next-line:no-console
@@ -75,17 +78,17 @@ class EditInline extends React.Component<Props, State> {
       }
     }
 
-    if (!state) {
-      state = deserialize('', 'plain')
+    if (!parsedValue) {
+      parsedValue = deserialize('', 'plain')
     }
-    return state as EditorState
+    return parsedValue as Value
   }
 
   getDefaultPlugins() {
     if (this.props.format === 'plain') {
       return []
     }
-    return [HoverToolbar(), HtmlPaste(), MarkShortcuts()]
+    return [HoverToolbar(), HtmlPaste(), MarkHotkeys()]
   }
 
   private timer: number
@@ -100,9 +103,9 @@ class EditInline extends React.Component<Props, State> {
 
   private save = async () => {
     const { format, tux, model, field } = this.props
-    const { editorState } = this.state
+    const { value } = this.state
     const oldValue = get(model, field)
-    const newValue = serialize(editorState, format)
+    const newValue = serialize(value, format)
 
     // TODO: Properly update props model after saving.
     if (deepEqual(oldValue, newValue)) {
@@ -115,8 +118,8 @@ class EditInline extends React.Component<Props, State> {
     await tux.adapter.save(fullModel)
   }
 
-  onChange = async (editorState: EditorState) => {
-    this.setState({ editorState })
+  onChange = async ({ value }: Change) => {
+    this.setState({ value })
 
     if (this.timer) {
       window.clearTimeout(this.timer)
@@ -126,16 +129,16 @@ class EditInline extends React.Component<Props, State> {
 
   render() {
     const { isEditing, placeholder } = this.props
-    const { editorState, plugins } = this.state
+    const { value, plugins } = this.state
 
-    if (!isEditing && !editorState.document.size) {
+    if (!isEditing && !value.document.size) {
       return null
     }
-
+    console.log(value.document.toJSON())
     return (
       <div className={`EditInline${isEditing ? ' is-editing' : ''}`}>
         <SlateRenderer
-          state={editorState}
+          value={value}
           onChange={this.onChange}
           readOnly={!isEditing}
           placeholder={placeholder || this.defaultPlaceholder()}
